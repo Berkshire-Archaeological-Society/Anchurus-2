@@ -28,7 +28,7 @@ components:
     - layout_properties: {grid_position: 'PJPEBZ,JOSTQA'}
       name: app_title
       properties:
-        font_size: 24
+        font_size: 28
         foreground: ''
         spacing:
           margin: ['5', null, null, null]
@@ -37,7 +37,7 @@ components:
     - layout_properties: {grid_position: 'QQFRTI,RJAXIH'}
       name: organisation
       properties:
-        font_size: 24
+        font_size: 28
         foreground: ''
         spacing:
           margin: ['5', null, null, null]

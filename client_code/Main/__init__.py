@@ -78,7 +78,8 @@ class Main(MainTemplate):
     #self.action_list.visible = False
     self.site_summary.visible = False
     #
-    self.menu_block.visible = False
+    self.menu_block.visible = True
+    self.title_panel.visible = True
     self.menu_top.visible = False
     self.menu_middle.visible = False
     #self.mm_left.visible = False
@@ -375,11 +376,12 @@ class Main(MainTemplate):
         self.mm_left.visible = False
         self.mm_middle.visible = False
         self.admin_dropdown.visible = True
-        self.menu_block.visible = False
+        self.menu_block.visible = True
       
       # make menu bar variable visible
       self.menu_block.visible = True
       self.menu_top.visible = True
+      self.title_panel.visible = True
 
       if anvil.users.get_user() is not None:
         sites_list = anvil.server.call('sites_get_summary')
@@ -749,7 +751,8 @@ class Main(MainTemplate):
     self.welcome_page.visible = True
 
     # make menu block and admin menu invisible
-    self.menu_block.visible = False
+    self.menu_block.visible = True
+    self.title_panel.visible = True
     self.menu_top.visible = False
     self.menu_middle.visible = False
     self.mm_left.visible = False
