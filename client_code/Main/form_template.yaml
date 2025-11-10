@@ -424,7 +424,14 @@ components:
     spacing_below: none
   type: ColumnPanel
 - components:
-  - components: []
+  - components:
+    - layout_properties: {}
+      name: app_name
+      properties:
+        font_size: 10
+        spacing:
+          margin: [null, null, null, '12']
+      type: Label
     layout_properties: {full_width_row: true, grid_position: 'DCRRVT,ZTIHLF'}
     name: flow_panel_2
     properties: {}
@@ -458,7 +465,10 @@ components:
       type: Label
     layout_properties: {full_width_row: true, grid_position: 'DCRRVT,XEYKUI'}
     name: flow_panel_1
-    properties: {align: right}
+    properties:
+      align: right
+      spacing:
+        padding: [null, null, null, null]
     type: FlowPanel
   layout_properties: {slot: footer-slot}
   name: footer_column_panel

@@ -7,6 +7,7 @@ import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
 import anvil.users
+from anvil.js.window import document
 
 from .. import indeterminate
 from ..Header import Header
@@ -47,6 +48,8 @@ class Main(MainTemplate):
     #self.title.text = Global.title + Global.status + Global.selected_site
     self.app_title.text = Global.system
     self.organisation.text = Global.organisation
+    self.app_name.text = document.head.querySelector('[name=title]').content
+    
     # add the about_us_text (taken from Anchurus-2.cfg file) to the about_us_box text field by adding a Rich Text Component
     rt = RichText(content=Global.about_us_text,format="restricted_html")
     self.about_us_box.add_component(rt)
@@ -333,13 +336,14 @@ class Main(MainTemplate):
       # reset action dropdown list
       #self.action_list.selected_value = None
     else:
-      Notification("This action is not yet implemented.")
+      n = Notification("This action has not yet been implemented.")
+      n.show()
     pass
   
   def login_button_click(self, **event_args):
     """" This Function is called when the users logs in """
     """This method is called when the button is clicked"""
-    print("Login button clicked")
+    #print("Login button clicked")
     user = anvil.users.login_with_form(allow_cancel=True)
     # check if user is logged in as newly registered account needs explicit enabling by administrator 
     # user = anvil.users.get_user()
