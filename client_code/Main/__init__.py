@@ -13,6 +13,7 @@ from ..Header import Header
 from ..RowForm import RowForm
 from ..TableList import TableList
 from ..ImportForm import ImportForm
+from ..FilterList import FilterList
 from .. import Global
 from .. import Function
 from .. import FunctionsB
@@ -78,7 +79,7 @@ class Main(MainTemplate):
     #self.action_list.visible = False
     self.site_summary.visible = False
     #
-    self.menu_block.visible = False
+    self.menu_block.visible = True
     self.menu_top.visible = False
     self.menu_middle.visible = False
     #self.mm_left.visible = False
@@ -697,10 +698,83 @@ class Main(MainTemplate):
 
   def filter_cols_click(self, **event_args):
     """This method is called when the button is clicked"""
+    # extract table columns names
+    column_headings = []
+    print(Global.work_area[Global.current_work_area_name]["data_list"])
+    if Global.work_area[Global.current_work_area_name]["data_list"]:
+      # Get the keys (which are the column headings) from the first item
+      column_headings = list(Global.work_area[Global.current_work_area_name]["data_list"][0].keys())
+      # remove special columns
+      column_headings.remove("select")
+      column_headings.remove("SiteId")
+      column_headings.remove("DBAcontrol")
+      # sort column names
+      column_headings.sort()
+
+    # 1. Define the options you want to display
+    option_id = 0
+    options_data = []
+    for column_name in column_headings:
+      option_id = option_id + 1
+      options_data.append({'text': column_name, 'id': option_id})
+
+    # 2. Create an instance of your Dialog Form
+    dialog = FilterList(options_list=options_data)
+
+    # 3. Use alert() to show the form as a modal popup
+    # The alert() function will return the 'value' passed when 'x-close-alert' is raised
+    selected_list = alert(
+      content=dialog, 
+      title="",
+      buttons=[] # Crucial: set buttons=[] to use your custom button for submission
+    )
+    if selected_list is not None:     # user has made a selection; if not, do nothing
+      # 4. Process the result after the dialog is closed
+      #
+      # First unhide all columns
+      # remove the columns out of the hidden columns list.
+      for col in Global.work_area[Global.current_work_area_name]["hidden_columns"]:
+        column = [c for c in Global.work_area[Global.current_work_area_name]["filter"] if c['title'] == col][0]
+        # remove from list of hidden_columns
+        Global.work_area[Global.current_work_area_name]["filter"].remove(column)
+        # Add it to the Data Grid's column list
+        Global.work_area[Global.current_work_area_name]["table"].columns.append(column)
+      # make it 'live'
+      Global.work_area[Global.current_work_area_name]["table"].columns = Global.work_area[Global.current_work_area_name]["table"].columns
+      # set hidden_columns to empty list
+      Global.work_area[Global.current_work_area_name]["hidden_columns"] = []
+
+      #
+      all_columns_titles = [col["title"] for col in Global.work_area[Global.current_work_area_name]["table"].columns if "title" in col]
+      #remove columns with empty title
+      cleaned_list = [item for item in all_columns_titles if item != ""]
+      cleaned_list.sort()
+      all_columns_titles = cleaned_list
+
+      # create columns_to_hide (difference between all_columns and selected_columns)
+      columns_to_hide = []
+      selected_columns_titles = []
+      if selected_list:
+        selected_columns_titles = [col["text"] for col in selected_list if "text" in col]
+        columns_to_hide = list(set(all_columns_titles).difference(selected_columns_titles))
+
+      # add columns_to_hide to the work_area data structure as "filter"
+      Global.work_area[Global.current_work_area_name]["hidden_columns"] = columns_to_hide
+      for col in columns_to_hide:
+        # add col to filter and remove from table
+        column = [c for c in Global.work_area[Global.current_work_area_name]["table"].columns if c['title'] == col][0]
+        Global.work_area[Global.current_work_area_name]["filter"].append(column)
+        Global.work_area[Global.current_work_area_name]["table"].columns.remove(column)
+
+      # make the filter 'live'
+      Global.work_area[Global.current_work_area_name]["table"].columns = Global.work_area[Global.current_work_area_name]["table"].columns
     pass
 
   def download_csv_click(self, **event_args):
     """This method is called when the button is clicked"""
+    # call server-side function create_csv to create a csv file and download this to user Download folder
+    csv_file = anvil.server.call('create_csv',Global.work_area[Global.current_work_area_name]["data_list"])
+    anvil.media.download(csv_file)
     pass
 
   def print_click(self, **event_args):
@@ -749,7 +823,7 @@ class Main(MainTemplate):
     self.welcome_page.visible = True
 
     # make menu block and admin menu invisible
-    self.menu_block.visible = False
+    self.menu_block.visible = True
     self.menu_top.visible = False
     self.menu_middle.visible = False
     self.mm_left.visible = False
