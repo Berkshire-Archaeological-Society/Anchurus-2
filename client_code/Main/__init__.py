@@ -699,8 +699,10 @@ class Main(MainTemplate):
   def filter_cols_click(self, **event_args):
     """This method is called when the button is clicked"""
     # extract table columns names
+    print(Global.work_area[Global.current_work_area_name]["columns_show"])
+    print(Global.work_area[Global.current_work_area_name]["table"].columns)
     column_headings = []
-    print(Global.work_area[Global.current_work_area_name]["data_list"])
+    #print(Global.work_area[Global.current_work_area_name]["data_list"])
     if Global.work_area[Global.current_work_area_name]["data_list"]:
       # Get the keys (which are the column headings) from the first item
       column_headings = list(Global.work_area[Global.current_work_area_name]["data_list"][0].keys())
