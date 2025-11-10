@@ -52,7 +52,8 @@ class ContextForm(ContextFormTemplate):
                            required=False,
                            message="Please enter a valid year YYYY BC|AD (or -YYYY for BC year)")
     #
-    self.SiteId.text = Global.context_items["SiteId"]
+    print(Global.context_items)
+    self.SiteId.text = Global.site_id
     #Global.work_area[Global.current_work_area_name]["site_id"] 
     self.SiteId.enabled = False
     self.context_help_information.text = Global.context_help_information
@@ -63,7 +64,7 @@ class ContextForm(ContextFormTemplate):
     if Global.work_area[Global.current_work_area_name]["action"] == "View Context" or Global.work_area[Global.current_work_area_name]["action"] == "Edit Context":
       # fill fields with values for View or Edit
       # call check_DBAcontrol for existing or new DBAcontrol value
-      Global.context_items["DBAcontrol"] = anvil.server.call("check_DBAcontrol",Global.username,"e")
+      #Global.context_items["DBAcontrol"] = anvil.server.call("check_DBAcontrol",Global.username,"e")
       self.ContextId.text = Global.context_items["ContextId"]
       self.Name.text = Global.context_items["Name"]
       self.Year.text = Global.context_items["Year"]
@@ -105,7 +106,7 @@ class ContextForm(ContextFormTemplate):
       self.Submit_button.visible = False  
     if Global.work_area[Global.current_work_area_name]["action"] == "Add Context":
       # call check_DBAcontrol for existing or new DBAcontrol value
-      Global.context_items["DBAcontrol"] = anvil.server.call("check_DBAcontrol",Global.username,"i")
+      #Global.context_items["DBAcontrol"] = anvil.server.call("check_DBAcontrol",Global.username,"i")
       self.ContextId.text = ""
       self.ContextId.enabled = True
       self.Name.text = ""
@@ -163,6 +164,7 @@ class ContextForm(ContextFormTemplate):
       #
       if (self.ContextType.selected_value) is not None:
         # call server for database update
+        # set all empty fields to None (will be Null in DB)
         for x in Global.context_items:
           if Global.context_items[x] == "":
             Global.context_items[x] = None

@@ -2,7 +2,7 @@
  This CSS implements the Material Design 3 look and feel for Anvil apps.
  **/
 
-/* Stop panel-cols cutting off drop shadows */
+/* Stop panel-cols cutting of drop shadows */
 .anvil-panel-col {
   padding-bottom: 10px;
   margin-bottom: -10px;
@@ -182,9 +182,9 @@ color: %color:On Primary Container%;
 }
 
 .nav-holder {
-  display: flex;
-/*   flex-grow: 1;
-  overflow-y: initial; */
+ display: flex; 
+/*  flex-grow: 1;
+    overflow-y: initial;*/
 }
 
 @media print {
@@ -230,7 +230,7 @@ color: %color:On Primary Container%;
   left: 0;
   flex-shrink: 0;
   min-width: 240px;
-  max-width: 400px;
+  max-width: 400px; 
 }
 
 .nav-shield {
@@ -398,7 +398,7 @@ color: %color:On Primary Container%;
 
 /* Components: App Bar */
 .app-bar {
-  min-height: 56px;
+  min-height: 150px; /* orig 56px */
   padding: 0 16px 0 72px;
   position: fixed;
   width: 100%;
@@ -468,6 +468,7 @@ color: %color:On Primary Container%;
 .app-bar-nav > .anvil-container {
   margin: 0;
   padding: 0;
+  width: 92vw; /* added TB */
   min-height: 56px;
 }
 
@@ -475,6 +476,7 @@ color: %color:On Primary Container%;
   outline: 1px dotted #fff;
   margin-top: 8px;
   min-height: 40px;
+  min-width: 600px;
   padding: 5px 8px;
 }
 
@@ -817,22 +819,34 @@ input.anvil-component.anvil-spacing-below-large { margin-bottom: 20px; }
 
 input.anvil-component::-webkit-input-placeholder, textarea.anvil-component::-webkit-input-placeholder {
   color: %color:On Surface%;
+  font-style: italic;
+  font-size: 10px;
 }
 input.anvil-component::-moz-placeholder, textarea.anvil-component::-moz-placeholder {
   color: %color:On Surface%;
+  font-style: italic;
+  font-size: 10px;
 }
 input.anvil-component::placeholder, textarea.anvil-component::placeholder  {
   color: %color:On Surface%;
+  font-style: italic;
+  font-size: 10px;
 }
 
 .app-bar input.anvil-component::-webkit-input-placeholder, .app-bar textarea.anvil-component::-webkit-input-placeholder {
   color: %color:On Surface%;
+  font-style: italic;
+  font-size: 10px;
 }
 .app-bar input.anvil-component::-moz-placeholder, .app-bar textarea.anvil-component::-moz-placeholder {
   color: %color:On Surface%;
+  font-style: italic;
+  font-size: 10px;
 }
 .app-bar input.anvil-component::placeholder, .app-bar textarea.anvil-component::placeholder  {
   color: %color:On Surface%;
+  font-style: italic;
+  font-size: 10px;
 }
 
 input.anvil-component:hover, input.anvil-component:focus, textarea.anvil-component:hover, textarea.anvil-component:focus, 
@@ -932,6 +946,7 @@ textarea.anvil-component.anvil-role-input-error, input.anvil-component.anvil-rol
   width: 15px;
   height: 15px;
   border-radius: 1px;
+  border: 1px solid %color:On Surface Variant%; /* Add a border for better visibility */
   background-color: %color:Surface Variant%; 
 /*   color: %color:On Surface Variant%; */
 }
@@ -1018,13 +1033,15 @@ input[disabled] ~ span {
 }
 
 .anvil-role-tonal-data-grid.anvil-data-grid .data-grid-child-panel div.data-row-col:first-child {
-  border-left: 0;
+  /*border-left: 0;*/
+  border-left: 1px solid black;
 }
 
 .anvil-role-tonal-data-grid.anvil-data-grid > .data-grid-child-panel>div.auto-grid-header div.data-row-col {
   border-top: 0;
   border-bottom: 0;
-  border-right: 0;
+  /*border-right: 0;*/
+  border-right: 1px solid black;
 }
 
 /* DataGrid Horizontal Scroll */
@@ -1059,8 +1076,72 @@ div.plot-container.plotly svg.main-svg {
     --anvil-spinner-bg: %color:Surface Variant%;
 }
 
+/* 
+Changes to the standard Theme.css are below
+*/
+
 /* make all even rows a grey backgroud in data grid */
 .anvil-data-grid .anvil-data-row-panel:nth-child(even) {
-    background-color: #E3E3E3;
-    border-left: 0;
+    background-color: #EEEEEE;
+    /*border-left: 1px solid black;*/
+}
+
+/* Apply left and right borders to each cell within a data grid row */
+.anvil-data-row-panel > .data-row-col {
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+}
+
+/* Footer bar */
+.footer {
+  position: fixed;
+  left: 0px;
+  bottom: 0px;
+  /* top: 140px; */
+  width: 100%;
+  font-size: 20px;
+  font-weight: 500;
+  background-color:  %color:Primary 500%;;
+  color: white;
+  min-height: 40px;
+  text-align: center;
+  padding: 0 0px 0 0px; /* 0 72px 0 72px; */
+  z-index: 1;
+  /* box-shadow: 0 -4px 5px 0 rgba(0, 0, 0, 0.14), 0 -1px 10px 0 rgba(0, 0, 0, 0.12), 0 -2px 4px -1px rgba(0, 0, 0, 0.2);    */
+}
+
+.footer > .footer-slot > .placeholder { outline: 1px dotted; padding-left: 16px; padding-right: 16px; margin-top: 12px; display:none; }
+.anvil-highlight .footer > .footer-slot > .placeholder { display:block; }
+
+.content{
+  /*  adjusted for the footer  */
+  margin-bottom: 70px;
+}
+
+.footer a, .footer a.anvil-component {
+  padding: 5px;
+  /*   margin: 8px 0 0; */
+  border-radius: 20px;
+}
+
+footer a, .footer .anvil-component {
+  display: block;
+  color: white;
+  line-height: 30px;
+  min-width: 30px;
+  min-height: 30px;
+  margin: 4px 0;
+}
+.footer a:hover, .footer a:active {
+  color: #eee; text-decoration: none;
+  background-color: %color:Primary 700%;
+}
+.footer a .link-text {
+  padding: 0 4px;
+}
+
+/* Target all data grid column headers */
+.anvil-data-grid .auto-grid-header {
+  background-color: #348c8c; /* Example: background */
+  /* color: #ffffff; /* Example: White text color */
 }

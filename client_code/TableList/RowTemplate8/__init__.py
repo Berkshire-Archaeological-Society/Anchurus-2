@@ -10,33 +10,7 @@ from anvil.tables import app_tables
 from .. import Global
 
 class RowTemplate8(RowTemplate8Template):
-  def btn_view_click(self, **event_args):
-    """This handler is called by the dynamically created button."""
-    #print(self.item)
-    #print(Global.table_name)
-    Global.table_items = self.item
-    Global.action = "View " + Global.table_name.capitalize()
-    if Global.main_form:  # Important to check if the form exists
-      # Create new work_area "View Context" and set focus on this new work_area
-      print("From repatingPanel row calling create_new_work_area for:",Global.action)
-      Global.main_form.create_new_work_area(Global.action)
-    else:
-      print("Main form not found!")
-  pass
-
-  def btn_edit_click(self, **event_args):
-    """This handler is called by the dynamically created button."""
-    #print(self.item)
-    #print(Global.table_name)
-    Global.table_items = self.item
-    Global.action = "Edit " + Global.table_name.capitalize()
-    if Global.main_form:  # Important to check if the form exists
-      # Create new work_area "View Context" and set focus on this new work_area 
-      Global.main_form.create_new_work_area(Global.action)
-    else:
-      print("Main form not found!")
-  pass
-
+  
   def btn_delete_click(self, **event_args):
     """This handler is called by the dynamically created button."""
     #print(self.item)
@@ -47,24 +21,41 @@ class RowTemplate8(RowTemplate8Template):
     confirm(message)
   pass
   
+  def btn_select_click(self, **event_args):
+    """This handler is called by the dynamically created button."""
+    #
+    Global.work_area[Global.current_work_area_name]["menu_select_options"].visible = True
+    self.parent.raise_event('x-selection-change')
+    #     
+    if event_args["sender"].checked:
+      # add row to selected list but first remove select column
+      row = self.item
+      Global.work_area[Global.current_work_area_name]["selected_rows"].append(row)
+      self.background = Global.selected_highlight_colour
+    else:
+      #remove row from selected list
+      Global.work_area[Global.current_work_area_name]["selected_rows"].remove(self.item)
+      self.background = ""
+    #
+    # remove menu_select_options if there are no more selected_rows
+    if len(Global.work_area[Global.current_work_area_name]["selected_rows"]) == 0:
+      Global.work_area[Global.current_work_area_name]["menu_select_options"].visible = False
+
+    Global.table_items = self.item
+    Global.action = "Select " + Global.table_name.capitalize()
+  pass
+
   def __init__(self, **properties):
     # Set Form properties and Data Bindings.
     self.init_components(**properties)
 
     # Any code you write here will run before the form opens.
     # create the view and edit button for the row and set button click event handlers
-    btn_view = Button(text='',align='left',icon='fa:eye',icon_align='left_edge',tooltip="view row")
-    btn_view.set_event_handler('click', self.btn_view_click)
-    self.item['view'] = btn_view
-    btn_edit = Button(text='', align='left',icon='fa:edit',icon_align='left_edge',tooltip="edit row")
-    btn_edit.set_event_handler('click', self.btn_edit_click)
-    self.item['edit'] = btn_edit
-    btn_delete = Button(text='', align='left',icon='fa:remove',icon_align='left_edge',tooltip="delete row")
-    btn_delete.set_event_handler('click', self.btn_delete_click)
-    self.item['delete'] = btn_delete
+    self.btn_select = CheckBox(text='',align='left',tooltip="select row")
+    self.btn_select.set_event_handler('change',self.btn_select_click)
+    self.item['select'] = self.btn_select
+    self.spacing_above = 'none'
+    self.spacing_below = 'none'
 
-    self.add_component(self.item['view'], column='1')
-    self.add_component(self.item['edit'], column='2')
-    self.add_component(self.item['delete'], column='3')
-
+    self.add_component(self.item['select'], column='1')
 
