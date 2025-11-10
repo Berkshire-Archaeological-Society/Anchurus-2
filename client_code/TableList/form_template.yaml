@@ -1,32 +1,163 @@
 components:
 - components:
-  - layout_properties: {full_width_row: true, grid_position: 'LNVHEX,BHZUPJ'}
+  - components:
+    - event_bindings: {change: select_all_change}
+      layout_properties: {}
+      name: select_all
+      properties:
+        align: center
+        allow_indeterminate: true
+        spacing:
+          margin: [null, null, null, '16']
+          padding: [null, '0', null, null]
+        text: ''
+        tooltip: Select / Deselect all
+      type: CheckBox
+    layout_properties: {full_width_row: true, grid_position: 'SCSBHS,TRMHNK'}
+    name: flow_panel_1
+    properties: {}
+    type: FlowPanel
+  - components:
+    - event_bindings: {click: view_button_click}
+      layout_properties: {}
+      name: view_button
+      properties:
+        foreground: '#FFFFFF'
+        icon: fa:eye
+        icon_align: top
+        spacing:
+          margin: [null, null, null, '0']
+          padding: [null, '4', null, '4']
+        text: ''
+      type: Button
+    - event_bindings: {click: edit_button_click}
+      layout_properties: {}
+      name: edit_button
+      properties:
+        foreground: '#FFFFFF'
+        icon: fa:edit
+        spacing:
+          padding: [null, '4', null, '4']
+        text: ''
+      type: Button
+    - event_bindings: {click: delete_button_click}
+      layout_properties: {}
+      name: delete_button
+      properties:
+        foreground: '#FFFFFF'
+        icon: fa:remove
+        spacing:
+          padding: [null, '4', null, '4']
+        text: ''
+      type: Button
+    layout_properties: {full_width_row: true, grid_position: 'SCSBHS,LPPOVY'}
+    name: menu_select_options
+    properties: {}
+    type: FlowPanel
+  - layout_properties: {grid_position: 'SCSBHS,WGAWYD'}
     name: information
-    properties: {auto_expand: true, background: 'theme:Surface Variant', border: none, height: '40'}
+    properties:
+      auto_expand: true
+      background: theme:Surface Variant
+      border: none
+      height: '40'
+      margin: ['8', null, null, '4']
     type: TextArea
-  - layout_properties: {full_width_row: true, grid_position: 'LNVHEX,MZKYDJ'}
-    name: total_number
-    properties: {align: right, border: none, role: outlined}
-    type: TextBox
-  layout_properties: {full_width_row: true, grid_position: 'WWKKDB,DOHYNN'}
-  name: sub_header
-  properties:
-    col_widths: '{"BHZUPJ":50,"MZKYDJ":10}'
-    spacing:
-      margin: ['0', null, '0', null]
-    spacing_above: none
-    spacing_below: none
+  - components:
+    - layout_properties: {width: 89.2728271484375}
+      name: selection_info
+      properties: {background: 'theme:Tertiary', border: none, foreground: 'theme:On Primary'}
+      type: TextBox
+    - event_bindings: {click: first_page_btn_click}
+      layout_properties: {width: 20}
+      name: first_page_btn
+      properties:
+        foreground: theme:On Secondary
+        icon: fa:angle-double-left
+        spacing:
+          padding: [null, '0', null, '0']
+        text: ''
+      type: Button
+    - event_bindings: {click: prev_page_btn_click}
+      layout_properties: {width: 20}
+      name: prev_page_btn
+      properties:
+        foreground: theme:On Secondary
+        icon: fa:angle-left
+        spacing:
+          padding: [null, '0', null, '0']
+        text: ''
+      type: Button
+    - event_bindings: {click: next_page_btn_click}
+      layout_properties: {}
+      name: next_page_btn
+      properties:
+        foreground: theme:On Secondary
+        icon: fa:angle-right
+        spacing:
+          padding: [null, '0', null, '0']
+        text: ''
+      type: Button
+    - event_bindings: {click: last_page_btn_click}
+      layout_properties: {}
+      name: last_page_btn
+      properties:
+        foreground: theme:On Secondary
+        icon: fa:angle-double-right
+        spacing:
+          padding: [null, '0', null, '0']
+        text: ''
+      type: Button
+    - layout_properties: {width: 118.181884765625}
+      name: row_number_info
+      properties:
+        align: right
+        border: none
+        font_size: 12
+        foreground: theme:On Primary
+        margin: ['8', null, '0', null]
+        role: outlined
+      type: TextBox
+    layout_properties: {grid_position: 'SCSBHS,VJGQSP'}
+    name: flow_panel_2
+    properties: {align: right}
+    type: FlowPanel
+  layout_properties: {full_width_row: true, grid_position: 'XQLOBP,LOKUOL'}
+  name: column_panel_1
+  properties: {background: 'theme:Tertiary', col_widths: '{"LPPOVY":10,"WGAWYD":35,"VJGQSP":25,"TRMHNK":5}'}
   type: ColumnPanel
 - components:
-  - name: repeating_panel_1
-    properties: {item_template: TableList.RowTemplate8}
+  - data_bindings: []
+    layout_properties: {}
+    name: repeating_panel_1
+    properties:
+      border: ''
+      item_template: TableList.RowTemplate8
+      margin: ['0', null, '0', null]
+      role: null
     type: RepeatingPanel
-  layout_properties: {full_width_row: true, grid_position: 'AELHBN,LAYVIR'}
+  data_bindings: []
+  layout_properties: {full_width_row: true, grid_position: 'MWMTGX,ARPQLN'}
   name: table
   properties:
+    auto_header: true
+    background: ''
     columns: []
+    margin: ['0', null, null, null]
+    role: null
+    rows_per_page: 0
+    show_page_controls: false
+    spacing_above: none
+    spacing_below: none
   type: DataGrid
 container:
-  properties: {background: '', border: '', col_spacing: medium}
+  properties:
+    background: ''
+    border: ''
+    col_spacing: medium
+    spacing:
+      margin: ['0', null, null, null]
+    spacing_above: none
+    spacing_below: none
   type: ColumnPanel
 is_package: true

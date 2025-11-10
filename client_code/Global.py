@@ -25,20 +25,22 @@ user_action_list = ["Select Site",separator,
                     "List Interpretations","Add Interpretation"
                    ]
 # action_list_not_implemented should always contain the separator
-action_list_not_implemented = [separator,"Bulk Upload Finds","Draw","List Areas","Add Area"]
+action_list_not_implemented = [separator,"Bulk Upload Finds","Draw","List Areas","Add Area","Add Anomaly"]
 # the list_action_list is a list of the tables in DB (not yet sites)
-list_action_dropdown = ["Contexts","Finds","Anomolies","Interpretrations"]
+list_action_dropdown = ["Contexts","Finds","Anomolies","Interpretations"]
 insert_action_dropdown = ["Context","Find","Anomoly","Interpretation"]
-file_action_dropdown = ["Bulk import",separator,"Save Work Areas"]
+file_action_dropdown = ["Import",separator,"Save"]
 view_action_dropdown = []
 help_action_dropdown = []
 admin_action_dropdown = ["List Users","List Sites","Add Site"]
+import_action_dropdown = ["context","find"]
 #
-action_forms_with_refresh = ["TableList","ListUsers","ListSites","ListContexts","ListFinds","ListAreas","BulkUpload","Add Area","List Areas"]
+#
+action_forms_with_refresh = ["TableList","RowForm","ListUsers","ListSites","ListContexts","ListFinds","ListAreas","BulkUpload","Add Area","List Areas"]
 #action_forms_with_print = ["ListUsers","ListSites","ListContexts","ListFinds","ListAreas","List Areas","View Context","View Find","View Area"]
-action_forms_with_print = ["ListContexts","ListFinds","TableList"]
+action_forms_with_print = ["ListContexts","ListFinds","TableList","RowForm"]
 action_forms_with_download = ["ListContexts","ListFinds","TableList"]
-action_forms_with_filter = ["ListContexts","ListFinds","TableList"]
+action_forms_with_filter = ["ListContexts","ListFinds","TableList","RowForm"]
 #
 action_seq_no = {}
 csv_file = None
@@ -64,6 +66,31 @@ gh_insert_list = {}
 gh_admin_list = {}
 #
 work_area = {}
+# variable for work area header menu options 
+wa_header_menu_bottom = {}
+wa_header_mb_left = {}
+wa_header_mb_middle = {}
+wa_header_mb_right = {}
+#
+selected_row = []
+selected_highlight_colour = "#66FFFF"
+#
+menu_select_options = ""
+Quill_toolbarOptions = [
+['bold', 'italic', 'underline', 'strike'],        # toggled buttons
+['link'],
+[{ 'header': 1 }, { 'header': 2 }],               # custom button values
+[{ 'list': 'ordered'}, { 'list': 'bullet' }, { 'list': 'check' }],
+[{ 'script': 'sub'}, { 'script': 'super' }],      # superscript/subscript
+[{ 'indent': '-1'}, { 'indent': '+1' }],          # outdent/indent
+[{ 'direction': 'rtl' }],                         # text direction
+[{ 'size': ['small', 'normal', 'large', 'huge'] }],  # custom dropdown
+[{ 'header': [1, 2, 3, 4, 5, 6] }],
+[{ 'color': [] }, { 'background': [] }],          # dropdown with defaults from theme
+[{ 'font': [] }],
+[{ 'align': [] }],
+['clean']                                         # remove formatting button
+]
 #
 button_normal_background_clour = "#DCE5DD"
 button_highlight_background_clour = "#CBEAD6"
@@ -77,6 +104,8 @@ admin_user_initials = ""
 area_items = {}
 area_id = None
 area_options = {}
+dummy_btn1 = {}
+dummy_btn2 = {}
 context_id = None
 context_items = {}
 context_options = {}
@@ -103,14 +132,22 @@ face(s) 7. Bonding material (brick height of 4 courses and 4 bed joints in mm 8 
 """
 image_type = ""
 ip_address = ""
+print_action = False
 selected_material_types = {}
 material_types = ["CBM Tile","CBM Brick","CBM Drain Pipe","CBM Mortar",
                   "Stone","Roofing Slate","Flint","Worked Flint","Pottery",
                   "Clay Pipe","Metalwork","Nails","Iron Slag","Glass","Animal Bone",
                   "Oyster Shells","Wood","Charcoal"]
 login_options = {"Sign in", "Sign out"}
-nr_of_rows = 20
+#
 organisation = "Berkshire Archaeological Society"
+#
+# The following variable rows_per_page has to be set to 0, to make sure the print function prints the whole table
+# During startup of the client (i.e. browser URL click of website) this value can be overwritten by a value for this
+# defined in the server side configuration file
+# Note that the 'page' is this context is a webpage and not a physical printing page
+rows_per_page = 0 
+#
 selected_site = ""
 sign_in_out_button_text = "Sign in"
 site_id = None
@@ -120,11 +157,21 @@ site_items = {}
 header_site_summary_information = {}
 system_name = ""
 SurveyMethod_options = {"BNG","Aligned to BNG north","Not aligned to BNG north"}
-system = "Anchurus Web Service"
+system = "Anchurus-II Web Service Application"
 status = ""
+#
 table_name = ""
 table_items = {}
-title = system + "\n" + organisation
+table_colwidth_60 = ["FillOf","Year","Count","Weight"]
+table_colwidth_70 = []
+table_colwidth_80 = ["FContextId","AreaId","YearStart","YearEnd","Workflow","BoxId","FromSample","FindType"]
+table_colwidth_90 = ["FindId"]
+table_colwidth_100 = ["FindGroupId","ContextYear","ContextType","PackageType","SmallFindId","FromSample","RecordStatus"]
+table_colwidth_120 = []
+table_colwidth_140 = []
+table_colwidth_default = 150
+#
+title = system + "\n\n" + organisation
 sign_in_out_button_text = "Sign in"
 username = ""
 user_initials = ""
@@ -141,20 +188,27 @@ about_us_text = """
 <p>
 This system allows for the digital recording of archaeological excavations.
 The software has been developed by Archaeology IT Solutions, an independent 'not-for-profit' or 'nonprofit' organisation developing software solutions for the archaeological community.
-It is developed using the <a href="https://anvil.works/">Anvil Framework</a> and is using the open source Anvil App Server to run on your own dedicated server. It uses an external MySQL database to store the excavation details.  
+It is developed using the <a href="https://anvil.works/" target="_blank>Anvil Framework</a> and is using the open source Anvil App Server to run on your own dedicated server. It uses an external MySQL database to store the excavation details.  
 This software is released under Creative Commons license: 
-<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Attributions-NonCommercial-ShareAlike 4.0 International (CC BY-NC-AS 4.0) license</a>.
+<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target=_blank>Attributions-NonCommercial-ShareAlike 4.0 International (CC BY-NC-AS 4.0) license</a>.
 This is version """ + version + """.</p>
 
-<p>For more information please contact ...</p>
-"""
-help_introduction = """
-<h3>Introduction to the the Anchurus-II Web Service</h3>" + """
-
 <p>
-
-
-
-
-
+For more information please contact ...</p>
+"""
+help_page_form = ""
+help_page = {}
+help_introduction = """
+<h3>Introduction</h3>
+<p>
+You have successfully logged into the Anchurus-II Web service Application of the """ + organisation + """.
+</p>
+<p>
+Please select a site. Once selected you can use the menu items to select your actions.</p>
+<p>
+<b>Note:</b> When changing/selecting a new site, all current workspaces wil be deleted.</p>
+<h3> </h3>
+<p>
+For more information on recording Archaeological excavations please go to the
+<a href="https://anchurus.co.uk/" target=_blank>Anchurus Website</a></p>
 """

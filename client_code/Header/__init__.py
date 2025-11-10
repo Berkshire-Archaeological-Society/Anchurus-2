@@ -18,7 +18,7 @@ from ..ListFinds import ListFinds
 from ..ListAreas import ListAreas
 from ..ListSites import ListSites
 from ..ListUsers import ListUsers
-from ..BulkUpload import BulkUpload
+from ..ImportForm import ImportForm
 from ..FilterList import FilterList 
 
 class Header(HeaderTemplate):
@@ -48,32 +48,38 @@ class Header(HeaderTemplate):
       alert("The new work area name is already in use. Please change it.")
     else:
       # new name is unique so now add new work area name in the two lists (one for buttons and one for the forms 
-      #Global.work_area_list[new_work_area_name] = Global.work_area_list[Global.current_work_area_name]
-      #Global.work_area_action[new_work_area_name] = Global.work_area_action[Global.current_work_area_name] 
-      #Global.work_area_name_list[new_work_area_name] = Global.work_area_name_list[Global.current_work_area_name]
-      #Global.work_area_name_list[new_work_area_name].text = new_work_area_name
       Global.work_area[new_work_area_name] = {}
       Global.work_area[new_work_area_name] = Global.work_area[Global.current_work_area_name]
       Global.work_area[new_work_area_name]["button"].text = new_work_area_name
-      # remove old key/value pair for the old work_area_name from the dictionaries
-      #Global.work_area_list.pop(Global.current_work_area_name)
-      #Global.work_area_action.pop(Global.current_work_area_name)
-      #Global.work_area_name_list.pop(Global.current_work_area_name)
-      #print(Global.work_area)
+      
+      # remove old key/value pair for the old work_area_name from the dictionaries     
       Global.work_area.pop(Global.current_work_area_name)
-      #print(Global.work_area)
+
       # update Global.curret_work_area_name with new name
       Global.current_work_area_name = new_work_area_name
-      #
+      
     pass
 
   def print_button_click(self, **event_args):
     """This method is called when the button is clicked"""
     form = str(type(Global.work_area[Global.current_work_area_name]["form"])).split(".")[2][:-2]
     #print("calling print_form on server for form: ",form)
-    table_name = Global.work_area[Global.current_work_area_name]["action"].split(" ")[1][:-1].lower()
-    print("table name for print = ",table_name)
-    pdf_form = anvil.server.call('print_form',form,Global.site_id,table_name)
+    # table name sare all lowercase and singular, so create table name from action
+    tmp_name = Global.work_area[Global.current_work_area_name]["action"].split(" ")[1].strip("s")
+    table_name = tmp_name.lower()
+    
+    # clear select column from data_list
+    #i = 0
+    #while i < len(Global.work_area[Global.current_work_area_name]["data_list"]):
+    #  Global.work_area[Global.current_work_area_name]["data_list"][i].pop("select")
+    #  i = i + 1
+      
+    # call the print_form at the server-side
+    pdf_form = anvil.server.call('print_form',form,Global.site_id,table_name.strip(),
+                                 Global.work_area[Global.current_work_area_name]["action"],
+                                 Global.work_area[Global.current_work_area_name]["data_list"],
+                                 Global.work_area[Global.current_work_area_name]["page_info"]
+                                )
     anvil.media.download(pdf_form)
     pass
 
@@ -93,8 +99,10 @@ class Header(HeaderTemplate):
       ListSites.list_sites_refresh(Global.work_area[Global.current_work_area_name]["form"]) 
     elif Global.work_area[Global.current_work_area_name]["action"] == "List Users":
       ListUsers.list_users_refresh(Global.work_area[Global.current_work_area_name]["form"]) 
-    elif Global.work_area[Global.current_work_area_name]["action"] == "BulkUpload":
-      BulkUpload.bulk_upload_refresh(Global.work_area[Global.current_work_area_name]["form"])
+    elif Global.work_area[Global.current_work_area_name]["action"] == "Import":
+      ImportForm.Import_refresh(Global.work_area[Global.current_work_area_name]["form"])
+    # clear list of selected_rows
+    Global.work_area[Global.current_work_area_name]["selected_rows"].clear()
     pass
 
   def delete_work_area_click(self, **event_args):
@@ -104,7 +112,7 @@ class Header(HeaderTemplate):
 
   def download_button_click(self, **event_args):
     """This method is called when the button is clicked"""
-    #form = str(type(Global.work_area[Global.current_work_area_name]["form"])).split(".")[2][:-2]
+    # call server-side function create_csv to create a csv file and download this to user Download folder
     csv_file = anvil.server.call('create_csv',Global.work_area[Global.current_work_area_name]["data_list"])
     anvil.media.download(csv_file)
     pass
@@ -115,7 +123,14 @@ class Header(HeaderTemplate):
     if Global.work_area[Global.current_work_area_name]["data_list"]:
       # Get the keys (which are the column headings) from the first item
       column_headings = list(Global.work_area[Global.current_work_area_name]["data_list"][0].keys())
- 
+    
+    # remove special columns
+    column_headings.remove("select")
+    column_headings.remove("SiteId")
+    column_headings.remove("DBAcontrol")
+    # sort column names
+    column_headings.sort()
+    
     # 1. Define the options you want to display
     option_id = 0
     options_data = []
@@ -133,15 +148,46 @@ class Header(HeaderTemplate):
       title="",
       buttons=[] # Crucial: set buttons=[] to use your custom button for submission
     )
+    if selected_list is not None:     # user has made a selection; if not, do nothing
+      # 4. Process the result after the dialog is closed
+      #
+      # First unhide all columns
+      # remove the columns out of the hidden columns list.
+      for col in Global.work_area[Global.current_work_area_name]["hidden_columns"]:
+        column = [c for c in Global.work_area[Global.current_work_area_name]["filter"] if c['title'] == col][0]
+        # remove from list of hidden_columns
+        Global.work_area[Global.current_work_area_name]["filter"].remove(column)
+        # Add it to the Data Grid's column list
+        Global.work_area[Global.current_work_area_name]["table"].columns.append(column)
+      # make it 'live'
+      Global.work_area[Global.current_work_area_name]["table"].columns = Global.work_area[Global.current_work_area_name]["table"].columns
+      # set hidden_columns to empty list
+      Global.work_area[Global.current_work_area_name]["hidden_columns"] = []
 
-    # 4. Process the result after the dialog is closed
-    if selected_list:
-      print("User submitted the following items:")
-      for item in selected_list:
-        print(f"- {item['text']} (ID: {item['id']})")
-    else:
-      # This occurs if the user closes the modal without clicking a button
-      print("Selection was cancelled or dismissed.")
+      #
+      all_columns_titles = [col["title"] for col in Global.work_area[Global.current_work_area_name]["table"].columns if "title" in col]
+      #remove columns with empty title
+      cleaned_list = [item for item in all_columns_titles if item != ""]
+      cleaned_list.sort()
+      all_columns_titles = cleaned_list
+    
+      # create columns_to_hide (difference between all_columns and selected_columns)
+      columns_to_hide = []
+      selected_columns_titles = []
+      if selected_list:
+        selected_columns_titles = [col["text"] for col in selected_list if "text" in col]
+        columns_to_hide = list(set(all_columns_titles).difference(selected_columns_titles))
+    
+      # add columns_to_hide to the work_area data structure as "filter"
+      Global.work_area[Global.current_work_area_name]["hidden_columns"] = columns_to_hide
+      for col in columns_to_hide:
+        # add col to filter and remove from table
+        column = [c for c in Global.work_area[Global.current_work_area_name]["table"].columns if c['title'] == col][0]
+        Global.work_area[Global.current_work_area_name]["filter"].append(column)
+        Global.work_area[Global.current_work_area_name]["table"].columns.remove(column)
+    
+      # make the filter 'live'
+      Global.work_area[Global.current_work_area_name]["table"].columns = Global.work_area[Global.current_work_area_name]["table"].columns
     pass
 
 
