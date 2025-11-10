@@ -1,4 +1,5 @@
 from anvil import *
+import anvil.server
 
 @property
 def indeterminate(self):
