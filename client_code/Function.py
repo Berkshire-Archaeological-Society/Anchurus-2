@@ -94,8 +94,9 @@ def create_work_space(type,data_list):
   elif type == "Edit User":
     work_space = UserForm()
   #
-  elif type == "View Row":
-    work_space = RowForm("","context",data_list,type,page_info)
+  elif action == "view":
+    print(action, table_name)
+    work_space = RowForm("",table_name,data_list,type,page_info)
   elif type == "View Context":
     work_space = RowForm("","context",data_list,type,page_info)
   elif type == "View Find":
