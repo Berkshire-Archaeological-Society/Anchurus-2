@@ -183,7 +183,7 @@ user_items = {}
 config_version = ""
 #
 about_us_text = """
-<h3>Welcome to the Anchurus-II Web Application for """ + organisation + "</h3>" + """
+<h3>Welcome to the Anchurus-II Web Application</h3>
 
 <p>
 This system allows for the digital recording of archaeological excavations.
@@ -202,7 +202,7 @@ help_page = {}
 help_introduction = """
 <h3>Introduction</h3>
 <p>
-You have successfully logged into the Anchurus-II Web service Application of the """ + organisation + """.
+You have successfully logged into the Anchurus-II Web service Application.
 </p>
 <p>
 Please select a site. Once selected you can use the menu items to select your actions.</p>
