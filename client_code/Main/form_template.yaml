@@ -37,7 +37,9 @@ components:
         type: Label
       layout_properties: {grid_position: 'MRSIRL,GSIBAH'}
       name: flow_panel_7
-      properties: {}
+      properties:
+        spacing:
+          margin: ['0', null, null, null]
       type: FlowPanel
     - components:
       - layout_properties: {}
@@ -78,7 +80,9 @@ components:
         type: DropDown
       layout_properties: {full_width_row: true, grid_position: 'QBIUMU,LPGJNI'}
       name: flow_panel_6
-      properties: {}
+      properties:
+        spacing:
+          margin: ['0', null, null, null]
       type: FlowPanel
     - components:
       - event_bindings: {change: username_dropdown_change}
@@ -202,6 +206,12 @@ components:
     type: ColumnPanel
   - components:
     - components:
+      - layout_properties: {width: 118.852294921875}
+        name: flow_panel_10
+        properties:
+          spacing:
+            margin: ['0', null, null, null]
+        type: FlowPanel
       - components:
         - event_bindings: {change: select_all_change}
           layout_properties: {}
@@ -271,7 +281,11 @@ components:
         type: FlowPanel
       layout_properties: {full_width_row: true, grid_position: 'CNBXKD,NFHGGR'}
       name: mb_left
-      properties: {foreground: 'theme:Tertiary', gap: none}
+      properties:
+        foreground: theme:Tertiary
+        gap: none
+        spacing:
+          margin: ['0', null, null, null]
       type: FlowPanel
     - components:
       - event_bindings: {click: first_page_click}
@@ -337,7 +351,7 @@ components:
         align: center
         gap: none
         spacing:
-          margin: [null, '0', null, '0']
+          margin: ['0', '0', null, '0']
         spacing_above: small
         spacing_below: small
       type: FlowPanel
@@ -413,13 +427,13 @@ components:
         align: right
         gap: tiny
         spacing:
-          margin: [null, '4', null, '4']
+          margin: ['0', '4', null, '4']
         spacing_above: small
         spacing_below: small
       type: FlowPanel
     layout_properties: {full_width_row: true, grid_position: 'OXMUZC,ELDJTQ'}
     name: menu_bottom
-    properties: {background: 'theme:Primary Container', col_widths: '{"NFHGGR":20,"JJKSVV":20,"HLMPXY":20}', foreground: 'theme:On Tertiary Container'}
+    properties: {background: 'theme:Primary Container', col_widths: '{"NFHGGR":25,"JJKSVV":20,"HLMPXY":15}', foreground: 'theme:On Tertiary Container'}
     type: ColumnPanel
   layout_properties: {slot: nav-right}
   name: menu_block
