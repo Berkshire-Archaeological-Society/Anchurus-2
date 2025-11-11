@@ -32,6 +32,9 @@ class ListUsers(ListUsersTemplate):
     # save self in Global.work_area
     Global.work_area[Global.current_work_area_name]["self"] = self
     
+    # Set table role to horizontal scroll
+    self.User_list_1.role = "horizontal-scroll"
+    
     #self.list_users_refresh()
     FunctionsB.list_users_refresh(self)
 

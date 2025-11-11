@@ -21,14 +21,15 @@ components:
   properties:
     columns:
     - {data_key: column_4, expand: false, id: FBKXLS, title: '', width: 61}
-    - {data_key: email, expand: false, id: JKSDUP, title: email, width: 249}
-    - {data_key: Initials, expand: false, id: ATFSVD, title: Initials}
-    - {data_key: role, expand: false, id: VJQQOR, title: role, width: 80}
-    - {data_key: enabled, expand: false, id: OJLQEN, title: enabled, width: 77}
-    - {data_key: last_login, expand: false, id: SRVCJL, title: last login, width: 276}
-    - {data_key: signed_up, expand: false, id: MPXLTV, title: signed up, width: 288}
-    - {data_key: confirmed_email, expand: false, id: YKUJWY, title: confirmed email, width: 130}
-    - {data_key: n_password_failures, id: WXBITA, title: password failures}
+    - {data_key: email, expand: true, id: JKSDUP, title: email, width: 249}
+    - {data_key: Initials, expand: true, id: ATFSVD, title: Initials, width: 102.27276611328125}
+    - {data_key: role, expand: true, id: VJQQOR, title: role, width: 130.0909423828125}
+    - {data_key: enabled, expand: true, id: OJLQEN, title: enabled, width: 77}
+    - {data_key: last_login, expand: true, id: SRVCJL, title: last login, width: 276}
+    - {data_key: signed_up, expand: true, id: MPXLTV, title: signed up, width: 288}
+    - {data_key: confirmed_email, expand: true, id: YKUJWY, title: confirmed email, width: 130}
+    - {data_key: n_password_failures, expand: false, id: WXBITA, title: password failures, width: 203.181884765625}
+    - {data_key: '', id: DRLZHP, title: '', width: '10'}
   type: DataGrid
 container:
   properties: {col_widths: '{"WRVCWB":40,"ZGUBRQ":20}'}
