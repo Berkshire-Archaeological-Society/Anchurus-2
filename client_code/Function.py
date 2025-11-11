@@ -55,7 +55,7 @@ def create_work_space(type,data_list):
     work_space = ListSites()
   elif action == "list":
     work_space = TableList("",table_name,data_list,type,page_info)
-    print(work_space)
+    #print(work_space)
   elif type == "List Contexts":
     work_space = TableList("","context",data_list,type,page_info)
     #work_space = ListContexts("")
