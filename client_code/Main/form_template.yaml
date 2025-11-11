@@ -25,24 +25,34 @@ components:
   type: ColumnPanel
 - components:
   - components:
-    - layout_properties: {grid_position: 'HHEOCJ,TYMTYS'}
-      name: app_title
-      properties:
-        font_size: 26
-        foreground: ''
-        spacing:
-          margin: ['8', null, null, null]
-          padding: ['0', null, 0.9090908893868948, null]
-      type: Label
-    - layout_properties: {grid_position: 'LYMAHU,ERYOJR'}
-      name: organisation
-      properties:
-        font_size: 26
-        foreground: ''
-        spacing:
-          margin: ['5', null, null, null]
-          padding: ['0', null, '0', null]
-      type: Label
+    - components:
+      - layout_properties: {}
+        name: app_title
+        properties:
+          font_size: 26
+          foreground: ''
+          spacing:
+            margin: ['8', null, null, null]
+            padding: ['0', null, 0.9090908893868948, null]
+        type: Label
+      layout_properties: {grid_position: 'MRSIRL,GSIBAH'}
+      name: flow_panel_7
+      properties: {}
+      type: FlowPanel
+    - components:
+      - layout_properties: {}
+        name: organisation
+        properties:
+          font_size: 26
+          foreground: ''
+          spacing:
+            margin: ['5', null, null, null]
+            padding: ['0', null, '0', null]
+        type: Label
+      layout_properties: {grid_position: 'DKEPZH,UEGDUK'}
+      name: flow_panel_8
+      properties: {}
+      type: FlowPanel
     layout_properties: {full_width_row: true, grid_position: 'TQCWAS,UNBOZX'}
     name: title_block
     properties: {}
@@ -430,11 +440,22 @@ components:
       properties:
         font_size: 10
         spacing:
-          margin: [null, null, null, '12']
+          margin: ['6', null, '0', '12']
+          padding: ['0', null, '0', null]
+      type: Label
+    - layout_properties: {}
+      name: config_version
+      properties:
+        font_size: 10
+        spacing:
+          margin: ['6', null, '0', null]
+          padding: ['0', null, '0', null]
       type: Label
     layout_properties: {full_width_row: true, grid_position: 'DCRRVT,ZTIHLF'}
     name: flow_panel_2
-    properties: {}
+    properties:
+      spacing:
+        margin: [null, null, '4', null]
     type: FlowPanel
   - components: []
     layout_properties: {grid_position: 'DCRRVT,EOEARF'}
@@ -459,8 +480,8 @@ components:
         icon: fa:copyright
         icon_align: left
         spacing:
-          margin: ['0', '12', 1.8181817787737895, null]
-          padding: ['6', null, '0', null]
+          margin: ['6', '12', '0', null]
+          padding: ['0', null, '0', null]
         text: Berkshire Archaeological Society
       type: Label
     layout_properties: {full_width_row: true, grid_position: 'DCRRVT,XEYKUI'}

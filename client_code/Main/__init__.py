@@ -29,7 +29,8 @@ class Main(MainTemplate):
     # get client variable settings from server configuration file
     globals_from_config = anvil.server.call("client_globals")
     Global.rows_per_page = globals_from_config["rows_per_page"]
-    Global.version = globals_from_config["client_version"]
+    Global.organisation = globals_from_config["organisation"]
+    Global.config_version = globals_from_config["version"]
     Global.admin_domain = globals_from_config["admin_domain"]
     Global.admin_user = globals_from_config["admin_user"]
     Global.admin_user_initials = globals_from_config["admin_user_initials"]
@@ -44,11 +45,10 @@ class Main(MainTemplate):
     Global.help_page.visible = False
 
     # set Main title field with name of organisation (defined in Anchurus-2.cgf file from server)
-    #Global.title_label = self.title
-    #self.title.text = Global.title + Global.status + Global.selected_site
     self.app_title.text = Global.system
     self.organisation.text = Global.organisation
     self.app_name.text = document.head.querySelector('[name=title]').content
+    self.config_version.text = "cfg " + Global.config_version
     
     # add the about_us_text (taken from Anchurus-2.cfg file) to the about_us_box text field by adding a Rich Text Component
     rt = RichText(content=Global.about_us_text,format="restricted_html")

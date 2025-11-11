@@ -140,7 +140,7 @@ material_types = ["CBM Tile","CBM Brick","CBM Drain Pipe","CBM Mortar",
                   "Oyster Shells","Wood","Charcoal"]
 login_options = {"Sign in", "Sign out"}
 #
-organisation = "Berkshire Archaeological Society"
+organisation = ""
 #
 # The following variable rows_per_page has to be set to 0, to make sure the print function prints the whole table
 # During startup of the client (i.e. browser URL click of website) this value can be overwritten by a value for this
@@ -157,7 +157,7 @@ site_items = {}
 header_site_summary_information = {}
 system_name = ""
 SurveyMethod_options = {"BNG","Aligned to BNG north","Not aligned to BNG north"}
-system = "Anchurus-II Web Service Application"
+system = "Anchurus-II Web Application"
 status = ""
 #
 table_name = ""
@@ -180,7 +180,7 @@ user_status = ""
 user_role_options = {"None","admin","PM","user"}
 user_status_options = {"True", "False"}
 user_items = {}
-version = ""
+config_version = ""
 #
 about_us_text = """
 <h3>Welcome to the Anchurus-II Web Service for """ + organisation + "</h3>" + """
@@ -191,7 +191,7 @@ The software has been developed by Archaeology IT Solutions, an independent 'not
 It is developed using the <a href="https://anvil.works/" target="_blank>Anvil Framework</a> and is using the open source Anvil App Server to run on your own dedicated server. It uses an external MySQL database to store the excavation details.  
 This software is released under Creative Commons license: 
 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target=_blank>Attributions-NonCommercial-ShareAlike 4.0 International (CC BY-NC-AS 4.0) license</a>.
-This is version """ + version + """.</p>
+</p>
 
 <p>
 For more information please contact ...</p>
