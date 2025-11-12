@@ -82,8 +82,12 @@ class RowForm(RowFormTemplate):
         input = TextBox(placeholder=column_name)
         # extract length from type
         match = re.search(r'\d+',column_type)
-        max_length = match.group()
-        # add event handler for when input field is changed to update the character count
+        max_length = int(match.group())
+        if column_type.find("decimal") != -1 or column_type.find("float") != -1 or column_type.find("double") != -1:
+          # for these data types add 1 to max _length as length does not take into account the decimal point
+          max_length = max_length + 1
+          
+        # add event handler for when input field is changed to update the character counth
         input.add_event_handler('change',self.input_change)
         
       # if field is None make is "" (empty)
@@ -107,6 +111,21 @@ class RowForm(RowFormTemplate):
                                        pattern="^\d{4}$",
                                        required=True,
                                        message="Please enter a valid year in YYYY format")
+      elif column_type.find("int") != -1:
+        self.validator.regex(component=input,
+                             events=['lost_focus', 'change'],
+                             pattern="^\d*$",
+                             required=True,
+                             message="Please enter a valid whole number")
+      elif column_type.find("decimal") != -1 or column_type.find("float") != -1 or column_type.find("double") != -1:
+        dec_type = re.findall(r'\d+',column_type)
+        # regex ^\d{0,x}\.?\d{1,y}
+        pattern_string = "^\d{0," + str(int(dec_type[0])-int(dec_type[1])) + "}\.?\d{1," +str(dec_type[1]) + "}$"
+        self.validator.regex(component=input,
+                             events=['lost_focus', 'change'],
+                             pattern=pattern_string,
+                             required=True,
+                             message="Please enter a valid number in the form x.xxx")
       # end of validation 
       
       # if action is View or Edit then fill all fields
