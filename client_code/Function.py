@@ -37,17 +37,13 @@ from Help import Help
 from Draw import Draw
 #from Workarea import Workarea
 
-def say_hello():
-  print("Hello, world")
-  return
-
 def create_work_space(type,data_list):
   #print("Work space to create is: ",type)
   page_info = {}
   table_name = type.split(" ")[1].lower()
   action = type.split(" ")[0].lower()
-  print(action, table_name)
-  # first param of RowForm and TableList is site_id, but is blanked out. Only used by server print function
+  #print(action, table_name)
+  # First param of RowForm and TableList is site_id, but is blanked out. Only used by server print function
   # Make sure any List actions that are not using the TableList Form should be listed first
   if type == "List Users":
     work_space = ListUsers()
@@ -55,15 +51,6 @@ def create_work_space(type,data_list):
     work_space = ListSites()
   elif action == "list":
     work_space = TableList("",table_name,data_list,type,page_info)
-  #  #print(work_space)
-  #elif type == "List Contexts":
-  #  work_space = TableList("","context",data_list,type,page_info)
-  #  #work_space = ListContexts("")
-  #elif type == "List Areas":
-  #  work_space = ListAreas() 
-  #elif type == "List Finds":
-  #  work_space = TableList("","find",data_list,type,page_info)
-  #  #work_space = ListFinds("")
   #
   elif action == "import":
     work_space = ImportForm()
@@ -71,45 +58,13 @@ def create_work_space(type,data_list):
   elif action in ["add","insert"]:
     work_space = RowForm("","row",data_list,type,page_info)
   #
-  #elif type == "Add Context":
-  #  work_space = RowForm("","context",data_list,type,page_info)
-  #  #work_space = ContextForm()
-  #elif type == "Add Find":
-  #  work_space = RowForm("","find",data_list,type,page_info)
-  #  #work_space = FindForm()
-  #elif type == "Add Area":
-  #  work_space = AreaForm()
-  #elif type == "Add Site":
-  #  work_space = SiteForm()
-  #
   elif action == "edit":
     work_space = RowForm("",table_name,data_list,type,page_info)
-  #  #work_space = ContextForm()
-  #elif type == "Edit Context":
-  #  work_space = RowForm("","context",data_list,type,page_info)
-  #  #work_space = ContextForm()
-  #elif type == "Edit Find":
-  #  work_space = RowForm("","find",data_list,type,page_info)
-  #elif type == "Edit Area":
-  #  work_space = AreaForm()
-  #elif type == "Edit Site":
-  #  work_space = SiteForm()
-  #elif type == "Edit User":
-  #  work_space = UserForm()
   #
   elif action == "view":
     #print(action, table_name)
     work_space = RowForm("",table_name,data_list,type,page_info)
-  #elif type == "View Context":
-  #  work_space = RowForm("","context",data_list,type,page_info)
-  #elif type == "View Find":
-  #  work_space = RowForm("","find",data_list,type,page_info)
-  #  #work_space = FindForm()
-  #elif type == "View Area":
-  #  work_space = AreaForm()
-  #elif type == "View Site":
-  #  work_space = SiteForm()
-  #
+
   #elif type == "Draw":
   #  work_space = Draw()
   #

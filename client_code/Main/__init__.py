@@ -139,7 +139,7 @@ class Main(MainTemplate):
 
     Global.action_form_type = str(type(Global.work_area[Global.current_work_area_name]["form"])).split(".")[2][:-2]
     #
-    if Global.work_area[Global.current_work_area_name]["action"].split(" ")[0] in ["View", "Edit", "Add", "Import"] or Global.work_area[Global.current_work_area_name]["action"] == "List Users":
+    if Global.work_area[Global.current_work_area_name]["action"].split(" ")[0] in ["View", "Edit", "Insert", "Add", "Import"] or Global.work_area[Global.current_work_area_name]["action"] == "List Users":
       self.mb_middle.visible = False
       self.mb_left.visible = False
     elif Global.work_area[Global.current_work_area_name]["action"].split(" ")[0] in ["List"]:
@@ -190,6 +190,15 @@ class Main(MainTemplate):
 
     # set name of work_area to be action name if action is view or edit
     work_area_name = action
+    print("Create Work area: ", Global.table_items)
+    if action.split(" ")[0].lower() in ["view","edit"]:
+      if Global.table_items.get("SiteId") is None:
+        print("No SiteId", list(Global.table_items.values())[0])
+        new_name = action + list(Global.table_items.values())[0]
+      else:
+        print("There is a SiteId", list(Global.table_items.values())[0])
+        new_name = action + list(Global.table_items.values())[1]
+      print("new work area name: ",new_name)
     if action == "View Context" or action == "Edit Context":
       # modify work_area name to add XxxxId number (ContextId, FindId, AeraId, etc); for now only implemented for Context
       Global.context_items = Global.table_items
@@ -293,7 +302,7 @@ class Main(MainTemplate):
       #Global.action_form_type = Global.header_work_area_type.text.split(".")[2][:-2]
       #
       # Only show page controls for List action
-      if Global.work_area[Global.current_work_area_name]["action"].split(" ")[0] in ["View", "Edit", "Add", "Import"] or Global.work_area[Global.current_work_area_name]["action"] == "List Users":
+      if Global.work_area[Global.current_work_area_name]["action"].split(" ")[0] in ["View", "Edit", "Insert", "Add", "Import"] or Global.work_area[Global.current_work_area_name]["action"] == "List Users":
         self.mb_middle.visible = False
         self.mb_left.visible = False
       elif Global.work_area[Global.current_work_area_name]["action"].split(" ")[0] in ["List"]:
@@ -478,8 +487,8 @@ class Main(MainTemplate):
     """ This Function is called when the users selects an option form the Insert dropdown"""
     """This method is called when an item is selected"""
     #Global.main_form = get_open_form()
-    # make action to be "Add ..." 
-    Global.action = "Add " + str(self.insert_dropdown.selected_value).capitalize()
+    # make action to be "Insert ..." 
+    Global.action = "Insert " + str(self.insert_dropdown.selected_value).capitalize()
     #print("Insert action - ",Global.action)
     if Global.action not in Global.action_list_not_implemented:
       # Action has been selected, create button in work area list, and make this work area in focus (highlight button)
@@ -533,7 +542,7 @@ class Main(MainTemplate):
   def import_dropdown_change(self, **event_args):
     """This method is called when an item is selected"""
     """ This Function is called when the users selects an option form the Import dropdown"""
-    print("Import dropdown")
+    #print("Import dropdown")
     #Global.main_form = get_open_form()
     # set action
     Global.action = "Import " + str(self.import_dropdown.selected_value).capitalize()
@@ -550,7 +559,7 @@ class Main(MainTemplate):
           buttons=[("Ok", True)],
         )
       else:
-        print("Import action: ",Global.action)
+        #print("Import action: ",Global.action)
         self.create_new_work_area(Global.action)
     else:
       if Global.action != Global.separator:
@@ -703,8 +712,8 @@ class Main(MainTemplate):
   def filter_cols_click(self, **event_args):
     """This method is called when the button is clicked"""
     # extract table columns names
-    print(Global.work_area[Global.current_work_area_name]["columns_show"])
-    print(Global.work_area[Global.current_work_area_name]["table"].columns)
+    #print(Global.work_area[Global.current_work_area_name]["columns_show"])
+    #print(Global.work_area[Global.current_work_area_name]["table"].columns)
     column_headings = []
     #print(Global.work_area[Global.current_work_area_name]["data_list"])
     if Global.work_area[Global.current_work_area_name]["data_list"]:
@@ -786,7 +795,7 @@ class Main(MainTemplate):
   def print_click(self, **event_args):
     """This method is called when the button is clicked"""
     form = str(type(Global.work_area[Global.current_work_area_name]["form"])).split(".")[2][:-2]
-    print("From new print_click, form to use and send to server function: ",form)
+    #print("From new print_click, form to use and send to server function: ",form)
     # table names are all lowercase and singular, so create table name from action
     tmp_name = Global.work_area[Global.current_work_area_name]["action"].split(" ")[1]
     table_name = tmp_name.lower()
@@ -808,12 +817,14 @@ class Main(MainTemplate):
 
   def refresh_click(self, **event_args):
     """This method is called when the button is clicked"""
-    print("Refresh cicked: ",Global.current_work_area_name)
+    #print("Refresh cicked: ",Global.current_work_area_name)
     FunctionsB.refresh_click(Global.work_area[Global.current_work_area_name]["self"])
     pass
 
   def del_work_area_click(self, **event_args):
     """This method is called when the button is clicked"""
+    #print("Deleting work space: ", Global.current_work_area_name)
+    Function.delete_workspace(Global.current_work_area_name)
     pass
 
   def logout_click(self, **event_args):

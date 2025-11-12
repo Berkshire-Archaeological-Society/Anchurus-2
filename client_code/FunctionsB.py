@@ -43,7 +43,7 @@ def update_status_label(self):
     Global.main_form.row_number_info.text = f"{start_row}-{end_row} of {total_rows}"
   else:
     # No need to display page control buttons as nr of rows is less than 
-    print("Make all page control invisible")
+    #print("Make all page control invisible")
     Global.main_form.last_page.enabled = False
     Global.main_form.next_page.enabled = False      
     Global.main_form.first_page.enabled = False

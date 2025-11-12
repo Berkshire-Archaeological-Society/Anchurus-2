@@ -37,12 +37,12 @@ class RowForm(RowFormTemplate):
       Global.table_name = table_name
       Global.work_area = {}
       Global.work_area[Global.current_work_area_name] = {}
-      print(data_list)
+      #print(data_list)
       Global.work_area[Global.current_work_area_name]["data_list"] = data_list
     else:
       # set table_name to one of "context", "find", from the action Global variable
-      print(Global.table_name)
-      print(Global.work_area[Global.current_work_area_name]["action"])
+      #print(Global.table_name)
+      #print(Global.work_area[Global.current_work_area_name]["action"])
       Global.table_name = Global.work_area[Global.current_work_area_name]["action"].split(" ")[1].lower()
       # Global.action.split(" ")[1].rstrip("s").lower()
       
@@ -51,14 +51,14 @@ class RowForm(RowFormTemplate):
     # we need to find out which table we are dealing with
     self.title.text = "This form is to " + Global.action
     # get table information
-    print("In RowForm: ",Global.table_name)
+    #print("In RowForm: ",Global.table_name)
     table_info = anvil.server.call("describe_table",Global.table_name)
     # And then we need to create all the fields based on table information 
     # loop over table columns
     self.field_details = {}
     self.form_fields = {}
-    print(Global.table_items)
-    print(Global.work_area[Global.current_work_area_name]["data_list"])
+    #print(Global.table_items)
+    #print(Global.work_area[Global.current_work_area_name]["data_list"])
     for item in table_info:
       column_name = item["Field"]
       column_type = item["Type"]
