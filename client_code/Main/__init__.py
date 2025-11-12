@@ -113,7 +113,7 @@ class Main(MainTemplate):
     Global.current_work_area_name = work_area.text
     
     # Set Global.table_name linked with work_area_type
-    Global.table_name = Global.work_area[Global.current_work_area_name]["action"].split(" ")[1].rstrip("s").lower()
+    Global.table_name = Global.work_area[Global.current_work_area_name]["action"].split(" ")[1].lower()
 
     # set Global variables for site information
     Global.site_name = Global.work_area[Global.current_work_area_name]["site_name"]
@@ -788,7 +788,7 @@ class Main(MainTemplate):
     form = str(type(Global.work_area[Global.current_work_area_name]["form"])).split(".")[2][:-2]
     print("From new print_click, form to use and send to server function: ",form)
     # table names are all lowercase and singular, so create table name from action
-    tmp_name = Global.work_area[Global.current_work_area_name]["action"].split(" ")[1].strip("s")
+    tmp_name = Global.work_area[Global.current_work_area_name]["action"].split(" ")[1]
     table_name = tmp_name.lower()
 
     # clear select column from data_list

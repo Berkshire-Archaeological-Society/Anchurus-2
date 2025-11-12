@@ -41,7 +41,9 @@ class RowForm(RowFormTemplate):
       Global.work_area[Global.current_work_area_name]["data_list"] = data_list
     else:
       # set table_name to one of "context", "find", from the action Global variable
-      Global.table_name = Global.table_name = Global.work_area[Global.current_work_area_name]["action"].split(" ")[1].lower()
+      print(Global.table_name)
+      print(Global.work_area[Global.current_work_area_name]["action"])
+      Global.table_name = Global.work_area[Global.current_work_area_name]["action"].split(" ")[1].lower()
       # Global.action.split(" ")[1].rstrip("s").lower()
       
     action = Global.action.split(" ")[0].lower()
@@ -63,7 +65,6 @@ class RowForm(RowFormTemplate):
       # types can be varchar(length),int(length),text,float,double,date
       # type text can be 65535 char so need to be a TextArea, other can be a TextBox
       # create the label and the input field
-      #lab = Label(text=column_name, font_size=14,placeholder=column_name)
       if column_type == "text":
         #create TextArea input field for text type
         #input = TextArea(tag=column_name)
@@ -85,16 +86,13 @@ class RowForm(RowFormTemplate):
         max_length = int(match.group())
         if column_type.find("decimal") != -1 or column_type.find("float") != -1 or column_type.find("double") != -1:
           # for these data types add 1 to max _length as length does not take into account the decimal point
+          # (nor negative symbol but that is not applicable for us)
           max_length = max_length + 1
           
         # add event handler for when input field is changed to update the character counth
         input.add_event_handler('change',self.input_change)
         
-      # if field is None make is "" (empty)
-      #if Global.work_area[Global.current_work_area_name]["data_list"][column_name] is None:
-      #  Global.work_area[Global.current_work_area_name]["data_list"][column_name] = ""
-      #print(column_name, Global.work_area[Global.current_work_area_name]["data_list"][column_name])
-      # set specific settings (like validators) for the various fields
+      # set specific validators for the various fields
       if column_name in ["SiteId"]:
         input.text = Global.site_id
         input.enabled = False
@@ -150,19 +148,18 @@ class RowForm(RowFormTemplate):
       # add columns details to nested dictionary
       field_details = {"header": lab, "field": input, "length": max_length}
       self.form_fields[column_name] = field_details
-      # add label and imput field to column_panel
+      # add label and input field to column_panel
       self.column_panel_1.add_component(lab)
       self.column_panel_1.add_component(input)
     #
-    if action in ["edit","view"]:     #"Edit Context","Edit Find","Add Context","Add Find"]:
+    if action in ["edit","add"]:     #"Edit Context","Edit Find","Add Context","Add Find"]:
       # Add a Submit button if Edit or Add action
       submit_btn = Button(text="Submit")
       submit_btn.add_event_handler("click",self.submit_btn_click)
       self.column_panel_1.add_component(submit_btn)
 
-    # For this form the page_info details are all set to 0; this is for when the server print function call the form
+    # For this work_area form the page_info details are all set to 0; this is for when the server print function call the form
     Global.work_area[Global.current_work_area_name]["page_info"] = {"page_num": 0, "rows_per_page": 0, "total_rows": 0}
-
 
   def submit_btn_click(self, **event_args):
     """This method is called when the button is clicked"""
@@ -173,6 +170,7 @@ class RowForm(RowFormTemplate):
         print(col[0],col[1]["field"].text)
     pass
 
+  # a previous version of the submit function; to be check and moved relevant bits to current submit_btn_click function
   def submit_button_click(self, **evemt_args):
     if self.validator.are_all_valid():
       # All fields are filled in correct (I think)

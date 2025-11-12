@@ -151,7 +151,7 @@ class TableList(TableListTemplate):
       Global.current_work_area_name = "TableList"
       Global.work_area = {}
       Global.work_area[Global.current_work_area_name] = {}
-      Global.table_name = table_name.rstrip("s")
+      Global.table_name = table_name
     else:
     # set table_name to one of "context", "find", from the action Global variable 
       Global.table_name = Global.action.split(" ")[1].lower()
