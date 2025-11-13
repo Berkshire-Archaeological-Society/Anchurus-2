@@ -200,14 +200,19 @@ class Main(MainTemplate):
     # For all actions not in Admin_action_list check ID field for creating unique work_area name
     #print(action, Global.admin_action_list)
     if action not in Global.admin_action_list:
-      # add first Primary Key ID field (not counting SiteId) when view or edit
+      # add first Primary Key ID field when view or edit
       table_info = anvil.server.call("describe_table",action.split(" ")[1].lower())
       primary_key_list = []
       for column in table_info:
-        if column["Field"] != "SiteId" and column["Key"] == "PRI":
+        if column["Key"] == "PRI":
           primary_key_list.append(column["Field"])
       if action.split(" ")[0].lower() in ["view","edit"]:
-        work_area_name = action + " " + Global.table_items[primary_key_list[0]]
+        if len(primary_key_list) == 1:
+          work_area_name = action + " " + Global.table_items[primary_key_list[0]]
+        else:
+          work_area_name = action + " " + Global.table_items[primary_key_list[1]]
+    
+    print(work_area_name)
     
     # check if work_area_name exists and keep counter
     if (Global.work_area.get(work_area_name) is None):
@@ -224,7 +229,6 @@ class Main(MainTemplate):
       Global.action_seq_no[work_area_name] += 1
       work_area_name = work_area_name + " (" + str(Global.action_seq_no[work_area_name]) + ")"
 
-    print(work_area_name)
     # create new 'empty row' in nested work_area dictionary for the new work_area_name
     Global.work_area[work_area_name] = {}
     Global.work_area[work_area_name]["action"] = action
@@ -407,7 +411,7 @@ class Main(MainTemplate):
 
       # create a introduction message and add it to the introduction_message of the introduction_message block and make it visible
       Global.help_page.visible = True
-
+      Global.site_id = "not_selected"
     pass
 
   def register_button_click(self, **event_args):
@@ -490,6 +494,8 @@ class Main(MainTemplate):
     # Action has been selected, but only take action if action in not a separator
     # save a link to the Main form in a Global variable 
     #Global.main_form = get_open_form()
+    Global.help_page.visible = False
+
     Global.action = self.admin_dropdown.selected_value
 
     if Global.action not in Global.action_list_not_implemented:
