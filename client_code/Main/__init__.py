@@ -178,8 +178,8 @@ class Main(MainTemplate):
     else:
       Global.header_download_button.visible = False
       self.download_csv.visible = False
-    if Global.action_form_type in Global.action_forms_with_filter:
-      # Make filter button visible for Global.action_form_type
+    if Global.action_form_type in Global.action_forms_with_filter and Global.work_area[Global.current_work_area_name]["data_list"]:
+      # Make filter button visible for Global.action_form_type if data_list is not empty
       Global.header_filter_button.visible = True
       self.filter_cols.visible = True
     else:
@@ -327,8 +327,8 @@ class Main(MainTemplate):
       else:
         Global.header_download_button.visible = False
         self.download_csv.visible = False
-      if Global.action_form_type in Global.action_forms_with_filter:
-        # Make filter button visible for Global.action_form_type
+      if Global.action_form_type in Global.action_forms_with_filter and Global.work_area[work_area_name]["data_list"]:
+        # Make filter button visible for Global.action_form_type if data_list is not empty
         Global.header_filter_button.visible = True
         self.filter_cols.visible = True
       else:
@@ -375,7 +375,7 @@ class Main(MainTemplate):
       user = anvil.users.get_user()
       Global.user_role = user["role"]
       self.user_role.text = Global.user_role
-      if Global.user_role == "admin":
+      if Global.user_role in ["Administrator"]:
         #print(Global.username, Global.user_role)
         self.menu_middle.visible = True
         self.mm_right.visible = True
@@ -444,6 +444,36 @@ class Main(MainTemplate):
       self.mm_left.visible = True
       self.mm_middle.visible = True
       self.mm_right.visible = True
+      if Global.user_role in ["Administrator","Editor","Manager"]:
+        self.list_dropdown.visible = True
+        self.view_row.visible = True
+        
+        self.edit_row.visible = True
+        self.insert_dropdown.visible = True
+        
+        self.delete_row.visible = True
+        self.import_dropdown.visible = True
+      elif Global.user_role in ["Viewer"]:
+        # role is Viewer
+        self.list_dropdown.visible = True
+        self.view_row.visible = True
+        #
+        self.insert_dropdown.visible = False
+        self.import_dropdown.visible = False
+        self.edit_row.visible = False
+        self.delete_row.visible = False
+      else:
+        # unkown role
+        n = Notification("Unkown User Role identified!")
+        n.show()
+        # disable able all action buttons
+        self.admin_dropdown.visible = False
+        self.list_dropdown.visible = False
+        self.view_row.visible = False
+        self.insert_dropdown.visible = False
+        self.import_dropdown.visible = False
+        self.edit_row.visible = False
+        self.delete_row.visible = False
     pass
 
   # Funtions for the menu options (Menu_middle) after the user selected a site
