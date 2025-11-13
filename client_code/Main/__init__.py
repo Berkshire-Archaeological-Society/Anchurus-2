@@ -150,6 +150,12 @@ class Main(MainTemplate):
     if Global.work_area[Global.current_work_area_name]["action"].split(" ")[0] in ["List"] and Global.work_area[Global.current_work_area_name]["action"] != "List Users":
       FunctionsB.update_status_label(Global.work_area[Global.current_work_area_name]["self"])
 
+    if len(Global.work_area[Global.current_work_area_name]["selected_rows"]) == 0:
+      Global.work_area[Global.current_work_area_name]["menu_select_options"].visible = False
+    else:
+      Global.work_area[Global.current_work_area_name]["menu_select_options"].visible = True
+    pass
+    
     # Set selected buttons on Header for work area type
     if Global.action_form_type in Global.action_forms_with_refresh:
       # Make refresh button visible for Global.action_form_type
