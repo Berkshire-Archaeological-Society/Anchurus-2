@@ -188,31 +188,18 @@ class Main(MainTemplate):
     Global.header.visible = False
     Global.wa_header_menu_bottom.visible = True
 
-    # set name of work_area to be action name if action is view or edit
+    # set name of work_area to be action name
     work_area_name = action
-    print("Create Work area: ", Global.table_items)
+
+    # add first Primary Key ID field (not counting SiteId) when view or edit
+    table_info = anvil.server.call("describe_table",action.split(" ")[1].lower())
+    primary_key_list = []
+    for column in table_info:
+      if column["Field"] != "SiteId" and column["Key"] == "PRI":
+        primary_key_list.append(column["Field"])
     if action.split(" ")[0].lower() in ["view","edit"]:
-      if Global.table_items.get("SiteId") is None:
-        print("No SiteId", list(Global.table_items.values())[0])
-        new_name = action + list(Global.table_items.values())[0]
-      else:
-        print("There is a SiteId", list(Global.table_items.values())[0])
-        new_name = action + list(Global.table_items.values())[1]
-      print("new work area name: ",new_name)
-    if action == "View Context" or action == "Edit Context":
-      # modify work_area name to add XxxxId number (ContextId, FindId, AeraId, etc); for now only implemented for Context
-      Global.context_items = Global.table_items
-      work_area_name = action + " " + Global.context_items["ContextId"]
-    if action == "View Site" or action == "Edit Site":
-      # modify work_area name to add XxxxId number (ContextId, FindId, AeraId, etc); for now only implemented for Context
-      work_area_name = action + " " + Global.site_items["SiteId"]
-    if action == "View Area" or action == "Edit Area":
-      # modify work_area name to add XxxxId number (ContextId, FindId, AeraId, etc); for now only implemented for Context
-      work_area_name = action + " " + Global.area_items["AreaId"]
-    if action == "View Find" or action == "Edit Find":
-      # modify work_area name to add XxxxId number (ContextId, FindId, AeraId, etc); for now only implemented for Context
-      Global.find_items = Global.table_items
-      work_area_name = action + " " + Global.find_items["FindId"]
+      work_area_name = action + " " + Global.table_items[primary_key_list[0]]
+    
     # check if work_area_name exists and keep counter
     if (Global.work_area.get(work_area_name) is None):
       if Global.action_seq_no.get(work_area_name) is None:
