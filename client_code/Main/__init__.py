@@ -211,9 +211,7 @@ class Main(MainTemplate):
           work_area_name = action + " " + Global.table_items[primary_key_list[0]]
         else:
           work_area_name = action + " " + Global.table_items[primary_key_list[1]]
-    
-    print(work_area_name)
-    
+        
     # check if work_area_name exists and keep counter
     if (Global.work_area.get(work_area_name) is None):
       if Global.action_seq_no.get(work_area_name) is None:
@@ -263,10 +261,10 @@ class Main(MainTemplate):
     Global.work_area[work_area_name]["data_list"] = [Global.table_items]
     
     # create a new work_space and add this to the work_area_list and add component to main     
-    print("Main create_new_work_area: ",self)
+    #print("Main create_new_work_area: ",self)
     form_result = Function.create_work_space(action,Global.table_items)
     if form_result != "Unknown":
-      print(action, work_area_name, Global.work_area)
+      #print(action, work_area_name, Global.work_area)
       Global.work_area[work_area_name]["form"] = form_result
       #print(Global.work_area[work_area_name]["form"])
       self.add_component(Global.work_area[work_area_name]["form"])

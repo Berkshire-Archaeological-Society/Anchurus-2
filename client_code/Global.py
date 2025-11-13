@@ -16,7 +16,7 @@ import anvil.users
 #
 main_form = ""
 separator = "------------------"
-admin_action_list = ["List Users","Edit User","List Site","Edit Site","Add Site"]
+admin_action_list = ["List Anvilusers","Edit AnvilUser","List Site","Edit Site","Add Site"]
 admin_action_list_not_implemented = [separator]
 user_action_list = ["Select Site",separator,
                     "List Contexts","Add Context","Bulk Upload Contexts",separator,
@@ -32,7 +32,7 @@ insert_action_dropdown = ["Context","Find","Anomoly","Interpretation"]
 file_action_dropdown = ["Import",separator,"Save"]
 view_action_dropdown = []
 help_action_dropdown = []
-admin_action_dropdown = [("List Users","List Users"),("List Sites","List Site"),("Insert Site","Add Site")]
+admin_action_dropdown = [("List Anvil Users","List Anvilusers"),("List Sites","List Site"),("Insert Site","Add Site")]
 import_action_dropdown = ["context","find"]
 #
 #

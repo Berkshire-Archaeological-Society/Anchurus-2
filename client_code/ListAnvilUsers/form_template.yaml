@@ -13,11 +13,11 @@ components:
   properties: {align: right, border: none, role: outlined}
   type: TextBox
 - components:
-  - name: UsersList
-    properties: {item_template: ListUsers.RowTemplate2}
+  - name: repeating_panel_1
+    properties: {item_template: ListAnvilUsers.RowTemplate2}
     type: RepeatingPanel
   layout_properties: {full_width_row: true, grid_position: 'GVFZBW,UNPKFM'}
-  name: User_list_1
+  name: table
   properties:
     columns:
     - {data_key: column_4, expand: false, id: FBKXLS, title: '', width: 61}

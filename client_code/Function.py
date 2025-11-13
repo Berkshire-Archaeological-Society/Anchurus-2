@@ -23,14 +23,14 @@ from ListContexts import ListContexts
 from ListFinds import ListFinds
 from ListSites import ListSites
 from ListAreas import ListAreas
-from ListUsers import ListUsers
+from ListAnvilUsers import ListAnvilUsers
 from TableList import TableList
 from ContextForm import ContextForm
 from FindForm import FindForm
 from AreaForm import AreaForm
 from RowForm import RowForm
 from SiteForm import SiteForm
-from UserForm import UserForm
+from AnvilUserForm import AnvilUserForm
 from ImportForm import ImportForm
 from Help import Help
 
@@ -45,10 +45,10 @@ def create_work_space(type,data_list):
   #print(action, table_name)
   # First param of RowForm and TableList is site_id, but is blanked out. Only used by server print function
   # Make sure any List actions that are not using the TableList Form should be listed first
-  if type == "List Users":
-    work_space = ListUsers()
-  elif type == "Edit User":
-    work_space = UserForm()
+  if type == "List Anvilusers":
+    work_space = ListAnvilUsers()
+  elif type == "Edit AnvilUser":
+    work_space = AnvilUserForm()
   #elif type == "List Site":
   #  work_space = ListSites()
   #
@@ -59,7 +59,7 @@ def create_work_space(type,data_list):
     work_space = ImportForm()
   #
   elif action in ["add","insert"]:
-    work_space = RowForm("","row",data_list,type,page_info)
+    work_space = RowForm("",table_name,data_list,type,page_info)
   #
   elif action == "edit":
     work_space = RowForm("",table_name,data_list,type,page_info)

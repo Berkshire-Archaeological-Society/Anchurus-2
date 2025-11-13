@@ -111,7 +111,7 @@ def table_list_refresh(self):
 
 def list_users_refresh(self):
   # this function does the filling of the table contents
-  self.UsersList.items = anvil.server.call('users_get')
-  self.User_list_1.rows_per_page = Global.rows_per_page
-  self.total_user_number.text = "Total number of Users: " + str(len(self.UsersList.items))
+  self.repeating_panel_1.items = anvil.server.call('users_get')
+  self.table.rows_per_page = Global.rows_per_page
+  self.total_user_number.text = "Total number of Users: " + str(len(self.repeating_panel_1.items))
   return
