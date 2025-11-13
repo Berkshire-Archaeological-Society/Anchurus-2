@@ -197,14 +197,17 @@ class Main(MainTemplate):
     # set name of work_area to be action name
     work_area_name = action
 
-    # add first Primary Key ID field (not counting SiteId) when view or edit
-    table_info = anvil.server.call("describe_table",action.split(" ")[1].lower())
-    primary_key_list = []
-    for column in table_info:
-      if column["Field"] != "SiteId" and column["Key"] == "PRI":
-        primary_key_list.append(column["Field"])
-    if action.split(" ")[0].lower() in ["view","edit"]:
-      work_area_name = action + " " + Global.table_items[primary_key_list[0]]
+    # For all actions not in Admin_action_list check ID field for creating unique work_area name
+    #print(action, Global.admin_action_list)
+    if action not in Global.admin_action_list:
+      # add first Primary Key ID field (not counting SiteId) when view or edit
+      table_info = anvil.server.call("describe_table",action.split(" ")[1].lower())
+      primary_key_list = []
+      for column in table_info:
+        if column["Field"] != "SiteId" and column["Key"] == "PRI":
+          primary_key_list.append(column["Field"])
+      if action.split(" ")[0].lower() in ["view","edit"]:
+        work_area_name = action + " " + Global.table_items[primary_key_list[0]]
     
     # check if work_area_name exists and keep counter
     if (Global.work_area.get(work_area_name) is None):
@@ -221,6 +224,7 @@ class Main(MainTemplate):
       Global.action_seq_no[work_area_name] += 1
       work_area_name = work_area_name + " (" + str(Global.action_seq_no[work_area_name]) + ")"
 
+    print(work_area_name)
     # create new 'empty row' in nested work_area dictionary for the new work_area_name
     Global.work_area[work_area_name] = {}
     Global.work_area[work_area_name]["action"] = action
@@ -258,6 +262,7 @@ class Main(MainTemplate):
     print("Main create_new_work_area: ",self)
     form_result = Function.create_work_space(action,Global.table_items)
     if form_result != "Unknown":
+      print(action, work_area_name, Global.work_area)
       Global.work_area[work_area_name]["form"] = form_result
       #print(Global.work_area[work_area_name]["form"])
       self.add_component(Global.work_area[work_area_name]["form"])
@@ -302,13 +307,15 @@ class Main(MainTemplate):
         self.mb_middle.visible = True
         self.mb_left.visible = True
 
+      self.select_all.indeterminate = False
+
       # Set selected buttons on Header for work area type
       Global.action_form_type = Global.header_work_area_type.text
       if Global.action_form_type in Global.action_forms_with_refresh:
         # make Refresh button visible if action_form_type has refresh function (i.e. in list Global.action_forms_with_refresh) 
         Global.header_refresh_button.visible = True
         self.refresh.visible = True
-        print("set refresh button")
+        #print("set refresh button")
       else:
         Global.header_refresh_button.visible = False
         self.refresh.visible = False
@@ -488,16 +495,16 @@ class Main(MainTemplate):
     if Global.action not in Global.action_list_not_implemented:
       # Action has been selected, create button in work area list, and make this work area in focus (highlight button)
       # for any action that has a Form defined create a new work_area
-      if Global.site_id is None and Global.action not in (Global.admin_action_dropdown):
-        # if site is not yet selected alert user
-        alert(
-          content="Site has not been selected. Please select a site.",
-          title="Site selection warning",
-          large=True,
-          buttons=[("Ok", True)],
-        )
-      else:
-        self.create_new_work_area(Global.action)
+      #if Global.site_id is None and Global.action not in (Global.admin_action_dropdown):
+      #  # if site is not yet selected alert user
+      #  alert(
+      #    content="Site has not been selected. Please select a site.",
+      #    title="Site selection warning",
+      #    large=True,
+      #    buttons=[("Ok", True)],
+      #  )
+      #else:
+      self.create_new_work_area(Global.action)
     else:
       if Global.action != Global.separator:
         alert("Action not yet implemented.")

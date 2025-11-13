@@ -47,8 +47,11 @@ def create_work_space(type,data_list):
   # Make sure any List actions that are not using the TableList Form should be listed first
   if type == "List Users":
     work_space = ListUsers()
-  elif type == "List Sites":
-    work_space = ListSites()
+  elif type == "Edit User":
+    work_space = UserForm()
+  #elif type == "List Site":
+  #  work_space = ListSites()
+  #
   elif action == "list":
     work_space = TableList("",table_name,data_list,type,page_info)
   #
