@@ -154,9 +154,11 @@ class Main(MainTemplate):
       FunctionsB.update_status_label(Global.work_area[Global.current_work_area_name]["self"])
 
     if len(Global.work_area[Global.current_work_area_name]["selected_rows"]) == 0:
+      print("work_area_click: ", Global.current_work_area_name, " 0 selected rows, disable menu")
       Global.work_area[Global.current_work_area_name]["menu_select_options"].visible = False
       #Global.work_area[Global.current_work_area_name]["self"].select_all
     else:
+      print("work_area_click: ", Global.current_work_area_name, " there are selected rows, enable menu")
       Global.work_area[Global.current_work_area_name]["menu_select_options"].visible = True
       #Global.work_area[Global.current_work_area_name]["self"].select_all
     pass
@@ -658,7 +660,12 @@ class Main(MainTemplate):
   def select_all_change(self, **event_args):
     """This method is called when this checkbox is checked or unchecked"""
     checked = self.select_all.checked
+    indetermined = self.select_all.indeterminate
+    print("Select_all button clicked: ",Global.current_work_area_name, " checked: ",checked, " indeterminate: ",indetermined)
     #
+    if self.select_all.indeterminate:
+      # if indeterminate is True, force check to False
+      checked = False
     #for row in self.repeating_panel_1.get_components(): 
     for row in Global.work_area[Global.current_work_area_name]["self"].repeating_panel_1.get_components():
       prev_status_btn_select = row.btn_select.checked
@@ -672,10 +679,13 @@ class Main(MainTemplate):
           Global.work_area[Global.current_work_area_name]["selected_rows"].remove(row.item)
           row.background = ""
     #
-    #self.select_all.indeterminate = False
-    Global.work_area[Global.current_work_area_name]["self"].select_all.indeterminate = False
+    if self.select_all.indeterminate:
+      print("if indeterminate was True, set indeterminate to False ")
+      self.select_all.indeterminate = False
+      Global.work_area[Global.current_work_area_name]["self"].select_all.indeterminate = False
     #
     if len(Global.work_area[Global.current_work_area_name]["selected_rows"]) == 0:
+      print("0 selected rows, clear menu")
       Global.work_area[Global.current_work_area_name]["menu_select_options"].visible = False
       Global.work_area[Global.current_work_area_name]["self"].select_all.checked = False
     else:
