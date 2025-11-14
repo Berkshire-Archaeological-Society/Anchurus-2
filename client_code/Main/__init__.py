@@ -156,6 +156,8 @@ class Main(MainTemplate):
     if len(Global.work_area[Global.current_work_area_name]["selected_rows"]) == 0:
       print("work_area_click: ", Global.current_work_area_name, " 0 selected rows, disable menu")
       Global.work_area[Global.current_work_area_name]["menu_select_options"].visible = False
+      self.select_all.checked = False
+      self.select_all.indetermine = False
       #Global.work_area[Global.current_work_area_name]["self"].select_all
     else:
       print("work_area_click: ", Global.current_work_area_name, " there are selected rows, enable menu")
@@ -682,6 +684,7 @@ class Main(MainTemplate):
     if self.select_all.indeterminate:
       print("if indeterminate was True, set indeterminate to False ")
       self.select_all.indeterminate = False
+      self.select_all.checked = False
       Global.work_area[Global.current_work_area_name]["self"].select_all.indeterminate = False
     #
     if len(Global.work_area[Global.current_work_area_name]["selected_rows"]) == 0:
