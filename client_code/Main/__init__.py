@@ -145,17 +145,25 @@ class Main(MainTemplate):
     elif Global.work_area[Global.current_work_area_name]["action"].split(" ")[0] in ["List"]:
       self.mb_middle.visible = True
       self.mb_left.visible = True
-    
+
+    #self.select_all.indeterminate = False
+    #self.select_all.checked = False
+
     # update status label (page control information) if work_space is a List
-    if Global.work_area[Global.current_work_area_name]["action"].split(" ")[0] in ["List"] and Global.work_area[Global.current_work_area_name]["action"] != "List Users":
+    if Global.work_area[Global.current_work_area_name]["action"].split(" ")[0] in ["List"] and Global.work_area[Global.current_work_area_name]["action"] != "List Anvilusers":
       FunctionsB.update_status_label(Global.work_area[Global.current_work_area_name]["self"])
 
     if len(Global.work_area[Global.current_work_area_name]["selected_rows"]) == 0:
       Global.work_area[Global.current_work_area_name]["menu_select_options"].visible = False
+      #Global.work_area[Global.current_work_area_name]["self"].select_all
     else:
       Global.work_area[Global.current_work_area_name]["menu_select_options"].visible = True
+      #Global.work_area[Global.current_work_area_name]["self"].select_all
     pass
-    
+    self.select_all.checked = Global.work_area[Global.current_work_area_name]["self"].select_all.checked
+    self.select_all.indeterminate = Global.work_area[Global.current_work_area_name]["self"].select_all.indeterminate
+    print("work_area_click: ",Global.current_work_area_name," select_all.checked = ",self.select_all.checked, "select_all.indeterminate = ",self.select_all.indeterminate)
+
     # Set selected buttons on Header for work area type
     if Global.action_form_type in Global.action_forms_with_refresh:
       # Make refresh button visible for Global.action_form_type
@@ -310,6 +318,7 @@ class Main(MainTemplate):
         self.mb_left.visible = True
 
       self.select_all.indeterminate = False
+      self.select_all.checked = False
 
       # Set selected buttons on Header for work area type
       Global.action_form_type = Global.header_work_area_type.text
@@ -633,6 +642,7 @@ class Main(MainTemplate):
   # Functions on the header for the work area
   def selection_change(self, **event_args):
     #
+    print("selection_change in Main")
     rows = [row for row in Global.work_area[Global.current_work_area_name]["self"].repeating_panel_1.get_components()]
     any_checked = any(row.btn_select.checked for row in rows)
     all_checked = all(row.btn_select.checked for row in rows)
@@ -667,8 +677,11 @@ class Main(MainTemplate):
     #
     if len(Global.work_area[Global.current_work_area_name]["selected_rows"]) == 0:
       Global.work_area[Global.current_work_area_name]["menu_select_options"].visible = False
+      Global.work_area[Global.current_work_area_name]["self"].select_all.checked = False
     else:
       Global.work_area[Global.current_work_area_name]["menu_select_options"].visible = True
+
+    Global.work_area[Global.current_work_area_name]["self"].select_all.checked = checked
     pass
     
   def view_row_click(self, **event_args):

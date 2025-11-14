@@ -213,19 +213,21 @@ class TableList(TableListTemplate):
     
   def selection_change(self, **event_args):
     #
-    rows = [row for row in self.repeating_panel_1.get_components()]
+    #rows = [row for row in self.repeating_panel_1.get_components()]
+    rows = [row for row in Global.work_area[Global.current_work_area_name]["self"].repeating_panel_1.get_components()]
     any_checked = any(row.btn_select.checked for row in rows)
     all_checked = all(row.btn_select.checked for row in rows)
-    #print("any_checked: ",any_checked)
-    #print("all_checked: ",all_checked)
+
     indeterminate_value = not all_checked and any_checked
-    #print("indeterminate: ",indeterminate_value)
+    print("selection_change in TableList: indeterminate = ",indeterminate_value," any_checked = ",any_checked, " all_checked = ",all_checked)
     # make select_all a Global.work_area[Global.Global.current_work_area_name]["select_all"]
     self.select_all.checked = any_checked
     self.select_all.indeterminate = not all_checked and any_checked
+    Global.work_area[Global.current_work_area_name]["self"].select_all.checked = any_checked
+    Global.work_area[Global.current_work_area_name]["self"].select_all.indeterminate = not all_checked and any_checked
+    Global.work_area[Global.current_work_area_name]["menu_select_options"].visible = any_checked
     Global.main_form.select_all.checked = any_checked
     Global.main_form.select_all.indeterminate = not all_checked and any_checked
-    Global.work_area[Global.current_work_area_name]["menu_select_options"].visible = any_checked
     #
     pass
     
