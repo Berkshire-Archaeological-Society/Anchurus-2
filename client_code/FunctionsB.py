@@ -65,6 +65,10 @@ def clear_selection(self):
   # clear select_all checkbox
   Global.main_form.select_all.checked = False
   Global.main_form.select_all.indeterminate = False
+
+  # make menu_select_options invisible
+  Global.work_area[Global.current_work_area_name]["menu_select_options"].visible = False
+
   return
   
 #
