@@ -663,7 +663,7 @@ class Main(MainTemplate):
     """This method is called when this checkbox is checked or unchecked"""
     checked = self.select_all.checked
     indetermined = self.select_all.indeterminate
-    print("Select_all button clicked: ",Global.current_work_area_name, " checked: ",checked, " indeterminate: ",indetermined)
+    #print("Select_all button clicked: ",Global.current_work_area_name, " checked: ",checked, " indeterminate: ",indetermined)
     #
     if self.select_all.indeterminate:
       # if indeterminate is True, force check to False
@@ -682,13 +682,13 @@ class Main(MainTemplate):
           row.background = ""
     #
     if self.select_all.indeterminate:
-      print("if indeterminate was True, set indeterminate to False ")
+      #print("if indeterminate was True, set indeterminate to False ")
       self.select_all.indeterminate = False
       self.select_all.checked = False
       Global.work_area[Global.current_work_area_name]["self"].select_all.indeterminate = False
     #
     if len(Global.work_area[Global.current_work_area_name]["selected_rows"]) == 0:
-      print("0 selected rows, clear menu")
+      #print("0 selected rows, clear menu")
       Global.work_area[Global.current_work_area_name]["menu_select_options"].visible = False
       Global.work_area[Global.current_work_area_name]["self"].select_all.checked = False
     else:
