@@ -195,7 +195,7 @@ class TableList(TableListTemplate):
         #columns_titles.append({"id": id, "title": field_name, "data_key": field_name, "expand": True })
 
     # assign the columns titles to the grid columns
-    print(columns_titles)
+    #print(columns_titles)
     self.table.columns = columns_titles
 
     # add table to work_area data structure for Global.current_work_area_name
