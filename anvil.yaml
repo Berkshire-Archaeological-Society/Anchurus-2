@@ -46,16 +46,10 @@ db_schema:
       name: confirmed_email
       type: bool
     - admin_ui: {width: 200}
-      name: role
-      type: string
-    - admin_ui: {width: 200}
       name: signed_up
       type: datetime
     - admin_ui: {width: 200}
       name: email_confirmation_key
-      type: string
-    - admin_ui: {width: 200}
-      name: Initials
       type: string
     - admin_ui: {width: 200}
       name: remembered_logins
@@ -63,6 +57,18 @@ db_schema:
     - admin_ui: {order: 11, width: 200}
       name: mfa
       type: simpleObject
+    - admin_ui: {order: 12, width: 200}
+      name: initials
+      type: string
+    - admin_ui: {order: 13, width: 200}
+      name: firstname
+      type: string
+    - admin_ui: {order: 14, width: 200}
+      name: lastname
+      type: string
+    - admin_ui: {order: 15, width: 200}
+      name: role
+      type: string
     server: full
     title: Users
 dependencies:

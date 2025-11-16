@@ -370,13 +370,7 @@ class Main(MainTemplate):
     #print("Login button clicked")
     user = anvil.users.login_with_form(allow_cancel=True)
     # check if user is logged in as newly registered account needs explicit enabling by administrator 
-    # user = anvil.users.get_user()
-    #if user is None and Global.admin_user != "":
-      # this code should only run if Global.admin_user is disabled (which should only be at fist time run of anvil web server with clean user database)
-      # this will set admin role and enable account for admin_user
-      #print("First time login, set admin role and enable account for admin_user")
-      #anvil.server.call('user_update',Global.admin_user,"admin",True,Global.admin_user_initials)
-    #
+
     if user is not None:
       # make welcome block of Main form invisible
       self.welcome_page.visible = False
@@ -386,19 +380,19 @@ class Main(MainTemplate):
       Global.username = user["email"]
       
       #Global.DBAcontrol = anvil.server.call("check_DBAcontrol",Global.username,"i")
-      #self.username.text = Global.username + "\n (" + Global.user_role + ")"
+      #self.username.text = Global.username + "\n (" + Global.site_user_role + ")"
       self.username_dropdown.placeholder = Global.username
       self.username_dropdown.items = ["Logout"]
+
+      # notify server side of login
+      Global.ip_address = anvil.server.call("user_authentication")
       
-      # check user authorisation - role columns will be updated in anvil user table
-      Global.ip_address = anvil.server.call("user_authorisation")
-      
-      # if users has admin role, add admin actions list and set it visible
+      # if user has system admin role, add system admin actions list and set it visible
       user = anvil.users.get_user()
-      Global.user_role = user["role"]
-      self.user_role.text = Global.user_role
-      if Global.user_role in ["Administrator"]:
-        #print(Global.username, Global.user_role)
+      Global.system_user_role = user["role"]
+      
+      if Global.system_user_role in ["system-administrator"]:
+        self.user_role.text = Global.system_user_role
         self.menu_middle.visible = True
         self.mm_right.visible = True
         self.mm_left.visible = False
@@ -429,8 +423,7 @@ class Main(MainTemplate):
     """ This Function is called when a user wants to register himself"""
     """This method is called when the button is clicked"""
     user = anvil.users.signup_with_form(allow_cancel=True)
-    # check if user logged in (should not be, as registration requires an administrator to enable account)
-    # user = anvil.users.get_user()
+    # check if user logged in (should not be, as registration requires a system-administrator to enable account)
     if user is not None:
       # when user is logged in enable Action menu, username field and logout button, and disable content panel (welcome message)
       # also set username  to user email address
@@ -453,6 +446,10 @@ class Main(MainTemplate):
       
       Global.site_name = self.select_site_dropdown.selected_value
       Global.site_id = Global.site_options[self.select_site_dropdown.selected_value]
+      
+      # check user authorisation role for the selected site
+      Global.site_user_role = anvil.server.call("user_authorisation",Global.site_id,Global.username)
+      
       Global.selected_site = ": " + Global.site_name
       #Global.title_label.text = Global.title + Global.status + Global.selected_site
       #Global.title_label.text = Global.title
@@ -466,7 +463,7 @@ class Main(MainTemplate):
       self.mm_left.visible = True
       self.mm_middle.visible = True
       self.mm_right.visible = True
-      if Global.user_role in ["Administrator","Editor","Manager"]:
+      if Global.site_user_role in ["Administrator","Editor","Manager"]:
         self.list_dropdown.visible = True
         self.view_row.visible = True
         
@@ -475,7 +472,7 @@ class Main(MainTemplate):
         
         self.delete_row.visible = True
         self.import_dropdown.visible = True
-      elif Global.user_role in ["Viewer"]:
+      elif Global.site_user_role in ["Viewer"]:
         # role is Viewer
         self.list_dropdown.visible = True
         self.view_row.visible = True
