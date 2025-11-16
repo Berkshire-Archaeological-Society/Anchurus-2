@@ -165,13 +165,14 @@ class TableList(TableListTemplate):
     # (Field:, Type:, Null:, Key:, Default:, Extra:)
     Global.work_area[Global.current_work_area_name]["columns_show"] = []
     columns_titles = []
-    columns_titles.append({"id": 1, "title": "", "data_key": "select", "width": 30, "expand": True })
+    columns_titles.append({"id": 1, "title": "", "data_key": "select", "width": 30, "expand": False })
     id = 1
     for column_data in table_info:
       # Select Column "Field"
       field_name = column_data["Field"]
       Global.work_area[Global.current_work_area_name]["columns_show"].append(field_name)
       col_width = Global.table_colwidth_default
+      #col_width = 0
       if field_name in Global.table_colwidth_60:
         col_width = 60
       if field_name in Global.table_colwidth_70:
@@ -186,11 +187,15 @@ class TableList(TableListTemplate):
         col_width = 120
       if field_name in Global.table_colwidth_140:
         col_width = 140
+      if field_name in Global.table_colwidth_200:
+        col_width = 200
       if field_name not in ["SiteId"]: # do not create a columns for SiteId
         id = id + 1
         columns_titles.append({"id": id, "title": field_name, "data_key": field_name, "width": col_width, "expand": True })
+        #columns_titles.append({"id": id, "title": field_name, "data_key": field_name, "expand": True })
 
     # assign the columns titles to the grid columns
+    print(columns_titles)
     self.table.columns = columns_titles
 
     # add table to work_area data structure for Global.current_work_area_name
@@ -218,7 +223,7 @@ class TableList(TableListTemplate):
     any_checked = any(row.btn_select.checked for row in rows)
     all_checked = all(row.btn_select.checked for row in rows)
 
-    indeterminate_value = not all_checked and any_checked
+    #indeterminate_value = not all_checked and any_checked
     #print("selection_change in TableList: indeterminate = ",indeterminate_value," any_checked = ",any_checked, " all_checked = ",all_checked)
     # make select_all a Global.work_area[Global.Global.current_work_area_name]["select_all"]
     self.select_all.checked = any_checked
