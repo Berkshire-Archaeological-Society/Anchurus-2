@@ -154,19 +154,19 @@ class Main(MainTemplate):
       FunctionsB.update_status_label(Global.work_area[Global.current_work_area_name]["self"])
 
     if len(Global.work_area[Global.current_work_area_name]["selected_rows"]) == 0:
-      print("work_area_click: ", Global.current_work_area_name, " 0 selected rows, disable menu")
+      #print("work_area_click: ", Global.current_work_area_name, " 0 selected rows, disable menu")
       Global.work_area[Global.current_work_area_name]["menu_select_options"].visible = False
       self.select_all.checked = False
       self.select_all.indetermine = False
       #Global.work_area[Global.current_work_area_name]["self"].select_all
     else:
-      print("work_area_click: ", Global.current_work_area_name, " there are selected rows, enable menu")
+      #print("work_area_click: ", Global.current_work_area_name, " there are selected rows, enable menu")
       Global.work_area[Global.current_work_area_name]["menu_select_options"].visible = True
       #Global.work_area[Global.current_work_area_name]["self"].select_all
     pass
     self.select_all.checked = Global.work_area[Global.current_work_area_name]["self"].select_all.checked
     self.select_all.indeterminate = Global.work_area[Global.current_work_area_name]["self"].select_all.indeterminate
-    print("work_area_click: ",Global.current_work_area_name," select_all.checked = ",self.select_all.checked, "select_all.indeterminate = ",self.select_all.indeterminate)
+    #print("work_area_click: ",Global.current_work_area_name," select_all.checked = ",self.select_all.checked, "select_all.indeterminate = ",self.select_all.indeterminate)
 
     # Set selected buttons on Header for work area type
     if Global.action_form_type in Global.action_forms_with_refresh:

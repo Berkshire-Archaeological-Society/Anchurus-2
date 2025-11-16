@@ -219,7 +219,7 @@ class TableList(TableListTemplate):
     all_checked = all(row.btn_select.checked for row in rows)
 
     indeterminate_value = not all_checked and any_checked
-    print("selection_change in TableList: indeterminate = ",indeterminate_value," any_checked = ",any_checked, " all_checked = ",all_checked)
+    #print("selection_change in TableList: indeterminate = ",indeterminate_value," any_checked = ",any_checked, " all_checked = ",all_checked)
     # make select_all a Global.work_area[Global.Global.current_work_area_name]["select_all"]
     self.select_all.checked = any_checked
     self.select_all.indeterminate = not all_checked and any_checked
