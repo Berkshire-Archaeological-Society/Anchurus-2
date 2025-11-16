@@ -390,9 +390,9 @@ class Main(MainTemplate):
       # if user has system admin role, add system admin actions list and set it visible
       user = anvil.users.get_user()
       Global.system_user_role = user["role"]
-      
+      self.user_role.text = Global.system_user_role
+
       if Global.system_user_role in ["system-administrator"]:
-        self.user_role.text = Global.system_user_role
         self.menu_middle.visible = True
         self.mm_right.visible = True
         self.mm_left.visible = False
@@ -443,56 +443,65 @@ class Main(MainTemplate):
       #Global.help_page.help_page_text.visible = True
       #Global.help_page.help_page_text.clear()
       Global.help_page.visible = False
-      
-      Global.site_name = self.select_site_dropdown.selected_value
-      Global.site_id = Global.site_options[self.select_site_dropdown.selected_value]
-      
+
       # check user authorisation role for the selected site
-      Global.site_user_role = anvil.server.call("user_authorisation",Global.site_id,Global.username)
+      Global.site_user_role = anvil.server.call("user_authorisation",Global.site_options[self.select_site_dropdown.selected_value],Global.username)
+      if Global.site_user_role != "unknown":
+        # user found with a role for the selected site
+        self.user_role.text = Global.site_user_role
+
+        Global.site_name = self.select_site_dropdown.selected_value
+        Global.site_id = Global.site_options[self.select_site_dropdown.selected_value]
       
-      Global.selected_site = ": " + Global.site_name
-      #Global.title_label.text = Global.title + Global.status + Global.selected_site
-      #Global.title_label.text = Global.title
-      #Global.header_site_name.text = Global.site_name
-      db_summary = anvil.server.call("db_get_summary")
-      self.site_summary.visible = True
-      self.site_summary.items = db_summary
-      
-      #
-      self.menu_middle.visible = True
-      self.mm_left.visible = True
-      self.mm_middle.visible = True
-      self.mm_right.visible = True
-      if Global.site_user_role in ["Administrator","Editor","Manager"]:
-        self.list_dropdown.visible = True
-        self.view_row.visible = True
-        
-        self.edit_row.visible = True
-        self.insert_dropdown.visible = True
-        
-        self.delete_row.visible = True
-        self.import_dropdown.visible = True
-      elif Global.site_user_role in ["Viewer"]:
-        # role is Viewer
-        self.list_dropdown.visible = True
-        self.view_row.visible = True
+        Global.selected_site = ": " + Global.site_name
+        #Global.title_label.text = Global.title + Global.status + Global.selected_site
+        #Global.title_label.text = Global.title
+        #Global.header_site_name.text = Global.site_name
+        db_summary = anvil.server.call("db_get_summary")
+        self.site_summary.visible = True
+        self.site_summary.items = db_summary
+  
         #
-        self.insert_dropdown.visible = False
-        self.import_dropdown.visible = False
-        self.edit_row.visible = False
-        self.delete_row.visible = False
+        self.menu_middle.visible = True
+        self.mm_left.visible = True
+        self.mm_middle.visible = True
+        self.mm_right.visible = True
+        if Global.site_user_role in ["Administrator","Editor","Manager"]:
+          self.list_dropdown.visible = True
+          self.view_row.visible = True
+        
+          self.edit_row.visible = True
+          self.insert_dropdown.visible = True
+        
+          self.delete_row.visible = True
+          self.import_dropdown.visible = True
+        elif Global.site_user_role in ["Viewer"]:
+          # role is Viewer
+          self.list_dropdown.visible = True
+          self.view_row.visible = True
+          #
+          self.insert_dropdown.visible = False
+          self.import_dropdown.visible = False
+          self.edit_row.visible = False
+          self.delete_row.visible = False
+        else:
+          # unkown role
+          msg = "Unkown User Role identified: " + str(Global.site_user_role)
+          n = Notification(msg)
+          n.show()
+          # disable able all action buttons
+          self.admin_dropdown.visible = False
+          self.list_dropdown.visible = False
+          self.view_row.visible = False
+          self.insert_dropdown.visible = False
+          self.import_dropdown.visible = False
+          self.edit_row.visible = False
+          self.delete_row.visible = False
       else:
-        # unkown role
-        n = Notification("Unkown User Role identified!")
+        msg = "Not found a role for you in site " + self.select_site_dropdown.selected_value + ". Please contact the Project Manager."
+        n = Notification(msg)
+        self.select_site_dropdown.selected_value = None
         n.show()
-        # disable able all action buttons
-        self.admin_dropdown.visible = False
-        self.list_dropdown.visible = False
-        self.view_row.visible = False
-        self.insert_dropdown.visible = False
-        self.import_dropdown.visible = False
-        self.edit_row.visible = False
-        self.delete_row.visible = False
     pass
 
   # Funtions for the menu options (Menu_middle) after the user selected a site
@@ -909,6 +918,8 @@ class Main(MainTemplate):
 
     self.username_dropdown.placeholder = Global.username
     self.username_dropdown.items = []
+    Global.system_user_role = ""
+    self.user_role.text = ""
 
     # To be done: save work areas in table for user for loading when login
 
