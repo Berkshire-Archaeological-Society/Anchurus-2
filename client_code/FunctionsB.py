@@ -94,7 +94,7 @@ def table_list_refresh(self):
   # This function does the filling of the table contents
   # 1. call server function '"table_name"s_get', which retrieves all rows of the table_name for the given site
   self.repeating_panel_1.items = anvil.server.call("table_get",Global.site_id,Global.table_name)
-  #print(self.repeating_panel_1.items)
+  print(self.repeating_panel_1.items)
   # 2. set nr of rows per page from Global variable (which is defined by a parameter in the server-side config file)
   #if Global.rows_per_page is not None:
   self.table.rows_per_page = Global.rows_per_page
