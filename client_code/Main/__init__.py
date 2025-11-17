@@ -451,8 +451,12 @@ class Main(MainTemplate):
 
         if Global.site_user_role == "Manager" or Global.site_user_role == "Administrator" or Global.system_user_role == "System Administrator" :
           # add site manager admin actions to admin dropdown
-          options = Global.sys_admin_action_dropdown + Global.site_admin_action_dropdown
+          if Global.site_user_role == "Manager":
+            options = Global.site_admin_action_dropdown
+          else: 
+            options = Global.sys_admin_action_dropdown + Global.site_admin_action_dropdown
           self.admin_dropdown.items = options
+          self.admin_dropdown.visible = True
         
         Global.site_name = self.select_site_dropdown.selected_value
         Global.site_id = Global.site_options[self.select_site_dropdown.selected_value]
