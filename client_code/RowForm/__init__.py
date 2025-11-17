@@ -93,7 +93,7 @@ class RowForm(RowFormTemplate):
         input.add_event_handler('change',self.input_change)
         
       # set specific validators for the various fields
-      if column_name in ["SiteId"]:
+      if column_name in ["SiteId"] and action != "add":
         input.text = Global.site_id
         input.enabled = False
         input.foreground = "#ffffff"
@@ -173,8 +173,8 @@ class RowForm(RowFormTemplate):
   # a previous version of the submit function; to be check and moved relevant bits to current submit_btn_click function
   def submit_button_click(self, **evemt_args):
     if self.validator.are_all_valid():
-      # All fields are filled in correct (I think)
-      # collect context form details and then call anvil.server add_context
+      # All fields are filled in correct (I hope ;))
+      # collect form details and then call anvil.server add_context
       Global.context_items["ContextId"] = self.ContextId.text
       Global.context_items["SiteId"] = self.SiteId.text
       Global.context_items["Name"] = self.Name.text
