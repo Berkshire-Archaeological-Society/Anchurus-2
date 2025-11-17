@@ -165,10 +165,10 @@ class RowForm(RowFormTemplate):
     table_name = Global.action.split(" ")[1].lower()
     if self.validator.are_all_valid():
       #print(self.form_fields.items())
-      row_list = []
+      row_list = {}
       for col in self.form_fields.items():
-        col_value = {col[0]: col[1]["field"].text}
-        row_list.append(col_value)
+        row_list[col[0]] = col[1]["field"].text
+        #row_list.append(col_value)
         #if str(type(col[1]["field"])) == "<class 'anvil_extras.Quill.Quill'>":
         #  print(col[0],col[1]["field"].get_html())
         #else:
