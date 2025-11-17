@@ -57,7 +57,7 @@ class RowForm(RowFormTemplate):
     # loop over table columns
     self.field_details = {}
     self.form_fields = {}
-    #print(Global.table_items)
+    print(Global.table_items.keys())
     #print(Global.work_area[Global.current_work_area_name]["data_list"])
     for item in table_info:
       column_name = item["Field"]
