@@ -128,7 +128,7 @@ components:
       type: FlowPanel
     layout_properties: {full_width_row: true, grid_position: 'TQCWAS,XHRUHC GROHGQ,GCYXKZ'}
     name: menu_top
-    properties: {background: 'theme:Primary', col_widths: '{"LPGJNI":35,"SCFEUE":25}'}
+    properties: {background: 'theme:Primary', col_widths: '{"LPGJNI":30,"SCFEUE":30}'}
     type: ColumnPanel
   - components:
     - components:
