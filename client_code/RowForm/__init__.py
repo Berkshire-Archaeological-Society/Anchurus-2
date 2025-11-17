@@ -162,23 +162,27 @@ class RowForm(RowFormTemplate):
   def submit_btn_click(self, **event_args):
     """This method is called when the button is clicked"""
     action = Global.action.split(" ")[0].lower()
+    table_name = Global.action.split(" ")[1].lower()
     if self.validator.are_all_valid():
-      print(self.form_fields.items())
+      #print(self.form_fields.items())
+      row_list = []
       for col in self.form_fields.items():
-        if str(type(col[1]["field"])) == "<class 'anvil_extras.Quill.Quill'>":
-          print(col[0],col[1]["field"].get_html())
-        else:
-          print(col[0],col[1]["field"].text)
-      #
+        col_value = {col[0]: col[1]["field"].text}
+        row_list.append(col_value)
+        #if str(type(col[1]["field"])) == "<class 'anvil_extras.Quill.Quill'>":
+        #  print(col[0],col[1]["field"].get_html())
+        #else:
+        #  print(col[0],col[1]["field"].text)
+      print(row_list)
       if action == "add":
-        ret = anvil.server.call("row_add",self.form_fields.items())
+        ret = anvil.server.call("row_add",table_name,row_list)
         # if success then goto list contexts
         if ret[:2] == "OK":
           msg = "Row has been successfully inserted to the database."
         else:
           msg = "Row has not been inserted to the database, because of " + ret
       elif action == "edit":
-        ret = anvil.server.call("row_update",self.form_fields.items())
+        ret = anvil.server.call("row_update",table_name,row_list)
         # if success then goto list contexts
         if ret[:2] == "OK":
           msg = "Row has been successfully updated in the database."
