@@ -57,8 +57,6 @@ class RowForm(RowFormTemplate):
     # loop over table columns
     self.field_details = {}
     self.form_fields = {}
-    print(Global.table_items.keys())
-    #print(Global.work_area[Global.current_work_area_name]["data_list"])
     for item in table_info:
       column_name = item["Field"]
       column_type = item["Type"]
@@ -128,7 +126,7 @@ class RowForm(RowFormTemplate):
       
       # if action is View or Edit then fill all fields
       cur_len = 0
-      if action in ["edit", "view"]:          # Edit Context","Edit Find","View Context","View Find"]:
+      if action in ["edit", "view"]:
         if str(type(input)) == "<class 'anvil_extras.Quill.Quill'>":
           html_text = Global.work_area[Global.current_work_area_name]["data_list"][0][column_name]
           delta = input.clipboard.convert(html_text)
@@ -163,11 +161,32 @@ class RowForm(RowFormTemplate):
 
   def submit_btn_click(self, **event_args):
     """This method is called when the button is clicked"""
-    for col in self.form_fields.items():
-      if str(type(col[1]["field"])) == "<class 'anvil_extras.Quill.Quill'>":
-        print(col[0],col[1]["field"].get_html())
-      else:
-        print(col[0],col[1]["field"].text)
+    action = Global.action.split(" ")[0].lower()
+    if self.validator.are_all_valid():
+      print(self.form_fields.items())
+      for col in self.form_fields.items():
+        if str(type(col[1]["field"])) == "<class 'anvil_extras.Quill.Quill'>":
+          print(col[0],col[1]["field"].get_html())
+        else:
+          print(col[0],col[1]["field"].text)
+      #
+      if action == "add":
+        ret = anvil.server.call("row_add",self.form_fields.items())
+        # if success then goto list contexts
+        if ret[:2] == "OK":
+          msg = "Row has been successfully inserted to the database."
+        else:
+          msg = "Row has not been inserted to the database, because of " + ret
+      elif action == "edit":
+        ret = anvil.server.call("row_update",self.form_fields.items())
+        # if success then goto list contexts
+        if ret[:2] == "OK":
+          msg = "Row has been successfully updated in the database."
+        else:
+          msg = "Row has not been updated in the database, because of " + ret
+      alert(content=msg)
+    else:
+      alert("Please correct the field(s) with errors before submitting.")
     pass
 
   # a previous version of the submit function; to be check and moved relevant bits to current submit_btn_click function
