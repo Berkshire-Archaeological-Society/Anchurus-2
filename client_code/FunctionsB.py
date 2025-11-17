@@ -68,13 +68,8 @@ def clear_selection(self):
 
   # make menu_select_options invisible
   Global.work_area[Global.current_work_area_name]["menu_select_options"].visible = False
-
   return
   
-#
-#
-#
-
 def refresh_click(self):
   # The refresh button on then main menu has been clicked. 
   # The self variable is the one of the current_work_area_name
@@ -87,14 +82,51 @@ def refresh_click(self):
     msg = "Refresh not yet implemented."
     n = Notification(msg)
     n.show()
-  
+  return
+
+def create_table_columns(column_list,work_area):
+  work_area["columns_show"] = []
+  columns_titles = []
+  columns_titles.append({"id": 1, "title": "", "data_key": "select", "width": 30, "expand": False })
+  id = 1
+  for column in column_list:
+    # Select Column "Field"
+    work_area["columns_show"].append(column)
+    col_width = Global.table_colwidth_default
+    #col_width = 0
+    if column in Global.table_colwidth_60:
+      col_width = 60
+    if column in Global.table_colwidth_70:
+      col_width = 70
+    if column in Global.table_colwidth_80:
+      col_width = 80
+    if column in Global.table_colwidth_90:
+      col_width = 90
+    if column in Global.table_colwidth_100:
+      col_width = 100
+    if column in Global.table_colwidth_120:
+      col_width = 120
+    if column in Global.table_colwidth_140:
+      col_width = 140
+    if column in Global.table_colwidth_200:
+      col_width = 200
+    if column not in ["SiteId","DBAcontrol","select"]: # do not create a columns for SiteId, DBAControl,select
+      id = id + 1
+      columns_titles.append({"id": id, "title": column, "data_key": column, "width": col_width, "expand": True })
+    # assign the columns titles to the grid columns
+    #print(columns_titles)
+    work_area["table"].columns = columns_titles
   return
   
 def table_list_refresh(self):
   # This function does the filling of the table contents
   # 1. call server function '"table_name"s_get', which retrieves all rows of the table_name for the given site
   self.repeating_panel_1.items = anvil.server.call("table_get",Global.site_id,Global.table_name)
-  print(self.repeating_panel_1.items)
+  if len(self.repeating_panel_1.items) > 0:
+    # reset table columns if we have rows. This will able to receive views, not just fixed table columns
+    column_list = self.repeating_panel_1.items[0].keys()
+    create_table_columns(column_list,Global.work_area[Global.current_work_area_name])
+
   # 2. set nr of rows per page from Global variable (which is defined by a parameter in the server-side config file)
   #if Global.rows_per_page is not None:
   self.table.rows_per_page = Global.rows_per_page
