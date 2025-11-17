@@ -29,7 +29,7 @@ components:
       - layout_properties: {}
         name: app_title
         properties:
-          font_size: 26
+          font_size: 24
           foreground: ''
           spacing:
             margin: ['8', null, null, null]
@@ -45,7 +45,7 @@ components:
       - layout_properties: {}
         name: organisation
         properties:
-          font_size: 26
+          font_size: 24
           foreground: ''
           spacing:
             margin: ['5', null, null, null]
@@ -128,7 +128,7 @@ components:
       type: FlowPanel
     layout_properties: {full_width_row: true, grid_position: 'TQCWAS,XHRUHC GROHGQ,GCYXKZ'}
     name: menu_top
-    properties: {background: 'theme:Primary', col_widths: '{"LPGJNI":30,"SCFEUE":30}'}
+    properties: {background: 'theme:Primary', col_widths: '{"LPGJNI":25,"SCFEUE":35}'}
     type: ColumnPanel
   - components:
     - components:
@@ -202,7 +202,7 @@ components:
       type: FlowPanel
     layout_properties: {full_width_row: true, grid_position: 'TQCWAS,XHRUHC GLJQXU,ESANAM'}
     name: menu_middle
-    properties: {background: 'theme:Primary', col_widths: '{"VAHDCA":20,"DCKDAP":27,"EQMWKT":11}'}
+    properties: {background: 'theme:Primary', col_widths: '{"VAHDCA":20,"DCKDAP":29,"EQMWKT":11}'}
     type: ColumnPanel
   - components:
     - components:
