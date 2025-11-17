@@ -66,7 +66,7 @@ class Main(MainTemplate):
     self.import_dropdown.items = Global.import_action_dropdown
     self.insert_dropdown.items = Global.insert_action_dropdown
     self.list_dropdown.items = Global.list_action_dropdown
-    self.admin_dropdown.items = Global.admin_action_dropdown
+    self.admin_dropdown.items = Global.sys_admin_action_dropdown
     #self.file_dropdown.items = Global.file_list
     self.view_dropdown.items = Global.view_action_dropdown
     self.help_dropdown.items = Global.help_action_dropdown
@@ -210,8 +210,7 @@ class Main(MainTemplate):
     work_area_name = action
 
     # For all actions not in Admin_action_list check ID field for creating unique work_area name
-    #print(action, Global.admin_action_list)
-    if action not in Global.admin_action_list:
+    if action not in Global.sys_admin_action_list and action not in Global.site_admin_action_list:
       # add first Primary Key ID field when view or edit
       table_info = anvil.server.call("describe_table",action.split(" ")[1].lower())
       primary_key_list = []
@@ -379,8 +378,6 @@ class Main(MainTemplate):
       # also set username  to user email address
       Global.username = user["email"]
       
-      #Global.DBAcontrol = anvil.server.call("check_DBAcontrol",Global.username,"i")
-      #self.username.text = Global.username + "\n (" + Global.site_user_role + ")"
       self.username_dropdown.placeholder = Global.username
       self.username_dropdown.items = ["Logout"]
 
@@ -392,7 +389,7 @@ class Main(MainTemplate):
       Global.system_user_role = user["role"]
       self.user_role.text = Global.system_user_role
 
-      if Global.system_user_role in ["system-administrator"]:
+      if Global.system_user_role in ["System Administrator"]:
         self.menu_middle.visible = True
         self.mm_right.visible = True
         self.mm_left.visible = False
@@ -448,8 +445,15 @@ class Main(MainTemplate):
       Global.site_user_role = anvil.server.call("user_authorisation",Global.site_options[self.select_site_dropdown.selected_value],Global.username)
       if Global.site_user_role != "unknown":
         # user found with a role for the selected site
-        self.user_role.text = Global.site_user_role
+        # Update role text if system_role is not System Administrator
+        if Global.system_user_role == "Site User":
+          self.user_role.text = "Site " + Global.site_user_role
 
+        if Global.site_user_role == "Manager" or Global.site_user_role == "Administrator" or Global.system_user_role == "System Administrator" :
+          # add site manager admin actions to admin dropdown
+          options = Global.sys_admin_action_dropdown + Global.site_admin_action_dropdown
+          self.admin_dropdown.items = options
+        
         Global.site_name = self.select_site_dropdown.selected_value
         Global.site_id = Global.site_options[self.select_site_dropdown.selected_value]
       
@@ -516,17 +520,6 @@ class Main(MainTemplate):
     Global.action = self.admin_dropdown.selected_value
 
     if Global.action not in Global.action_list_not_implemented:
-      # Action has been selected, create button in work area list, and make this work area in focus (highlight button)
-      # for any action that has a Form defined create a new work_area
-      #if Global.site_id is None and Global.action not in (Global.admin_action_dropdown):
-      #  # if site is not yet selected alert user
-      #  alert(
-      #    content="Site has not been selected. Please select a site.",
-      #    title="Site selection warning",
-      #    large=True,
-      #    buttons=[("Ok", True)],
-      #  )
-      #else:
       self.create_new_work_area(Global.action)
     else:
       if Global.action != Global.separator:
@@ -546,7 +539,7 @@ class Main(MainTemplate):
     if Global.action not in Global.action_list_not_implemented:
       # Action has been selected, create button in work area list, and make this work area in focus (highlight button)
       # for any action that has a Form defined create a new work_area
-      if Global.site_id is None and Global.action not in (Global.admin_action_dropdown):
+      if Global.site_id is None and Global.action not in (Global.sys_admin_action_dropdown) and Global.action not in (Global.site_admin_action_dropdown) :
         # if site is not yet selected alert user
         alert(
           content="Site has not been selected. Please select a site.",
@@ -575,7 +568,7 @@ class Main(MainTemplate):
     if Global.action not in Global.action_list_not_implemented:
       # Action has been selected, create button in work area list, and make this work area in focus (highlight button)
       # for any action that has a Form defined create a new work_area
-      if Global.site_id is None and Global.action not in (Global.admin_action_dropdown):
+      if Global.site_id is None and Global.action not in (Global.sys_admin_action_dropdown) and Global.action not in (Global.site_admin_action_dropdown) :
         # if site is not yet selected alert user
         alert(
           content="Site has not been selected. Please select a site.",
@@ -603,7 +596,7 @@ class Main(MainTemplate):
     if Global.action not in Global.action_list_not_implemented:
       # Action has been selected, create button in work area list, and make this work area in focus (highlight button)
       # for any action that has a Form defined create a new work_area
-      if Global.site_id is None and Global.action not in (Global.admin_action_dropdown):
+      if Global.site_id is None and Global.action not in (Global.sys_admin_action_dropdown) and Global.action not in (Global.site_admin_action_dropdown)  :
         # if site is not yet selected alert user
         alert(
           content="Site has not been selected. Please select a site.",

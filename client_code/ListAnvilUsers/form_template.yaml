@@ -22,9 +22,11 @@ components:
     columns:
     - {data_key: column_4, expand: false, id: FBKXLS, title: '', width: 61}
     - {data_key: email, expand: true, id: JKSDUP, title: email, width: 249}
-    - {data_key: Initials, expand: true, id: ATFSVD, title: Initials, width: 102.27276611328125}
-    - {data_key: role, expand: true, id: VJQQOR, title: role, width: 130.0909423828125}
-    - {data_key: enabled, expand: true, id: OJLQEN, title: enabled, width: 77}
+    - {data_key: firstname, expand: false, id: CFBYUP, title: firstname, width: 148.18182373046875}
+    - {data_key: lastname, expand: false, id: KIVAWX, title: lastname, width: 172.727294921875}
+    - {data_key: initials, expand: false, id: ATFSVD, title: initials, width: 80.45458984375}
+    - {data_key: role, expand: false, id: VJQQOR, title: role, width: 151.9091796875}
+    - {data_key: enabled, expand: false, id: OJLQEN, title: enabled, width: 97}
     - {data_key: last_login, expand: true, id: SRVCJL, title: last login, width: 276}
     - {data_key: signed_up, expand: true, id: MPXLTV, title: signed up, width: 288}
     - {data_key: confirmed_email, expand: true, id: YKUJWY, title: confirmed email, width: 130}

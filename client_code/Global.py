@@ -16,7 +16,8 @@ import anvil.users
 #
 main_form = ""
 separator = "------------------"
-admin_action_list = ["List Anvilusers","Edit AnvilUser","List Site","Edit Site","Add Site","List SiteUser","Edit SiteUsers","Add SiteUser"]
+sys_admin_action_list = ["List Anvilusers","Edit AnvilUser",separator,"List Site","Edit Site","Add Site"]
+site_admin_action_list = [separator,"List SiteUser","Edit SiteUsers","Add SiteUser"]
 admin_action_list_not_implemented = [separator]
 user_action_list = ["Select Site",separator,
                     "List Contexts","Add Context","Bulk Upload Contexts",separator,
@@ -32,8 +33,9 @@ insert_action_dropdown = ["Context","Find","Anomoly","Interpretation"]
 file_action_dropdown = ["Import",separator,"Save"]
 view_action_dropdown = []
 help_action_dropdown = []
-admin_action_dropdown = [("List Anvil Users","List Anvilusers"),("List Sites","List Site"),("Insert Site","Add Site"),("List Site Users","List Siteuser"),
-                         ("Edit Site User","Edit Siteuser"),("Insert Site User","Add Siteuser")]
+sys_admin_action_dropdown = [("List Anvil Users","List Anvilusers"),("List Sites","List Site"),("Insert Site","Add Site")]
+site_admin_action_dropdown = [(separator,separator),("List Site Users","List sys_siteuser"),("Edit Site User","Edit sys_siteuser"),("Insert Site User","Add sys_siteuser")]
+#
 import_action_dropdown = ["context","find"]
 #
 #
@@ -181,6 +183,7 @@ system_user_role = ""
 site_user_role = ""
 user_status = ""
 site_user_role_options = {"Administrator","Manager","Editor","Viewer"}
+system_user_role_options = {"System Administrator","Site User"}
 user_status_options = {"True", "False"}
 user_items = {}
 config_version = ""
