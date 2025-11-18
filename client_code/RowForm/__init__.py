@@ -175,9 +175,10 @@ class RowForm(RowFormTemplate):
         if ret[:2] == "OK":
           msg = "Row has been successfully inserted to the database."
           # if a site has been added, update the site selection dropdown
+          print(table_name)
           if table_name == "site":
             Global.site_options = FunctionsB.set_select_site_dropdown_options()      
-            Global.select_site_dropdown_list = Global.site_options.keys()
+            Global.select_site_dropdown_list.items = Global.site_options.keys()
         else:
           msg = "Row has not been inserted to the database, because of " + ret
       elif action == "edit":
