@@ -11,6 +11,7 @@ from anvil.tables import app_tables
 from anvil_extras.Quill import Quill
 
 from ..Validation import Validator
+from .. import FunctionsB
 from .. import Global
 
 class RowForm(RowFormTemplate):
@@ -174,7 +175,7 @@ class RowForm(RowFormTemplate):
         if ret[:2] == "OK":
           msg = "Row has been successfully inserted to the database."
           # if a site has been added, update the site selection dropdown
-          if table_name == "site" :
+          if table_name == "site":
             Global.site_options = FunctionsB.set_select_site_dropdown_options()      
             Global.select_site_dropdown_list = Global.site_options.keys()
         else:
