@@ -180,7 +180,7 @@ class RowForm(RowFormTemplate):
             print("updating select_site_dropdown_list")
             Global.site_options = FunctionsB.set_select_site_dropdown_options() 
             print(Global.site_options)
-            Global.select_site_dropdown_list.items = Global.site_options.keys()
+            Global.select_site_dropdown.items = Global.site_options.keys()
         else:
           msg = "Row has not been inserted to the database, because of " + ret
       elif action == "edit":
