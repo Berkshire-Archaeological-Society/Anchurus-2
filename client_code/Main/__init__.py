@@ -401,16 +401,10 @@ class Main(MainTemplate):
       self.menu_block.visible = True
       self.menu_top.visible = True
 
-      if anvil.users.get_user() is not None:
-        sites_list = anvil.server.call('sites_get_summary')
-        Global.site_options = {}
-        for x in sites_list:
-          val_list = list(x.values())
-          option = val_list[0] + " - " + val_list[1]
-          Global.site_options[option] = val_list[0]
-        
+      Global.site_options = FunctionsB.set_select_site_dropdown_options()      
       self.select_site_dropdown.items = Global.site_options.keys()
-
+      Global.select_site_dropdown_list = self.select_site_dropdown.items
+      
       # create a introduction message and add it to the introduction_message of the introduction_message block and make it visible
       Global.help_page.visible = True
       Global.site_id = "not_selected"

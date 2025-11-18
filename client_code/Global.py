@@ -157,6 +157,7 @@ site_id = None
 site_name = ""
 site_options = {}
 site_items = {}
+select_site_dropdown_list = {}
 header_site_summary_information = {}
 system_name = ""
 SurveyMethod_options = {"BNG","Aligned to BNG north","Not aligned to BNG north"}

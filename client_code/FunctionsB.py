@@ -151,3 +151,12 @@ def list_users_refresh(self):
   self.table.rows_per_page = Global.rows_per_page
   self.total_user_number.text = "Total number of Users: " + str(len(self.repeating_panel_1.items))
   return
+
+def set_select_site_dropdown_options():
+  sites_list = anvil.server.call('sites_get_summary')
+  site_options = {}
+  for x in sites_list:
+    val_list = list(x.values())
+    option = val_list[0] + " - " + val_list[1]
+    site_options[option] = val_list[0]
+  return site_options

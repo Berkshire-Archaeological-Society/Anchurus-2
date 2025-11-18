@@ -168,17 +168,15 @@ class RowForm(RowFormTemplate):
       row_list = {}
       for col in self.form_fields.items():
         row_list[col[0]] = col[1]["field"].text
-        #row_list.append(col_value)
-        #if str(type(col[1]["field"])) == "<class 'anvil_extras.Quill.Quill'>":
-        #  print(col[0],col[1]["field"].get_html())
-        #else:
-        #  print(col[0],col[1]["field"].text)
-      print(row_list)
       if action == "add":
         ret = anvil.server.call("row_add",table_name,row_list)
         # if success then goto list contexts
         if ret[:2] == "OK":
           msg = "Row has been successfully inserted to the database."
+          # if a site has been added, update the site selection dropdown
+          if table_name == "site" :
+            Global.site_options = FunctionsB.set_select_site_dropdown_options()      
+            Global.select_site_dropdown_list = Global.site_options.keys()
         else:
           msg = "Row has not been inserted to the database, because of " + ret
       elif action == "edit":
