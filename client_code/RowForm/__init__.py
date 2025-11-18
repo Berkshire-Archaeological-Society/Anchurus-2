@@ -177,7 +177,9 @@ class RowForm(RowFormTemplate):
           # if a site has been added, update the site selection dropdown
           print(table_name)
           if table_name == "site":
-            Global.site_options = FunctionsB.set_select_site_dropdown_options()      
+            print("updating select_site_dropdown_list")
+            Global.site_options = FunctionsB.set_select_site_dropdown_options() 
+            print(Global.site_options)
             Global.select_site_dropdown_list.items = Global.site_options.keys()
         else:
           msg = "Row has not been inserted to the database, because of " + ret
