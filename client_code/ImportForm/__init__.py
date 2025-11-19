@@ -40,7 +40,8 @@ class ImportForm(ImportFormTemplate):
       msg = anvil.server.call("import_file", Global.table_name, file)
       self.message_log.text = msg
       change_id = msg.splitlines(False)[0]
-      Global.DBAcontrol = change_id.split(" ")[1]
+      print(change_id)
+      Global.DBAcontrol = change_id.split(" ")[2]
       print(Global.DBAcontrol)
     else:
       self.upload_file.clear()
@@ -50,12 +51,13 @@ class ImportForm(ImportFormTemplate):
 
   def cancel_inserts_click(self, **event_args):
     """This method is called when the button is clicked"""
-    message = anvil.server.call("delete_by_DBAcontrol", Global.DBAcontrol)
+    message = anvil.server.call("delete_by_DBAcontrol",Global.DBAcontrol,Global.table_name)
     self.message.text = self.message.text + message
     byte_string = bytes(self.message_log.text, "utf-8")
     text_file = anvil.BlobMedia('text/plain', byte_string, name='Import.log')
     anvil.media.download(text_file)
-    n = Notification("The successful Inserts of the import have been cancelled and deleted from the table. The message log has been downloaded.")
+    note = "The successful row imports to table " + Global.table_name + " have been cancelled and deleted from the table. The message log has been downloaded."
+    n = Notification(note)
     n.show()
     self.upload_file.clear()
     self.selected_file_name.text = ""
