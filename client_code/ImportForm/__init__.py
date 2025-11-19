@@ -38,7 +38,7 @@ class ImportForm(ImportFormTemplate):
       msg = "No message received."
       msg = anvil.server.call("import_file", Global.table_name, file)
       self.message_log.text = msg
-      DBAcontrol = msg.splitlines(False)[0]
+      change_id = msg.splitlines(False)[0]
       print(DBAcontrol)
     else:
       self.upload_file.clear()
