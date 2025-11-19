@@ -40,9 +40,9 @@ class ImportForm(ImportFormTemplate):
       msg = anvil.server.call("import_file", Global.table_name, file)
       self.message_log.text = msg
       change_id = msg.splitlines(False)[0]
-      print(change_id)
+      #print(change_id)
       Global.DBAcontrol = change_id.split(" ")[2]
-      print(Global.DBAcontrol)
+      #print(Global.DBAcontrol)
     else:
       self.upload_file.clear()
       self.selected_file_name.text = ""
