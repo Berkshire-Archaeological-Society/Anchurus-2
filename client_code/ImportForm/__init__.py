@@ -24,7 +24,7 @@ class ImportForm(ImportFormTemplate):
     # Any code you write here will run before the form opens.
     self.Import_title.text = "Here you can import csv files for importing to the Database. You can download a template csv file if needed."
     Global.table_name = Global.action.split(" ")[1].rstrip("s").lower()
-    self.selected_table.text = "You have selected to import a csv file for the table: " + Global.table_name
+    self.selected_table.text = Global.table_name
     Global.main_form.mb_left.visible = False
     Global.main_form.mb_middle.visible = False
 
@@ -33,13 +33,15 @@ class ImportForm(ImportFormTemplate):
     """This method is called when a new file is loaded into this FileLoader"""
     #print(Global.current_work_area_name)
     self.selected_file_name.text = "You have selected file: " + file.name
-    msg = "No message received."
-    # type is database table name
-    # call check_DBAcontrol for existing or new DBAcontrol value
-    #DBAcontrol = anvil.server.call("check_DBAcontrol",Global.username,"b")
-    msg = anvil.server.call("import_file", Global.table_name, file)
-    #print(msg)
-    self.message_log.text = msg
+    msg = "You have selected file: " + file.name + "/nDo you wish to continue?"
+    if confirm(content=msg):
+      msg = "No message received."
+      msg = anvil.server.call("import_file", Global.table_name, file)
+      self.message_log.text = msg
+    else:
+      self.upload_file.clear()
+      self.selected_file_name.text = ""
+      self.message_log.text = ""
     pass
 
   def cancel_inserts_click(self, **event_args):
