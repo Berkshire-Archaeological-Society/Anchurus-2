@@ -33,7 +33,7 @@ class ImportForm(ImportFormTemplate):
     """This method is called when a new file is loaded into this FileLoader"""
     #print(Global.current_work_area_name)
     self.selected_file_name.text = "You have selected file: " + file.name
-    msg = "You have selected file: " + file.name + "/nDo you wish to continue?"
+    msg = "You have selected file: " + file.name + "\nDo you wish to continue?"
     if confirm(content=msg):
       msg = "No message received."
       msg = anvil.server.call("import_file", Global.table_name, file)
