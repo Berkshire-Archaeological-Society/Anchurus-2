@@ -28,12 +28,18 @@ components:
 - event_bindings: {click: commit_inserts_click}
   layout_properties: {grid_position: 'LDSRWL,TXRUOI'}
   name: commit_inserts
-  properties: {role: outlined-button, text: Commit and Save log}
+  properties:
+    role: outlined-button
+    text: "Commit \n(and save message log)"
   type: Button
 - event_bindings: {click: cancel_inserts_click}
   layout_properties: {grid_position: 'LDSRWL,GARSTZ'}
   name: cancel_inserts
-  properties: {role: outlined-button, text: Cancel}
+  properties:
+    role: outlined-button
+    text: |-
+      Cancel
+      (and save message log)
   type: Button
 container:
   properties: {col_widths: '{"ZMXQUR":55,"EPHMYV":40}'}

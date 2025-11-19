@@ -153,7 +153,7 @@ class RowForm(RowFormTemplate):
     #
     if action in ["edit","add"]:     #"Edit Context","Edit Find","Add Context","Add Find"]:
       # Add a Submit button if Edit or Add action
-      submit_btn = Button(text="Submit")
+      submit_btn = Button(text="Submit",role="outlined-button")
       submit_btn.add_event_handler("click",self.submit_btn_click)
       self.column_panel_1.add_component(submit_btn)
 
