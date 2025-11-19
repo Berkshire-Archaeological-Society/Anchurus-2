@@ -32,6 +32,7 @@ class ImportForm(ImportFormTemplate):
   def upload_file_change(self, file, **event_args):
     """This method is called when a new file is loaded into this FileLoader"""
     #print(Global.current_work_area_name)
+    Global.DBAcontrol = ""
     self.selected_file_name.text = "You have selected file: " + file.name
     msg = "You have selected file: " + file.name + "\nDo you wish to continue?"
     if confirm(content=msg):
@@ -39,7 +40,8 @@ class ImportForm(ImportFormTemplate):
       msg = anvil.server.call("import_file", Global.table_name, file)
       self.message_log.text = msg
       change_id = msg.splitlines(False)[0]
-      print(DBAcontrol)
+      Global.DBAcontrol = change_id.split(" ")[1]
+      print(Global.DBAcontrol)
     else:
       self.upload_file.clear()
       self.selected_file_name.text = ""
@@ -48,10 +50,12 @@ class ImportForm(ImportFormTemplate):
 
   def cancel_inserts_click(self, **event_args):
     """This method is called when the button is clicked"""
+    message = anvil.server.call("delete_by_DBAcontrol", Global.DBAcontrol)
+    self.message.text = self.message.text + message
     byte_string = bytes(self.message_log.text, "utf-8")
     text_file = anvil.BlobMedia('text/plain', byte_string, name='Import.log')
     anvil.media.download(text_file)
-    n = Notification("The successful Inserts have been cancelled and removed from to the table. The message log has been downloaded.")
+    n = Notification("The successful Inserts of the import have been cancelled and deleted from the table. The message log has been downloaded.")
     n.show()
     self.upload_file.clear()
     self.selected_file_name.text = ""
