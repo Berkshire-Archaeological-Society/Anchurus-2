@@ -32,6 +32,8 @@ class ImportForm(ImportFormTemplate):
   def upload_file_change(self, file, **event_args):
     """This method is called when a new file is loaded into this FileLoader"""
     #print(Global.current_work_area_name)
+    self.selected_file_name.text = ""
+    self.message_log.text = ""
     Global.DBAcontrol = ""
     self.selected_file_name.text = "You have selected file: " + file.name
     msg = "You have selected file: " + file.name + "\nDo you wish to continue?"
@@ -52,16 +54,16 @@ class ImportForm(ImportFormTemplate):
   def cancel_inserts_click(self, **event_args):
     """This method is called when the button is clicked"""
     message = anvil.server.call("delete_by_DBAcontrol",Global.DBAcontrol,Global.table_name)
-    self.message.text = self.message.text + message
+    self.message_log.text = self.message_log.text + message
     byte_string = bytes(self.message_log.text, "utf-8")
     text_file = anvil.BlobMedia('text/plain', byte_string, name='Import.log')
     anvil.media.download(text_file)
-    note = "The successful row imports to table " + Global.table_name + " have been cancelled and deleted from the table. The message log has been downloaded."
+    note = "The successful inserts to table " + Global.table_name + " have been cancelled and deleted from the table. The message log has been downloaded."
     n = Notification(note)
     n.show()
-    self.upload_file.clear()
-    self.selected_file_name.text = ""
-    self.message_log.text = ""
+    #self.upload_file.clear()
+    #self.selected_file_name.text = ""
+    #self.message_log.text = ""
     pass
 
   def commit_inserts_click(self, **event_args):
@@ -71,7 +73,7 @@ class ImportForm(ImportFormTemplate):
     anvil.media.download(text_file)
     n = Notification("The successful Inserts have been comitted to the table. The message log has been downloaded.")
     n.show()
-    self.upload_file.clear()
-    self.selected_file_name.text = ""
-    self.message_log.text = ""
+    #self.upload_file.clear()
+    #self.selected_file_name.text = ""
+    #self.message_log.text = ""
     pass
