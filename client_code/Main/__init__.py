@@ -459,7 +459,7 @@ class Main(MainTemplate):
         #Global.title_label.text = Global.title + Global.status + Global.selected_site
         #Global.title_label.text = Global.title
         #Global.header_site_name.text = Global.site_name
-        db_summary = anvil.server.call("db_get_summary")
+        db_summary = anvil.server.call("db_get_summary",Global.site_id)
         self.site_summary.visible = True
         self.site_summary.items = db_summary
   

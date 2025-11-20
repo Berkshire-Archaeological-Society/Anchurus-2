@@ -153,7 +153,7 @@ def list_users_refresh(self):
   return
 
 def set_select_site_dropdown_options():
-  sites_list = anvil.server.call('sites_get_summary')
+  sites_list = anvil.server.call('sites_get_summary',Global.username)
   site_options = {}
   for x in sites_list:
     val_list = list(x.values())
