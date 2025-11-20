@@ -56,7 +56,7 @@ class ImportForm(ImportFormTemplate):
     message = anvil.server.call("delete_by_DBAcontrol",Global.DBAcontrol,Global.table_name)
     self.message_log.text = self.message_log.text + message
     byte_string = bytes(self.message_log.text, "utf-8")
-    text_file = anvil.BlobMedia('text/plain', byte_string, name='Import.log')
+    text_file = anvil.BlobMedia('text/plain', byte_string, name='Import_message.log')
     anvil.media.download(text_file)
     note = "The successful inserts to table " + Global.table_name + " have been cancelled and deleted from the table. The message log has been downloaded."
     n = Notification(note)
@@ -69,7 +69,7 @@ class ImportForm(ImportFormTemplate):
   def commit_inserts_click(self, **event_args):
     """This method is called when the button is clicked"""
     byte_string = bytes(self.message_log.text, "utf-8")
-    text_file = anvil.BlobMedia('text/plain', byte_string, name='Import.log')
+    text_file = anvil.BlobMedia('text/plain', byte_string, name='Import_message.log')
     anvil.media.download(text_file)
     n = Notification("The successful Inserts have been comitted to the table. The message log has been downloaded.")
     n.show()
