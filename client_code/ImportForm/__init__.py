@@ -38,7 +38,6 @@ class ImportForm(ImportFormTemplate):
     self.selected_file_name.text = "You have selected file: " + file.name
     msg = "You have selected file: " + file.name + "\nDo you wish to continue?"
     if confirm(content=msg):
-      msg = "No message received."
       msg = anvil.server.call("import_file", Global.table_name, file)
       self.message_log.text = msg
       change_id = msg.splitlines(False)[0]
