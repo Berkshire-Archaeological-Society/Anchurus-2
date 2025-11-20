@@ -5,13 +5,17 @@ components:
     properties: {font_size: 24, italic: false, text: This form is used for updating a Web user role and/or status, underline: true}
     type: Label
   - components:
-    - layout_properties: {}
+    - layout_properties: {width: 100}
       name: label_2
       properties:
         spacing:
           margin: ['8', null, null, null]
         text: 'User email:'
       type: Label
+    - layout_properties: {width: 27.727294921875}
+      name: column_panel_2
+      properties: {}
+      type: ColumnPanel
     - layout_properties: {}
       name: user_email_value
       properties: {role: outlined}
@@ -21,14 +25,19 @@ components:
     properties: {}
     type: FlowPanel
   - components:
-    - layout_properties: {}
+    - layout_properties: {width: 100}
       name: label_8
       properties:
         spacing:
           margin: ['8', null, null, null]
         text: 'Firstname:'
       type: Label
-    - layout_properties: {}
+    - layout_properties: {width: 32.81817626953125}
+      name: column_panel_3
+      properties: {}
+      type: ColumnPanel
+    - event_bindings: {change: firstname_change}
+      layout_properties: {}
       name: firstname
       properties: {role: outlined}
       type: TextBox
@@ -37,14 +46,19 @@ components:
     properties: {}
     type: FlowPanel
   - components:
-    - layout_properties: {}
+    - layout_properties: {width: 100}
       name: label_9
       properties:
         spacing:
           margin: ['8', null, null, null]
         text: 'Lastname:'
       type: Label
-    - layout_properties: {}
+    - layout_properties: {width: 33}
+      name: column_panel_4
+      properties: {}
+      type: ColumnPanel
+    - event_bindings: {change: lastname_change}
+      layout_properties: {}
       name: lastname
       properties: {role: outlined}
       type: TextBox
@@ -53,13 +67,17 @@ components:
     properties: {}
     type: FlowPanel
   - components:
-    - layout_properties: {}
+    - layout_properties: {width: 100}
       name: Initials_header
       properties: {text: 'Initials:'}
       type: Label
-    - event_bindings: {change: Initials_change}
+    - layout_properties: {width: 54.27276611328125}
+      name: column_panel_5
+      properties: {}
+      type: ColumnPanel
+    - event_bindings: {change: initials_change}
       layout_properties: {}
-      name: Initials
+      name: initials
       properties:
         margin: ['0', null, null, null]
         role: outlined
@@ -69,12 +87,16 @@ components:
     properties: {}
     type: FlowPanel
   - components:
-    - layout_properties: {width: 500}
+    - layout_properties: {width: 100}
       name: label_3
       properties: {text: 'Role:'}
       type: Label
+    - layout_properties: {width: 67.90056611328124}
+      name: column_panel_6
+      properties: {}
+      type: ColumnPanel
     - event_bindings: {change: user_role_value_change}
-      layout_properties: {width: 223.715894921875}
+      layout_properties: {width: 198.97976611328124}
       name: user_role_value
       properties: {background: 'theme:On Primary'}
       type: DropDown
@@ -87,6 +109,10 @@ components:
       name: label_4
       properties: {text: 'Enabled:'}
       type: Label
+    - layout_properties: {width: 44.81817626953125}
+      name: column_panel_7
+      properties: {}
+      type: ColumnPanel
     - event_bindings: {change: user_status_value_change}
       layout_properties: {width: 202.89771865234374}
       name: user_status_value

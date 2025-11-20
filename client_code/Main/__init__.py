@@ -164,9 +164,8 @@ class Main(MainTemplate):
       Global.work_area[Global.current_work_area_name]["menu_select_options"].visible = True
       #Global.work_area[Global.current_work_area_name]["self"].select_all
     pass
-    self.select_all.checked = Global.work_area[Global.current_work_area_name]["self"].select_all.checked
-    self.select_all.indeterminate = Global.work_area[Global.current_work_area_name]["self"].select_all.indeterminate
-    #print("work_area_click: ",Global.current_work_area_name," select_all.checked = ",self.select_all.checked, "select_all.indeterminate = ",self.select_all.indeterminate)
+    ###self.select_all.checked = Global.work_area[Global.current_work_area_name]["self"].select_all.checked
+    ###self.select_all.indeterminate = Global.work_area[Global.current_work_area_name]["self"].select_all.indeterminate
 
     # Set selected buttons on Header for work area type
     if Global.action_form_type in Global.action_forms_with_refresh:
@@ -650,8 +649,8 @@ class Main(MainTemplate):
     #
     #self.select_all.checked = any_checked
     #self.select_all.indeterminate = not all_checked and any_checked
-    Global.work_area[Global.current_work_area_name]["self"].select_all.checked = any_checked
-    Global.work_area[Global.current_work_area_name]["self"].select_all.indeterminate = not all_checked and any_checked
+    ###Global.work_area[Global.current_work_area_name]["self"].select_all.checked = any_checked
+    ###Global.work_area[Global.current_work_area_name]["self"].select_all.indeterminate = not all_checked and any_checked
     Global.work_area[Global.current_work_area_name]["menu_select_options"].visible = any_checked
     #
     pass
@@ -682,16 +681,18 @@ class Main(MainTemplate):
       #print("if indeterminate was True, set indeterminate to False ")
       self.select_all.indeterminate = False
       self.select_all.checked = False
-      Global.work_area[Global.current_work_area_name]["self"].select_all.indeterminate = False
+      ###Global.work_area[Global.current_work_area_name]["self"].select_all.indeterminate = False
     #
     if len(Global.work_area[Global.current_work_area_name]["selected_rows"]) == 0:
       #print("0 selected rows, clear menu")
       Global.work_area[Global.current_work_area_name]["menu_select_options"].visible = False
-      Global.work_area[Global.current_work_area_name]["self"].select_all.checked = False
+      ###Global.work_area[Global.current_work_area_name]["self"].select_all.checked = False
+      self.select_all.checked = False
     else:
       Global.work_area[Global.current_work_area_name]["menu_select_options"].visible = True
 
-    Global.work_area[Global.current_work_area_name]["self"].select_all.checked = checked
+    ###Global.work_area[Global.current_work_area_name]["self"].select_all.checked = checked
+    self.select_all.checked = checked
     pass
     
   def view_row_click(self, **event_args):
