@@ -139,7 +139,7 @@ class Main(MainTemplate):
 
     Global.action_form_type = str(type(Global.work_area[Global.current_work_area_name]["form"])).split(".")[2][:-2]
     #
-    if Global.work_area[Global.current_work_area_name]["action"].split(" ")[0] in ["View", "Edit", "Insert", "Add", "Import"] or Global.work_area[Global.current_work_area_name]["action"] == "List Users":
+    if Global.work_area[Global.current_work_area_name]["action"].split(" ")[0] in ["View", "Edit", "Insert", "Add", "Import"] or Global.work_area[Global.current_work_area_name]["action"] == "List Anvilusers":
       self.mb_middle.visible = False
       self.mb_left.visible = False
     elif Global.work_area[Global.current_work_area_name]["action"].split(" ")[0] in ["List"]:
@@ -150,7 +150,7 @@ class Main(MainTemplate):
     #self.select_all.checked = False
 
     # update status label (page control information) if work_space is a List
-    if Global.work_area[Global.current_work_area_name]["action"].split(" ")[0] in ["List"] and Global.work_area[Global.current_work_area_name]["action"] != "List Anvilusers":
+    if Global.work_area[Global.current_work_area_name]["action"].split(" ")[0] in ["List"] or Global.work_area[Global.current_work_area_name]["action"] != "List Anvilusers":
       FunctionsB.update_status_label(Global.work_area[Global.current_work_area_name]["self"])
 
     if len(Global.work_area[Global.current_work_area_name]["selected_rows"]) == 0:
@@ -309,10 +309,12 @@ class Main(MainTemplate):
       Global.current_work_area_name = work_area_name
       Global.header_work_area_type.text = str(type(Global.work_area[Global.current_work_area_name]["form"])).split(".")[2][:-2]
       Global.header_work_area_type.enabled = False
+      print(Global.header_work_area_type.text)
       #Global.action_form_type = Global.header_work_area_type.text.split(".")[2][:-2]
+      Global.action_form_type = Global.header_work_area_type.text
       #
-      # Only show page controls for List action
-      if Global.work_area[Global.current_work_area_name]["action"].split(" ")[0] in ["View", "Edit", "Insert", "Add", "Import"] or Global.work_area[Global.current_work_area_name]["action"] == "List Users":
+      # Only show page controls for List Table action
+      if Global.work_area[Global.current_work_area_name]["action"].split(" ")[0] in ["View", "Edit", "Insert", "Add", "Import"] or Global.work_area[Global.current_work_area_name]["action"] == "List Anvilusers":
         self.mb_middle.visible = False
         self.mb_left.visible = False
       elif Global.work_area[Global.current_work_area_name]["action"].split(" ")[0] in ["List"]:
@@ -324,35 +326,36 @@ class Main(MainTemplate):
 
       # Set selected buttons on Header for work area type
       Global.action_form_type = Global.header_work_area_type.text
+      print(Global.action_form_type)
       if Global.action_form_type in Global.action_forms_with_refresh:
         # make Refresh button visible if action_form_type has refresh function (i.e. in list Global.action_forms_with_refresh) 
-        Global.header_refresh_button.visible = True
+        #Global.header_refresh_button.visible = True
         self.refresh.visible = True
         #print("set refresh button")
       else:
-        Global.header_refresh_button.visible = False
+        #Global.header_refresh_button.visible = False
         self.refresh.visible = False
 
       if Global.action_form_type in Global.action_forms_with_print:
         # make print button visible if action_form_type has print function (i.e. in list Global.action_forms_with_print) 
-        Global.header_print_button.visible = True
+        #Global.header_print_button.visible = True
         self.print.visible = True
       else:
-        Global.header_print_button.visible = False   
+        #Global.header_print_button.visible = False   
         self.print.visible = False
       if Global.action_form_type in Global.action_forms_with_download:
         # Make download button visible for Global.action_form_type
-        Global.header_download_button.visible = True
+        #Global.header_download_button.visible = True
         self.download_csv.visible = True
       else:
-        Global.header_download_button.visible = False
+        #Global.header_download_button.visible = False
         self.download_csv.visible = False
       if Global.action_form_type in Global.action_forms_with_filter and Global.work_area[work_area_name]["data_list"]:
         # Make filter button visible for Global.action_form_type if data_list is not empty
-        Global.header_filter_button.visible = True
+        #Global.header_filter_button.visible = True
         self.filter_cols.visible = True
       else:
-        Global.header_filter_button.visible = False
+        #Global.header_filter_button.visible = False
         self.filter_cols.visible = False
 
       # reset action dropdown list
@@ -511,7 +514,7 @@ class Main(MainTemplate):
 
   # Funtions for the menu options (Menu_middle) after the user selected a site
   def admin_dropdown_change(self, **event_args):
-    """ Thus Function is called when the users has selected an action form the Admin dropdown menu """
+    """ This Function is called when the users has selected an action form the Admin dropdown menu """
     """This method is called when an item from the dropdown menu is selected"""
     # Action has been selected, but only take action if action in not a separator
     # save a link to the Main form in a Global variable 

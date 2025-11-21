@@ -23,11 +23,13 @@ class ListAnvilUsers(ListAnvilUsersTemplate):
     # Set Form properties and Data Bindings.
     self.init_components(**properties)
     # Any code you write here will run before the form opens.
+    print("in ListAvilUsers")
     Global.help_page.visible = False
     Global.header.visible = False
     Global.main_form.menu_bottom.visible = True
-    Global.main_form.mb_left.visible = False
-    Global.main_form.mb_middle.visible = False
+    #Global.main_form.mb_left.visible = False
+    #Global.main_form.mb_middle.visible = False
+    #Global.main_form.refresh.visible = True
     #
     # save self in Global.work_area
     Global.work_area[Global.current_work_area_name]["self"] = self

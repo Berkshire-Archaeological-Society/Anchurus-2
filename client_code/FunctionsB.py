@@ -163,9 +163,9 @@ def set_select_site_dropdown_options():
     site_options[option] = val_list[0]
   return site_options
 
-def list_anvil_users_refresh():
+def list_anvil_users_refresh(self):
   # this function does the filling of the table contents
-  self.UsersList.items = anvil.server.call('users_get')
+  self.repeating_panel_1.items = anvil.server.call('users_get')
   self.table.rows_per_page = Global.rows_per_page
-  self.total_user_number.text = "Total number of Users: " + str(len(self.UsersList.items))
+  self.total_user_number.text = "Total number of Users: " + str(len(self.repeating_panel_1.items))
   return
