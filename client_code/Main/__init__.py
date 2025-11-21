@@ -376,6 +376,10 @@ class Main(MainTemplate):
       # when user is logged in, enable Action menu, username field and logout button, and disable content panel (welcome message)
       # also set username  to user email address
       Global.username = user["email"]
+      Global.name = user["firstname"] + " " + user["lastname"]
+      message = Global.help_introduction.replace("<user>",Global.name)
+      rt = RichText(content=message,format="restricted_html")
+      Global.help_page_form.help_page_text.add_component(rt)
       
       self.username_dropdown.placeholder = Global.username
       self.username_dropdown.items = ["Logout"]
@@ -688,7 +692,6 @@ class Main(MainTemplate):
       Global.work_area[Global.current_work_area_name]["menu_select_options"].visible = False
       ###Global.work_area[Global.current_work_area_name]["self"].select_all.checked = False
       self.select_all.checked = False
-    else:
       Global.work_area[Global.current_work_area_name]["menu_select_options"].visible = True
 
     ###Global.work_area[Global.current_work_area_name]["self"].select_all.checked = checked
