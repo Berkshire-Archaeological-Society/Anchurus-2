@@ -21,9 +21,9 @@ class AnvilUserForm(AnvilUserFormTemplate):
     # set validation on fields
     self.validator.regex(component=self.initials,
                          events=['lost_focus', 'change'],
-                         pattern="^[A-Z]{2}$",
+                         pattern="^[A-Z]{2}[a-z0-9]$",
                          required=True,
-                         message="Please enter the two letter initials of the user")
+                         message="Please enter the two letter initials of the user, followed by a lowercase letter or digit")
     #
     self.user_role_value.items = Global.system_user_role_options
     self.user_status_value.items = Global.user_status_options
