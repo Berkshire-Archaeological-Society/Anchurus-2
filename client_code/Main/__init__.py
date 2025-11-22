@@ -447,7 +447,8 @@ class Main(MainTemplate):
         Function.delete_workspace(work_area_name)
       self.menu_bottom.visible = False
       self.site_summary.visible = False
-
+      Global.action_seq_no = {}
+      Global.work_area = {}
       # check user authorisation role for the selected site
       Global.site_user_role = anvil.server.call("user_authorisation",Global.site_options[self.select_site_dropdown.selected_value],Global.username)
       if Global.site_user_role != "unknown":
@@ -942,7 +943,7 @@ class Main(MainTemplate):
     for work_area_name in temp_work_area_name_list:
       Function.delete_workspace(work_area_name)
 
-      # clear selected site
+    # clear selected site
     self.select_site_dropdown.selected_value = None
 
     # clear work_area list and action_seq_no
