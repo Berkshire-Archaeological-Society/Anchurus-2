@@ -899,6 +899,7 @@ class Main(MainTemplate):
 
     # make help_page invisible
     Global.help_page.visible = False
+    Global.help_page.help_page_text.clear()
 
     # Welcome_page will show the login page
     self.welcome_page.visible = True
