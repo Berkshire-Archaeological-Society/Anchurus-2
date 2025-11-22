@@ -112,7 +112,7 @@ def create_table_columns(column_list,work_area):
       col_width = 140
     if column in Global.table_colwidth_200:
       col_width = 200
-    if column not in ["SiteId","DBAcontrol","select"]: # do not create a columns for SiteId, DBAControl,select
+    if column not in ["DBAcontrol","select"]: # do not create a columns for DBAControl and select
       id = id + 1
       columns_titles.append({"id": id, "title": column, "data_key": column, "width": col_width, "expand": True })
     # assign the columns titles to the grid columns
@@ -124,9 +124,10 @@ def table_list_refresh(self):
   # This function does the filling of the table contents
   # 1. call server function '"table_name"s_get', which retrieves all rows of the table_name for the given site
   self.repeating_panel_1.items = anvil.server.call("table_get",Global.site_id,Global.table_name)
-  if len(self.repeating_panel_1.items) > 0:
+  if len(self.repeating_panel_1.items) > 0 and Global.query_view:
     # reset table columns if we have rows. This will able to receive views, not just fixed table columns
     column_list = self.repeating_panel_1.items[0].keys()
+    print(column_list)
     create_table_columns(column_list,Global.work_area[Global.current_work_area_name])
 
   # 2. set nr of rows per page from Global variable (which is defined by a parameter in the server-side config file)

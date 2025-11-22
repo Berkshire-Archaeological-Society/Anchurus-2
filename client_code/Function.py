@@ -42,6 +42,10 @@ def create_work_space(type,data_list):
   page_info = {}
   table_name = type.split(" ")[1].lower()
   action = type.split(" ")[0].lower()
+  Global.query_view = False
+  if table_name in Global.view_queries:
+    Global.query_view = True
+
   #print(action, table_name)
   # First param of RowForm and TableList is site_id, but is blanked out. Only used by server print function
   # Make sure any List actions that are not using the TableList Form should be listed first

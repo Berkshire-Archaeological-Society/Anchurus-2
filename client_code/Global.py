@@ -144,6 +144,8 @@ material_types = ["CBM Tile","CBM Brick","CBM Drain Pipe","CBM Mortar",
 login_options = {"Sign in", "Sign out"}
 #
 organisation = ""
+query_view = False
+view_queries = ["sys_siteuser"]
 #
 # The following variable rows_per_page has to be set to 0, to make sure the print function prints the whole table
 # During startup of the client (i.e. browser URL click of website) this value can be overwritten by a value for this
@@ -170,8 +172,8 @@ table_colwidth_60 = ["FillOf","Year","Count","Weight"]
 table_colwidth_70 = []
 table_colwidth_80 = ["FContextId","AreaId","YearStart","YearEnd","Workflow","BoxId","FromSample","FindType"]
 table_colwidth_90 = ["FindId"]
-table_colwidth_100 = ["FindGroupId","ContextYear","ContextType","PackageType","SmallFindId","FromSample","RecordStatus"]
-table_colwidth_120 = []
+table_colwidth_100 = ["FindGroupId","ContextYear","ContextType","PackageType","SmallFindId","FromSample","RecordStatus","SiteId"]
+table_colwidth_120 = ["SiteId"]
 table_colwidth_140 = []
 table_colwidth_200 = ["email","Email"]
 table_colwidth_default = 150
