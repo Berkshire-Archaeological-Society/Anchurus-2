@@ -439,12 +439,22 @@ class Main(MainTemplate):
       # clear help_page_text 
       #Global.help_page.help_page_text.visible = True
       #Global.help_page.help_page_text.clear()
-      Global.help_page.visible = False
+      Global.help_page.visible = True
+
+      #delete all work_areas and all work_area names/buttons
+      temp_work_area_name_list = list(Global.work_area.keys())
+      for work_area_name in temp_work_area_name_list:
+        Function.delete_workspace(work_area_name)
+      self.menu_bottom.visible = False
+      self.site_summary.visible = False
 
       # check user authorisation role for the selected site
       Global.site_user_role = anvil.server.call("user_authorisation",Global.site_options[self.select_site_dropdown.selected_value],Global.username)
       if Global.site_user_role != "unknown":
         # user found with a role for the selected site
+        Global.help_page.visible = False
+        self.site_summary.visible = True
+
         # Update role text if system_role is not System Administrator
         if Global.system_user_role == "Site User":
           self.user_role.text = "Site " + Global.site_user_role
@@ -460,7 +470,6 @@ class Main(MainTemplate):
         
         Global.site_name = self.select_site_dropdown.selected_value
         Global.site_id = Global.site_options[self.select_site_dropdown.selected_value]
-      
         Global.selected_site = ": " + Global.site_name
         #Global.title_label.text = Global.title + Global.status + Global.selected_site
         #Global.title_label.text = Global.title
@@ -507,11 +516,14 @@ class Main(MainTemplate):
           self.delete_row.visible = False
       else:
         msg = "Not found a role for you in site " + self.select_site_dropdown.selected_value + ". Please contact the Project Manager."
-        Global.site_name = ""
-        Global.site_id = ""
-        Global.selected_site = ""
+        Global.site_name = self.select_site_dropdown.selected_value
+        Global.site_id = Global.site_options[self.select_site_dropdown.selected_value]
+        Global.selected_site = ": " + Global.site_name
+        #Global.site_name = ""
+        #Global.site_id = ""
+        #Global.selected_site = ""
+        #self.select_site_dropdown.selected_value = None
         n = Notification(msg)
-        self.select_site_dropdown.selected_value = None
         n.show()
     pass
 
