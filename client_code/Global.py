@@ -173,7 +173,7 @@ table_colwidth_90 = ["FindId"]
 table_colwidth_100 = ["FindGroupId","ContextYear","ContextType","PackageType","SmallFindId","FromSample","RecordStatus"]
 table_colwidth_120 = []
 table_colwidth_140 = []
-table_colwidth_200 = ["email"]
+table_colwidth_200 = ["email","Email"]
 table_colwidth_default = 150
 #
 title = system + "\n\n" + organisation

@@ -507,6 +507,9 @@ class Main(MainTemplate):
           self.delete_row.visible = False
       else:
         msg = "Not found a role for you in site " + self.select_site_dropdown.selected_value + ". Please contact the Project Manager."
+        Global.site_name = ""
+        Global.site_id = ""
+        Global.selected_site = ""
         n = Notification(msg)
         self.select_site_dropdown.selected_value = None
         n.show()
