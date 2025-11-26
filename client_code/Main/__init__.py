@@ -451,7 +451,7 @@ class Main(MainTemplate):
       Global.work_area = {}
       # check user authorisation role for the selected site
       Global.site_user_role = anvil.server.call("user_authorisation",Global.site_options[self.select_site_dropdown.selected_value],Global.username)
-      if Global.site_user_role != "unknown":
+      if Global.site_user_role != "unknown" or Global.system_user_role == "System Administrator":
         # user found with a role for the selected site
         Global.help_page.visible = False
         self.site_summary.visible = True
@@ -484,7 +484,7 @@ class Main(MainTemplate):
         self.mm_left.visible = True
         self.mm_middle.visible = True
         self.mm_right.visible = True
-        if Global.site_user_role in ["Administrator","Editor","Manager"]:
+        if Global.site_user_role in ["Administrator","Editor","Manager"] or Global.system_user_role == "System Administrator":
           self.list_dropdown.visible = True
           self.view_row.visible = True
         
