@@ -92,7 +92,8 @@ class RowForm(RowFormTemplate):
         input.add_event_handler('change',self.input_change)
         
       # set specific validators for the various fields
-      if column_name in ["SiteId"] and action != "add":
+      #if column_name in ["SiteId"] and action != "add":
+      if column_name in ["SiteId"]:
         input.text = Global.site_id
         input.enabled = False
         input.foreground = "#ffffff"
