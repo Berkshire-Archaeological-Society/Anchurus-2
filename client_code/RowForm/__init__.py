@@ -128,7 +128,7 @@ class RowForm(RowFormTemplate):
       
       # if action is View or Edit then fill all fields
       cur_len = 0
-      if action in ["edit", "view"]:
+      if action in ["edit","update","view"]:
         if str(type(input)) == "<class 'anvil_extras.Quill.Quill'>":
           html_text = Global.work_area[Global.current_work_area_name]["data_list"][0][column_name]
           delta = input.clipboard.convert(html_text)
@@ -152,7 +152,8 @@ class RowForm(RowFormTemplate):
       self.column_panel_1.add_component(lab)
       self.column_panel_1.add_component(input)
     #
-    if action in ["edit","add"]:     #"Edit Context","Edit Find","Add Context","Add Find"]:
+    print(action)
+    if action in ["edit","add","insert"]:     #"Edit Context","Edit Find","Add Context","Add Find"]:
       # Add a Submit button if Edit or Add action
       submit_btn = Button(text="Submit",role="outlined-button")
       submit_btn.add_event_handler("click",self.submit_btn_click)
@@ -169,8 +170,19 @@ class RowForm(RowFormTemplate):
       #print(self.form_fields.items())
       row_list = {}
       for col in self.form_fields.items():
-        row_list[col[0]] = col[1]["field"].text
-      if action == "add":
+        if action in ["edit","update","view"]:
+          if col[1]["field"] == "<class 'anvil_extras.Quill.Quill'>":
+            row_list[col[0]] = col[1]["field"].clipboard
+            #Global.work_area[Global.current_work_area_name]["data_list"][0][column_name]
+            #delta = col[1]["field"].clipboard.convert(html_text)
+            #col[1]["field"].setContents(delta, 'silent')
+            #cur_len = 0
+            #if html_text is not None:
+              #cur_len = len(html_text)
+          else:
+            row_list[col[0]] = col[1]["field"].text
+      #
+      if action in ["add","insert"]:
         ret = anvil.server.call("row_add",table_name,row_list)
         # if success then goto list contexts
         if ret[:2] == "OK":
@@ -184,7 +196,7 @@ class RowForm(RowFormTemplate):
             Global.select_site_dropdown.items = Global.site_options.keys()
         else:
           msg = "Row has not been inserted to the database, because of " + ret
-      elif action == "edit":
+      elif action in ["edit","update"]:
         ret = anvil.server.call("row_update",table_name,row_list)
         # if success then goto list contexts
         if ret[:2] == "OK":
