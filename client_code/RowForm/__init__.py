@@ -172,6 +172,7 @@ class RowForm(RowFormTemplate):
       for col in self.form_fields.items():
         print("col field is: ",col[1]["field"])
         if str(type(col[1]["field"])) == "<class 'anvil_extras.Quill.Quill'>":
+          delta = col[1]["field"].getContents()
           print(col[1]["field"].clipboard.convert(html_text))
           row_list[col[0]] = col[1]["field"].clipboard.convert(html_text)
           #Global.work_area[Global.current_work_area_name]["data_list"][0][column_name]
