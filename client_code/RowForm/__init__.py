@@ -174,7 +174,7 @@ class RowForm(RowFormTemplate):
         if str(type(col[1]["field"])) == "<class 'anvil_extras.Quill.Quill'>":
           row_list[col[0]] = col[1]["field"].getText()
           #delta = col[1]["field"].getContents()
-          print("Quille Value is: ",row_list[col[0]])
+          #print("Quill Value is: ",row_list[col[0]])
           #row_list[col[0]] = col[1]["field"].clipboard.convert(html_text)
           #Global.work_area[Global.current_work_area_name]["data_list"][0][column_name]
           #delta = col[1]["field"].clipboard.convert(html_text)
@@ -183,9 +183,12 @@ class RowForm(RowFormTemplate):
           #if html_text is not None:
             #cur_len = len(html_text)
         else:
-          print("value is:",col[1]["field"].text)
+          #print("value is:",col[1]["field"].text)
           row_list[col[0]] = col[1]["field"].text
-        print(row_list)
+        # set empty fields to None
+        if row_list[col[0]] == "":
+          row_list[col[0]] = None
+        # print(row_list)
       #
       if action in ["add","insert"]:
         ret = anvil.server.call("row_add",table_name,row_list)
