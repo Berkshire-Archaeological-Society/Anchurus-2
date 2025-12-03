@@ -152,7 +152,7 @@ class RowForm(RowFormTemplate):
       self.column_panel_1.add_component(lab)
       self.column_panel_1.add_component(input)
     #
-    print(action)
+    #print(action)
     if action in ["edit","add","insert"]:     #"Edit Context","Edit Find","Add Context","Add Find"]:
       # Add a Submit button if Edit or Add action
       submit_btn = Button(text="Submit",role="outlined-button")
@@ -170,7 +170,7 @@ class RowForm(RowFormTemplate):
       #print(self.form_fields.items())
       row_list = {}
       for col in self.form_fields.items():
-        print("col field is: ",col[1]["field"])
+        #print("col field is: ",col[1]["field"])
         if str(type(col[1]["field"])) == "<class 'anvil_extras.Quill.Quill'>":
           row_list[col[0]] = col[1]["field"].getText()
           #delta = col[1]["field"].getContents()
