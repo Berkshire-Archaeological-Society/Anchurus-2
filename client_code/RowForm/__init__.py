@@ -92,12 +92,11 @@ class RowForm(RowFormTemplate):
         input.add_event_handler('change',self.input_change)
         
       # set specific validators for the various fields
-      #if column_name in ["SiteId"] and action != "add":
-      if column_name in ["SiteId"]:
-        input.text = Global.site_id
+      # if column is Primary Key then make it un-editable
+      if item_key == "PRI":
         input.enabled = False
         input.foreground = "#ffffff"
-      elif column_name in ["YearEnd","YearStart"]:
+      if column_name in ["YearEnd","YearStart"]:
         self.validator.regex(component=input,
                            events=['lost_focus', 'change'],
                            pattern="^-?\d{1,4}(?:BC|AD)?$",
