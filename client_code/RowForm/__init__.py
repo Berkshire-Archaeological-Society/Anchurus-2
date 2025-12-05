@@ -93,7 +93,7 @@ class RowForm(RowFormTemplate):
         
       # set specific validators for the various fields
       # if column is Primary Key then make it un-editable
-      if item["Key"] == "PRI" or action == "view":
+      if item["Key"] == "PRI" or action == "view" or column_name == "DBAcontrol":
         input.enabled = False
         input.foreground = "#ffffff"
       if column_name in ["YearEnd","YearStart"]:
