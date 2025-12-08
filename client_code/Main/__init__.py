@@ -161,15 +161,15 @@ class Main(MainTemplate):
       self.select_all.indeterminate = False
       #Global.work_area[Global.current_work_area_name]["self"].select_all
     else:
-      print("work_area_click: ", Global.current_work_area_name, " there are selected rows, enable menu")
+      #print("work_area_click: ", Global.current_work_area_name, " there are selected rows, enable menu")
       Global.work_area[Global.current_work_area_name]["menu_select_options"].visible = True
-      print(len(Global.work_area[Global.current_work_area_name]["selected_rows"]))
-      print(Global.rows_per_page)
-      if len(Global.work_area[Global.current_work_area_name]["selected_rows"]) == Global.rows_per_page:
-        print("Select_all.checked True")
-        self.select_all.checked = True
+      page_num = int(Global.work_area[Global.current_work_area_name]["table"].get_page())
+      rows_per_page = int(Global.work_area[Global.current_work_area_name]["table"].rows_per_page)
+      total_rows = len(Global.work_area[Global.current_work_area_name]["self"].repeating_panel_1.items)
+      rest = total_rows - page_num * rows_per_page
+      if str(len(Global.work_area[Global.current_work_area_name]["selected_rows"])) == str(Global.rows_per_page) or str(len(Global.work_area[Global.current_work_area_name]["selected_rows"])) == str(rest):
+        self.select_all.checked = True 
       else:
-        print("Select_all.indeterminate True")
         self.select_all.indeterminate = True
     
     #self.select_all.checked = Global.work_area[Global.current_work_area_name]["self"].select_all.checked
