@@ -86,7 +86,7 @@ components:
       type: FlowPanel
     - components:
       - event_bindings: {change: username_dropdown_change}
-        layout_properties: {width: 244.962}
+        layout_properties: {width: 304.199951171875}
         name: username_dropdown
         properties:
           font_size: 13
@@ -128,7 +128,7 @@ components:
       type: FlowPanel
     layout_properties: {full_width_row: true, grid_position: 'TQCWAS,XHRUHC GROHGQ,GCYXKZ'}
     name: menu_top
-    properties: {background: 'theme:Primary', col_widths: '{"LPGJNI":25,"SCFEUE":35}'}
+    properties: {background: 'theme:Primary', col_widths: '{"LPGJNI":20,"SCFEUE":40}'}
     type: ColumnPanel
   - components:
     - components:

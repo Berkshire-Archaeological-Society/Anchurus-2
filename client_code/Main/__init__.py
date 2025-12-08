@@ -146,26 +146,34 @@ class Main(MainTemplate):
       self.mb_middle.visible = True
       self.mb_left.visible = True
 
-    #self.select_all.indeterminate = False
-    #self.select_all.checked = False
+    self.select_all.indeterminate = False
+    self.select_all.checked = False
 
-    # update status label (page control information) if work_space is a List
-    if Global.work_area[Global.current_work_area_name]["action"].split(" ")[0] in ["List"] or Global.work_area[Global.current_work_area_name]["action"] != "List Anvilusers":
+    # update status label (page control information) if work_space is a List (but not List Anvilusers (not using the TableList form))
+    if Global.work_area[Global.current_work_area_name]["action"].split(" ")[0] in ["List"] and Global.work_area[Global.current_work_area_name]["action"] != "List Anvilusers":
+      print(Global.current_work_area_name)
       FunctionsB.update_status_label(Global.work_area[Global.current_work_area_name]["self"])
 
     if len(Global.work_area[Global.current_work_area_name]["selected_rows"]) == 0:
       #print("work_area_click: ", Global.current_work_area_name, " 0 selected rows, disable menu")
       Global.work_area[Global.current_work_area_name]["menu_select_options"].visible = False
       self.select_all.checked = False
-      self.select_all.indetermine = False
+      self.select_all.indeterminate = False
       #Global.work_area[Global.current_work_area_name]["self"].select_all
     else:
-      #print("work_area_click: ", Global.current_work_area_name, " there are selected rows, enable menu")
+      print("work_area_click: ", Global.current_work_area_name, " there are selected rows, enable menu")
       Global.work_area[Global.current_work_area_name]["menu_select_options"].visible = True
-      #Global.work_area[Global.current_work_area_name]["self"].select_all
-    pass
-    ###self.select_all.checked = Global.work_area[Global.current_work_area_name]["self"].select_all.checked
-    ###self.select_all.indeterminate = Global.work_area[Global.current_work_area_name]["self"].select_all.indeterminate
+      print(len(Global.work_area[Global.current_work_area_name]["selected_rows"]))
+      print(Global.rows_per_page)
+      if len(Global.work_area[Global.current_work_area_name]["selected_rows"]) == Global.rows_per_page:
+        print("Select_all.checked True")
+        self.select_all.checked = True
+      else:
+        print("Select_all.indeterminate True")
+        self.select_all.indeterminate = True
+    
+    #self.select_all.checked = Global.work_area[Global.current_work_area_name]["self"].select_all.checked
+    #self.select_all.indeterminate = Global.work_area[Global.current_work_area_name]["self"].select_all.indeterminate
 
     # Set selected buttons on Header for work area type
     if Global.action_form_type in Global.action_forms_with_refresh:
