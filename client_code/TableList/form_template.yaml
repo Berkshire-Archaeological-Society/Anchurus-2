@@ -1,5 +1,16 @@
 components:
 - components:
+  - layout_properties: {}
+    name: title
+    properties:
+      spacing:
+        margin: [null, null, null, '4']
+    type: Label
+  layout_properties: {full_width_row: true, grid_position: 'AWDFQE,CNFIXF'}
+  name: flow_panel_1
+  properties: {background: 'theme:Tertiary', foreground: 'theme:On Secondary'}
+  type: FlowPanel
+- components:
   - data_bindings: []
     layout_properties: {}
     name: repeating_panel_1

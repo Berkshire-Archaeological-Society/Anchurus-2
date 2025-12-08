@@ -93,9 +93,10 @@ class RowForm(RowFormTemplate):
         
       # set specific validators for the various fields
       # if column is Primary Key then make it un-editable
-      if item["Key"] == "PRI" or action == "view" or column_name == "DBAcontrol":
+      if (action == "view") or (action in ["edit"] and item["Key"] == "PRI") or column_name in ["SiteId","DBAcontrol"]:
         input.enabled = False
         input.foreground = "#ffffff"
+    
       if column_name in ["YearEnd","YearStart"]:
         self.validator.regex(component=input,
                            events=['lost_focus', 'change'],
@@ -130,6 +131,8 @@ class RowForm(RowFormTemplate):
       if action in ["edit","update","view"]:
         if str(type(input)) == "<class 'anvil_extras.Quill.Quill'>":
           html_text = Global.work_area[Global.current_work_area_name]["data_list"][0][column_name]
+          if html_text == "None":
+            html_text = ""
           delta = input.clipboard.convert(html_text)
           input.setContents(delta, 'silent')
           cur_len = 0
@@ -137,7 +140,9 @@ class RowForm(RowFormTemplate):
             cur_len = len(html_text)
         else:
           input.text = Global.work_area[Global.current_work_area_name]["data_list"][0][column_name]
-          cur_len = 0
+          if input.text == "None":
+            input.text = ""
+            cur_len = 0
           if input.text is not None:
             cur_len = len(input.text)
           
