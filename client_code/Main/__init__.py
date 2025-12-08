@@ -226,9 +226,9 @@ class Main(MainTemplate):
           primary_key_list.append(column["Field"])
       if action.split(" ")[0].lower() in ["view","edit"]:
         if len(primary_key_list) == 1:
-          work_area_name = action + " " + Global.table_items[primary_key_list[0]]
+          work_area_name = action.split(" ")[0] + " " + Global.table_items[primary_key_list[0]]
         else:
-          work_area_name = action + " " + Global.table_items[primary_key_list[1]]
+          work_area_name = action.split(" ")[0] + " " + Global.table_items[primary_key_list[1]]
         
     # check if work_area_name exists and keep counter
     if (Global.work_area.get(work_area_name) is None):
