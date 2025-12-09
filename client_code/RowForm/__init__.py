@@ -131,9 +131,10 @@ class RowForm(RowFormTemplate):
       if action in ["edit","update","view"]:
         if str(type(input)) == "<class 'anvil_extras.Quill.Quill'>":
           html_text = Global.work_area[Global.current_work_area_name]["data_list"][0][column_name]
-          if html_text == "None":
-            html_text = ""
+          #if html_text == "None":
+          #  html_text = ""
           delta = input.clipboard.convert(html_text)
+          print(delta)
           input.setContents(delta, 'silent')
           cur_len = 0
           if html_text is not None:
@@ -168,6 +169,7 @@ class RowForm(RowFormTemplate):
 
   def submit_btn_click(self, **event_args):
     """This method is called when the button is clicked"""
+    print(Global.action)
     action = Global.action.split(" ")[0].lower()
     table_name = Global.action.split(" ")[1].lower()
     if self.validator.are_all_valid():
