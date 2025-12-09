@@ -216,7 +216,7 @@ class Main(MainTemplate):
 
     # set name of work_area to be action name
     work_area_name = action
-
+    print("Click work area, action: ",action)
     # For all actions not in Admin_action_list check ID field for creating unique work_area name
     if action not in Global.sys_admin_action_list and action not in Global.site_admin_action_list:
       # add first Primary Key ID field when view or edit
