@@ -171,10 +171,8 @@ class RowForm(RowFormTemplate):
     action = Global.action.split(" ")[0].lower()
     table_name = Global.action.split(" ")[1].lower()
     if self.validator.are_all_valid():
-      #print(self.form_fields.items())
       row_list = {}
       for col in self.form_fields.items():
-        #print("col field is: ",col[1]["field"])
         if str(type(col[1]["field"])) == "<class 'anvil_extras.Quill.Quill'>":
           row_list[col[0]] = col[1]["field"].getText()
           #delta = col[1]["field"].getContents()
@@ -187,12 +185,10 @@ class RowForm(RowFormTemplate):
           #if html_text is not None:
             #cur_len = len(html_text)
         else:
-          #print("value is:",col[1]["field"].text)
           row_list[col[0]] = col[1]["field"].text
         # set empty fields to None
         if row_list[col[0]] in ["","\n"]:
           row_list[col[0]] = None
-        print(row_list)
       #
       if action in ["add","insert"]:
         ret = anvil.server.call("row_add",table_name,row_list)
@@ -200,11 +196,8 @@ class RowForm(RowFormTemplate):
         if ret[:2] == "OK":
           msg = "Row has been successfully inserted to the database."
           # if a site has been added, update the site selection dropdown
-          #print(table_name)
           if table_name == "site":
-            #print("updating select_site_dropdown_list")
             Global.site_options = FunctionsB.set_select_site_dropdown_options() 
-            #print(Global.site_options)
             Global.select_site_dropdown.items = Global.site_options.keys()
         else:
           msg = "Row has not been inserted to the database, because of " + ret
@@ -215,6 +208,8 @@ class RowForm(RowFormTemplate):
           msg = "Row has been successfully updated in the database."
         else:
           msg = "Row has not been updated in the database, because of " + ret
+      else:
+        msg = "Unknown action: " + action
       alert(content=msg)
     else:
       alert("Please correct the field(s) with errors before submitting.")

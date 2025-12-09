@@ -167,6 +167,7 @@ class Main(MainTemplate):
       rows_per_page = int(Global.work_area[Global.current_work_area_name]["table"].rows_per_page)
       total_rows = len(Global.work_area[Global.current_work_area_name]["self"].repeating_panel_1.items)
       rest = total_rows - page_num * rows_per_page
+      print(str(len(Global.work_area[Global.current_work_area_name]["selected_rows"])),str(rest),str(Global.rows_per_page))
       if str(len(Global.work_area[Global.current_work_area_name]["selected_rows"])) == str(Global.rows_per_page) or str(len(Global.work_area[Global.current_work_area_name]["selected_rows"])) == str(rest):
         self.select_all.checked = True 
       else:
