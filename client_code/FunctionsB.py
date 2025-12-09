@@ -60,7 +60,8 @@ def clear_selection(self):
     row.background = ""
 
   # clear selection list
-  Global.work_area[Global.current_work_area_name]["selected_rows"].clear()
+  if Global.work_area[Global.current_work_area_name].get("selected_rows") is not None:
+    Global.work_area[Global.current_work_area_name]["selected_rows"].clear()
 
   # clear select_all checkbox
   Global.main_form.select_all.checked = False
@@ -71,7 +72,7 @@ def clear_selection(self):
   return
   
 def refresh_click(self):
-  # The refresh button on then main menu has been clicked. 
+  # The refresh button on the main menu has been clicked. 
   # The self variable is the one of the current_work_area_name
   # select which refresh fucntion should be called
   if Global.work_area[Global.current_work_area_name]["form_type"] == "ListUsers":
@@ -145,6 +146,7 @@ def table_list_refresh(self):
   if not Global.print_action:
     update_status_label(self)
 
+  clear_selection(self)
   #self.information.text = Global.table_name
   return
 
