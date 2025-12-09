@@ -192,7 +192,7 @@ class RowForm(RowFormTemplate):
         # set empty fields to None
         #if row_list[col[0]] == "":
         #  row_list[col[0]] = None
-        # print(row_list)
+        print(row_list)
       #
       if action in ["add","insert"]:
         ret = anvil.server.call("row_add",table_name,row_list)
