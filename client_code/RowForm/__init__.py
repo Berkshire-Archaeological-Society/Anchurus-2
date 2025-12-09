@@ -190,8 +190,8 @@ class RowForm(RowFormTemplate):
           #print("value is:",col[1]["field"].text)
           row_list[col[0]] = col[1]["field"].text
         # set empty fields to None
-        if row_list[col[0]] == "":
-          row_list[col[0]] = None
+        #if row_list[col[0]] == "":
+        #  row_list[col[0]] = None
         # print(row_list)
       #
       if action in ["add","insert"]:
