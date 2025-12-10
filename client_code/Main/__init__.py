@@ -104,10 +104,12 @@ class Main(MainTemplate):
     Global.wa_header_menu_bottom.visible = True
 
     # Here the user clicked on a button in the left navigation list, requested to go to a different work area.
+    # first make all work_areasinvisible and lset button to be 'normal', i.e. not highlighted
     for name in Global.work_area:
       Global.work_area[name]["form"].visible = False
       Global.work_area[name]["button"].bold = False
       Global.work_area[name]["button"].background = Global.button_normal_background_clour
+    
     # now get the name of the button (work_area_name) that was clicked and make this and the associated work_area visible
     work_area = event_args['sender']
     Global.current_work_area_name = work_area.text
@@ -121,6 +123,7 @@ class Main(MainTemplate):
     Global.selected_site = ": " + Global.site_name
     
     # Fill header fields with work_area name and work_area Form name
+    # This was for old header, can prob removed
     Global.header_work_area_name.text = Global.current_work_area_name
     Global.header_work_area_type.text = str(type(Global.work_area[Global.current_work_area_name]["form"])).split(".")[2][:-2]
     Global.header_site_name.text = Global.work_area[Global.current_work_area_name]["site_name"]
@@ -133,7 +136,7 @@ class Main(MainTemplate):
     # make old header invisible
     Global.header.visible = False
     Global.wa_header_menu_bottom.visible = True
-    # set menu_select_opti0ns as invisible
+    # set menu_select_options as invisible
     Global.work_area[Global.current_work_area_name]["menu_select_options"] = self.fp_select_options
     Global.work_area[Global.current_work_area_name]["menu_select_options"].visible = False
 
