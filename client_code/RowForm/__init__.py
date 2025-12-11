@@ -96,8 +96,7 @@ class RowForm(RowFormTemplate):
       if (action == "view") or (action in ["edit"] and item["Key"] == "PRI") or column_name in ["SiteId","DBAcontrol"]:
         input.enabled = False
         input.foreground = "#ffffff"
-      if column_name == "SiteId" and action in ["edit","insert"]: # pre-set SiteId when 
-        Global.work_area[Global.current_work_area_name]["data_list"][0][column_name] = Global.site_id
+      #
       if column_name in ["YearEnd","YearStart"]:
         self.validator.regex(component=input,
                            events=['lost_focus', 'change'],
@@ -129,6 +128,7 @@ class RowForm(RowFormTemplate):
       
       # if action is View or Edit then fill all fields
       cur_len = 0
+      print(column_name)
       if action in ["edit","update","view"]:
         if str(type(input)) == "<class 'anvil_extras.Quill.Quill'>":
           html_text = Global.work_area[Global.current_work_area_name]["data_list"][0][column_name]
@@ -150,7 +150,16 @@ class RowForm(RowFormTemplate):
             cur_len = 0
           if input.text is not None:
             cur_len = len(input.text)
-          
+      if column_name == "SiteId" and action in ["edit","insert"]: # pre-set SiteId when
+        Global.work_area[Global.current_work_area_name]["data_list"][0][column_name] = Global.site_id
+        input.text = Global.work_area[Global.current_work_area_name]["data_list"][0][column_name]
+        if input.text == "None":
+          input.text = ""
+          cur_len = 0
+        if input.text is not None:
+          cur_len = len(input.text)
+        #print(Global.work_area[Global.current_work_area_name]["data_list"][0][column_name])
+
       # set default label text
       col = column_name + " (" + str(cur_len) + "/" + str(max_length) + ")" 
       lab = Label(text=col,font_size=14,tag=column_name)
