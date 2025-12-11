@@ -23,7 +23,7 @@ class ImportForm(ImportFormTemplate):
     self.init_components(**properties)
     # Any code you write here will run before the form opens.
     self.Import_title.text = "Here you can import csv files for importing to the Database. You can download a template csv file if needed."
-    Global.table_name = Global.action.split(" ")[1].rstrip("s").lower()
+    Global.table_name = Global.action.split(" ")[1].lower()
     self.selected_table.text = Global.table_name
     Global.main_form.mb_left.visible = False
     Global.main_form.mb_middle.visible = False
