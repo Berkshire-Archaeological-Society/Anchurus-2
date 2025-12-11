@@ -96,7 +96,8 @@ class RowForm(RowFormTemplate):
       if (action == "view") or (action in ["edit"] and item["Key"] == "PRI") or column_name in ["SiteId","DBAcontrol"]:
         input.enabled = False
         input.foreground = "#ffffff"
-    
+      if column_name == "SiteId" and action in ["edit","insert"]: # pre-set SiteId when 
+        Global.work_area[Global.current_work_area_name]["data_list"][0][column_name] = Global.site_id
       if column_name in ["YearEnd","YearStart"]:
         self.validator.regex(component=input,
                            events=['lost_focus', 'change'],
@@ -157,8 +158,9 @@ class RowForm(RowFormTemplate):
       field_details = {"header": lab, "field": input, "length": max_length}
       self.form_fields[column_name] = field_details
       # add label and input field to column_panel
-      self.column_panel_1.add_component(lab)
-      self.column_panel_1.add_component(input)
+      if column_name != "DBAcontrol": # do not add an input field for DBAcontrol column
+        self.column_panel_1.add_component(lab)
+        self.column_panel_1.add_component(input)
     #
     print("In RowForm, action:",action)
     if action in ["edit","add","insert"]:     #"Edit Context","Edit Find","Add Context","Add Find"]:
