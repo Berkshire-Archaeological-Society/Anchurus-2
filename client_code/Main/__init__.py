@@ -413,6 +413,7 @@ class Main(MainTemplate):
         self.mm_middle.visible = False
         self.admin_dropdown.visible = True
         self.menu_block.visible = False
+        self.admin_dropdown.items = Global.sys_admin_action_dropdown
       
       # make menu bar variable visible
       self.menu_block.visible = True
@@ -472,6 +473,7 @@ class Main(MainTemplate):
           self.user_role.text = "Site " + Global.site_user_role
 
         if Global.site_user_role == "Manager" or Global.site_user_role == "Administrator" or Global.system_user_role == "System Administrator" :
+          options = []
           # add site manager admin actions to admin dropdown
           if Global.site_user_role == "Manager":
             options = Global.site_admin_action_dropdown
@@ -943,6 +945,8 @@ class Main(MainTemplate):
     self.admin_dropdown.visible = False
     self.site_summary.visible = False
     self.menu_bottom.visible = False
+
+    self.admin_dropdown.items = []
 
     self.username_dropdown.placeholder = Global.username
     self.username_dropdown.items = []
