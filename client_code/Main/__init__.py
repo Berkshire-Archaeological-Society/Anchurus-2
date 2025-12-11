@@ -722,6 +722,7 @@ class Main(MainTemplate):
       Global.work_area[Global.current_work_area_name]["menu_select_options"].visible = False
       ###Global.work_area[Global.current_work_area_name]["self"].select_all.checked = False
       self.select_all.checked = False
+    else:
       Global.work_area[Global.current_work_area_name]["menu_select_options"].visible = True
 
     ###Global.work_area[Global.current_work_area_name]["self"].select_all.checked = checked
@@ -766,7 +767,7 @@ class Main(MainTemplate):
       message = message + "\nYou have seleted to delete " + Global.table_name.capitalize() + "\n\n" + str(row)
 
     # ask confirmation to delete selected rows
-    message = message + "\n\nDo you wish to continue?"
+    message = message + "\n\nDo you wish to continue?\n\nNote: This action is not yet implemented!"
     confirm(message)
     pass
 
