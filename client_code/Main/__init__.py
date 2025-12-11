@@ -98,13 +98,9 @@ class Main(MainTemplate):
   # =========
   def work_area_click(self, **event_args):
     """" This function is called when the work area button is clicked. Here we make sure all the variable are set correct for the work area swap"""
-    #
-    # First make sure the old header is invisible
-    Global.header.visible = False
-    Global.wa_header_menu_bottom.visible = True
 
-    # Here the user clicked on a button in the left navigation list, requested to go to a different work area.
-    # first make all work_areasinvisible and lset button to be 'normal', i.e. not highlighted
+    # Here the user clicked on a work_area button in the left navigation list, requested to go to a different work area.
+    # first make all work_areas invisible and set button to be 'normal', i.e. not highlighted
     for name in Global.work_area:
       Global.work_area[name]["form"].visible = False
       Global.work_area[name]["button"].bold = False
@@ -113,6 +109,7 @@ class Main(MainTemplate):
     # now get the name of the button (work_area_name) that was clicked and make this and the associated work_area visible
     work_area = event_args['sender']
     Global.current_work_area_name = work_area.text
+    print("Work area clicked: ",Global.current_work_area_name)
     
     # Set Global.table_name linked with work_area_type
     Global.table_name = Global.work_area[Global.current_work_area_name]["action"].split(" ")[1].lower()
@@ -136,12 +133,14 @@ class Main(MainTemplate):
     # make old header invisible
     Global.header.visible = False
     Global.wa_header_menu_bottom.visible = True
+    
     # set menu_select_options as invisible
     Global.work_area[Global.current_work_area_name]["menu_select_options"] = self.fp_select_options
     Global.work_area[Global.current_work_area_name]["menu_select_options"].visible = False
 
     Global.action_form_type = str(type(Global.work_area[Global.current_work_area_name]["form"])).split(".")[2][:-2]
     #
+    print("Work area action form type: ",Global.action_form_type)
     if Global.work_area[Global.current_work_area_name]["action"].split(" ")[0] in ["View", "Edit", "Insert", "Add", "Import"] or Global.work_area[Global.current_work_area_name]["action"] == "List Anvilusers":
       self.mb_middle.visible = False
       self.mb_left.visible = False
@@ -170,7 +169,7 @@ class Main(MainTemplate):
       rows_per_page = int(Global.work_area[Global.current_work_area_name]["table"].rows_per_page)
       total_rows = len(Global.work_area[Global.current_work_area_name]["self"].repeating_panel_1.items)
       rest = total_rows - page_num * rows_per_page
-      print(str(len(Global.work_area[Global.current_work_area_name]["selected_rows"])),str(rest),str(Global.rows_per_page))
+      #print(str(len(Global.work_area[Global.current_work_area_name]["selected_rows"])),str(rest),str(Global.rows_per_page))
       if str(len(Global.work_area[Global.current_work_area_name]["selected_rows"])) == str(Global.rows_per_page) or str(len(Global.work_area[Global.current_work_area_name]["selected_rows"])) == str(rest):
         self.select_all.checked = True 
       else:
