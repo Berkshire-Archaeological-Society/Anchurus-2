@@ -497,26 +497,29 @@ class Main(MainTemplate):
         self.mm_left.visible = True
         self.mm_middle.visible = True
         self.mm_right.visible = True
-        if Global.site_user_role in ["Administrator","Editor","Manager"] or Global.system_user_role == "System Administrator":
+        if Global.site_user_role in ["Administrator","Manager"] or Global.system_user_role == "System Administrator":
           self.list_dropdown.visible = True
-          self.view_row.visible = True
-        
+          self.view_row.visible = True        
           self.edit_row.visible = True
-          self.insert_dropdown.visible = True
-        
+          self.insert_dropdown.visible = True     
           self.delete_row.visible = True
           self.import_dropdown.visible = True
+        elif Global.site_user_role in ["Editor"]:
+          self.list_dropdown.visible = True
+          self.view_row.visible = True        
+          self.edit_row.visible = True
+          self.insert_dropdown.visible = True     
+          self.delete_row.visible = False
+          self.import_dropdown.visible = False
         elif Global.site_user_role in ["Viewer"]:
-          # role is Viewer
           self.list_dropdown.visible = True
           self.view_row.visible = True
-          #
           self.insert_dropdown.visible = False
           self.import_dropdown.visible = False
           self.edit_row.visible = False
           self.delete_row.visible = False
         else:
-          # unkown role
+          # unknown role
           msg = "Unkown User Role identified: " + str(Global.site_user_role)
           n = Notification(msg)
           n.show()
