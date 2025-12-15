@@ -472,13 +472,9 @@ class Main(MainTemplate):
         if Global.system_user_role == "Site User":
           self.user_role.text = "Site " + Global.site_user_role
 
-        if Global.site_user_role == "Manager" or Global.site_user_role == "Administrator" or Global.system_user_role == "System Administrator" :
-          options = []
+        if Global.site_user_role == "Manager" or Global.system_user_role == "System Administrator" :
           # add site manager admin actions to admin dropdown
-          if Global.site_user_role == "Manager":
-            options = Global.site_admin_action_dropdown
-          else: 
-            options = Global.sys_admin_action_dropdown + Global.site_admin_action_dropdown
+          options = Global.sys_admin_action_dropdown + Global.site_admin_action_dropdown
           self.admin_dropdown.items = options
           self.admin_dropdown.visible = True
         
@@ -497,7 +493,7 @@ class Main(MainTemplate):
         self.mm_left.visible = True
         self.mm_middle.visible = True
         self.mm_right.visible = True
-        if Global.site_user_role in ["Administrator","Manager"] or Global.system_user_role == "System Administrator":
+        if Global.site_user_role in ["Manager"] or Global.system_user_role == "System Administrator":
           self.list_dropdown.visible = True
           self.view_row.visible = True        
           self.edit_row.visible = True
