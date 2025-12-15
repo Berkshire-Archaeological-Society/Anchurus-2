@@ -171,7 +171,7 @@ class RowForm(RowFormTemplate):
         self.column_panel_1.add_component(lab)
         self.column_panel_1.add_component(input)
     #
-    print("In RowForm, action:",action)
+    #print("In RowForm, action:",action)
     if action in ["edit","add","insert"]:     #"Edit Context","Edit Find","Add Context","Add Find"]:
       # Add a Submit button if Edit or Add action
       submit_btn = Button(text="Submit",role="outlined-button")
@@ -183,7 +183,7 @@ class RowForm(RowFormTemplate):
 
   def submit_btn_click(self, **event_args):
     """This method is called when the button is clicked"""
-    print("Submit button clicked: ",Global.action)
+    #print("Submit button clicked: ",Global.action)
     action = Global.action.split(" ")[0].lower()
     table_name = Global.action.split(" ")[1].lower()
     if self.validator.are_all_valid():
