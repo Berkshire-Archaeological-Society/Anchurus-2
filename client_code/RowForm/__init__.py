@@ -150,7 +150,8 @@ class RowForm(RowFormTemplate):
             cur_len = 0
           if input.text is not None:
             cur_len = len(input.text)
-      if column_name == "SiteId" and action in ["edit","insert"]: # pre-set SiteId when
+      if column_name == "SiteId" and action in ["edit","insert","add"]: # pre-set SiteId when
+        print(column_name,action)
         Global.work_area[Global.current_work_area_name]["data_list"][0][column_name] = Global.site_id
         input.text = Global.work_area[Global.current_work_area_name]["data_list"][0][column_name]
         if input.text == "None":
@@ -158,7 +159,7 @@ class RowForm(RowFormTemplate):
           cur_len = 0
         if input.text is not None:
           cur_len = len(input.text)
-        #print(Global.work_area[Global.current_work_area_name]["data_list"][0][column_name])
+        print(Global.work_area[Global.current_work_area_name]["data_list"][0][column_name])
 
       # set default label text
       col = column_name + " (" + str(cur_len) + "/" + str(max_length) + ")" 
