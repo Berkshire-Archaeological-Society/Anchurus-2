@@ -92,6 +92,7 @@ def delete_workspace(work_area_name):
   Global.header_work_area_name.text = ""
   Global.header_work_area_type.text = ""
   Global.header.visible = False
+  Global.main_form.menu_bottom.visible = False
   return
 
 def delete_all_workspace(work_area_list):

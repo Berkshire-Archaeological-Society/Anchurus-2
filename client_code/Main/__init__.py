@@ -380,7 +380,7 @@ class Main(MainTemplate):
     """" This Function is called when the users logs in """
     """This method is called when the button is clicked"""
     #print("Login button clicked")
-    user = anvil.users.login_with_form(allow_cancel=True)
+    user = anvil.users.login_with_form(allow_cancel=True,remember_by_default=False,show_signup_option=False)
     # check if user is logged in as newly registered account needs explicit enabling by administrator 
 
     if user is not None:
