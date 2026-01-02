@@ -653,7 +653,7 @@ class Main(MainTemplate):
     """This method is called when an item is selected"""
     #Global.main_form = get_open_form()
     Global.action = self.help_dropdown.selected_value
-
+    
     self.help_dropdown.selected_value = None
     pass
 

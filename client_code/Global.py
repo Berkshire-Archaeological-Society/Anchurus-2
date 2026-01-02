@@ -32,7 +32,7 @@ list_action_dropdown = ["Contexts","Finds","Anomolies","Interpretations"]
 insert_action_dropdown = ["Context","Find","Anomoly","Interpretation"]
 file_action_dropdown = ["Import",separator,"Save"]
 view_action_dropdown = []
-help_action_dropdown = []
+help_action_dropdown = ["Anchurus Website"]
 sys_admin_action_dropdown = [("List Anvil Users","List Anvilusers"),("List Sites","List Site"),("Insert Site","Add Site")]
 site_admin_action_dropdown = [(separator,separator),("List Site Users","List sys_siteuser"),("Edit Site User","Edit sys_siteuser"),("Insert Site User","Add sys_siteuser")]
 #
