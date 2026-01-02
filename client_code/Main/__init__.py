@@ -109,7 +109,7 @@ class Main(MainTemplate):
     # now get the name of the button (work_area_name) that was clicked and make this and the associated work_area visible
     work_area = event_args['sender']
     Global.current_work_area_name = work_area.text
-    print("Work area clicked: ",Global.current_work_area_name)
+    #print("Work area clicked: ",Global.current_work_area_name)
     
     # Set Global.table_name linked with work_area_type
     Global.table_name = Global.work_area[Global.current_work_area_name]["action"].split(" ")[1].lower()
@@ -140,7 +140,7 @@ class Main(MainTemplate):
 
     Global.action_form_type = str(type(Global.work_area[Global.current_work_area_name]["form"])).split(".")[2][:-2]
     #
-    print("Work area action form type: ",Global.action_form_type)
+    #print("Work area action form type: ",Global.action_form_type)
     if Global.work_area[Global.current_work_area_name]["action"].split(" ")[0] in ["View", "Edit", "Insert", "Add", "Import"] or Global.work_area[Global.current_work_area_name]["action"] == "List Anvilusers":
       self.mb_middle.visible = False
       self.mb_left.visible = False
@@ -153,7 +153,7 @@ class Main(MainTemplate):
 
     # update status label (page control information) if work_space is a List (but not List Anvilusers (not using the TableList form))
     if Global.work_area[Global.current_work_area_name]["action"].split(" ")[0] in ["List"] and Global.work_area[Global.current_work_area_name]["action"] != "List Anvilusers":
-      print(Global.current_work_area_name)
+      #print(Global.current_work_area_name)
       FunctionsB.update_status_label(Global.work_area[Global.current_work_area_name]["self"])
 
     if len(Global.work_area[Global.current_work_area_name]["selected_rows"]) == 0:
@@ -218,7 +218,7 @@ class Main(MainTemplate):
 
     # set name of work_area to be action name
     work_area_name = action
-    print("Click work area, action: ",action)
+    #print("Click work area, action: ",action)
     # For all actions not in Admin_action_list check ID field for creating unique work_area name
     if action not in Global.sys_admin_action_list and action not in Global.site_admin_action_list:
       # add first Primary Key ID field when view or edit
@@ -320,7 +320,7 @@ class Main(MainTemplate):
       Global.current_work_area_name = work_area_name
       Global.header_work_area_type.text = str(type(Global.work_area[Global.current_work_area_name]["form"])).split(".")[2][:-2]
       Global.header_work_area_type.enabled = False
-      print(Global.header_work_area_type.text)
+      #print(Global.header_work_area_type.text)
       #Global.action_form_type = Global.header_work_area_type.text.split(".")[2][:-2]
       Global.action_form_type = Global.header_work_area_type.text
       #
@@ -337,7 +337,7 @@ class Main(MainTemplate):
 
       # Set selected buttons on Header for work area type
       Global.action_form_type = Global.header_work_area_type.text
-      print(Global.action_form_type)
+      #print(Global.action_form_type)
       if Global.action_form_type in Global.action_forms_with_refresh:
         # make Refresh button visible if action_form_type has refresh function (i.e. in list Global.action_forms_with_refresh) 
         #Global.header_refresh_button.visible = True

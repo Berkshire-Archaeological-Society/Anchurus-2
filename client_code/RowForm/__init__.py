@@ -128,14 +128,14 @@ class RowForm(RowFormTemplate):
       
       # if action is View or Edit then fill all fields
       cur_len = 0
-      print(column_name)
+      #print(column_name)
       if action in ["edit","update","view"]:
         if str(type(input)) == "<class 'anvil_extras.Quill.Quill'>":
           html_text = Global.work_area[Global.current_work_area_name]["data_list"][0][column_name]
           #if html_text == "None":
           #  html_text = ""
           delta = input.clipboard.convert(html_text)
-          print(delta)
+          #print(delta)
           input.setContents(delta, 'silent')
           cur_len = 0
           if html_text is not None:
@@ -151,7 +151,7 @@ class RowForm(RowFormTemplate):
           if input.text is not None:
             cur_len = len(input.text)
       if column_name == "SiteId" and action in ["edit","insert","add"]: # pre-set SiteId when
-        print(column_name,action)
+        #print(column_name,action)
         Global.work_area[Global.current_work_area_name]["data_list"][0][column_name] = Global.site_id
         input.text = Global.work_area[Global.current_work_area_name]["data_list"][0][column_name]
         if input.text == "None":
@@ -159,7 +159,7 @@ class RowForm(RowFormTemplate):
           cur_len = 0
         if input.text is not None:
           cur_len = len(input.text)
-        print(Global.work_area[Global.current_work_area_name]["data_list"][0][column_name])
+        #print(Global.work_area[Global.current_work_area_name]["data_list"][0][column_name])
 
       # set default label text
       col = column_name + " (" + str(cur_len) + "/" + str(max_length) + ")" 
