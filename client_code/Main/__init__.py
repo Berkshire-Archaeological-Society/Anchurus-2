@@ -8,6 +8,7 @@ import anvil.tables.query as q
 from anvil.tables import app_tables
 import anvil.users
 from anvil.js.window import document
+import anvil.js
 
 from .. import indeterminate
 from ..Header import Header
@@ -409,7 +410,7 @@ class Main(MainTemplate):
       if Global.system_user_role in ["System Administrator"]:
         self.menu_middle.visible = True
         self.mm_right.visible = True
-        self.mm_left.visible = False
+        self.mm_left.visible = True
         self.mm_middle.visible = False
         self.admin_dropdown.visible = True
         self.menu_block.visible = False
@@ -653,7 +654,7 @@ class Main(MainTemplate):
     """This method is called when an item is selected"""
     #Global.main_form = get_open_form()
     Global.action = self.help_dropdown.selected_value
-    
+    anvil.js.window.open("http://anchurus.co.uk", '_blank')
     self.help_dropdown.selected_value = None
     pass
 
@@ -938,7 +939,7 @@ class Main(MainTemplate):
     self.menu_block.visible = True
     self.menu_top.visible = False
     self.menu_middle.visible = False
-    self.mm_left.visible = False
+    self.mm_left.visible = True
     self.mm_middle.visible = False
     self.mm_right.visible = False
     self.admin_dropdown.visible = False

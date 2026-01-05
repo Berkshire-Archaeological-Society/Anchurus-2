@@ -214,10 +214,12 @@ help_page = {}
 help_introduction = """
 <h3>Introduction</h3>
 <p>
-Welcome <user>. You have successfully logged into the Anchurus-II Web service Application.
+Welcome <user>.
+</p>
+<p>You have successfully logged into the Anchurus-II Web service Application.
 </p>
 <p>
-Please select a site. If a site you require access to, is not in the list, please contact the Project Manager for that site to provide you with access.
+Please select a site. If a site you require access to, is not in the 'Select Site' list, please contact the Project Manager for that site to provide you with access.
 <br>Once selected you can use the menu items to select your actions.</p>
 <p>
 <b>Note:</b> When changing/selecting a new site, all current workspaces wil be deleted.</p>
