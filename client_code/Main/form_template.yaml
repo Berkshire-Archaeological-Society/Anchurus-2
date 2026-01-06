@@ -7,12 +7,12 @@ components:
   - event_bindings: {click: login_button_click}
     layout_properties: {grid_position: 'FGKTJN,ZMAKTC'}
     name: login_button
-    properties: {role: outlined-button, text: Please Login}
+    properties: {role: outlined-button, text: Login}
     type: Button
   - event_bindings: {click: register_button_click}
     layout_properties: {grid_position: 'FGKTJN,HUZFAM'}
     name: register_button
-    properties: {role: outlined-button, text: Please Register}
+    properties: {role: outlined-button, text: Sign Up}
     type: Button
   layout_properties: {slot: default}
   name: welcome_page
@@ -132,11 +132,6 @@ components:
     type: ColumnPanel
   - components:
     - components:
-      - event_bindings: {change: view_dropdown_change}
-        layout_properties: {width: 75}
-        name: view_dropdown
-        properties: {font_size: 13, include_placeholder: true, placeholder: View, tooltip: view}
-        type: DropDown
       - event_bindings: {change: help_dropdown_change}
         layout_properties: {width: 75}
         name: help_dropdown

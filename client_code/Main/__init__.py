@@ -69,7 +69,6 @@ class Main(MainTemplate):
     self.list_dropdown.items = Global.list_action_dropdown
     self.admin_dropdown.items = Global.sys_admin_action_dropdown
     #self.file_dropdown.items = Global.file_list
-    self.view_dropdown.items = Global.view_action_dropdown
     self.help_dropdown.items = Global.help_action_dropdown
     #
     #self.file_dropdown.items = Global.file_action_dropdown
@@ -658,15 +657,6 @@ class Main(MainTemplate):
     if Global.action == "Anchurus Website":
       anvil.js.window.open("https://anchurus.co.uk", '_blank')
     self.help_dropdown.selected_value = None
-    pass
-
-  def view_dropdown_change(self, **event_args):
-    """ This Function is called when the users selects an option form the View dropdown"""
-    """This method is called when an item is selected"""
-    #Global.main_form = get_open_form()
-    Global.action = self.view_dropdown.selected_value
-
-    self.view_dropdown.selected_value = None
     pass
 
   def site_summary_change(self, **event_args):
