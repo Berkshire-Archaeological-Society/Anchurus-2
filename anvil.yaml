@@ -125,7 +125,7 @@ services:
   server_config: {}
   source: /runtime/services/google.yml
 - client_config: {}
-  server_config: {custom_smtp: true}
+  server_config: {custom_smtp: true, smtp_encryption: ssl, smtp_host: mail.gandi.net, smtp_password: ihD2HzuFog1Tu4VO5D6HyAd7lKfm1Mk3shxxUdyby1mQl2qfRO5vwhKpnuzbfPJk2TSQoPSNubDONcTsiAPtS/OFA0ZNqwYvhLHqeMyinhUDZ876bLwbhBIanFqCQe/pUXBxYLIFsx0aZhk+pJ6VyOJsM7jwWzXqJR2a22iwrtoMajbnlNUZ6g==, smtp_port: 465, smtp_user: send@bakkernoguer.eu, test_mode: false}
   source: /runtime/services/anvil/email.yml
 startup: {module: Main, type: form}
 startup_form: null
