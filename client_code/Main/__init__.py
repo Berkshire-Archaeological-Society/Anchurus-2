@@ -403,7 +403,7 @@ class Main(MainTemplate):
       
       # if user has system admin role, add system admin actions list and set it visible
       user = anvil.users.get_user()
-      Global.system_user_role = user["role"]
+      Global.system_user_role = user["systemrole"]
       self.user_role.text = Global.system_user_role
 
       if Global.system_user_role in ["System Administrator"]:
