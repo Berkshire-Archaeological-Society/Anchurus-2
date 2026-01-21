@@ -70,6 +70,8 @@ class RowForm(RowFormTemplate):
         input = Quill(placeholder=column_name,toolbar=Global.Quill_toolbarOptions)
         max_length = 65535
         input.add_event_handler('text_change',self.input_change)
+      #elif column_type == "tinyint":
+      #  
       elif column_type == "date":
         # by default create TextBox fields
         input = TextBox(placeholder=column_name)
