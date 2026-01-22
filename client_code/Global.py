@@ -16,7 +16,7 @@ import anvil.users
 #
 main_form = ""
 separator = "------------------"
-sys_admin_action_list = ["List Anvilusers","Edit AnvilUser",separator,"List Site","Edit Site","Add Site"]
+sys_admin_action_list = ["List Anvilusers","Edit AnvilUser","Insert Anviluser",separator,"List Site","Edit Site","Add Site"]
 site_admin_action_list = [separator,"List SiteUser","Edit SiteUsers","Add SiteUser"]
 admin_action_list_not_implemented = [separator]
 user_action_list = ["Select Site",separator,

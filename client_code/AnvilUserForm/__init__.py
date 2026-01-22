@@ -27,26 +27,28 @@ class AnvilUserForm(AnvilUserFormTemplate):
     #
     self.user_role_value.items = Global.system_user_role_options
     self.user_status_value.items = Global.user_status_options
-    self.user_email_value.text = Global.user_items["email"]
-    self.user_email_value.enabled = False
-    self.firstname.text = Global.user_items["firstname"]
-    self.lastname.text = Global.user_items["lastname"]
-    if Global.user_items["role"] is None:
-      self.user_role_value.selected_value = "None"
-    else:
-      self.user_role_value.selected_value = Global.user_items["role"]
-    Global.user_role = Global.user_items["role"]
-    if Global.user_items["enabled"]:
-      Global.user_status = True
-      self.user_status_value.selected_value = "True"
-    else:
-      Global.user_status = False
-      self.user_status_value.selected_value = "False"
-    self.initials.enabled = True
-    self.initials.text = Global.user_items["initials"]
+    if Global.action == ["Edit Anviluser"]:
+      self.user_email_value.text = Global.user_items["email"]
+      self.user_email_value.enabled = False
+      self.firstname.text = Global.user_items["firstname"]
+      self.lastname.text = Global.user_items["lastname"]
+      if Global.user_items["role"] is None:
+        self.user_role_value.selected_value = "None"
+      else:
+        self.user_role_value.selected_value = Global.user_items["role"]
+      Global.user_role = Global.user_items["role"]
+      if Global.user_items["enabled"]:
+        Global.user_status = True
+        self.user_status_value.selected_value = "True"
+      else:
+        Global.user_status = False
+        self.user_status_value.selected_value = "False"
+      self.initials.enabled = True
+      self.initials.text = Global.user_items["initials"]
+    
     #validate 
 
-  def user_system_role_value_change(self, **event_args):
+  def user_role_value_change(self, **event_args):
     """This method is called when an item is selected"""
     #print("Role selected is ",self.user_role_value.selected_value)
     Global.system_user_role = self.user_role_value.selected_value
