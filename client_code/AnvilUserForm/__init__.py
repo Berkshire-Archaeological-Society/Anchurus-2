@@ -46,7 +46,7 @@ class AnvilUserForm(AnvilUserFormTemplate):
     self.initials.text = Global.user_items["initials"]
     #validate 
 
-  def user_role_value_change(self, **event_args):
+  def user_system_role_value_change(self, **event_args):
     """This method is called when an item is selected"""
     #print("Role selected is ",self.user_role_value.selected_value)
     Global.system_user_role = self.user_role_value.selected_value

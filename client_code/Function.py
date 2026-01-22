@@ -49,14 +49,14 @@ def create_work_space(type,data_list):
   #print(action, table_name)
   # First param of RowForm and TableList is site_id, but is blanked out. Only used by server print function
   # Make sure any List actions that are not using the TableList Form should be listed first
-  if type == "List Anvilusers":
-    work_space = ListAnvilUsers()
-  elif type == "Edit AnvilUser":
-    work_space = AnvilUserForm()
+  #if type == "List Anvilusers":
+  #  work_space = ListAnvilUsers()
+  #elif type == "Edit AnvilUser":
+  #  work_space = AnvilUserForm()
   #elif type == "List Site":
   #  work_space = ListSites()
   #
-  elif action == "list":
+  if action == "list":
     work_space = TableList("",table_name,data_list,type,page_info)
   #
   elif action == "import":

@@ -25,7 +25,7 @@ components:
     - {data_key: firstname, expand: false, id: CFBYUP, title: firstname, width: 148.18182373046875}
     - {data_key: lastname, expand: false, id: KIVAWX, title: lastname, width: 172.727294921875}
     - {data_key: initials, expand: false, id: ATFSVD, title: initials, width: 80.45458984375}
-    - {data_key: role, expand: false, id: VJQQOR, title: role, width: 151.9091796875}
+    - {data_key: systemrole, expand: false, id: VJQQOR, title: systemrole, width: 151.9091796875}
     - {data_key: enabled, expand: false, id: OJLQEN, title: enabled, width: 97}
     - {data_key: last_login, expand: true, id: SRVCJL, title: last login, width: 276}
     - {data_key: signed_up, expand: true, id: MPXLTV, title: signed up, width: 288}
