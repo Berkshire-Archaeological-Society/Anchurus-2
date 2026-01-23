@@ -19,6 +19,11 @@ class AnvilUserForm(AnvilUserFormTemplate):
     # Any code you write here will run before the form opens.
     self.validator = Validator()
     # set validation on fields
+    self.validator.regex(component=self.user_email_value,
+                         events=['lost_focus', 'change'],
+                         pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$",
+                         required=True,
+                         message="Please enter a correct email address")
     self.validator.regex(component=self.initials,
                          events=['lost_focus', 'change'],
                          pattern="^[A-Z]{2}[a-z0-9]$",

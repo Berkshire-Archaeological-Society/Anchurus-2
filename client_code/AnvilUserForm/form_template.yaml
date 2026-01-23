@@ -85,7 +85,7 @@ components:
       - event_bindings: {change: user_role_value_change}
         layout_properties: {width: 200}
         name: user_role_value
-        properties: {background: 'theme:On Primary'}
+        properties: {background: 'theme:On Primary', include_placeholder: true, placeholder: Select System Role}
         type: DropDown
       layout_properties: {grid_position: 'GALLAE,BOGZVG'}
       name: flow_panel_1
