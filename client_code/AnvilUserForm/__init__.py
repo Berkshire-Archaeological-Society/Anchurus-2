@@ -35,6 +35,7 @@ class AnvilUserForm(AnvilUserFormTemplate):
     if Global.action == ["Edit Anviluser"]:
       self.user_email_value.text = Global.user_items["email"]
       self.user_email_value.enabled = False
+      self.user_email_value.foreground = "#ffffff"
       self.firstname.text = Global.user_items["firstname"]
       self.lastname.text = Global.user_items["lastname"]
       if Global.user_items["role"] is None:
@@ -50,7 +51,7 @@ class AnvilUserForm(AnvilUserFormTemplate):
         self.user_status_value.selected_value = "False"
       self.initials.enabled = True
       self.initials.text = Global.user_items["initials"]
-    
+  
     #validate 
 
   def user_role_value_change(self, **event_args):
@@ -76,6 +77,7 @@ class AnvilUserForm(AnvilUserFormTemplate):
   def submit_changes_click(self, **event_args):
     """This method is called when the button is clicked"""
     #print("New values for ",Global.user_items["email"], ": ", Global.user_role,Global.user_status)
+    Global.username = self.user_email_value.text
     Global.user_firstname = self.firstname.text
     Global.user_lastname = self.lastname.text
     Global.user_initials = self.initials.text
@@ -85,7 +87,12 @@ class AnvilUserForm(AnvilUserFormTemplate):
       Global.user_status = False
     Global.system_user_role = self.user_role_value.selected_value
     #
-    msg = anvil.server.call('user_update',Global.user_items["email"], Global.system_user_role,Global.user_status,Global.user_initials,Global.user_firstname,Global.user_lastname)
+    if Global.action == ["Edit Anviluser"]: 
+      msg = anvil.server.call('user_update',Global.user_items["email"], Global.system_user_role,Global.user_status,Global.user_initials,Global.user_firstname,Global.user_lastname)
+    elif Global.action == ["Insert Anviluser"]:
+      msg = anvil.server.call('user_insert',Global.user_items["email"], Global.system_user_role,Global.user_status,Global.user_initials,Global.user_firstname,Global.user_lastname)
+    else:
+      msg = "Unknown action: " + Global.action
     n = Notification(msg)
     n.show()
     pass
