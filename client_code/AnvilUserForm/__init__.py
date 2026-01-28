@@ -32,17 +32,19 @@ class AnvilUserForm(AnvilUserFormTemplate):
     #
     self.user_role_value.items = Global.system_user_role_options
     self.user_status_value.items = Global.user_status_options
-    if Global.action == ["Edit Anviluser"]:
+    print(Global.action,Global.user_items["email"])
+    if Global.action == "Edit AnvilUser":
+      print(Global.action,Global.user_items["email"])
       self.user_email_value.text = Global.user_items["email"]
       self.user_email_value.enabled = False
-      self.user_email_value.foreground = "#ffffff"
+      #self.user_email_value.foreground = "#ffffff"
       self.firstname.text = Global.user_items["firstname"]
       self.lastname.text = Global.user_items["lastname"]
-      if Global.user_items["role"] is None:
+      if Global.user_items["systemrole"] is None:
         self.user_role_value.selected_value = "None"
       else:
-        self.user_role_value.selected_value = Global.user_items["role"]
-      Global.user_role = Global.user_items["role"]
+        self.user_role_value.selected_value = Global.user_items["systemrole"]
+      Global.user_role = Global.user_items["systemrole"]
       if Global.user_items["enabled"]:
         Global.user_status = True
         self.user_status_value.selected_value = "True"
@@ -87,10 +89,10 @@ class AnvilUserForm(AnvilUserFormTemplate):
       Global.user_status = False
     Global.system_user_role = self.user_role_value.selected_value
     #
-    if Global.action == ["Edit Anviluser"]: 
-      msg = anvil.server.call('user_update',Global.user_items["email"], Global.system_user_role,Global.user_status,Global.user_initials,Global.user_firstname,Global.user_lastname)
-    elif Global.action == ["Insert Anviluser"]:
-      msg = anvil.server.call('user_insert',Global.user_items["email"], Global.system_user_role,Global.user_status,Global.user_initials,Global.user_firstname,Global.user_lastname)
+    if Global.action == "Edit AnvilUser": 
+      msg = anvil.server.call('system_user_update',Global.user_items["email"], Global.system_user_role,Global.user_status,Global.user_initials,Global.user_firstname,Global.user_lastname)
+    elif Global.action == "Insert AnvilUser":
+      msg = anvil.server.call('system_user_insert',Global.user_items["email"], Global.system_user_role,Global.user_status,Global.user_initials,Global.user_firstname,Global.user_lastname)
     else:
       msg = "Unknown action: " + Global.action
     n = Notification(msg)
