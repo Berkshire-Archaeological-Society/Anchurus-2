@@ -34,7 +34,7 @@ file_action_dropdown = ["Import",separator,"Save"]
 view_action_dropdown = []
 help_action_dropdown = ["Anchurus Website"]
 sys_admin_action_dropdown = [("List Users","List Anvilusers"),("Insert User","Insert Anviluser"),("Import Users","Import Anvilusers"),separator,("List Sites","List Site"),("Insert Site","Add Site")]
-site_admin_action_dropdown = [(separator,separator),("List Site Users","List sys_siteuserrole"),("Insert Site User","Add sys_siteuserrole"),("Import Site Users","Import sys_siteuserroles")]
+site_admin_action_dropdown = [(separator,separator),("List Site Users","List sys_siteuserrole"),("Insert Site User","Add sys_siteuserrole"),("Import Site Users","Import sys_siteuserrole")]
 #
 import_action_dropdown = ["context","find"]
 #
