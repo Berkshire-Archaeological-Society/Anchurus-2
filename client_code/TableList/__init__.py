@@ -159,7 +159,7 @@ class TableList(TableListTemplate):
     
     # get the Table information form the Database
     table_info = anvil.server.call("describe_table", Global.table_name)
-    print(table_info)
+    #print(table_info)
     # Extract the columns names from the table_info
     # Frist column if for Select
     # The DESCRIBE result structure is:

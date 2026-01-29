@@ -96,6 +96,7 @@ class RowForm(RowFormTemplate):
       if (action == "view") or (action in ["edit"] and item["Key"] == "PRI") or column_name in ["SiteId","DBAcontrol"]:
         input.enabled = False
         input.foreground = "#ffffff"
+        input.background = "#000000"
       #
       if column_name in ["YearEnd","YearStart"]:
         self.validator.regex(component=input,
