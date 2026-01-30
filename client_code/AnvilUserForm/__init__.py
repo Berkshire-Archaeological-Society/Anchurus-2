@@ -28,18 +28,19 @@ class AnvilUserForm(AnvilUserFormTemplate):
                          events=['lost_focus', 'change'],
                          pattern="^[A-Z]{2}[a-z0-9]$",
                          required=True,
-                         message="Please enter the two letter initials of the user, followed by a lowercase letter or digit")
+                         message="Please enter the two capital letter initials of the user, followed by a lowercase letter or digit")
     #
     self.user_role_value.items = Global.system_user_role_options
     self.user_status_value.items = Global.user_status_options
-    print(Global.action,Global.user_items["email"])
     if Global.action == "Edit AnvilUser":
       print(Global.action,Global.user_items["email"])
       self.user_email_value.text = Global.user_items["email"]
       self.user_email_value.enabled = False
-      #self.user_email_value.foreground = "#ffffff"
+      self.user_email_value.foreground = "#ffffff"
+      self.user_email_value.background = "#000000"
       self.firstname.text = Global.user_items["firstname"]
       self.lastname.text = Global.user_items["lastname"]
+      print(Global.user_items["systemrole"])
       if Global.user_items["systemrole"] is None:
         self.user_role_value.selected_value = "None"
       else:

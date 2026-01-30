@@ -92,8 +92,8 @@ class RowForm(RowFormTemplate):
         input.add_event_handler('change',self.input_change)
         
       # set specific validators for the various fields
-      # if column is Primary Key then make it un-editable
-      if (action == "view") or (action in ["edit"] and item["Key"] == "PRI") or column_name in ["SiteId","DBAcontrol"]:
+      # if column is Primary Key or a known special column then make it un-editable
+      if (action == "view") or (action in ["edit"] and item["Key"] == "PRI") or column_name in ["SiteId","DBAcontrol","RegistrationDate"]:
         input.enabled = False
         input.foreground = "#ffffff"
         input.background = "#000000"
@@ -110,6 +110,12 @@ class RowForm(RowFormTemplate):
                                        pattern="^\d{4}$",
                                        required=True,
                                        message="Please enter a valid year in YYYY format")
+      elif column_name in ["Email"]:
+        self.validator.regex(component=input,
+                             events=['lost_focus', 'change'],
+                             pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$",
+                             required=True,
+                             message="Please enter a correct email address")
       elif column_type.find("int") != -1:
         self.validator.regex(component=input,
                              events=['lost_focus', 'change'],
