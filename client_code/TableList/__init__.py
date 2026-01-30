@@ -200,7 +200,6 @@ class TableList(TableListTemplate):
       #if field_name not in ["SiteId"]: # do not create a columns for SiteId
       id = id + 1
       columns_titles.append({"id": id, "title": field_name, "data_key": field_name, "width": col_width, "expand": True })
-        #columns_titles.append({"id": id, "title": field_name, "data_key": field_name, "expand": True })
 
     # assign the columns titles to the grid columns
     #print(columns_titles)
