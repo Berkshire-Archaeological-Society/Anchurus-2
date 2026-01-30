@@ -2,6 +2,7 @@ from ._anvil_designer import RowFormTemplate
 from anvil import *
 import anvil.server
 import re
+import datetime
 import anvil.google.auth, anvil.google.drive
 from anvil.google.drive import app_files
 import anvil.users
@@ -136,6 +137,12 @@ class RowForm(RowFormTemplate):
       # if action is View or Edit then fill all fields
       cur_len = 0
       #print(column_name)
+      if action in ["insert","add"] and column_name == "RegistrationDate":
+        # force RegistrationDate
+        input.text = datetime.datetime.now()
+        input.enabled = False
+        input.foreground = "#ffffff"
+        input.background = "#000000"
       if action in ["edit","update","view"]:
         if str(type(input)) == "<class 'anvil_extras.Quill.Quill'>":
           html_text = Global.work_area[Global.current_work_area_name]["data_list"][0][column_name]

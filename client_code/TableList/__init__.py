@@ -193,6 +193,10 @@ class TableList(TableListTemplate):
         col_width = 140
       if field_name in Global.table_colwidth_200:
         col_width = 200
+      if field_name in Global.table_colwidth_250:
+        col_width = 250
+      if field_name in Global.table_colwidth_300:
+        col_width = 300
       #if field_name not in ["SiteId"]: # do not create a columns for SiteId
       id = id + 1
       columns_titles.append({"id": id, "title": field_name, "data_key": field_name, "width": col_width, "expand": True })
