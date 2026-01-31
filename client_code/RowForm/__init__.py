@@ -139,7 +139,7 @@ class RowForm(RowFormTemplate):
       #print(column_name)
       if action in ["insert","add"] and column_name == "RegistrationDate":
         # force RegistrationDate
-        input.text = datetime.datetime.now()
+        input.text = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         input.enabled = False
         input.foreground = "#ffffff"
         input.background = "#000000"
