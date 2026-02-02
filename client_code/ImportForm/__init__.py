@@ -60,9 +60,10 @@ class ImportForm(ImportFormTemplate):
     note = "The successful inserts to table " + Global.table_name + " have been cancelled and deleted from the table. The message log has been downloaded."
     n = Notification(note)
     n.show()
-    #self.upload_file.clear()
-    #self.selected_file_name.text = ""
-    #self.message_log.text = ""
+    #
+    self.upload_file.clear()
+    self.selected_file_name.text = ""
+    self.message_log.text = ""
     pass
 
   def commit_inserts_click(self, **event_args):
@@ -72,7 +73,8 @@ class ImportForm(ImportFormTemplate):
     anvil.media.download(text_file)
     n = Notification("The successful Inserts have been comitted to the table. The message log has been downloaded.")
     n.show()
-    #self.upload_file.clear()
-    #self.selected_file_name.text = ""
-    #self.message_log.text = ""
+    #
+    self.upload_file.clear()
+    self.selected_file_name.text = ""
+    self.message_log.text = ""
     pass
