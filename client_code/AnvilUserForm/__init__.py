@@ -17,6 +17,9 @@ class AnvilUserForm(AnvilUserFormTemplate):
     self.init_components(**properties)
 
     # Any code you write here will run before the form opens.
+    self.tag.password = 'My password'
+    self.showhide_password_checkbox_change()
+    #
     self.validator = Validator()
     # set validation on fields
     self.validator.regex(component=self.user_email_value,
@@ -38,6 +41,7 @@ class AnvilUserForm(AnvilUserFormTemplate):
       self.user_email_value.enabled = False
       self.user_email_value.foreground = "#ffffff"
       self.user_email_value.background = "#000000"
+      # password reset ?
       self.firstname.text = Global.user_items["firstname"]
       self.lastname.text = Global.user_items["lastname"]
       print(Global.user_items["systemrole"])
@@ -80,7 +84,9 @@ class AnvilUserForm(AnvilUserFormTemplate):
   def submit_changes_click(self, **event_args):
     """This method is called when the button is clicked"""
     #print("New values for ",Global.user_items["email"], ": ", Global.user_role,Global.user_status)
+    # extract field values fom from
     Global.username = self.user_email_value.text
+    Global.password = self.password_text_box.text
     Global.user_firstname = self.firstname.text
     Global.user_lastname = self.lastname.text
     Global.user_initials = self.initials.text
@@ -90,10 +96,10 @@ class AnvilUserForm(AnvilUserFormTemplate):
       Global.user_status = False
     Global.system_user_role = self.user_role_value.selected_value
     #
-    if Global.action == "Edit AnvilUser": 
-      msg = anvil.server.call('system_user_update',Global.user_items["email"], Global.system_user_role,Global.user_status,Global.user_initials,Global.user_firstname,Global.user_lastname)
-    elif Global.action == "Insert AnvilUser":
-      msg = anvil.server.call('system_user_insert',Global.user_items["email"], Global.system_user_role,Global.user_status,Global.user_initials,Global.user_firstname,Global.user_lastname)
+    if Global.action in ["Edit AnvilUser","Edit Anviluser","edit anviluser"]: 
+      msg = anvil.server.call('system_user_update',Global.username, Global.system_user_role,Global.user_status,Global.user_initials,Global.user_firstname,Global.user_lastname)
+    elif Global.action in ["Insert AnvilUser","Insert Anviluser","insert anviluser"]:
+      msg = anvil.server.call('system_user_insert',Global.username,Global.password,Global.system_user_role,Global.user_status,Global.user_initials,Global.user_firstname,Global.user_lastname)
     else:
       msg = "Unknown action: " + Global.action
     n = Notification(msg)
@@ -109,3 +115,23 @@ class AnvilUserForm(AnvilUserFormTemplate):
     """This method is called when the text in this text box is edited"""
     Global.user_lastname = self.lastname.text
     pass
+
+  @handle("showhide_password_checkbox", "change")
+  def showhide_password_checkbox_change(self, **event_args):
+    """This method is called when this checkbox is checked or unchecked"""
+    if self.showhide_password_checkbox.checked:
+      self.password_text_box.text = self.tag.password
+      self.password_text_box.enabled = True
+      self.showhide_password_checkbox.text = 'Unclick to Hide password'
+    else:
+      self.password_text_box.text = '*' * len(self.tag.password)
+      self.password_text_box.enabled = False
+      self.showhide_password_checkbox.text = 'Click to Show (and Change) password'
+    pass
+
+  @handle("password_text_box", "change")
+  def password_text_box_change(self, **event_args):
+    """This method is called when the text in this text box is edited"""
+    self.tag.password = self.password_text_box.text
+    pass
+

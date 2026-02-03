@@ -183,6 +183,7 @@ table_colwidth_default = 150
 title = system + "\n\n" + organisation
 sign_in_out_button_text = "Sign in"
 username = ""
+password = ""
 name = ""
 user_firstname = ""
 user_lastname = ""

@@ -5,7 +5,7 @@ components:
     properties: {font_size: 24, italic: false, text: This form is used for inserting / updating user details, underline: true}
     type: Label
   - components:
-    - layout_properties: {grid_position: 'NWCXXY,LQXQCN'}
+    - layout_properties: {grid_position: 'AXENSZ,QWWLYX'}
       name: label_2
       properties:
         font_size: 16
@@ -13,67 +13,72 @@ components:
           margin: ['8', null, '4', null]
         text: 'User email:'
       type: Label
-    layout_properties: {grid_position: 'CZSOJR,GFYDSW XMQZHY,RJFLOF'}
-    name: column_panel_8
-    properties: {}
-    type: ColumnPanel
-  - layout_properties: {grid_position: 'CZSOJR,GFYDSW FYRBQU,SAQXGO'}
-    name: label_8
-    properties:
-      bold: false
-      font_size: 16
-      italic: false
-      spacing:
-        margin: ['4', null, '8', null]
-      text: 'Firstname:'
-    type: Label
-  - layout_properties: {grid_position: 'CZSOJR,GFYDSW JOWPBX,PMLZJP'}
-    name: label_9
-    properties:
-      font_size: 16
-      spacing:
-        margin: ['8', null, '4', null]
-      text: 'Lastname:'
-    type: Label
-  - layout_properties: {grid_position: 'CZSOJR,GFYDSW DYUYML,YDLWFI'}
-    name: Initials_header
-    properties:
-      font_size: 16
-      spacing:
-        margin: ['8', null, '8', null]
-      text: 'Initials:'
-    type: Label
-  - layout_properties: {grid_position: 'CZSOJR,GFYDSW HRJQDJ,XOGZLN'}
-    name: label_3
-    properties:
-      font_size: 16
-      spacing:
-        margin: ['6', null, '8', null]
-      text: 'System Role:'
-    type: Label
-  - layout_properties: {grid_position: 'CZSOJR,GFYDSW PMGKTG,IQDUXW'}
-    name: label_4
-    properties:
-      font_size: 16
-      spacing:
-        margin: ['12', null, null, null]
-      text: 'Enabled:'
-    type: Label
-  - components:
     - layout_properties: {grid_position: 'AXENSZ,CLYXTT'}
       name: user_email_value
       properties: {role: outlined}
       type: TextBox
+    - layout_properties: {grid_position: 'AXENSZ,HGMECB'}
+      name: label_5
+      properties: {}
+      type: Label
+    - layout_properties: {grid_position: 'LTULCE,IURAUI'}
+      name: Password
+      properties: {font_size: 16, text: Password}
+      type: Label
+    - event_bindings: {}
+      layout_properties: {grid_position: 'LTULCE,GOEBJZ'}
+      name: password_text_box
+      properties: {role: outlined}
+      type: TextBox
+    - event_bindings: {}
+      layout_properties: {grid_position: 'LTULCE,INNOUV'}
+      name: showhide_password_checkbox
+      properties: {text: Show/Hide password}
+      type: CheckBox
+    - layout_properties: {grid_position: 'UPVGJU,PTHXLV'}
+      name: label_8
+      properties:
+        bold: false
+        font_size: 16
+        italic: false
+        spacing:
+          margin: ['4', null, '8', null]
+        text: 'Firstname:'
+      type: Label
     - event_bindings: {change: firstname_change}
       layout_properties: {grid_position: 'UPVGJU,EMOZTP'}
       name: firstname
       properties: {role: outlined}
       type: TextBox
+    - layout_properties: {grid_position: 'UPVGJU,KXHIUO'}
+      name: label_6
+      properties: {}
+      type: Label
+    - layout_properties: {grid_position: 'XZCQZZ,TRWXJV'}
+      name: label_9
+      properties:
+        font_size: 16
+        spacing:
+          margin: ['8', null, '4', null]
+        text: 'Lastname:'
+      type: Label
     - event_bindings: {change: lastname_change}
       layout_properties: {grid_position: 'XZCQZZ,LMXPEZ'}
       name: lastname
       properties: {role: outlined}
       type: TextBox
+    - layout_properties: {grid_position: 'XZCQZZ,GWODOX'}
+      name: label_10
+      properties: {}
+      type: Label
+    - layout_properties: {grid_position: 'XIYRDV,ZXSYMI'}
+      name: Initials_header
+      properties:
+        font_size: 16
+        spacing:
+          margin: ['8', null, '8', null]
+        text: 'Initials:'
+      type: Label
     - event_bindings: {change: initials_change}
       layout_properties: {grid_position: 'XIYRDV,RONMFK'}
       name: initials
@@ -81,6 +86,18 @@ components:
         margin: ['0', null, null, null]
         role: outlined
       type: TextBox
+    - layout_properties: {grid_position: 'XIYRDV,UNNVRR'}
+      name: label_11
+      properties: {}
+      type: Label
+    - layout_properties: {grid_position: 'GALLAE,BGHADU'}
+      name: label_3
+      properties:
+        font_size: 16
+        spacing:
+          margin: ['6', null, '8', null]
+        text: 'System Role:'
+      type: Label
     - components:
       - event_bindings: {change: user_role_value_change}
         layout_properties: {width: 200}
@@ -91,19 +108,37 @@ components:
       name: flow_panel_1
       properties: {}
       type: FlowPanel
+    - layout_properties: {grid_position: 'GALLAE,LIFQWI'}
+      name: label_12
+      properties: {}
+      type: Label
+    - layout_properties: {grid_position: 'FUBCDU,ZPAWPC'}
+      name: label_4
+      properties:
+        font_size: 16
+        spacing:
+          margin: ['12', null, null, null]
+        text: 'Enabled:'
+      type: Label
     - components:
       - event_bindings: {change: user_status_value_change}
         layout_properties: {width: 200}
         name: user_status_value
-        properties: {background: 'theme:On Primary'}
+        properties:
+          background: theme:On Primary
+          items: []
         type: DropDown
       layout_properties: {grid_position: 'FUBCDU,JEUHLV'}
       name: flow_panel_2
       properties: {}
       type: FlowPanel
+    - layout_properties: {grid_position: 'FUBCDU,ABJXRO'}
+      name: label_13
+      properties: {}
+      type: Label
     layout_properties: {grid_position: 'CZSOJR,KLKKRB'}
     name: column_panel_9
-    properties: {}
+    properties: {col_widths: '{"ZXSYMI":10,"RONMFK":55,"TRWXJV":10,"LMXPEZ":55,"PTHXLV":10,"EMOZTP":55,"QWWLYX":10,"CLYXTT":55,"BGHADU":10,"BOGZVG":55,"ZPAWPC":10,"JEUHLV":55,"IURAUI":10,"GOEBJZ":55,"INNOUV":15,"HGMECB":15,"KXHIUO":15,"GWODOX":15,"UNNVRR":15,"LIFQWI":15,"ABJXRO":15}'}
     type: ColumnPanel
   - layout_properties: {grid_position: 'ZCAJKV,AGXLVA'}
     name: label_7
