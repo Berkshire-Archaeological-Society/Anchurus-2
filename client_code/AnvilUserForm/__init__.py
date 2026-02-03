@@ -41,7 +41,12 @@ class AnvilUserForm(AnvilUserFormTemplate):
       self.user_email_value.enabled = False
       self.user_email_value.foreground = "#ffffff"
       self.user_email_value.background = "#000000"
-      # password reset ?
+      # password cannot be changed
+      self.password_text_box.enabled = False
+      self.password_text_box.foreground = "#ffffff"
+      self.password_text_box.background = "#000000"
+      self.showhide_password_checkbox.enabled = False
+      #
       self.firstname.text = Global.user_items["firstname"]
       self.lastname.text = Global.user_items["lastname"]
       print(Global.user_items["systemrole"])
