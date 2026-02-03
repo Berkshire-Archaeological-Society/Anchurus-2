@@ -29,13 +29,15 @@ class AnvilUserForm(AnvilUserFormTemplate):
                          message="Please enter a correct email address")
     self.validator.regex(component=self.initials,
                          events=['lost_focus', 'change'],
-                         pattern="^[A-Z]{2}[a-z0-9]$",
+                         pattern="^[A-Z]{2}[A-Za-z0-9]$",
                          required=True,
-                         message="Please enter the two capital letter initials of the user, followed by a lowercase letter or digit")
+                         message="Please enter the two capital letter initials of the user, followed by a letter or digit")
     #
     self.user_role_value.items = Global.system_user_role_options
     self.user_status_value.items = Global.user_status_options
+    self.title.text = "This form is for inserting a new user"
     if Global.action == "Edit AnvilUser":
+      self.title.text = "This form is for updating details of a user"
       print(Global.action,Global.user_items["email"])
       self.user_email_value.text = Global.user_items["email"]
       self.user_email_value.enabled = False
@@ -126,12 +128,14 @@ class AnvilUserForm(AnvilUserFormTemplate):
     """This method is called when this checkbox is checked or unchecked"""
     if self.showhide_password_checkbox.checked:
       self.password_text_box.text = self.tag.password
-      self.password_text_box.enabled = True
-      self.showhide_password_checkbox.text = 'Unclick to Hide password'
+      self.password_text_box.hide_text = False
+      #self.password_text_box.enabled = True
+      self.showhide_password_checkbox.text = 'Hide Password'
     else:
-      self.password_text_box.text = '*' * len(self.tag.password)
-      self.password_text_box.enabled = False
-      self.showhide_password_checkbox.text = 'Click to Show (and Change) password'
+      #self.password_text_box.text = '*' * len(self.tag.password)
+      self.password_text_box.hide_text = True
+      #self.password_text_box.enabled = False
+      self.showhide_password_checkbox.text = 'Show Password'
     pass
 
   @handle("password_text_box", "change")
