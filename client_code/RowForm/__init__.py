@@ -134,7 +134,7 @@ class RowForm(RowFormTemplate):
                              message="Please enter a valid number in the form x.xxx")
       # end of validation 
       
-      # if action is View or Edit then fill all fields
+      # spedial case when Field is RegistrationDate: Pre-fill is for Insert and also block edit contents
       cur_len = 0
       #print(column_name)
       if action in ["insert","add"] and column_name == "RegistrationDate":
@@ -143,6 +143,8 @@ class RowForm(RowFormTemplate):
         input.enabled = False
         input.foreground = "#ffffff"
         input.background = "#000000"
+
+      # if action is View or Edit then fill all fields
       if action in ["edit","update","view"]:
         if str(type(input)) == "<class 'anvil_extras.Quill.Quill'>":
           html_text = Global.work_area[Global.current_work_area_name]["data_list"][0][column_name]
@@ -185,15 +187,14 @@ class RowForm(RowFormTemplate):
       if column_name != "DBAcontrol": # do not add an input field for DBAcontrol column
         self.column_panel_1.add_component(lab)
         self.column_panel_1.add_component(input)
-    #
-    #print("In RowForm, action:",action)
+    
+    # Add a Submit button if Edit or Add action
     if action in ["edit","add","insert"]:     #"Edit Context","Edit Find","Add Context","Add Find"]:
-      # Add a Submit button if Edit or Add action
       submit_btn = Button(text="Submit",role="outlined-button")
       submit_btn.add_event_handler("click",self.submit_btn_click)
       self.column_panel_1.add_component(submit_btn)
 
-    # For this work_area form the page_info details are all set to 0; this is for when the server print function call the form
+    # For this work_area form the page_info details are all set to 0; this is for when the server print function calls this form
     Global.work_area[Global.current_work_area_name]["page_info"] = {"page_num": 0, "rows_per_page": 0, "total_rows": 0}
 
   def submit_btn_click(self, **event_args):
