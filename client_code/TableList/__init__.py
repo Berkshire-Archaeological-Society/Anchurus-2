@@ -160,14 +160,17 @@ class TableList(TableListTemplate):
     # get the Table information form the Database
     table_info = anvil.server.call("describe_table", Global.table_name)
     #print(table_info)
+
+    # add table to work_area data structure for Global.current_work_area_name
+    Global.work_area[Global.current_work_area_name]["table"] = self.table
+    
     # Extract the columns names from the table_info
     # Frist column if for Select
     # The DESCRIBE result structure is:
     # (Field:, Type:, Null:, Key:, Default:, Extra:)
-    Global.work_area[Global.current_work_area_name]["columns_show"] = []
-    columns_titles = []
-    columns_titles.append({"id": 1, "title": "", "data_key": "select", "width": 30, "expand": False })
-    id = 1
+
+    # first make column list
+    column_list = []
     for column_data in table_info:
       # Select Column name:
       # anvil users table uses different title for columns names (name) compared to the Database (Field)
@@ -175,40 +178,58 @@ class TableList(TableListTemplate):
         field_name = column_data["name"]
       else:
         field_name = column_data["Field"]
-      Global.work_area[Global.current_work_area_name]["columns_show"].append(field_name)
-      # set column width
-      col_width = Global.table_colwidth_default
-      #col_width = 0
-      if field_name in Global.table_colwidth_60:
-        col_width = 60
-      if field_name in Global.table_colwidth_70:
-        col_width = 70
-      if field_name in Global.table_colwidth_80:
-        col_width = 80
-      if field_name in Global.table_colwidth_90:
-        col_width = 90
-      if field_name in Global.table_colwidth_100:
-        col_width = 100
-      if field_name in Global.table_colwidth_120:
-        col_width = 120
-      if field_name in Global.table_colwidth_140:
-        col_width = 140
-      if field_name in Global.table_colwidth_200:
-        col_width = 200
-      if field_name in Global.table_colwidth_250:
-        col_width = 250
-      if field_name in Global.table_colwidth_300:
-        col_width = 300
-      #if field_name not in ["SiteId"]: # do not create a columns for SiteId
-      id = id + 1
-      columns_titles.append({"id": id, "title": field_name, "data_key": field_name, "width": col_width, "expand": True })
+      column_list.append(field_name)
+    # now create the table columns    
+    FunctionsB.create_table_columns(column_list,Global.work_area[Global.current_work_area_name])
+    #
+    ####
+    #Global.work_area[Global.current_work_area_name]["columns_show"] = []
+    #columns_titles = []
+    #columns_titles.append({"id": 1, "title": "", "data_key": "select", "width": 30, "expand": False })
+    #id = 1
+    #for column_data in table_info:
+    #  # Select Column name:
+    #  # anvil users table uses different title for columns names (name) compared to the Database (Field)
+    #  if Global.table_name in ["anvilusers","anviluser"]:
+    #    field_name = column_data["name"]
+    #  else:
+    #    field_name = column_data["Field"]
+    #  Global.work_area[Global.current_work_area_name]["columns_show"].append(field_name)
+    #  # set column width
+    #  col_width = Global.table_colwidth_default
+    #  #col_width = 0
+    #  if field_name in Global.table_colwidth_60:
+    #    col_width = 60
+    #  if field_name in Global.table_colwidth_70:
+    #    col_width = 70
+    #  if field_name in Global.table_colwidth_80:
+    #    col_width = 80
+    #  if field_name in Global.table_colwidth_90:
+    #    col_width = 90
+    #  if field_name in Global.table_colwidth_100:
+    #    col_width = 100
+    #  if field_name in Global.table_colwidth_120:
+    #    col_width = 120
+    #  if field_name in Global.table_colwidth_140:
+    #    col_width = 140
+    #  if field_name in Global.table_colwidth_200:
+    #    col_width = 200
+    #  if field_name in Global.table_colwidth_250:
+    #    col_width = 250
+    #  if field_name in Global.table_colwidth_300:
+    #    col_width = 300
+    #  #if field_name not in ["SiteId"]: # do not create a columns for SiteId
+    #  id = id + 1
+    #  columns_titles.append({"id": id, "title": field_name, "data_key": field_name, "width": col_width, "expand": True })
 
     # assign the columns titles to the grid columns
-    print(columns_titles)
-    self.table.columns = columns_titles
+    #print(Global.work_area[Global.current_work_area_name]["table"].columns)
+
+    
+    self.table.columns = Global.work_area[Global.current_work_area_name]["table"].columns
 
     # add table to work_area data structure for Global.current_work_area_name
-    Global.work_area[Global.current_work_area_name]["table"] = self.table
+    # Global.work_area[Global.current_work_area_name]["table"] = self.table
     
     # Set table role to horizontal scroll
     self.table.role = "horizontal-scroll"

@@ -175,10 +175,10 @@ table_colwidth_90 = ["FindId"]
 table_colwidth_100 = ["FindGroupId","ContextYear","ContextType","PackageType","SmallFindId","FromSample","RecordStatus","SiteId","Role"]
 table_colwidth_120 = ["SiteId"]
 table_colwidth_140 = ["RegistrationDate"]
-table_colwidth_200 = ["email"]
-table_colwidth_250 = ["Email"]
-table_colwidth_300 = ["Description1","Description2"]
-table_colwidth_default = 150
+table_colwidth_200 = ["Address"]
+table_colwidth_250 = []
+table_colwidth_300 = ["email","Email","Description1","Description2"]
+table_colwidth_default = 120
 #
 title = system + "\n\n" + organisation
 sign_in_out_button_text = "Sign in"

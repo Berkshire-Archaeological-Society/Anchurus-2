@@ -113,6 +113,10 @@ def create_table_columns(column_list,work_area):
       col_width = 140
     if column in Global.table_colwidth_200:
       col_width = 200
+    if column in Global.table_colwidth_250:
+      col_width = 250
+    if column in Global.table_colwidth_300:
+      col_width = 300
     if column not in ["DBAcontrol","select"]: # do not create a columns for DBAControl and select
       id = id + 1
       columns_titles.append({"id": id, "title": column, "data_key": column, "width": col_width, "expand": True })
