@@ -178,7 +178,7 @@ table_colwidth_140 = ["RegistrationDate"]
 table_colwidth_200 = ["Address"]
 table_colwidth_250 = []
 table_colwidth_300 = ["email","Email","Description1","Description2"]
-table_colwidth_default = 120
+table_colwidth_default = 110
 #
 title = system + "\n\n" + organisation
 sign_in_out_button_text = "Sign in"
