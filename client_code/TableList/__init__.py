@@ -170,11 +170,13 @@ class TableList(TableListTemplate):
     id = 1
     for column_data in table_info:
       # Select Column name:
+      # anvil users table uses different title for columns names (name) compared to the Database (Field)
       if Global.table_name in ["anvilusers","anviluser"]:
         field_name = column_data["name"]
       else:
         field_name = column_data["Field"]
       Global.work_area[Global.current_work_area_name]["columns_show"].append(field_name)
+      # set column width
       col_width = Global.table_colwidth_default
       #col_width = 0
       if field_name in Global.table_colwidth_60:
@@ -202,7 +204,7 @@ class TableList(TableListTemplate):
       columns_titles.append({"id": id, "title": field_name, "data_key": field_name, "width": col_width, "expand": True })
 
     # assign the columns titles to the grid columns
-    #print(columns_titles)
+    print(columns_titles)
     self.table.columns = columns_titles
 
     # add table to work_area data structure for Global.current_work_area_name
