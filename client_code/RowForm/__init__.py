@@ -126,25 +126,27 @@ class RowForm(RowFormTemplate):
       elif column_type.find("decimal") != -1 or column_type.find("float") != -1 or column_type.find("double") != -1:
         dec_type = re.findall(r'\d+',column_type)
         # regex ^\d{0,x}\.?\d{1,y}
-        pattern_string = "^\d{0," + str(int(dec_type[0])-int(dec_type[1])) + "}\.?\d{1," +str(dec_type[1]) + "}$"
+        pattern_string = "^\d{0," + str(int(dec_type[0])-int(dec_type[1])) + "}\.?\d{1," + str(int(dec_type[1])) + "}$"
+        print(dec_type[0],dec_type[1])
+        msg = "Please enter a valid number in the form " + "x" * (int(dec_type[0]) - int(dec_type[1])) + "." + "x" * int(dec_type[1])
         self.validator.regex(component=input,
                              events=['lost_focus', 'change'],
                              pattern=pattern_string,
                              required=True,
-                             message="Please enter a valid number in the form x.xxx")
+                             message=msg)
       # add more validations for fields if required
-      #elif  column_name in ["RecordStatus"]:
-      #  self.validator.regex(component=input,
-      #                       events=['lost_focus', 'change'],
-      #                       pattern="(?i)\b(registered|planned|dated|grouped|report)\b",
-      #                       required=True,
-      #                       message="This defines the state of this context record. Pick one of Registered, Planned, Dated, Grouped, Report.")      
-      #elif  column_name in ["ContextType"]:
-      #  self.validator.regex(component=input,
-      #                       events=['lost_focus', 'change'],
-      #                       pattern="(?i)\b(deposit|fill|cut|structure|feature)\b",
-      #                       required=True,
-      #                       message="Pick one of Deposit, Fill, Cut, Strucure or Feature.")      
+      elif  column_name in ["RecordStatus"]:
+        self.validator.regex(component=input,
+                             events=['lost_focus', 'change'],
+                             pattern="(?i)^(registered|planned|dated|grouped|report)$",
+                             required=True,
+                             message="This defines the state of this context record. Pick one of Registered, Planned, Dated, Grouped, Report.")      
+      elif  column_name in ["ContextType"]:
+        self.validator.regex(component=input,
+                             events=['lost_focus', 'change'],
+                             pattern="(?i)^(deposit|fill|cut|structure|feature)$",
+                             required=True,
+                             message="Pick one of Deposit, Fill, Cut, Strucure or Feature.")      
 
       # end of validation 
       
