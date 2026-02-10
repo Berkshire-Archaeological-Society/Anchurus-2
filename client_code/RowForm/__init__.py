@@ -11,8 +11,8 @@ import anvil.tables.query as q
 from anvil.tables import app_tables
 from anvil_extras.Quill import Quill
 
-from ..Validation import Validator
-#from ..validator import Validator
+#from ..Validation import Validator
+from ..validator import Validator
 from .. import FunctionsB
 from .. import Global
 
