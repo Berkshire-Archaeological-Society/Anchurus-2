@@ -11,8 +11,7 @@ import anvil.tables.query as q
 from anvil.tables import app_tables
 from anvil_extras.Quill import Quill
 
-#from ..Validation import Validator
-from ..validator import Validator
+from ..Validation import Validator
 from .. import FunctionsB
 from .. import Global
 
@@ -119,11 +118,13 @@ class RowForm(RowFormTemplate):
                              required=True,
                              message="Please enter a correct email address")
       elif column_type.find("int") != -1:
-        self.validator.regex(component=input,
-                             events=['lost_focus', 'change'],
-                             pattern="^\d*$",
-                             required=True,
-                             message="Please enter a valid whole number")
+        self.validator.integer(component=input,
+                               events=['lost_focus', 'change'])
+        #self.validator.regex(component=input,
+        #                     events=['lost_focus', 'change'],
+        #                     pattern="^\d*$",
+        #                    required=True,
+        #                     message="Please enter a valid whole number")
       elif column_type.find("decimal") != -1 or column_type.find("float") != -1 or column_type.find("double") != -1:
         dec_type = re.findall(r'\d+',column_type)
         # regex ^\d{0,x}\.?\d{1,y}
