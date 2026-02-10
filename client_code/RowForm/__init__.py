@@ -132,6 +132,20 @@ class RowForm(RowFormTemplate):
                              pattern=pattern_string,
                              required=True,
                              message="Please enter a valid number in the form x.xxx")
+      # add more validations for fields if required
+      #elif  column_name in ["RecordStatus"]:
+      #  self.validator.regex(component=input,
+      #                       events=['lost_focus', 'change'],
+      #                       pattern="(?i)\b(registered|planned|dated|grouped|report)\b",
+      #                       required=True,
+      #                       message="This defines the state of this context record. Pick one of Registered, Planned, Dated, Grouped, Report.")      
+      #elif  column_name in ["ContextType"]:
+      #  self.validator.regex(component=input,
+      #                       events=['lost_focus', 'change'],
+      #                       pattern="(?i)\b(deposit|fill|cut|structure|feature)\b",
+      #                       required=True,
+      #                       message="Pick one of Deposit, Fill, Cut, Strucure or Feature.")      
+
       # end of validation 
       
       # spedial case when Field is RegistrationDate: Pre-fill is for Insert and also block edit contents
