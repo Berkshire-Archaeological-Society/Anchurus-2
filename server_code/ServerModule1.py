@@ -28,7 +28,7 @@ import anvil.tables.query as q
 import anvil.secrets
 import anvil.media
 import anvil.pdf
-from anvil.pdf import PdfRenderer
+from anvil.pdf import PDFRenderer
 from anvil.tables import app_tables
 
 ############# Defining all the Functions #############
@@ -277,7 +277,7 @@ def create_csv(data_list):
 
 @anvil.server.callable
 def print_form(form,site_id,table_name,action,data_list,page_info):
-  # 1. Call PdfRenderer
+  # 1. Call PDFRenderer
   # - set name of exported csv file
   # - set page orientation and size
   # ****** Add more variables for user to select (quality, scale, margins) as well as landscape and paper size)
@@ -286,7 +286,7 @@ def print_form(form,site_id,table_name,action,data_list,page_info):
   #print("In print form")
   #print(site_id, table_name, action)
   #print(data_list)
-  pdf_form = PdfRenderer(filename='Anchurus_list_form.pdf',landscape=True,page_size='A3').render_form(form,site_id,table_name,data_list,action,page_info)
+  pdf_form = PDFRenderer(filename='Anchurus_list_form.pdf',landscape=True,page_size='A3').render_form(form,site_id,table_name,data_list,action,page_info)
   return pdf_form
 
 @anvil.server.callable
