@@ -75,7 +75,7 @@ services:
 - client_config: {}
   server_config: {}
   source: /runtime/services/tables.yml
-- client_config: {allow_remember_me: false, allow_signup: true, confirm_email: false, enable_automatically: false, mfa_timeout_days: 1, remember_me_days: 1, require_mfa: false, require_secure_passwords: true, use_email: true, use_token: true}
+- client_config: {allow_remember_me: false, allow_signup: true, confirm_email: false, enable_automatically: false, mfa_timeout_days: 1, remember_me_days: 1, require_mfa: false, require_secure_passwords: true, use_email: true, use_token: false}
   server_config:
     email_content:
       confirm_address:
@@ -102,7 +102,7 @@ services:
   server_config: {}
   source: /runtime/services/google.yml
 - client_config: {}
-  server_config: {custom_smtp: false, smtp_encryption: ssl, smtp_host: mail.gandi.net, smtp_password: ihD2HzuFog1Tu4VO5D6HyAd7lKfm1Mk3shxxUdyby1mQl2qfRO5vwhKpnuzbfPJk2TSQoPSNubDONcTsiAPtS/OFA0ZNqwYvhLHqeMyinhUDZ876bLwbhBIanFqCQe/pUXBxYLIFsx0aZhk+pJ6VyOJsM7jwWzXqJR2a22iwrtoMajbnlNUZ6g==, smtp_port: 465, smtp_user: send@bakkernoguer.eu, test_mode: false}
+  server_config: {custom_smtp: true, smtp_encryption: starttls, smtp_host: smtp.google.com, smtp_password: Ux0QEUyCfToIQuzsW1ArKGEnOxKlJPug/tLnz+yR6/QkEJsIKIgJhelKGDNPb1bn9hUAL286UWzl11W570DP6d2pAB7SOU0be6U2uVNxHzVIK5H6xUMkLZS0fPcuXIqrSgOlobowKlpyIvDWKg6oYhsZZI2SIqWSbro5bN0Cl7DoOx9vq1IPsB4=, smtp_port: 465, smtp_user: mail-server@berksarch.co.uk, test_mode: false}
   source: /runtime/services/anvil/email.yml
 startup: {module: Main, type: form}
 startup_form: null
