@@ -29,6 +29,7 @@ import anvil.secrets
 import anvil.media
 import anvil.pdf
 from anvil.pdf import PDFRenderer
+#from anvil.pdf import PdfRenderer
 from anvil.tables import app_tables
 
 ############# Defining all the Functions #############
@@ -213,23 +214,23 @@ def user_authorisation(site_id,email):
   conn.ping(reconnect=True)
   #
   with conn.cursor() as cur:
-    query = "SELECT Role FROM sys_siteuserrole WHERE SiteId = '" + site_id + "' AND Email = '" + email + "' AND Enabled = True"
+    query = "SELECT Role FROM sys_siteuserrole WHERE SiteId = '" + str(ite_id) + "' AND Email = '" + str(email) + "' AND Enabled = True"
     cur.execute(query)
     #print(query)
     result = cur.fetchall()
     #print(result)
     if cur.rowcount != 0:
       Global_site_role = result[0]["Role"]
-      msg = "Found user " + str(email) + " in site " + site_id + " with role as " + str(Global_site_role)
+      msg = "Found user " + str(email) + " in site " + str(site_id) + " with role as " + str(Global_site_role)
     else:
-      msg = "No role found for user " + email + " in site " + site_id
+      msg = "No role found for user " + str(email) + " in site " + str(site_id)
       Global_site_role = "unknown"
     logmsg("INFO",msg)
   return Global_site_role
 
 @anvil.server.callable
 def user_logout_notification(ip_address,email):
-  msg = "Logout notification from " + ip_address + ", User " + str(email)
+  msg = "Logout notification from " + str(ip_address) + ", User " + str(email)
   logmsg("INFO",msg)
   return
 
@@ -284,6 +285,7 @@ def print_form(form,site_id,table_name,action,data_list,page_info):
   #print("In print form")
   #print(site_id, table_name, action)
   #print(data_list)
+  #pdf_form = PdfRenderer(filename='Anchurus_list_form.pdf',landscape=True,page_size='A3').render_form(form,site_id,table_name,data_list,action,page_info)
   pdf_form = PDFRenderer(filename='Anchurus_list_form.pdf',landscape=True,page_size='A3').render_form(form,site_id,table_name,data_list,action,page_info)
   return pdf_form
 
@@ -338,7 +340,7 @@ def sites_get_summary(email):
       query = "SELECT site.SiteId,site.SiteName FROM site,sys_siteuserrole WHERE site.SiteId = sys_siteuserrole.SiteId AND sys_siteuserrole.Email = '" + email + "' AND sys_siteuserrole.Enabled = True ORDER BY site.SiteId"
     cur.execute(query)
     result = cur.fetchall()
-    msg = "Found " + str(len(result)) +" sites for user " + email
+    msg = "Found " + str(len(result)) +" sites for user " + str(email)
     logmsg("INFO",msg)
   return result
 
@@ -964,7 +966,7 @@ def check_DBAcontrol(user,action,description):
     logmsg("INFO",msg)
   # DBAcontrol now has the value of the exisiting or new record in the DB, so return this to caller. If the INSERT to database failed, the DBAcontrol value is empty string.
   return DBAcontrol
-
+  
 # --------------
 # user functions
 # --------------
@@ -1025,7 +1027,7 @@ def import_file(type,file):
     logmsg("INFO", msg)
     # read Import csv file as Pandas Dataframe
     registrationdate = datetime.now()
-
+    
     try:
       table = pd.read_csv(tempfilename,dtype='str')
       table.replace({np.nan: None},inplace=True)
@@ -1063,13 +1065,13 @@ def import_file(type,file):
 
 # Functions to handle log file compression
 def namer(name):
-  return name + ".gz"
+    return name + ".gz"
 
 def rotator(source, dest):
-  with open(source, 'rb') as f_in:
-    with gzip.open(dest, 'wb') as f_out:
-      shutil.copyfileobj(f_in, f_out)
-  os.remove(source)
+    with open(source, 'rb') as f_in:
+        with gzip.open(dest, 'wb') as f_out:
+            shutil.copyfileobj(f_in, f_out)
+    os.remove(source)
 
 def logmsg(level,message):
   # This function adds the Anvil session_id to the log message and logs the message to the log file with the specified log level
@@ -1085,8 +1087,8 @@ def logmsg(level,message):
     logging.critical("%s | %s",anvil.server.get_session_id(),message)
   return
 
-  #----------------------------------------------------------------------------------------#
-  # This is the start of the server code execution; the following lines are executed at
+#----------------------------------------------------------------------------------------#
+# This is the start of the server code execution; the following lines are executed at
 # startup of the server and before any calls from the client are processed
 #----------------------------------------------------------------------------------------#
 
