@@ -28,7 +28,7 @@ class Main(MainTemplate):
     # get client variable settings from server configuration file
     globals_from_config = anvil.server.call("client_globals")
     Global.rows_per_page = globals_from_config["rows_per_page"]
-    Global.version = globals_from_config["client_version"]
+    Global.version = globals_from_config["version"]
     Global.admin_domain = globals_from_config["admin_domain"]
     Global.admin_user = globals_from_config["admin_user"]
     Global.admin_user_initials = globals_from_config["admin_user_initials"]
@@ -65,7 +65,7 @@ class Main(MainTemplate):
     self.list_dropdown.items = Global.list_action_dropdown
     self.admin_dropdown.items = Global.admin_action_dropdown
     #self.file_dropdown.items = Global.file_list
-    self.view_dropdown.items = Global.view_action_dropdown
+    #self.view_dropdown.items = Global.view_action_dropdown
     self.help_dropdown.items = Global.help_action_dropdown
     #
     #self.file_dropdown.items = Global.file_action_dropdown

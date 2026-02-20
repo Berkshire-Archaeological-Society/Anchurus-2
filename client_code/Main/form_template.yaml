@@ -120,11 +120,6 @@ components:
     type: ColumnPanel
   - components:
     - components:
-      - event_bindings: {change: view_dropdown_change}
-        layout_properties: {width: 75}
-        name: view_dropdown
-        properties: {font_size: 13, include_placeholder: true, placeholder: View, tooltip: view}
-        type: DropDown
       - event_bindings: {change: help_dropdown_change}
         layout_properties: {width: 75}
         name: help_dropdown
