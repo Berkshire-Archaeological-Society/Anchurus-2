@@ -905,8 +905,8 @@ class Main(MainTemplate):
 
   def refresh_click(self, **event_args):
     """This method is called when the button is clicked"""
-    print("Refresh cicked: ",Global.current_work_area_name)
-    print(Global.work_area[Global.current_work_area_name])
+    #print("Refresh clicked: ",Global.current_work_area_name)
+    #print(Global.work_area[Global.current_work_area_name])
     FunctionsB.refresh_click(Global.work_area[Global.current_work_area_name]["self"])
     pass
 
