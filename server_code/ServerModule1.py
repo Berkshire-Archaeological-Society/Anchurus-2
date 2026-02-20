@@ -1,3 +1,24 @@
+##!/usr/local/bin/python
+##
+# Anvil-Uplink server
+# provides callable functions for Anvil Webapp
+##
+# import generic stuff and special installed modules
+import sys
+import pymysql
+import csv
+import logging
+import os
+import gzip
+import shutil
+from logging.handlers import TimedRotatingFileHandler
+from datetime import datetime
+import uuid
+import pandas as pd
+import numpy as np
+import configparser
+import bcrypt
+
 #import anvil modules
 #from anvil.users import UserExistsError
 import anvil.server
@@ -7,7 +28,7 @@ import anvil.tables.query as q
 import anvil.secrets
 import anvil.media
 import anvil.pdf
-from anvil.pdf import PDFRenderer
+from anvil.pdf import PdfRenderer
 from anvil.tables import app_tables
 
 ############# Defining all the Functions #############
@@ -263,7 +284,7 @@ def print_form(form,site_id,table_name,action,data_list,page_info):
   #print("In print form")
   #print(site_id, table_name, action)
   #print(data_list)
-  pdf_form = PDFRenderer(filename='Anchurus_list_form.pdf',landscape=True,page_size='A3').render_form(form,site_id,table_name,data_list,action,page_info)
+  pdf_form = PdfRenderer(filename='Anchurus_list_form.pdf',landscape=True,page_size='A3').render_form(form,site_id,table_name,data_list,action,page_info)
   return pdf_form
 
 @anvil.server.callable
@@ -1004,7 +1025,7 @@ def import_file(type,file):
     logmsg("INFO", msg)
     # read Import csv file as Pandas Dataframe
     registrationdate = datetime.now()
-    
+
     try:
       table = pd.read_csv(tempfilename,dtype='str')
       table.replace({np.nan: None},inplace=True)
@@ -1042,13 +1063,13 @@ def import_file(type,file):
 
 # Functions to handle log file compression
 def namer(name):
-    return name + ".gz"
+  return name + ".gz"
 
 def rotator(source, dest):
-    with open(source, 'rb') as f_in:
-        with gzip.open(dest, 'wb') as f_out:
-            shutil.copyfileobj(f_in, f_out)
-    os.remove(source)
+  with open(source, 'rb') as f_in:
+    with gzip.open(dest, 'wb') as f_out:
+      shutil.copyfileobj(f_in, f_out)
+  os.remove(source)
 
 def logmsg(level,message):
   # This function adds the Anvil session_id to the log message and logs the message to the log file with the specified log level
@@ -1064,8 +1085,8 @@ def logmsg(level,message):
     logging.critical("%s | %s",anvil.server.get_session_id(),message)
   return
 
-#----------------------------------------------------------------------------------------#
-# This is the start of the server code execution; the following lines are executed at
+  #----------------------------------------------------------------------------------------#
+  # This is the start of the server code execution; the following lines are executed at
 # startup of the server and before any calls from the client are processed
 #----------------------------------------------------------------------------------------#
 
