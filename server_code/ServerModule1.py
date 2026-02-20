@@ -1074,7 +1074,7 @@ def logmsg(level,message):
 # using the Anvil-app-server it connects direct to the Client
 #----------------------------------------------------------------------------------------#
 
-anvil.server.connect("server_HGRHEN6VHS3TZUER3QF6XVSG-RSU3U7R2ORMFMQUN")
+#anvil.server.connect("server_HGRHEN6VHS3TZUER3QF6XVSG-RSU3U7R2ORMFMQUN")
 
 # setup logging 
 # 1. Stop console logging (stdout/stderr)
@@ -1212,4 +1212,4 @@ logmsg('INFO',msg)
 #---------------------------------------------------------------------------------------#
 # Now wait for calls from frontend (browser)
 
-anvil.server.wait_forever()
+#anvil.server.wait_forever()
