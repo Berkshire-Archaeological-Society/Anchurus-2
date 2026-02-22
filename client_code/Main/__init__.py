@@ -7,6 +7,8 @@ import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
 import anvil.users
+from anvil.js.window import document
+import anvil.js
 
 from .. import indeterminate
 from ..Header import Header
@@ -19,6 +21,8 @@ from .. import Function
 from .. import FunctionsB
 from ..Help import Help
 
+# branch V054
+
 class Main(MainTemplate):  
   def __init__(self, **properties):
     # Set Form properties and Data Bindings.
@@ -29,6 +33,8 @@ class Main(MainTemplate):
     globals_from_config = anvil.server.call("client_globals")
     Global.rows_per_page = globals_from_config["rows_per_page"]
     Global.version = globals_from_config["version"]
+    Global.organisation = globals_from_config["organisation"]
+    Global.config_version = globals_from_config["version"]
     Global.admin_domain = globals_from_config["admin_domain"]
     Global.admin_user = globals_from_config["admin_user"]
     Global.admin_user_initials = globals_from_config["admin_user_initials"]
@@ -47,6 +53,11 @@ class Main(MainTemplate):
     #self.title.text = Global.title + Global.status + Global.selected_site
     self.app_title.text = Global.system
     self.organisation.text = Global.organisation
+    self.app_title.text = Global.system
+    self.organisation.text = Global.organisation
+    self.app_name.text = document.head.querySelector('[name=title]').content
+    self.config_version.text = "cfg " + Global.config_version
+    
     # add the about_us_text (taken from Anchurus-2.cfg file) to the about_us_box text field by adding a Rich Text Component
     rt = RichText(content=Global.about_us_text,format="restricted_html")
     self.about_us_box.add_component(rt)
@@ -63,7 +74,7 @@ class Main(MainTemplate):
     self.import_dropdown.items = Global.import_action_dropdown
     self.insert_dropdown.items = Global.insert_action_dropdown
     self.list_dropdown.items = Global.list_action_dropdown
-    self.admin_dropdown.items = Global.admin_action_dropdown
+    self.admin_dropdown.items = Global.sys_admin_action_dropdown
     #self.file_dropdown.items = Global.file_list
     #self.view_dropdown.items = Global.view_action_dropdown
     self.help_dropdown.items = Global.help_action_dropdown
@@ -96,22 +107,21 @@ class Main(MainTemplate):
   # =========
   def work_area_click(self, **event_args):
     """" This function is called when the work area button is clicked. Here we make sure all the variable are set correct for the work area swap"""
-    #
-    # First make sure the old header is invisible
-    Global.header.visible = False
-    Global.wa_header_menu_bottom.visible = True
 
-    # Here the user clicked on a button in the left navigation list, requested to go to a different work area.
+    # Here the user clicked on a work_area button in the left navigation list, requested to go to a different work area.
+    # first make all work_areas invisible and set button to be 'normal', i.e. not highlighted
     for name in Global.work_area:
       Global.work_area[name]["form"].visible = False
       Global.work_area[name]["button"].bold = False
       Global.work_area[name]["button"].background = Global.button_normal_background_clour
+    
     # now get the name of the button (work_area_name) that was clicked and make this and the associated work_area visible
     work_area = event_args['sender']
     Global.current_work_area_name = work_area.text
+    #print("Work area clicked: ",Global.current_work_area_name)
     
     # Set Global.table_name linked with work_area_type
-    Global.table_name = Global.work_area[Global.current_work_area_name]["action"].split(" ")[1].rstrip("s").lower()
+    Global.table_name = Global.work_area[Global.current_work_area_name]["action"].split(" ")[1].lower()
 
     # set Global variables for site information
     Global.site_name = Global.work_area[Global.current_work_area_name]["site_name"]
@@ -119,6 +129,7 @@ class Main(MainTemplate):
     Global.selected_site = ": " + Global.site_name
     
     # Fill header fields with work_area name and work_area Form name
+    # This was for old header, can prob removed
     Global.header_work_area_name.text = Global.current_work_area_name
     Global.header_work_area_type.text = str(type(Global.work_area[Global.current_work_area_name]["form"])).split(".")[2][:-2]
     Global.header_site_name.text = Global.work_area[Global.current_work_area_name]["site_name"]
@@ -131,22 +142,50 @@ class Main(MainTemplate):
     # make old header invisible
     Global.header.visible = False
     Global.wa_header_menu_bottom.visible = True
-    # set menu_select_opti0ns as invisible
+    
+    # set menu_select_options as invisible
     Global.work_area[Global.current_work_area_name]["menu_select_options"] = self.fp_select_options
     Global.work_area[Global.current_work_area_name]["menu_select_options"].visible = False
 
     Global.action_form_type = str(type(Global.work_area[Global.current_work_area_name]["form"])).split(".")[2][:-2]
     #
-    if Global.work_area[Global.current_work_area_name]["action"].split(" ")[0] in ["View", "Edit", "Add", "Import"] or Global.work_area[Global.current_work_area_name]["action"] == "List Users":
+    #print("Work area action form type: ",Global.action_form_type)
+    if Global.work_area[Global.current_work_area_name]["action"].split(" ")[0] in ["View", "Edit", "Insert", "Add", "Import"] or Global.work_area[Global.current_work_area_name]["action"] == "List Anvilusers":
       self.mb_middle.visible = False
       self.mb_left.visible = False
     elif Global.work_area[Global.current_work_area_name]["action"].split(" ")[0] in ["List"]:
       self.mb_middle.visible = True
       self.mb_left.visible = True
-    
-    # update status label (page control information) if work_space is a List
-    if Global.work_area[Global.current_work_area_name]["action"].split(" ")[0] in ["List"] and Global.work_area[Global.current_work_area_name]["action"] != "List Users":
+
+    self.select_all.indeterminate = False
+    self.select_all.checked = False
+
+    # update status label (page control information) if work_space is a List (but not List Anvilusers (not using the TableList form))
+    if Global.work_area[Global.current_work_area_name]["action"].split(" ")[0] in ["List"] and Global.work_area[Global.current_work_area_name]["action"] != "List Anvilusers":
+      #print(Global.current_work_area_name)
       FunctionsB.update_status_label(Global.work_area[Global.current_work_area_name]["self"])
+
+    if len(Global.work_area[Global.current_work_area_name]["selected_rows"]) == 0:
+      #print("work_area_click: ", Global.current_work_area_name, " 0 selected rows, disable menu")
+      Global.work_area[Global.current_work_area_name]["menu_select_options"].visible = False
+      self.select_all.checked = False
+      self.select_all.indeterminate = False
+      #Global.work_area[Global.current_work_area_name]["self"].select_all
+    else:
+      #print("work_area_click: ", Global.current_work_area_name, " there are selected rows, enable menu")
+      Global.work_area[Global.current_work_area_name]["menu_select_options"].visible = True
+      page_num = int(Global.work_area[Global.current_work_area_name]["table"].get_page())
+      rows_per_page = int(Global.work_area[Global.current_work_area_name]["table"].rows_per_page)
+      total_rows = len(Global.work_area[Global.current_work_area_name]["self"].repeating_panel_1.items)
+      rest = total_rows - page_num * rows_per_page
+      #print(str(len(Global.work_area[Global.current_work_area_name]["selected_rows"])),str(rest),str(Global.rows_per_page))
+      if str(len(Global.work_area[Global.current_work_area_name]["selected_rows"])) == str(Global.rows_per_page) or str(len(Global.work_area[Global.current_work_area_name]["selected_rows"])) == str(rest):
+        self.select_all.checked = True 
+      else:
+        self.select_all.indeterminate = True
+    
+    #self.select_all.checked = Global.work_area[Global.current_work_area_name]["self"].select_all.checked
+    #self.select_all.indeterminate = Global.work_area[Global.current_work_area_name]["self"].select_all.indeterminate
 
     # Set selected buttons on Header for work area type
     if Global.action_form_type in Global.action_forms_with_refresh:
@@ -170,8 +209,8 @@ class Main(MainTemplate):
     else:
       Global.header_download_button.visible = False
       self.download_csv.visible = False
-    if Global.action_form_type in Global.action_forms_with_filter:
-      # Make filter button visible for Global.action_form_type
+    if Global.action_form_type in Global.action_forms_with_filter and Global.work_area[Global.current_work_area_name]["data_list"]:
+      # Make filter button visible for Global.action_form_type if data_list is not empty
       Global.header_filter_button.visible = True
       self.filter_cols.visible = True
     else:
@@ -186,22 +225,23 @@ class Main(MainTemplate):
     Global.header.visible = False
     Global.wa_header_menu_bottom.visible = True
 
-    # set name of work_area to be action name if action is view or edit
+    # set name of work_area to be action name
     work_area_name = action
-    if action == "View Context" or action == "Edit Context":
-      # modify work_area name to add XxxxId number (ContextId, FindId, AeraId, etc); for now only implemented for Context
-      Global.context_items = Global.table_items
-      work_area_name = action + " " + Global.context_items["ContextId"]
-    if action == "View Site" or action == "Edit Site":
-      # modify work_area name to add XxxxId number (ContextId, FindId, AeraId, etc); for now only implemented for Context
-      work_area_name = action + " " + Global.site_items["SiteId"]
-    if action == "View Area" or action == "Edit Area":
-      # modify work_area name to add XxxxId number (ContextId, FindId, AeraId, etc); for now only implemented for Context
-      work_area_name = action + " " + Global.area_items["AreaId"]
-    if action == "View Find" or action == "Edit Find":
-      # modify work_area name to add XxxxId number (ContextId, FindId, AeraId, etc); for now only implemented for Context
-      Global.find_items = Global.table_items
-      work_area_name = action + " " + Global.find_items["FindId"]
+    #print("Click work area, action: ",action)
+    # For all actions not in Admin_action_list check ID field for creating unique work_area name
+    if action not in Global.sys_admin_action_list and action not in Global.site_admin_action_list:
+      # add first Primary Key ID field when view or edit
+      table_info = anvil.server.call("describe_table",action.split(" ")[1].lower())
+      primary_key_list = []
+      for column in table_info:
+        if column["Key"] == "PRI":
+          primary_key_list.append(column["Field"])
+      if action.split(" ")[0].lower() in ["view","edit"]:
+        if len(primary_key_list) == 1:
+          work_area_name = action.split(" ")[0] + " " + Global.table_items[primary_key_list[0]]
+        else:
+          work_area_name = action.split(" ")[0] + " " + Global.table_items[primary_key_list[1]]
+        
     # check if work_area_name exists and keep counter
     if (Global.work_area.get(work_area_name) is None):
       if Global.action_seq_no.get(work_area_name) is None:
@@ -251,9 +291,10 @@ class Main(MainTemplate):
     Global.work_area[work_area_name]["data_list"] = [Global.table_items]
     
     # create a new work_space and add this to the work_area_list and add component to main     
-    print("Main create_new_work_area: ",self)
+    #print("Main create_new_work_area: ",self)
     form_result = Function.create_work_space(action,Global.table_items)
     if form_result != "Unknown":
+      #print(action, work_area_name, Global.work_area)
       Global.work_area[work_area_name]["form"] = form_result
       #print(Global.work_area[work_area_name]["form"])
       self.add_component(Global.work_area[work_area_name]["form"])
@@ -288,68 +329,69 @@ class Main(MainTemplate):
       Global.current_work_area_name = work_area_name
       Global.header_work_area_type.text = str(type(Global.work_area[Global.current_work_area_name]["form"])).split(".")[2][:-2]
       Global.header_work_area_type.enabled = False
+      #print(Global.header_work_area_type.text)
       #Global.action_form_type = Global.header_work_area_type.text.split(".")[2][:-2]
+      Global.action_form_type = Global.header_work_area_type.text
       #
-      # Only show page controls for List action
-      if Global.work_area[Global.current_work_area_name]["action"].split(" ")[0] in ["View", "Edit", "Add", "Import"] or Global.work_area[Global.current_work_area_name]["action"] == "List Users":
+      # Only show page controls for List Table action
+      if Global.work_area[Global.current_work_area_name]["action"].split(" ")[0] in ["View", "Edit", "Insert", "Add", "Import"] or Global.work_area[Global.current_work_area_name]["action"] == "List Anvilusers":
         self.mb_middle.visible = False
         self.mb_left.visible = False
       elif Global.work_area[Global.current_work_area_name]["action"].split(" ")[0] in ["List"]:
         self.mb_middle.visible = True
         self.mb_left.visible = True
 
+      self.select_all.indeterminate = False
+      self.select_all.checked = False
+
       # Set selected buttons on Header for work area type
       Global.action_form_type = Global.header_work_area_type.text
+      #print(Global.action_form_type)
       if Global.action_form_type in Global.action_forms_with_refresh:
         # make Refresh button visible if action_form_type has refresh function (i.e. in list Global.action_forms_with_refresh) 
-        Global.header_refresh_button.visible = True
+        #Global.header_refresh_button.visible = True
         self.refresh.visible = True
-        print("set refresh button")
+        #print("set refresh button")
       else:
-        Global.header_refresh_button.visible = False
+        #Global.header_refresh_button.visible = False
         self.refresh.visible = False
 
       if Global.action_form_type in Global.action_forms_with_print:
         # make print button visible if action_form_type has print function (i.e. in list Global.action_forms_with_print) 
-        Global.header_print_button.visible = True
+        #Global.header_print_button.visible = True
         self.print.visible = True
       else:
-        Global.header_print_button.visible = False   
+        #Global.header_print_button.visible = False   
         self.print.visible = False
       if Global.action_form_type in Global.action_forms_with_download:
         # Make download button visible for Global.action_form_type
-        Global.header_download_button.visible = True
+        #Global.header_download_button.visible = True
         self.download_csv.visible = True
       else:
-        Global.header_download_button.visible = False
+        #Global.header_download_button.visible = False
         self.download_csv.visible = False
-      if Global.action_form_type in Global.action_forms_with_filter:
-        # Make filter button visible for Global.action_form_type
-        Global.header_filter_button.visible = True
+      if Global.action_form_type in Global.action_forms_with_filter and Global.work_area[work_area_name]["data_list"]:
+        # Make filter button visible for Global.action_form_type if data_list is not empty
+        #Global.header_filter_button.visible = True
         self.filter_cols.visible = True
       else:
-        Global.header_filter_button.visible = False
+        #Global.header_filter_button.visible = False
         self.filter_cols.visible = False
 
       # reset action dropdown list
       #self.action_list.selected_value = None
     else:
-      Notification("This action is not yet implemented.")
+      n = Notification("This action has not yet been implemented.")
+      n.show()
     pass
   
   def login_button_click(self, **event_args):
     """" This Function is called when the users logs in """
     """This method is called when the button is clicked"""
-    print("Login button clicked")
-    user = anvil.users.login_with_form(allow_cancel=True)
+    #print("Login button clicked")
+    user = anvil.users.login_with_form(allow_cancel=True,remember_by_default=False,show_signup_option=False)
     # check if user is logged in as newly registered account needs explicit enabling by administrator 
-    # user = anvil.users.get_user()
-    #if user is None and Global.admin_user != "":
-      # this code should only run if Global.admin_user is disabled (which should only be at fist time run of anvil web server with clean user database)
-      # this will set admin role and enable account for admin_user
-      #print("First time login, set admin role and enable account for admin_user")
-      #anvil.server.call('user_update',Global.admin_user,"admin",True,Global.admin_user_initials)
-    #
+
     if user is not None:
       # make welcome block of Main form invisible
       self.welcome_page.visible = False
@@ -357,54 +399,51 @@ class Main(MainTemplate):
       # when user is logged in, enable Action menu, username field and logout button, and disable content panel (welcome message)
       # also set username  to user email address
       Global.username = user["email"]
+      Global.name = user["firstname"] + " " + user["lastname"]
+      message = Global.help_introduction.replace("<user>",Global.name)
+      rt = RichText(content=message,format="restricted_html")
+      Global.help_page_form.help_page_text.add_component(rt)
       
-      #Global.DBAcontrol = anvil.server.call("check_DBAcontrol",Global.username,"i")
-      #self.username.text = Global.username + "\n (" + Global.user_role + ")"
       self.username_dropdown.placeholder = Global.username
       self.username_dropdown.items = ["Logout"]
+
+      # notify server side of login
+      Global.ip_address = anvil.server.call("user_authentication")
       
-      # check user authorisation - role columns will be updated in anvil user table
-      Global.ip_address = anvil.server.call("user_authorisation")
-      
-      # if users has admin role, add admin actions list and set it visible
+      # if user has system admin role, add system admin actions list and set it visible
       user = anvil.users.get_user()
-      Global.user_role = user["role"]
-      self.user_role.text = Global.user_role
-      if Global.user_role == "admin":
-        #print(Global.username, Global.user_role)
+      Global.system_user_role = user["systemrole"]
+      self.user_role.text = Global.system_user_role
+
+      if Global.system_user_role in ["System Administrator"]:
         self.menu_middle.visible = True
         self.mm_right.visible = True
-        self.mm_left.visible = False
+        self.mm_left.visible = True
         self.mm_middle.visible = False
         self.admin_dropdown.visible = True
         self.menu_block.visible = True
+        #self.menu_block.visible = False
+        self.admin_dropdown.items = Global.sys_admin_action_dropdown
       
       # make menu bar variable visible
       self.menu_block.visible = True
       self.menu_top.visible = True
       self.title_panel.visible = True
 
-      if anvil.users.get_user() is not None:
-        sites_list = anvil.server.call('sites_get_summary')
-        Global.site_options = {}
-        for x in sites_list:
-          val_list = list(x.values())
-          option = val_list[0] + " - " + val_list[1]
-          Global.site_options[option] = val_list[0]
-        
+      Global.site_options = FunctionsB.set_select_site_dropdown_options()      
       self.select_site_dropdown.items = Global.site_options.keys()
-
+      Global.select_site_dropdown = self.select_site_dropdown
+      
       # create a introduction message and add it to the introduction_message of the introduction_message block and make it visible
       Global.help_page.visible = True
-
+      Global.site_id = "not_selected"
     pass
 
   def register_button_click(self, **event_args):
     """ This Function is called when a user wants to register himself"""
     """This method is called when the button is clicked"""
     user = anvil.users.signup_with_form(allow_cancel=True)
-    # check if user logged in (should not be, as registration requires an administrator to enable account)
-    # user = anvil.users.get_user()
+    # check if user logged in (should not be, as registration requires a system-administrator to enable account)
     if user is not None:
       # when user is logged in enable Action menu, username field and logout button, and disable content panel (welcome message)
       # also set username  to user email address
@@ -440,30 +479,108 @@ class Main(MainTemplate):
       self.mm_left.visible = True
       self.mm_middle.visible = True
       self.mm_right.visible = True
+      Global.help_page.visible = True
+
+      #delete all work_areas and all work_area names/buttons
+      temp_work_area_name_list = list(Global.work_area.keys())
+      for work_area_name in temp_work_area_name_list:
+        Function.delete_workspace(work_area_name)
+      self.menu_bottom.visible = False
+      self.site_summary.visible = False
+      Global.action_seq_no = {}
+      Global.work_area = {}
+      # check user authorisation role for the selected site
+      Global.site_user_role = anvil.server.call("user_authorisation",Global.site_options[self.select_site_dropdown.selected_value],Global.username)
+      if Global.site_user_role != "unknown" or Global.system_user_role == "System Administrator":
+        # user found with a role for the selected site
+        Global.help_page.visible = False
+        self.site_summary.visible = True
+
+        # Update role text if system_role is not System Administrator
+        if Global.system_user_role == "Site User":
+          self.user_role.text = "Site " + Global.site_user_role
+
+        if Global.site_user_role == "Manager" or Global.system_user_role == "System Administrator" :
+          # add site manager admin actions to admin dropdown
+          options = Global.sys_admin_action_dropdown + Global.site_admin_action_dropdown
+          self.admin_dropdown.items = options
+          self.admin_dropdown.visible = True
+        
+        Global.site_name = self.select_site_dropdown.selected_value
+        Global.site_id = Global.site_options[self.select_site_dropdown.selected_value]
+        Global.selected_site = ": " + Global.site_name
+        #Global.title_label.text = Global.title + Global.status + Global.selected_site
+        #Global.title_label.text = Global.title
+        #Global.header_site_name.text = Global.site_name
+        db_summary = anvil.server.call("db_get_summary",Global.site_id)
+        self.site_summary.visible = True
+        self.site_summary.items = db_summary
+  
+        #
+        self.menu_middle.visible = True
+        self.mm_left.visible = True
+        self.mm_middle.visible = True
+        self.mm_right.visible = True
+        if Global.site_user_role in ["Manager"] or Global.system_user_role == "System Administrator":
+          self.list_dropdown.visible = True
+          self.view_row.visible = True        
+          self.edit_row.visible = True
+          self.insert_dropdown.visible = True     
+          self.delete_row.visible = True
+          self.import_dropdown.visible = True
+        elif Global.site_user_role in ["Editor"]:
+          self.list_dropdown.visible = True
+          self.view_row.visible = True        
+          self.edit_row.visible = True
+          self.insert_dropdown.visible = True     
+          self.delete_row.visible = False
+          self.import_dropdown.visible = False
+        elif Global.site_user_role in ["Viewer"]:
+          self.list_dropdown.visible = True
+          self.view_row.visible = True
+          self.insert_dropdown.visible = False
+          self.import_dropdown.visible = False
+          self.edit_row.visible = False
+          self.delete_row.visible = False
+        else:
+          # unknown role
+          msg = "Unkown User Role identified: " + str(Global.site_user_role)
+          n = Notification(msg)
+          n.show()
+          # disable able all action buttons
+          self.admin_dropdown.visible = False
+          self.list_dropdown.visible = False
+          self.view_row.visible = False
+          self.insert_dropdown.visible = False
+          self.import_dropdown.visible = False
+          self.edit_row.visible = False
+          self.delete_row.visible = False
+      else:
+        msg = "Not found a role for you in site " + self.select_site_dropdown.selected_value + ". Please contact the Project Manager."
+        Global.site_name = self.select_site_dropdown.selected_value
+        Global.site_id = Global.site_options[self.select_site_dropdown.selected_value]
+        Global.selected_site = ": " + Global.site_name
+        #Global.site_name = ""
+        #Global.site_id = ""
+        #Global.selected_site = ""
+        #self.select_site_dropdown.selected_value = None
+        n = Notification(msg)
+        n.show()
     pass
 
   # Funtions for the menu options (Menu_middle) after the user selected a site
   def admin_dropdown_change(self, **event_args):
-    """ Thus Function is called when the users has selected an action form the Admin dropdown menu """
+    """ This Function is called when the users has selected an action form the Admin dropdown menu """
     """This method is called when an item from the dropdown menu is selected"""
     # Action has been selected, but only take action if action in not a separator
     # save a link to the Main form in a Global variable 
     #Global.main_form = get_open_form()
+    Global.help_page.visible = False
+
     Global.action = self.admin_dropdown.selected_value
 
     if Global.action not in Global.action_list_not_implemented:
-      # Action has been selected, create button in work area list, and make this work area in focus (highlight button)
-      # for any action that has a Form defined create a new work_area
-      if Global.site_id is None and Global.action not in (Global.admin_action_dropdown):
-        # if site is not yet selected alert user
-        alert(
-          content="Site has not been selected. Please select a site.",
-          title="Site selection warning",
-          large=True,
-          buttons=[("Ok", True)],
-        )
-      else:
-        self.create_new_work_area(Global.action)
+      self.create_new_work_area(Global.action)
     else:
       if Global.action != Global.separator:
         alert("Action not yet implemented.")
@@ -476,13 +593,13 @@ class Main(MainTemplate):
     """ This Function is called when the users selects an option form the Insert dropdown"""
     """This method is called when an item is selected"""
     #Global.main_form = get_open_form()
-    # make action to be "Add ..." 
-    Global.action = "Add " + str(self.insert_dropdown.selected_value).capitalize()
+    # make action to be "Insert ..." 
+    Global.action = "Insert " + str(self.insert_dropdown.selected_value).capitalize()
     #print("Insert action - ",Global.action)
     if Global.action not in Global.action_list_not_implemented:
       # Action has been selected, create button in work area list, and make this work area in focus (highlight button)
       # for any action that has a Form defined create a new work_area
-      if Global.site_id is None and Global.action not in (Global.admin_action_dropdown):
+      if Global.site_id is None and Global.action not in (Global.sys_admin_action_dropdown) and Global.action not in (Global.site_admin_action_dropdown) :
         # if site is not yet selected alert user
         alert(
           content="Site has not been selected. Please select a site.",
@@ -511,7 +628,7 @@ class Main(MainTemplate):
     if Global.action not in Global.action_list_not_implemented:
       # Action has been selected, create button in work area list, and make this work area in focus (highlight button)
       # for any action that has a Form defined create a new work_area
-      if Global.site_id is None and Global.action not in (Global.admin_action_dropdown):
+      if Global.site_id is None and Global.action not in (Global.sys_admin_action_dropdown) and Global.action not in (Global.site_admin_action_dropdown) :
         # if site is not yet selected alert user
         alert(
           content="Site has not been selected. Please select a site.",
@@ -531,7 +648,7 @@ class Main(MainTemplate):
   def import_dropdown_change(self, **event_args):
     """This method is called when an item is selected"""
     """ This Function is called when the users selects an option form the Import dropdown"""
-    print("Import dropdown")
+    #print("Import dropdown")
     #Global.main_form = get_open_form()
     # set action
     Global.action = "Import " + str(self.import_dropdown.selected_value).capitalize()
@@ -539,7 +656,7 @@ class Main(MainTemplate):
     if Global.action not in Global.action_list_not_implemented:
       # Action has been selected, create button in work area list, and make this work area in focus (highlight button)
       # for any action that has a Form defined create a new work_area
-      if Global.site_id is None and Global.action not in (Global.admin_action_dropdown):
+      if Global.site_id is None and Global.action not in (Global.sys_admin_action_dropdown) and Global.action not in (Global.site_admin_action_dropdown)  :
         # if site is not yet selected alert user
         alert(
           content="Site has not been selected. Please select a site.",
@@ -548,7 +665,7 @@ class Main(MainTemplate):
           buttons=[("Ok", True)],
         )
       else:
-        print("Import action: ",Global.action)
+        #print("Import action: ",Global.action)
         self.create_new_work_area(Global.action)
     else:
       if Global.action != Global.separator:
@@ -564,17 +681,10 @@ class Main(MainTemplate):
     """This method is called when an item is selected"""
     #Global.main_form = get_open_form()
     Global.action = self.help_dropdown.selected_value
-
+    #print(Global.action)
+    if Global.action == "Anchurus Website":
+      anvil.js.window.open("https://anchurus.co.uk", '_blank')
     self.help_dropdown.selected_value = None
-    pass
-
-  def view_dropdown_change(self, **event_args):
-    """ This Function is called when the users selects an option form the View dropdown"""
-    """This method is called when an item is selected"""
-    #Global.main_form = get_open_form()
-    Global.action = self.view_dropdown.selected_value
-
-    self.view_dropdown.selected_value = None
     pass
 
   def site_summary_change(self, **event_args):
@@ -588,14 +698,15 @@ class Main(MainTemplate):
   # Functions on the header for the work area
   def selection_change(self, **event_args):
     #
+    print("selection_change in Main")
     rows = [row for row in Global.work_area[Global.current_work_area_name]["self"].repeating_panel_1.get_components()]
     any_checked = any(row.btn_select.checked for row in rows)
     all_checked = all(row.btn_select.checked for row in rows)
     #
     #self.select_all.checked = any_checked
     #self.select_all.indeterminate = not all_checked and any_checked
-    Global.work_area[Global.current_work_area_name]["self"].select_all.checked = any_checked
-    Global.work_area[Global.current_work_area_name]["self"].select_all.indeterminate = not all_checked and any_checked
+    ###Global.work_area[Global.current_work_area_name]["self"].select_all.checked = any_checked
+    ###Global.work_area[Global.current_work_area_name]["self"].select_all.indeterminate = not all_checked and any_checked
     Global.work_area[Global.current_work_area_name]["menu_select_options"].visible = any_checked
     #
     pass
@@ -603,7 +714,12 @@ class Main(MainTemplate):
   def select_all_change(self, **event_args):
     """This method is called when this checkbox is checked or unchecked"""
     checked = self.select_all.checked
+    indetermined = self.select_all.indeterminate
+    #print("Select_all button clicked: ",Global.current_work_area_name, " checked: ",checked, " indeterminate: ",indetermined)
     #
+    if self.select_all.indeterminate:
+      # if indeterminate is True, force check to False
+      checked = False
     #for row in self.repeating_panel_1.get_components(): 
     for row in Global.work_area[Global.current_work_area_name]["self"].repeating_panel_1.get_components():
       prev_status_btn_select = row.btn_select.checked
@@ -617,13 +733,22 @@ class Main(MainTemplate):
           Global.work_area[Global.current_work_area_name]["selected_rows"].remove(row.item)
           row.background = ""
     #
-    #self.select_all.indeterminate = False
-    Global.work_area[Global.current_work_area_name]["self"].select_all.indeterminate = False
+    if self.select_all.indeterminate:
+      #print("if indeterminate was True, set indeterminate to False ")
+      self.select_all.indeterminate = False
+      self.select_all.checked = False
+      ###Global.work_area[Global.current_work_area_name]["self"].select_all.indeterminate = False
     #
     if len(Global.work_area[Global.current_work_area_name]["selected_rows"]) == 0:
+      #print("0 selected rows, clear menu")
       Global.work_area[Global.current_work_area_name]["menu_select_options"].visible = False
+      ###Global.work_area[Global.current_work_area_name]["self"].select_all.checked = False
+      self.select_all.checked = False
     else:
       Global.work_area[Global.current_work_area_name]["menu_select_options"].visible = True
+
+    ###Global.work_area[Global.current_work_area_name]["self"].select_all.checked = checked
+    self.select_all.checked = checked
     pass
     
   def view_row_click(self, **event_args):
@@ -664,7 +789,7 @@ class Main(MainTemplate):
       message = message + "\nYou have seleted to delete " + Global.table_name.capitalize() + "\n\n" + str(row)
 
     # ask confirmation to delete selected rows
-    message = message + "\n\nDo you wish to continue?"
+    message = message + "\n\nDo you wish to continue?\n\nNote: This action is not yet implemented!"
     confirm(message)
     pass
 
@@ -712,6 +837,20 @@ class Main(MainTemplate):
     column_headings.remove("DBAcontrol")
     # sort column names
     column_headings.sort()
+    # extract table columns names
+    #print(Global.work_area[Global.current_work_area_name]["columns_show"])
+    #print(Global.work_area[Global.current_work_area_name]["table"].columns)
+    column_headings = []
+    #print(Global.work_area[Global.current_work_area_name]["data_list"])
+    if Global.work_area[Global.current_work_area_name]["data_list"]:
+      # Get the keys (which are the column headings) from the first item
+      column_headings = list(Global.work_area[Global.current_work_area_name]["data_list"][0].keys())
+      # remove special columns
+      column_headings.remove("select")
+      column_headings.remove("SiteId")
+      column_headings.remove("DBAcontrol")
+      # sort column names
+      column_headings.sort()
 
     # 1. Define the options you want to display
     option_id = 0
@@ -782,9 +921,9 @@ class Main(MainTemplate):
   def print_click(self, **event_args):
     """This method is called when the button is clicked"""
     form = str(type(Global.work_area[Global.current_work_area_name]["form"])).split(".")[2][:-2]
-    print("From new print_click, form to use and send to server function: ",form)
+    #print("From new print_click, form to use and send to server function: ",form)
     # table names are all lowercase and singular, so create table name from action
-    tmp_name = Global.work_area[Global.current_work_area_name]["action"].split(" ")[1].strip("s")
+    tmp_name = Global.work_area[Global.current_work_area_name]["action"].split(" ")[1]
     table_name = tmp_name.lower()
 
     # clear select column from data_list
@@ -804,12 +943,15 @@ class Main(MainTemplate):
 
   def refresh_click(self, **event_args):
     """This method is called when the button is clicked"""
-    print("Refresh cicked: ",Global.current_work_area_name)
+    #print("Refresh clicked: ",Global.current_work_area_name)
+    #print(Global.work_area[Global.current_work_area_name])
     FunctionsB.refresh_click(Global.work_area[Global.current_work_area_name]["self"])
     pass
 
   def del_work_area_click(self, **event_args):
     """This method is called when the button is clicked"""
+    #print("Deleting work space: ", Global.current_work_area_name)
+    Function.delete_workspace(Global.current_work_area_name)
     pass
 
   def logout_click(self, **event_args):
@@ -820,6 +962,7 @@ class Main(MainTemplate):
 
     # make help_page invisible
     Global.help_page.visible = False
+    Global.help_page.help_page_text.clear()
 
     # Welcome_page will show the login page
     self.welcome_page.visible = True
@@ -829,15 +972,19 @@ class Main(MainTemplate):
     self.title_panel.visible = True
     self.menu_top.visible = False
     self.menu_middle.visible = False
-    self.mm_left.visible = False
+    self.mm_left.visible = True
     self.mm_middle.visible = False
     self.mm_right.visible = False
     self.admin_dropdown.visible = False
     self.site_summary.visible = False
     self.menu_bottom.visible = False
 
+    self.admin_dropdown.items = []
+
     self.username_dropdown.placeholder = Global.username
     self.username_dropdown.items = []
+    Global.system_user_role = ""
+    self.user_role.text = ""
 
     # To be done: save work areas in table for user for loading when login
 
@@ -846,7 +993,7 @@ class Main(MainTemplate):
     for work_area_name in temp_work_area_name_list:
       Function.delete_workspace(work_area_name)
 
-      # clear selected site
+    # clear selected site
     self.select_site_dropdown.selected_value = None
 
     # clear work_area list and action_seq_no

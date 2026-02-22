@@ -1,29 +1,6 @@
 allow_embedding: false
 correct_dependency_ids: {}
 db_schema:
-  systems:
-    client: none
-    columns:
-    - admin_ui: {order: 0, width: 200}
-      name: systemname
-      type: string
-    - admin_ui: {order: 1, width: 200}
-      name: databasename
-      type: string
-    - admin_ui: {order: 2.3125, width: 200}
-      name: username
-      type: string
-    - admin_ui: {order: 3, width: 200}
-      name: password
-      type: string
-    - admin_ui: {order: 1.625, width: 200}
-      name: port
-      type: string
-    - admin_ui: {order: 1.25, width: 200}
-      name: hostname
-      type: string
-    server: full
-    title: Systems
   users:
     client: none
     columns:
@@ -46,16 +23,10 @@ db_schema:
       name: confirmed_email
       type: bool
     - admin_ui: {width: 200}
-      name: role
-      type: string
-    - admin_ui: {width: 200}
       name: signed_up
       type: datetime
     - admin_ui: {width: 200}
       name: email_confirmation_key
-      type: string
-    - admin_ui: {width: 200}
-      name: Initials
       type: string
     - admin_ui: {width: 200}
       name: remembered_logins
@@ -63,12 +34,24 @@ db_schema:
     - admin_ui: {order: 11, width: 200}
       name: mfa
       type: simpleObject
+    - admin_ui: {order: 12, width: 200}
+      name: initials
+      type: string
+    - admin_ui: {order: 13, width: 200}
+      name: firstname
+      type: string
+    - admin_ui: {order: 14, width: 200}
+      name: lastname
+      type: string
+    - admin_ui: {order: 15, width: 200}
+      name: systemrole
+      type: string
     server: full
     title: Users
 dependencies:
-- dep_id: dep_6z06zktgfe2qxv
+- dep_id: dep_u7h63wh2m50rm
   resolution_hints: {app_id: C6ZZPAPN4YYF5NVJ, name: Anvil Extras, package_name: anvil_extras}
-  version: {version_tag: v3.5.0}
+  version: {version_tag: v3.6.1}
 metadata: {title: Anchurus2 v054}
 name: ANC2_v054
 native_deps:
@@ -92,14 +75,34 @@ services:
 - client_config: {}
   server_config: {}
   source: /runtime/services/tables.yml
-- client_config: {allow_remember_me: true, allow_signup: true, confirm_email: true, enable_automatically: false, mfa_timeout_days: 1, remember_me_days: 1, require_mfa: false, require_secure_passwords: true, use_email: true, use_token: true}
-  server_config: {user_table: users}
+- client_config: {allow_remember_me: false, allow_signup: true, confirm_email: false, enable_automatically: false, mfa_timeout_days: 1, remember_me_days: 1, require_mfa: false, require_secure_passwords: true, use_email: true, use_token: false}
+  server_config:
+    email_content:
+      confirm_address:
+        html: |-
+          <p>Thanks for registering your account with us. Please click the following link to confirm that this is your account:</p>
+          <p>{{confirm_link}}</p>
+          <p>Thanks,</p>
+          <p>The team</p>
+      reset_password:
+        html: |-
+          <p>Hi there,</p>
+          <p>You have requested a password reset for your account {{email}}. To reset your password, click the link below:</p>
+          <p>{{reset_link}}</p>
+          <p>This link will expire in ten minutes.</p>
+      token_login:
+        html: |-
+          <p>Hi there,</p>
+          <p>A login request was received for your account ({{email}}). To log in, click the link below:</p>
+          <p>{{login_link}}</p>
+          <p>This link will expire in ten minutes.</p>
+    user_table: users
   source: /runtime/services/anvil/users.yml
 - client_config: {}
   server_config: {}
   source: /runtime/services/google.yml
 - client_config: {}
-  server_config: {}
+  server_config: {custom_smtp: true, smtp_encryption: starttls, smtp_host: smtp.google.com, smtp_password: Ux0QEUyCfToIQuzsW1ArKGEnOxKlJPug/tLnz+yR6/QkEJsIKIgJhelKGDNPb1bn9hUAL286UWzl11W570DP6d2pAB7SOU0be6U2uVNxHzVIK5H6xUMkLZS0fPcuXIqrSgOlobowKlpyIvDWKg6oYhsZZI2SIqWSbro5bN0Cl7DoOx9vq1IPsB4=, smtp_port: 465, smtp_user: mail-server@berksarch.co.uk, test_mode: false}
   source: /runtime/services/anvil/email.yml
 startup: {module: Main, type: form}
 startup_form: null

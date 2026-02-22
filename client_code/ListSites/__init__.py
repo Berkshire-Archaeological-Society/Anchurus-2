@@ -15,7 +15,7 @@ class ListSites(ListSitesTemplate):
     # this function does the filling of the table contents
     #print("ListSites refresh called")
     self.SitesList.items = anvil.server.call("sites_get")
-    self.Site_list_1.rows_per_page = Global.nr_of_rows
+    self.Site_list_1.rows_per_page = Global.rows_per_page
     self.total_site_number.text = "Total number of Sites: " + str(len(self.SitesList.items))
   pass
   
@@ -23,4 +23,5 @@ class ListSites(ListSitesTemplate):
     # Set Form properties and Data Bindings.
     self.init_components(**properties)
     # Any code you write here will run before the form opens.
+    self.Site_list_1.role = "horizontal-scroll"
     self.list_sites_refresh()

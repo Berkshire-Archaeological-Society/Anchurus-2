@@ -136,12 +136,13 @@ class TableList(TableListTemplate):
     self.init_components(**properties)
     # make old headers invisible
     Global.header.visible = False
-    self.column_panel_1.visible = False
+    #self.column_panel_1.visible = False
     #
     self.repeating_panel_1.set_event_handler('x-selection-change', self.selection_change)
     #
     self.page_info = page_info
     self.site_id = site_id
+    self.title.text = "This form is to " + action
     # Any code you write here will run before the form open
     # Global.site_id is only None when form called from server side (e.g. printing form)
     if Global.site_id is None:
@@ -151,58 +152,41 @@ class TableList(TableListTemplate):
       Global.current_work_area_name = "TableList"
       Global.work_area = {}
       Global.work_area[Global.current_work_area_name] = {}
-      Global.table_name = table_name.rstrip("s")
+      Global.table_name = table_name
     else:
     # set table_name to one of "context", "find", from the action Global variable 
       Global.table_name = Global.action.split(" ")[1].lower()
     
     # get the Table information form the Database
     table_info = anvil.server.call("describe_table", Global.table_name)
-
-    # Extract the columns names from the table_info
-    # Frist column if for Select
-    # The DESCRIBE result structure is:
-    # (Field:, Type:, Null:, Key:, Default:, Extra:)
-    Global.work_area[Global.current_work_area_name]["columns_show"] = []
-    columns_titles = []
-    columns_titles.append({"id": 1, "title": "", "data_key": "select", "width": 30, "expand": True })
-    id = 1
-    for column_data in table_info:
-      # Select Column "Field"
-      field_name = column_data["Field"]
-      Global.work_area[Global.current_work_area_name]["columns_show"].append(field_name)
-      col_width = Global.table_colwidth_default
-      if field_name in Global.table_colwidth_60:
-        col_width = 60
-      if field_name in Global.table_colwidth_70:
-        col_width = 70
-      if field_name in Global.table_colwidth_80:
-        col_width = 80
-      if field_name in Global.table_colwidth_90:
-        col_width = 90
-      if field_name in Global.table_colwidth_100:
-        col_width = 100
-      if field_name in Global.table_colwidth_120:
-        col_width = 120
-      if field_name in Global.table_colwidth_140:
-        col_width = 140
-      if field_name not in ["SiteId"]: # do not create a columns for SiteId
-        id = id + 1
-        columns_titles.append({"id": id, "title": field_name, "data_key": field_name, "width": col_width, "expand": True })
-
-    # assign the columns titles to the grid columns
-    self.table.columns = columns_titles
+    #print(table_info)
 
     # add table to work_area data structure for Global.current_work_area_name
     Global.work_area[Global.current_work_area_name]["table"] = self.table
     
+    # Extract the columns names from the table_info
+    # Frist column if for Select
+    # The DESCRIBE result structure is:
+    # (Field:, Type:, Null:, Key:, Default:, Extra:)
+
+    # first make column list
+    column_list = []
+    for column_data in table_info:
+      # Select Column name:
+      # anvil users table uses different title for columns names (name) compared to the Database (Field)
+      if Global.table_name in ["anvilusers","anviluser"]:
+        field_name = column_data["name"]
+      else:
+        field_name = column_data["Field"]
+      column_list.append(field_name)
+    # now create the table columns    
+    FunctionsB.create_table_columns(column_list,Global.work_area[Global.current_work_area_name])
+    
+    self.table.columns = Global.work_area[Global.current_work_area_name]["table"].columns
+   
     # Set table role to horizontal scroll
     self.table.role = "horizontal-scroll"
     
-    # set menu_select_opti0ns as invisible
-    #Global.work_area[Global.current_work_area_name]["menu_select_options"] = self.menu_select_options
-    #Global.work_area[Global.current_work_area_name]["menu_select_options"].visible = False
-
     # save self in Global.work_area
     Global.work_area[Global.current_work_area_name]["self"] = self
 
@@ -213,19 +197,21 @@ class TableList(TableListTemplate):
     
   def selection_change(self, **event_args):
     #
-    rows = [row for row in self.repeating_panel_1.get_components()]
+    #rows = [row for row in self.repeating_panel_1.get_components()]
+    rows = [row for row in Global.work_area[Global.current_work_area_name]["self"].repeating_panel_1.get_components()]
     any_checked = any(row.btn_select.checked for row in rows)
     all_checked = all(row.btn_select.checked for row in rows)
-    #print("any_checked: ",any_checked)
-    #print("all_checked: ",all_checked)
-    indeterminate_value = not all_checked and any_checked
-    #print("indeterminate: ",indeterminate_value)
+
+    #indeterminate_value = not all_checked and any_checked
+    #print("selection_change in TableList: indeterminate = ",indeterminate_value," any_checked = ",any_checked, " all_checked = ",all_checked)
     # make select_all a Global.work_area[Global.Global.current_work_area_name]["select_all"]
-    self.select_all.checked = any_checked
-    self.select_all.indeterminate = not all_checked and any_checked
+    #self.select_all.checked = any_checked
+    #self.select_all.indeterminate = not all_checked and any_checked
+    ###Global.work_area[Global.current_work_area_name]["self"].select_all.checked = any_checked
+    ###Global.work_area[Global.current_work_area_name]["self"].select_all.indeterminate = not all_checked and any_checked
+    Global.work_area[Global.current_work_area_name]["menu_select_options"].visible = any_checked
     Global.main_form.select_all.checked = any_checked
     Global.main_form.select_all.indeterminate = not all_checked and any_checked
-    Global.work_area[Global.current_work_area_name]["menu_select_options"].visible = any_checked
     #
     pass
     

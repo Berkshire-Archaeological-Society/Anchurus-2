@@ -983,7 +983,7 @@ input[disabled] ~ span {
   justify-content: center;
 }
 
-.checkbox input:checked, .radio input:checked {
+.checkbox input:checked, .checkbox input:indeterminate, .radio input:checked {
   background-color: %color:Primary Container%;
   color: %color:On Primary Container%;
 }
@@ -1086,10 +1086,12 @@ Changes to the standard Theme.css are below
     /*border-left: 1px solid black;*/
 }
 
-/* Apply left and right borders to each cell within a data grid row */
+/* Apply left, right, top, bottom borders to each cell within a data grid row */
 .anvil-data-row-panel > .data-row-col {
   border-left: 1px solid #ccc;
   border-right: 1px solid #ccc;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
 }
 
 /* Footer bar */

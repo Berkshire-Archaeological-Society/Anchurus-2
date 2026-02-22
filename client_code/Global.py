@@ -16,7 +16,8 @@ import anvil.users
 #
 main_form = ""
 separator = "------------------"
-admin_action_list = ["List Users","List Sites","Add Site"]
+sys_admin_action_list = ["List Anvilusers","Edit AnvilUser","Insert Anviluser","Import Anvilusers",separator,"List Site","Edit Site","Add Site"]
+site_admin_action_list = [separator,"List SiteUser","Edit SiteUsers","Add SiteUser","Import SiteUsers"]
 admin_action_list_not_implemented = [separator]
 user_action_list = ["Select Site",separator,
                     "List Contexts","Add Context","Bulk Upload Contexts",separator,
@@ -31,16 +32,18 @@ list_action_dropdown = ["Contexts","Finds","Anomolies","Interpretations"]
 insert_action_dropdown = ["Context","Find","Anomoly","Interpretation"]
 file_action_dropdown = ["Import",separator,"Save"]
 view_action_dropdown = []
-help_action_dropdown = []
-admin_action_dropdown = ["List Users","List Sites","Add Site"]
+help_action_dropdown = ["Anchurus Website"]
+sys_admin_action_dropdown = [("List Users","List Anvilusers"),("Insert User","Insert Anviluser"),("Import Users","Import Anvilusers"),separator,("List Sites","List Site"),("Insert Site","Add Site")]
+site_admin_action_dropdown = [(separator,separator),("List Site Users","List sys_siteuserrole"),("Insert Site User","Add sys_siteuserrole"),("Import Site Users","Import sys_siteuserrole")]
+#
 import_action_dropdown = ["context","find"]
 #
 #
-action_forms_with_refresh = ["TableList","RowForm","ListUsers","ListSites","ListContexts","ListFinds","ListAreas","BulkUpload","Add Area","List Areas"]
+action_forms_with_refresh = ["TableList","RowForm","ListAnvilUsers","ListSites","ListContexts","ListFinds","ListAreas","BulkUpload","Add Area","List Areas"]
 #action_forms_with_print = ["ListUsers","ListSites","ListContexts","ListFinds","ListAreas","List Areas","View Context","View Find","View Area"]
 action_forms_with_print = ["ListContexts","ListFinds","TableList","RowForm"]
 action_forms_with_download = ["ListContexts","ListFinds","TableList"]
-action_forms_with_filter = ["ListContexts","ListFinds","TableList","RowForm"]
+action_forms_with_filter = ["ListContexts","ListFinds","TableList"]
 #
 action_seq_no = {}
 csv_file = None
@@ -140,7 +143,9 @@ material_types = ["CBM Tile","CBM Brick","CBM Drain Pipe","CBM Mortar",
                   "Oyster Shells","Wood","Charcoal"]
 login_options = {"Sign in", "Sign out"}
 #
-organisation = "Berkshire Archaeological Society"
+organisation = ""
+query_view = False
+view_queries = ["sys_siteuserrole"]
 #
 # The following variable rows_per_page has to be set to 0, to make sure the print function prints the whole table
 # During startup of the client (i.e. browser URL click of website) this value can be overwritten by a value for this
@@ -154,44 +159,55 @@ site_id = None
 site_name = ""
 site_options = {}
 site_items = {}
+select_site_dropdown = {}
 header_site_summary_information = {}
 system_name = ""
 SurveyMethod_options = {"BNG","Aligned to BNG north","Not aligned to BNG north"}
-system = "Anchurus-II Web Service Application"
+system = "Anchurus-II Web Application"
 status = ""
 #
 table_name = ""
 table_items = {}
 table_colwidth_60 = ["FillOf","Year","Count","Weight"]
 table_colwidth_70 = []
-table_colwidth_80 = ["FContextId","AreaId","YearStart","YearEnd","Workflow","BoxId","FromSample","FindType"]
+table_colwidth_80 = ["ContextId","AreaId","YearStart","YearEnd","Workflow","BoxId","FromSample","FindType","Enabled"]
 table_colwidth_90 = ["FindId"]
-table_colwidth_100 = ["FindGroupId","ContextYear","ContextType","PackageType","SmallFindId","FromSample","RecordStatus"]
-table_colwidth_120 = []
-table_colwidth_140 = []
-table_colwidth_default = 150
+table_colwidth_100 = ["FindGroupId","ContextYear","ContextType","PackageType","SmallFindId","FromSample","RecordStatus","SiteId","Role"]
+table_colwidth_120 = ["SiteId"]
+table_colwidth_140 = ["RegistrationDate"]
+table_colwidth_200 = ["Address"]
+table_colwidth_250 = []
+table_colwidth_300 = ["email","Email","Description1","Description2"]
+table_colwidth_default = 110
 #
 title = system + "\n\n" + organisation
 sign_in_out_button_text = "Sign in"
 username = ""
+password = ""
+name = ""
+user_firstname = ""
+user_lastname = ""
 user_initials = ""
-user_role = ""
+system_user_role = ""
+site_user_role = ""
 user_status = ""
-user_role_options = {"None","admin","PM","user"}
+site_user_role_options = {"Viewer","Editor","Manager","Administrator"}
+system_user_role_options = {"Site User","System Administrator"}
 user_status_options = {"True", "False"}
 user_items = {}
-version = ""
+config_version = ""
 #
 about_us_text = """
-<h3>Welcome to the Anchurus-II Web Service for """ + organisation + "</h3>" + """
+<h3>Welcome to the Anchurus-II Web Application</h3>
 
 <p>
 This system allows for the digital recording of archaeological excavations.
 The software has been developed by Archaeology IT Solutions, an independent 'not-for-profit' or 'nonprofit' organisation developing software solutions for the archaeological community.
-It is developed using the <a href="https://anvil.works/" target="_blank>Anvil Framework</a> and is using the open source Anvil App Server to run on your own dedicated server. It uses an external MySQL database to store the excavation details.  
+It is developed using the <a href="https://anvil.works/" target="_blank>Anvil Framework</a> and is using the open source Anvil App Server which allows to run the application on your
+own dedicated server. It uses its own MariaDB database to store the excavation details.  
 This software is released under Creative Commons license: 
 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target=_blank>Attributions-NonCommercial-ShareAlike 4.0 International (CC BY-NC-AS 4.0) license</a>.
-This is version """ + version + """.</p>
+</p>
 
 <p>
 For more information please contact ...</p>
@@ -201,10 +217,13 @@ help_page = {}
 help_introduction = """
 <h3>Introduction</h3>
 <p>
-You have successfully logged into the Anchurus-II Web service Application of the """ + organisation + """.
+Welcome <user>.
+</p>
+<p>You have successfully logged into the Anchurus-II Web service Application.
 </p>
 <p>
-Please select a site. Once selected you can use the menu items to select your actions.</p>
+Please select a site. If a site you require access to, is not in the 'Select Site' list, please contact the Project Manager for that site to provide you with access.
+<br>Once selected you can use the menu items to select your actions.</p>
 <p>
 <b>Note:</b> When changing/selecting a new site, all current workspaces wil be deleted.</p>
 <h3> </h3>
