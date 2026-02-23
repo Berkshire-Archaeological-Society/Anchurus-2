@@ -51,12 +51,12 @@ components:
       - event_bindings: {change: select_site_dropdown_change}
         layout_properties: {width: 210}
         name: select_site_dropdown
-        properties: {font_size: 13, include_placeholder: true, tooltip: select site}
+        properties: {font_size: 13, include_placeholder: true, placeholder: Select Site, tooltip: select site}
         type: DropDown
       - event_bindings: {change: site_summary_change}
         layout_properties: {width: 166}
         name: site_summary
-        properties: {font_size: 13, include_placeholder: true, tooltip: site summary}
+        properties: {font_size: 13, include_placeholder: true, placeholder: Site Summary, tooltip: site summary}
         type: DropDown
       layout_properties: {full_width_row: true, grid_position: 'QBIUMU,LPGJNI'}
       name: mt_left
@@ -66,7 +66,7 @@ components:
       type: FlowPanel
     - components:
       - event_bindings: {change: username_dropdown_change}
-        layout_properties: {width: 184}
+        layout_properties: {width: 329}
         name: username_dropdown
         properties: {font_size: 13, include_placeholder: true, tooltip: username}
         type: DropDown
@@ -102,7 +102,7 @@ components:
       type: FlowPanel
     layout_properties: {full_width_row: true, grid_position: 'TQCWAS,XHRUHC XRHQDB,TSHPZF'}
     name: menu_top
-    properties: {background: 'theme:Primary', col_widths: '{"LPGJNI":30,"SCFEUE":30}'}
+    properties: {background: 'theme:Primary', col_widths: '{"LPGJNI":25,"SCFEUE":35}'}
     type: ColumnPanel
   - components:
     - components:
@@ -111,7 +111,7 @@ components:
         name: help_dropdown
         properties: {font_size: 13, include_placeholder: true, placeholder: Help, tooltip: help}
         type: DropDown
-      layout_properties: {grid_position: 'WPNVXE,ZMXKSM'}
+      layout_properties: {full_width_row: true, grid_position: 'WPNVXE,ZMXKSM'}
       name: mm_left
       properties:
         background: theme:Primary
@@ -169,7 +169,7 @@ components:
         spacing:
           margin: ['0', null, null, null]
       type: FlowPanel
-    layout_properties: {grid_position: 'TQCWAS,XHRUHC WFHHAS,ZHZVPY'}
+    layout_properties: {full_width_row: true, grid_position: 'TQCWAS,XHRUHC WFHHAS,ZHZVPY'}
     name: menu_middle
     properties: {background: 'theme:Primary', col_widths: '{}'}
     type: ColumnPanel
