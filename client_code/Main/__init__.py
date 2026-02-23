@@ -449,7 +449,7 @@ class Main(MainTemplate):
       # also set username  to user email address
       Global.username = user["email"]
       self.username_dropdown.placeholder = Global.username
-      self.action_list.visible = True
+      #self.action_list.visible = True
       self.menu_top.visible = True
       self.welcome_page.visible = False
     pass
