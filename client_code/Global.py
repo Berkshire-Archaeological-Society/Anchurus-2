@@ -163,7 +163,7 @@ select_site_dropdown = {}
 header_site_summary_information = {}
 system_name = ""
 SurveyMethod_options = {"BNG","Aligned to BNG north","Not aligned to BNG north"}
-system = "Anchurus-II Web Application"
+system = "Anchurus-II R2"
 status = ""
 #
 table_name = ""
@@ -198,7 +198,7 @@ user_items = {}
 config_version = ""
 #
 about_us_text = """
-<h3>Welcome to the Anchurus-II Web Application</h3>
+<h3>Welcome to the Anchurus-II R2 Web Application</h3>
 
 <p>
 This system allows for the digital recording of archaeological excavations.
