@@ -126,7 +126,9 @@ components:
         name: user_status_value
         properties:
           background: theme:On Primary
+          include_placeholder: true
           items: []
+          placeholder: Select True or False
         type: DropDown
       layout_properties: {grid_position: 'FUBCDU,JEUHLV'}
       name: flow_panel_2

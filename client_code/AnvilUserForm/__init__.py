@@ -48,6 +48,7 @@ class AnvilUserForm(AnvilUserFormTemplate):
       self.password_text_box.foreground = "#ffffff"
       self.password_text_box.background = "#000000"
       self.showhide_password_checkbox.enabled = False
+      self.showhide_password_checkbox.visible = False
       #
       self.firstname.text = Global.user_items["firstname"]
       self.lastname.text = Global.user_items["lastname"]
@@ -126,6 +127,7 @@ class AnvilUserForm(AnvilUserFormTemplate):
   @handle("showhide_password_checkbox", "change")
   def showhide_password_checkbox_change(self, **event_args):
     """This method is called when this checkbox is checked or unchecked"""
+    self.showhide_password_checkbox.visible = False
     if self.showhide_password_checkbox.checked:
       self.password_text_box.text = self.tag.password
       self.password_text_box.hide_text = False
