@@ -443,16 +443,21 @@ class Main(MainTemplate):
     """ This Function is called when a user wants to register himself"""
     """This method is called when the button is clicked"""
     user = anvil.users.signup_with_form(allow_cancel=True)
-
-    # notify user that the Project Leader will have to check and enable the user account
-    alert("Thank you for registering. Your account registration request will need to be verified. You will be notified as soon as this has been completed.")
-    msg = ("Hi,\n\nUser %s has requested an account for the system %s.\n"
+    if user is not None:
+      print(str(user["email"]))
+    
+      # notify user that the Project Leader will have to check and enable the user account
+      alert("Thank you for registering. Your account registration request will need to be verified. You will be notified as soon as this has been completed.")
+      msg = ("Hi,\n\nUser %s has requested an account for the system %s.\n"
            "Please check the new user account, complete the registration and enable the account.\n"
            % (user["email"],Global.organisation ))
-    anvil.server.call("send_email","New user registration",msg,"tony.bakker@berksarch.co.uk")
-    # go back to login screen
-    self.logout_click()
-    
+      print(msg)
+      anvil.server.call("send_email","New user registration",msg,"tony.bakker@berksarch.co.uk")
+      # go back to login screen
+      self.logout_click()
+    else:
+      alert("Registration cancelled")
+      
     #if user is not None:
     #  # when user is logged in enable Action menu, username field and logout button, and disable content panel (welcome message)
     #  # also set username  to user email address
