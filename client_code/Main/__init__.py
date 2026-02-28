@@ -443,15 +443,21 @@ class Main(MainTemplate):
     """ This Function is called when a user wants to register himself"""
     """This method is called when the button is clicked"""
     user = anvil.users.signup_with_form(allow_cancel=True)
-    # check if user logged in (should not be, as registration requires a system-administrator to enable account)
-    if user is not None:
-      # when user is logged in enable Action menu, username field and logout button, and disable content panel (welcome message)
-      # also set username  to user email address
-      Global.username = user["email"]
-      self.username_dropdown.placeholder = Global.username
-      #self.action_list.visible = True
-      self.menu_top.visible = True
-      self.welcome_page.visible = False
+
+    # notify user that the Project Leader will have to check and enable the user account
+    alert("Thank you for registering. Your account registration request will need to be verified. You will be notified as soon as this has been completed.")
+    
+    # go back to login screen
+    self.logout_click()
+    
+    #if user is not None:
+    #  # when user is logged in enable Action menu, username field and logout button, and disable content panel (welcome message)
+    #  # also set username  to user email address
+    #  Global.username = user["email"]
+    #  self.username_dropdown.placeholder = Global.username
+    #  #self.action_list.visible = True
+    #  self.menu_top.visible = True
+    #  self.welcome_page.visible = False
     pass
 
   def select_site_dropdown_change(self, **event_args):
