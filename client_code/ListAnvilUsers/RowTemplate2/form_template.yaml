@@ -8,6 +8,20 @@ components:
       margin: ['0', null, '0', null]
       padding: ['0', '0', '0', '0']
     text: ''
+    tooltip: edit user
+  type: Button
+- event_bindings: {}
+  layout_properties: {column: PCBPDG}
+  name: delete_user_button
+  properties:
+    align: center
+    icon: fa:remove
+    icon_align: left
+    spacing:
+      margin: ['0', null, '0', null]
+      padding: ['0', '0', '0', '0']
+    text: ''
+    tooltip: delete user
   type: Button
 container:
   properties: {tooltip: edit user details}

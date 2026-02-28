@@ -26,3 +26,8 @@ class RowTemplate2(RowTemplate2Template):
     else:
       print("Main form not found!")
   pass
+
+  @handle("delete_user_button", "click")
+  def delete_user_button_click(self, **event_args):
+    """This method is called when the button is clicked"""
+    pass

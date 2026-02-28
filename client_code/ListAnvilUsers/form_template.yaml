@@ -20,7 +20,8 @@ components:
   name: table
   properties:
     columns:
-    - {data_key: column_4, expand: false, id: FBKXLS, title: '', width: 61}
+    - {data_key: column_4, expand: false, id: FBKXLS, title: '', width: '50'}
+    - {data_key: column_1, id: PCBPDG, title: '', width: '50'}
     - {data_key: email, expand: true, id: JKSDUP, title: email, width: 249}
     - {data_key: firstname, expand: false, id: CFBYUP, title: firstname, width: 148.18182373046875}
     - {data_key: lastname, expand: false, id: KIVAWX, title: lastname, width: 172.727294921875}
