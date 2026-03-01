@@ -30,4 +30,11 @@ class RowTemplate2(RowTemplate2Template):
   @handle("delete_user_button", "click")
   def delete_user_button_click(self, **event_args):
     """This method is called when the button is clicked"""
-    pass
+    Global.user_items = self.item
+    Global.action = "Delete AnvilUser"
+    if Global.main_form:  # Important to check if the form exists
+      # Create new work_area "Edit User" and set focus on this new work_area 
+      Global.main_form.create_new_work_area(Global.action)
+    else:
+      print("Main form not found!")
+  pass
