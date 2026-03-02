@@ -62,8 +62,8 @@ class RowForm(RowFormTemplate):
     self.field_details = {}
     self.form_fields = {}
     for item in table_info:
-      column_name = item["Field"]
-      column_type = item["Type"]
+      column_name = item["COLUMN_NAME"]
+      column_type = item["DATA_TYPE"]
       # types can be varchar(length),int(length),text,float,double,date
       # type text can be 65535 char so need to be a TextArea, other can be a TextBox
       # create the label and the input field

@@ -177,7 +177,7 @@ class TableList(TableListTemplate):
       if Global.table_name in ["anvilusers","anviluser"]:
         field_name = column_data["name"]
       else:
-        field_name = column_data["Field"]
+        field_name = column_data["COLUMN_NAME"]
       column_list.append(field_name)
     # now create the table columns    
     FunctionsB.create_table_columns(column_list,Global.work_area[Global.current_work_area_name])
