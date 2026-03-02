@@ -15,7 +15,7 @@ components:
   name: delete_user_button
   properties:
     align: center
-    icon: fa:remove
+    icon: fa:trash
     icon_align: left
     spacing:
       margin: ['0', null, '0', null]

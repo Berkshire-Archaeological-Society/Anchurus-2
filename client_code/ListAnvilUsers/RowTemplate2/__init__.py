@@ -34,7 +34,11 @@ class RowTemplate2(RowTemplate2Template):
     Global.action = "Delete AnvilUser"
     if Global.main_form:  # Important to check if the form exists
       # Create new work_area "Edit User" and set focus on this new work_area 
-      Global.main_form.create_new_work_area(Global.action)
+      if confirm(f"Do you really want to delete the user {Global_user_items['email']}?"):
+        anvil.server.call('system_user_delete', Global_user_items)
+        #refresh the Data Grid
+        self.repeating_panel_1.items = app_tables.movies.search()
+      
     else:
       print("Main form not found!")
   pass
