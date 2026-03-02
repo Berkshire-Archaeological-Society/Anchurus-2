@@ -171,7 +171,7 @@ components:
       type: FlowPanel
     layout_properties: {full_width_row: true, grid_position: 'TQCWAS,XHRUHC WFHHAS,ZHZVPY'}
     name: menu_middle
-    properties: {background: 'theme:Primary', col_widths: '{}'}
+    properties: {background: 'theme:Primary', col_widths: '{"ZMXKSM":15,"GYVRON":30,"BHRWOL":15}'}
     type: ColumnPanel
   - components:
     - components:
@@ -279,6 +279,7 @@ components:
             margin: ['0', null, null, '0']
             padding: ['0', '0', '0', '0']
           text: ''
+          tooltip: prev page
         type: Button
       - event_bindings: {click: next_page_click}
         layout_properties: {}
