@@ -19,10 +19,12 @@ class RowForm(RowFormTemplate):
   def input_change(self, **event_args):
     """This method is called when the text in this text box is edited"""
     column = event_args["sender"].placeholder
+    #print(str(type(event_args["sender"])))
     if str(type(event_args["sender"])) == "<class 'anvil_extras.Quill.Quill'>":
       self.form_fields[column]["header"].text = column + " (" + str(len(self.form_fields[column]["field"].get_html())) + "/" + str(self.form_fields[column]["length"]) + "):"
     else:
-      self.form_fields[column]["header"].text = column + " (" + str(len(self.form_fields[column]["field"].text)) + "/" + str(self.form_fields[column]["length"]) + "):"
+      if str(type(event_args["sender"])) != "<class 'anvil.DatePicker'>":
+        self.form_fields[column]["header"].text = column + " (" + str(len(self.form_fields[column]["field"].text)) + "/" + str(self.form_fields[column]["length"]) + "):"
   pass
   
   def __init__(self, site_id, table_name, data_list, action, page_info, **properties):
@@ -73,7 +75,8 @@ class RowForm(RowFormTemplate):
         input.add_event_handler('text_change',self.input_change)
       elif column_type == "date":
         # by default create TextBox fields
-        input = TextBox(placeholder=column_name)
+        input = DatePicker(placeholder=column_name,format="%Y-%m-%d")
+        #input = TextBox(placeholder=column_name)
         # date type is 10 long
         max_length = 10
         # add event handler for when input field is changed to update the character count
@@ -177,6 +180,8 @@ class RowForm(RowFormTemplate):
           if action == "view":
             input.enable(False)
             input.background = "#052014CC"
+        elif str(type(input)) == "<class 'anvil.DatePicker'>":
+          input.date = Global.work_area[Global.current_work_area_name]["data_list"][0][column_name]
         else:
           input.text = Global.work_area[Global.current_work_area_name]["data_list"][0][column_name]
           if input.text == "None":
@@ -234,6 +239,8 @@ class RowForm(RowFormTemplate):
           #cur_len = 0
           #if html_text is not None:
             #cur_len = len(html_text)
+        elif str(type(col[1]["field"])) == "<class 'anvil.DatePicker'>":
+          row_list[col[0]] = col[1]["field"].date
         else:
           row_list[col[0]] = col[1]["field"].text
         # set empty fields to None
