@@ -97,7 +97,7 @@ class RowForm(RowFormTemplate):
         
       # set specific validators for the various fields
       # if column is Primary Key or a known special column then make it un-editable
-      if (action == "view") or (action in ["edit"] and item["Key"] == "PRI") or column_name in ["SiteId","DBAcontrol","RegistrationDate"]:
+      if (action == "view") or (action in ["edit"] and item["COLUMN_KEY"] == "PRI") or column_name in ["SiteId","DBAcontrol","RegistrationDate"]:
         input.enabled = False
         input.foreground = "#ffffff"
         input.background = "#000000"
@@ -200,16 +200,20 @@ class RowForm(RowFormTemplate):
           cur_len = len(input.text)
         #print(Global.work_area[Global.current_work_area_name]["data_list"][0][column_name])
 
-      # set default label text
-      col = column_name + " (" + str(cur_len) + "/" + str(max_length) + ")" 
+      # create column header with column_name and column_description in one flowpanel (col_header)
+      col = column_name + " (" + str(cur_len) + "/" + str(max_length) + "):" 
       lab = Label(text=col,font_size=14,tag=column_name)
+      col_description = Label(text=item["COLUMN_COMMENT"],font_size=14)
+      col_header = FlowPanel()
+      col_header.add_component(lab)
+      col_header.add_component(col_description)
       # add columns details to nested dictionary
-      field_details = {"header": lab, "field": input, "length": max_length}
+      field_details = {"header": lab, "description": col_description,"field": input, "length": max_length}
       self.form_fields[column_name] = field_details
-      # add label and input field to column_panel
+      # add col_header and input field to column_panel
       if column_name != "DBAcontrol": # do not add an input field for DBAcontrol column
-        self.column_panel_1.add_component(lab)
-        self.column_panel_1.add_component(input)
+        self.column_panel_1.add_component(col_header,full_width_row=True)
+        self.column_panel_1.add_component(input,full_width_row=True)
     
     # Add a Submit button if Edit or Add action
     if action in ["edit","add","insert"]:     #"Edit Context","Edit Find","Add Context","Add Find"]:
