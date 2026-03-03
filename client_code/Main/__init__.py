@@ -234,7 +234,7 @@ class Main(MainTemplate):
       table_info = anvil.server.call("describe_table",action.split(" ")[1].lower())
       primary_key_list = []
       for column in table_info:
-        if column["COLUMNS_KEY"] == "PRI":
+        if column["COLUMN_KEY"] == "PRI":
           primary_key_list.append(column["COLUMN_NAME"])
       if action.split(" ")[0].lower() in ["view","edit"]:
         if len(primary_key_list) == 1:
