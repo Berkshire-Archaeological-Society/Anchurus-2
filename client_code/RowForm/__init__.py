@@ -211,7 +211,7 @@ class RowForm(RowFormTemplate):
       field_details = {"header": lab, "description": col_description,"field": input, "length": max_length}
       self.form_fields[column_name] = field_details
       # add col_header and input field to column_panel
-      if column_name != "DBAcontrol": # do not add an input field for DBAcontrol column
+      if column_name != "DBAcontrol" : #and Global.table_name != "dbdiary": # do not add an input field for DBAcontrol column
         self.column_panel_1.add_component(col_header,full_width_row=True)
         self.column_panel_1.add_component(input,full_width_row=True)
     
