@@ -139,13 +139,10 @@ components:
           placeholder: Import
           tooltip: import
         type: DropDown
-      - layout_properties: {}
-        name: query_button
-        properties:
-          font_size: 13
-          text: |
-            Query
-        type: Button
+      - layout_properties: {width: 69}
+        name: query_drop_down
+        properties: {font_size: 13, include_placeholder: true, placeholder: Query}
+        type: DropDown
       layout_properties: {grid_position: 'WPNVXE,GYVRON'}
       name: mm_middle
       properties:
