@@ -63,7 +63,7 @@ native_deps:
       }
 
     </script>
-package_name: ANC2_v050
+package_name: anii_r2_v033
 renamed: true
 runtime_options:
   client_version: '3'
@@ -71,6 +71,7 @@ runtime_options:
   server_spec: {base: python310-minimal}
   server_version: python3-sandbox
   version: 3
+secrets: {}
 services:
 - client_config: {}
   server_config: {}
@@ -104,6 +105,9 @@ services:
 - client_config: {}
   server_config: {custom_smtp: true, smtp_encryption: starttls, smtp_host: smtp.gmail.com, smtp_password: 7OyQOIAw5lgqL3GkJBrVcuCnHYXXQYPMSzssZTf/eyeHImQPV3/AwqZ771cETWl9nRO39B5354159RoNq4pH3XC7M/XYZI2BI8wDmEldYL/0PTUAdSMe7KSfVfX0TzD5jGpgWsOeR77U4muVlEXvjF2H70yNCVdQz0Vq/jNEewHQ/WCn6i6fvK4=, smtp_port: 587, smtp_user: mail-server@berksarch.co.uk, test_mode: false}
   source: /runtime/services/anvil/email.yml
+- client_config: {}
+  server_config: {}
+  source: /runtime/services/anvil/secrets.yml
 startup: {module: Main, type: form}
 startup_form: null
 uplink_visible: true
