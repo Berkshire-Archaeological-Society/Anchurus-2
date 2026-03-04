@@ -169,13 +169,15 @@ status = ""
 #
 table_name = ""
 table_items = {}
+
+# Specify names of columns in known colwidth (otherwise default colwidth is used)
 table_colwidth_60 = ["FillOf","Year","Count","Weight","DiaryId"]
 table_colwidth_70 = []
 table_colwidth_80 = ["ContextId","AreaId","YearStart","YearEnd","Workflow","BoxId","FromSample","FindType","Enabled"]
 table_colwidth_90 = ["FindId"]
 table_colwidth_100 = ["DBAcontrol","GazControl","FindGroupId","ContextYear","ContextType","PackageType","SmallFindId","FromSample","RecordStatus","SiteId","Role"]
-table_colwidth_120 = ["SiteId","DatesAssignedBy"]
-table_colwidth_140 = ["RegistrationDate"]
+table_colwidth_120 = ["SiteId"]
+table_colwidth_140 = ["RegistrationDate","DatesAssignedBy"]
 table_colwidth_200 = ["Address"]
 table_colwidth_250 = []
 table_colwidth_300 = ["Description","URL","Activity","email","Email","Description1","Description2"]
