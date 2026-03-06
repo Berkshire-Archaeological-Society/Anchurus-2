@@ -140,12 +140,12 @@ class RowForm(RowFormTemplate):
                              required=True,
                              message=msg)
       # add more validations for fields if required
-      elif  column_name in ["RecordStatus"]:
-        self.validator.regex(component=input,
-                             events=['lost_focus', 'change'],
-                             pattern="(?i)^(registered|planned|dated|grouped|report)$",
-                             required=True,
-                             message="This defines the state of this context record. Pick one of Registered, Planned, Dated, Grouped, Report.")      
+      #elif  column_name in ["RecordStatus"]:
+      #  self.validator.regex(component=input,
+      #                       events=['lost_focus', 'change'],
+      #                       pattern="(?i)^(registered|planned|dated|grouped|report)$",
+      #                       required=True,
+      #                       message="This lists the states of this context record. Pick one or more of Registered, Planned, Dated, Grouped, Report.")      
       elif  column_name in ["ContextType"]:
         self.validator.regex(component=input,
                              events=['lost_focus', 'change'],
@@ -217,6 +217,7 @@ class RowForm(RowFormTemplate):
       if Global.table_name == "dbdiary" or column_name != "DBAcontrol" : 
         self.column_panel_1.add_component(col_header,full_width_row=True)
         self.column_panel_1.add_component(input,full_width_row=True)
+    # endof forloop item in table_info
     
     # Add a Submit button if Edit or Add action
     if action in ["edit","add","insert"]:     #"Edit Context","Edit Find","Add Context","Add Find"]:
@@ -325,5 +326,6 @@ class RowForm(RowFormTemplate):
       else:
         alert("Please select a value for Contect Type and/or Area ID.")
     else:
+      # check which fields are incorrect
       alert("Please correct the field(s) with errors before submitting.")
     pass
