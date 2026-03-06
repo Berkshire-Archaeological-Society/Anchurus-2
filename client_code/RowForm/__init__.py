@@ -191,9 +191,10 @@ class RowForm(RowFormTemplate):
             cur_len = len(input.text)
       #if column_name == "SiteId" and action in ["edit","insert","add"]: # pre-set SiteId when
       if column_name == "SiteId" and action in ["edit"]: # pre-set SiteId when Action is Edit row
-        #print(column_name,action)
-        Global.work_area[Global.current_work_area_name]["data_list"][0][column_name] = Global.site_id
+        print(column_name,action)
+        #Global.work_area[Global.current_work_area_name]["data_list"][0][column_name] = Global.site_id
         input.text = Global.work_area[Global.current_work_area_name]["data_list"][0][column_name]
+        print(input.text)
         if input.text == "None":
           input.text = ""
           cur_len = 0
