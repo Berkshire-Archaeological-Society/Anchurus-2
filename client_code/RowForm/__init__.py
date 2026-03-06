@@ -97,7 +97,7 @@ class RowForm(RowFormTemplate):
         
       # set specific validators for the various fields
       # if column is Primary Key or a known special column then make it un-editable
-      if (action == "view") or (action in ["edit"] and item["COLUMN_KEY"] == "PRI") or column_name in ["SiteId","DBAcontrol","RegistrationDate"]:
+      if (action == "view") or (action in ["edit"] and item["COLUMN_KEY"] == "PRI") or column_name in ["DBAcontrol","RegistrationDate"]:
         input.enabled = False
         input.foreground = "#ffffff"
         input.background = "#000000"
@@ -189,7 +189,8 @@ class RowForm(RowFormTemplate):
             cur_len = 0
           if input.text is not None:
             cur_len = len(input.text)
-      if column_name == "SiteId" and action in ["edit","insert","add"]: # pre-set SiteId when
+      #if column_name == "SiteId" and action in ["edit","insert","add"]: # pre-set SiteId when
+      if column_name == "SiteId" and action in ["edit"]: # pre-set SiteId when Action is Edit row
         #print(column_name,action)
         Global.work_area[Global.current_work_area_name]["data_list"][0][column_name] = Global.site_id
         input.text = Global.work_area[Global.current_work_area_name]["data_list"][0][column_name]
