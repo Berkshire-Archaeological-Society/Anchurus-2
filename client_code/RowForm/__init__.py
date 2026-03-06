@@ -233,51 +233,59 @@ class RowForm(RowFormTemplate):
     #print("Submit button clicked: ",Global.action)
     action = Global.action.split(" ")[0].lower()
     table_name = Global.action.split(" ")[1].lower()
-    if self.validator.are_all_valid():
-      row_list = {}
-      for col in self.form_fields.items():
-        if str(type(col[1]["field"])) == "<class 'anvil_extras.Quill.Quill'>":
-          row_list[col[0]] = col[1]["field"].getText()
-          #delta = col[1]["field"].getContents()
-          #print("Quill Value is: ",row_list[col[0]])
-          #row_list[col[0]] = col[1]["field"].clipboard.convert(html_text)
-          #Global.work_area[Global.current_work_area_name]["data_list"][0][column_name]
-          #delta = col[1]["field"].clipboard.convert(html_text)
-          #col[1]["field"].setContents(delta, 'silent')
-          #cur_len = 0
-          #if html_text is not None:
-            #cur_len = len(html_text)
-        elif str(type(col[1]["field"])) == "<class 'anvil.DatePicker'>":
-          row_list[col[0]] = col[1]["field"].date
-        else:
-          row_list[col[0]] = col[1]["field"].text
-        # set empty fields to None
-        if row_list[col[0]] in ["","\n"]:
-          row_list[col[0]] = None
-      #
-      if action in ["add","insert"]:
-        ret = anvil.server.call("row_add",table_name,row_list)
-        # if success then goto list contexts
-        if ret[:2] == "OK":
-          msg = "Row has been successfully inserted to the database."
-          # if a site has been added, update the site selection dropdown
-          if table_name == "site":
-            Global.site_options = FunctionsB.set_select_site_dropdown_options() 
-            Global.select_site_dropdown.items = Global.site_options.keys()
-        else:
-          msg = "Row has not been inserted to the database, because of " + ret
-      elif action in ["edit","update"]:
-        ret = anvil.server.call("row_update",table_name,row_list)
-        # if success then goto list contexts
-        if ret[:2] == "OK":
-          msg = "Row has been successfully updated in the database."
-        else:
-          msg = "Row has not been updated in the database, because of " + ret
+    
+    #if self.validator.are_all_valid():
+    
+    row_list = {}
+    for col in self.form_fields.items():
+      # Add Additional field validation (if needed) before submitting 
+      if str(type(col[1]["field"])) == "<class 'anvil_extras.Quill.Quill'>":
+        # at the moment we only get the text of the Quill data, not the full rich text format - need extra column for that
+        row_list[col[0]] = col[1]["field"].getText()
+        #delta = col[1]["field"].getContents()
+        #print("Quill Value is: ",row_list[col[0]])
+        #row_list[col[0]] = col[1]["field"].clipboard.convert(html_text)
+        #Global.work_area[Global.current_work_area_name]["data_list"][0][column_name]
+        #delta = col[1]["field"].clipboard.convert(html_text)
+        #col[1]["field"].setContents(delta, 'silent')
+        #cur_len = 0
+        #if html_text is not None:
+          #cur_len = len(html_text)
+      elif str(type(col[1]["field"])) == "<class 'anvil.DatePicker'>":
+        row_list[col[0]] = col[1]["field"].date
       else:
-        msg = "Unknown action: " + action
-      alert(content=msg)
+        row_list[col[0]] = col[1]["field"].text
+      # set empty fields to None
+      if row_list[col[0]] in ["","\n"]:
+        row_list[col[0]] = None
+    #
+    print(table_name,row_list)
+    #
+    if action in ["add","insert"]:
+      ret = anvil.server.call("row_add",table_name,row_list)
+      # if success then goto list contexts
+      if ret[:2] == "OK":
+        msg = "Row has been successfully inserted to the database."
+        # if a site has been added, update the site selection dropdown
+        if table_name == "site":
+          Global.site_options = FunctionsB.set_select_site_dropdown_options() 
+          Global.select_site_dropdown.items = Global.site_options.keys()
+      else:
+        msg = "Row has not been inserted to the database, because of " + ret
+    elif action in ["edit","update"]:
+      ret = anvil.server.call("row_update",table_name,row_list)
+      # if success then goto list contexts
+      if ret[:2] == "OK":
+        msg = "Row has been successfully updated in the database."
+      else:
+        msg = "Row has not been updated in the database, because of " + ret
     else:
-      alert("Please correct the field(s) with errors before submitting.")
+      msg = "Unknown action: " + action
+    alert(content=msg)
+     
+    #else:
+    #  alert("Please correct the field(s) with errors before submitting.")
+    
     pass
 
   # a previous version of the submit function; to be check and moved relevant bits to current submit_btn_click function
