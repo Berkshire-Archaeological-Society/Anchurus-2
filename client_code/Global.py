@@ -228,7 +228,7 @@ Welcome <user>.
 Please select a site. If a site you require access to, is not in the 'Select Site' list, please contact the Project Manager for that site to provide you with access.
 <br>Once selected you can use the menu items to select your actions.</p>
 <p>
-<b>Note:</b> When changing/selecting a new site, all current workspaces wil be deleted.</p>
+<b>Note:</b> When changing/selecting a new site, all current workspaces will be deleted.</p>
 <h3> </h3>
 <p>
 For more information on recording Archaeological excavations please go to the
