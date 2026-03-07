@@ -97,7 +97,7 @@ class RowForm(RowFormTemplate):
         
       # set specific validators for the various fields
       # if column is Primary Key or a known special column then make it un-editable
-      if (action == "view") or (action in ["edit"] and item["COLUMN_KEY"] == "PRI") or column_name in ["DBAcontrol","RegistrationDate"]:
+      if Global.table_name != "site" and ((action == "view") or (action in ["edit"] and item["COLUMN_KEY"] == "PRI") or (action in ["insert"] and item["COLUMN_NAME"] == "SiteId") or column_name in ["DBAcontrol","RegistrationDate"]):
         input.enabled = False
         input.foreground = "#ffffff"
         input.background = "#000000"
@@ -189,10 +189,10 @@ class RowForm(RowFormTemplate):
             cur_len = 0
           if input.text is not None:
             cur_len = len(input.text)
-      #if column_name == "SiteId" and action in ["edit","insert","add"]: # pre-set SiteId when
-      if column_name == "SiteId" and action in ["edit"]: # pre-set SiteId when Action is Edit row
-        print(column_name,action)
-        #Global.work_area[Global.current_work_area_name]["data_list"][0][column_name] = Global.site_id
+            
+      if Global.table_name != "Site" and column_name == "SiteId" and action in ["edit","insert","add"]: # pre-set SiteId when
+        #print(column_name,action)
+        Global.work_area[Global.current_work_area_name]["data_list"][0][column_name] = Global.site_id
         input.text = Global.work_area[Global.current_work_area_name]["data_list"][0][column_name]
         print(input.text)
         if input.text == "None":
@@ -200,8 +200,12 @@ class RowForm(RowFormTemplate):
           cur_len = 0
         if input.text is not None:
           cur_len = len(input.text)
-        #print(Global.work_area[Global.current_work_area_name]["data_list"][0][column_name])
 
+      if Global.table_name == "site" and column_name == "SiteId" and action in ["insert","add"]:
+        # for Table site make sure that SiteId column filed is empty when action is insert,add
+        input.text = "" 
+        cur_len = 0
+        
       # create column header with column_name and column_description in one flowpanel (col_header)
       col = column_name + " (" + str(cur_len) + "/" + str(max_length) + "):" 
       lab = Label(text=col,font_size=14,tag=column_name)
