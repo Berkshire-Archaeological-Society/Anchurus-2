@@ -52,7 +52,10 @@ class RowForm(RowFormTemplate):
       # Global.action.split(" ")[1].rstrip("s").lower()
       
     action = Global.action.split(" ")[0].lower()
+    
+    # Inititalize the validator
     self.validator = Validator()
+    
     # we need to find out which table we are dealing with
     self.title.text = "This form is to " + Global.action
     # get table information
@@ -95,7 +98,11 @@ class RowForm(RowFormTemplate):
           
         # add event handler for when input field is changed to update the character counth
         input.add_event_handler('change',self.input_change)
-        
+
+      # create input_error label used for validation
+      input_error = TextBox(placeholder=column_name)
+      input_error.visible = False
+      
       # set specific validators for the various fields
       # if column is Primary Key or a known special column then make it un-editable
       if Global.table_name != "site" and ((action == "view") or (action in ["edit"] and item["COLUMN_KEY"] == "PRI") or (action in ["insert"] and item["COLUMN_NAME"] == "SiteId") or column_name in ["DBAcontrol","RegistrationDate"]):
@@ -103,7 +110,13 @@ class RowForm(RowFormTemplate):
         input.foreground = "#ffffff"
         input.background = "#000000"
       #
-      #if column_name in ["YearEnd","YearStart"]:
+      if column_name in ["YearEnd","YearStart"]:
+        self.validator.require(
+          input,
+          ['change', 'lost_focus'],
+          lambda tb: re.fullmatch(r"^-?\d{1,4}(?:BC|AD)?$", tb.text),
+          input_error
+        )
         #self.validator.regex(component=input,
         #                   events=['lost_focus', 'change'],
         #                   pattern="^-?\d{1,4}(?:BC|AD)?$",
