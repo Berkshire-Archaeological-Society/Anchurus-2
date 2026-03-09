@@ -100,73 +100,98 @@ class RowForm(RowFormTemplate):
         input.add_event_handler('change',self.input_change)
 
       # create input_error label used for validation
-      input_error = TextBox(placeholder=column_name)
+      input_error = TextBox(placeholder="Please enter the correct value")
       input_error.visible = False
       
-      # set specific validators for the various fields
-      # if column is Primary Key or a known special column then make it un-editable
+      # set specific validation checks for the various fields
+      # if column is Primary Key or a known special column then make it un-editable when action is View or Edit 
       if Global.table_name != "site" and ((action == "view") or (action in ["edit"] and item["COLUMN_KEY"] == "PRI") or (action in ["insert"] and item["COLUMN_NAME"] == "SiteId") or column_name in ["DBAcontrol","RegistrationDate"]):
         input.enabled = False
         input.foreground = "#ffffff"
         input.background = "#000000"
       #
       if column_name in ["YearEnd","YearStart"]:
+        input_error.text = "Enter a correct year format ([-][1-9999][AD|BC])"
+        input_error.foreground ="#FF0000"
+        # regex "^$|^-?(?!0+$)\d{1,4}(?:BC|AD)?$" = ^S allows empty string |(or) optional '-' number 1-9999 (no 0's) optionally followed by AD/BC
         self.validator.require(
           input,
           ['change', 'lost_focus'],
-          lambda tb: re.fullmatch(r"^-?\d{1,4}(?:BC|AD)?$", tb.text),
+          lambda tb: re.fullmatch(r"^$|^-?(?!0+$)\d{1,4}(?:BC|AD)?$", tb.text),
           input_error
         )
-        #self.validator.regex(component=input,
-        #                   events=['lost_focus', 'change'],
-        #                   pattern="^-?\d{1,4}(?:BC|AD)?$",
-        #                   required=False,
-        #                   message="Please enter a valid year YYYY BC|AD (or -YYYY for BC year)")
-      #elif column_name in ["Year"]:   
-        #self.validator.regex(component=input,
-        #                               events=['lost_focus', 'change'],
-        #                               pattern="^\d{4}$",
-        #                               required=True,
-        #                               message="Please enter a valid year in YYYY format")
-      #elif column_name in ["Email"]:
-        #self.validator.regex(component=input,
-        #                     events=['lost_focus', 'change'],
-        #                     pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$",
-        #                     required=True,
-        #                     message="Please enter a correct email address")
-      #elif column_type.find("int") != -1:
-        #self.validator.integer(component=input,
-        #                       events=['lost_focus', 'change'])
-        #self.validator.regex(component=input,
-        #                     events=['lost_focus', 'change'],
-        #                     pattern="^\d*$",
-        #                    required=True,
-        #                     message="Please enter a valid whole number")
-      #elif column_type.find("decimal") != -1 or column_type.find("float") != -1 or column_type.find("double") != -1:
-        #dec_type = re.findall(r'\d+',column_type)
-        # regex ^\d{0,x}\.?\d{1,y}
-        #pattern_string = "^\d{0," + str(int(dec_type[0])-int(dec_type[1])) + "}\.?\d{1," + str(int(dec_type[1])) + "}$"
-        #print(dec_type[0],dec_type[1])
-        #msg = "Please enter a valid number in the form " + "x" * (int(dec_type[0]) - int(dec_type[1])) + "." + "x" * int(dec_type[1])
+
+      elif column_name == Global.table_name.capitalize()+"Id":
+        input_error.text = "Enter a correct Id"
+        input_error.foreground ="#FF0000"
+        # 
+        self.validator.require_text_field(input,input_error)
+
+      elif column_name in ["Year","ContextYear","SurveyYear"]:   
+        input_error.text = "Enter a correct year format (1-9999])"
+        input_error.foreground ="#FF0000"
+        # regex "^$|^(?!0+$)\d{1,4}?$" = ^S allows empty string |(or) optional '-' number 1-9999 (no 0's) 
+        self.validator.require(
+          input,
+          ['change', 'lost_focus'],
+          lambda tb: re.fullmatch(r"^$|^-?(?!0+$)\d{1,4}?$", tb.text),
+          input_error
+        )
+
+      elif column_name in ["Email"]:
+        input_error.text = "Enter a correct email address"
+        input_error.foreground ="#FF0000"
+        # regex "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" = valid email address
+        self.validator.require(
+          input,
+          ['change', 'lost_focus'],
+          lambda tb: re.fullmatch(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$", tb.text),
+          input_error
+        )
         
-        #self.validator.regex(component=input,
-        #                     events=['lost_focus', 'change'],
-        #                     pattern=pattern_string,
-        #                     required=True,
-        #                     message=msg)
-      # add more validations for fields if required
+      elif column_type.find("int") != -1:
+        input_error.text = "Please enter a valid whole number"
+        input_error.foreground ="#FF0000"
+        # 
+        self.validator.require(
+          input,
+          ['change', 'lost_focus'],
+          lambda tb: re.fullmatch(r"^$|^\d*$", tb.text),
+          input_error
+        )
+
+      elif column_type.find("decimal") != -1 or column_type.find("float") != -1 or column_type.find("double") != -1:
+        dec_type = re.findall(r'\d+',column_type)
+        # regex ^\d{0,x}\.?\d{1,y}
+        pattern_string = "^$|^\d{0," + str(int(dec_type[0])-int(dec_type[1])) + "}\.?\d{1," + str(int(dec_type[1])) + "}$"
+        #print(dec_type[0],dec_type[1])
+        input_error.text = "Please enter a valid number in the form " + "x" * (int(dec_type[0]) - int(dec_type[1])) + "." + "x" * int(dec_type[1])
+        input_error.foreground ="#FF0000"
+        # 
+        self.validator.require(
+          input,
+          ['change', 'lost_focus'],
+          lambda tb: re.fullmatch(pattern_string, tb.text),
+          input_error
+        )
+      
       #elif  column_name in ["RecordStatus"]:
       #  self.validator.regex(component=input,
       #                       events=['lost_focus', 'change'],
       #                       pattern="(?i)^(registered|planned|dated|grouped|report)$",
       #                       required=True,
       #                       message="This lists the states of this context record. Pick one or more of Registered, Planned, Dated, Grouped, Report.")      
-      #elif  column_name in ["ContextType"]:
-        #self.validator.regex(component=input,
-        #                     events=['lost_focus', 'change'],
-        #                     pattern="(?i)^(deposit|fill|cut|structure|feature)$",
-        #                     required=True,
-        #                     message="Pick one of Deposit, Fill, Cut, Strucure or Feature.")      
+      elif  column_name in ["ContextType"]:
+        input_error.text = "Enter one of 'Deposit|Fill|Cut|Structure|Feature'"
+        input_error.foreground ="#FF0000"
+        # regex "(?i)^(deposit|fill|cut|structure|feature)$" = valid email address
+        self.validator.require(
+          input,
+          ['change', 'lost_focus'],
+          lambda tb: re.fullmatch(r"(?i)^(Deposit|Fill|Cut|Structure|Feature)$", tb.text),
+          input_error
+        )
+     
       # end of validation 
       
       # spedial case when Field is RegistrationDate: Pre-fill is for Insert and also block edit contents
@@ -235,6 +260,7 @@ class RowForm(RowFormTemplate):
       if Global.table_name == "dbdiary" or column_name != "DBAcontrol" : 
         self.column_panel_1.add_component(col_header,full_width_row=True)
         self.column_panel_1.add_component(input,full_width_row=True)
+        self.column_panel_1.add_component(input_error,full_width_row=True)
     # endof forloop item in table_info
     
     # Add a Submit button if Edit or Add action
@@ -252,57 +278,58 @@ class RowForm(RowFormTemplate):
     action = Global.action.split(" ")[0].lower()
     table_name = Global.action.split(" ")[1].lower()
     
-    #if self.validator.are_all_valid():
-    
-    row_list = {}
-    for col in self.form_fields.items():
-      # Add Additional field validation (if needed) before submitting 
-      if str(type(col[1]["field"])) == "<class 'anvil_extras.Quill.Quill'>":
-        # at the moment we only get the text of the Quill data, not the full rich text format - need extra column for that
-        row_list[col[0]] = col[1]["field"].getText()
-        #delta = col[1]["field"].getContents()
-        #print("Quill Value is: ",row_list[col[0]])
-        #row_list[col[0]] = col[1]["field"].clipboard.convert(html_text)
-        #Global.work_area[Global.current_work_area_name]["data_list"][0][column_name]
-        #delta = col[1]["field"].clipboard.convert(html_text)
-        #col[1]["field"].setContents(delta, 'silent')
-        #cur_len = 0
-        #if html_text is not None:
-          #cur_len = len(html_text)
-      elif str(type(col[1]["field"])) == "<class 'anvil.DatePicker'>":
-        row_list[col[0]] = col[1]["field"].date
+    if self.validator.is_valid():
+      # all validated input fields are ok
+      row_list = {}
+      for col in self.form_fields.items():
+        # Add Additional field validation (if needed) before submitting 
+        if str(type(col[1]["field"])) == "<class 'anvil_extras.Quill.Quill'>":
+          # at the moment we only get the text of the Quill data, not the full rich text format - need extra column for that
+          row_list[col[0]] = col[1]["field"].getText()
+          #delta = col[1]["field"].getContents()
+          #print("Quill Value is: ",row_list[col[0]])
+          #row_list[col[0]] = col[1]["field"].clipboard.convert(html_text)
+          #Global.work_area[Global.current_work_area_name]["data_list"][0][column_name]
+          #delta = col[1]["field"].clipboard.convert(html_text)
+          #col[1]["field"].setContents(delta, 'silent')
+          #cur_len = 0
+          #if html_text is not None:
+            #cur_len = len(html_text)
+        elif str(type(col[1]["field"])) == "<class 'anvil.DatePicker'>":
+          row_list[col[0]] = col[1]["field"].date
+        else:
+          row_list[col[0]] = col[1]["field"].text
+        # set empty fields to None
+        if row_list[col[0]] in ["","\n"]:
+          row_list[col[0]] = None
+      #
+      #print(table_name,row_list)
+      #
+      if action in ["add","insert"]:
+        ret = anvil.server.call("row_add",table_name,row_list)
+        # if success then goto list contexts
+        if ret[:2] == "OK":
+          msg = "Row has been successfully inserted to the database."
+          # if a site has been added, update the site selection dropdown
+          if table_name == "site":
+            Global.site_options = FunctionsB.set_select_site_dropdown_options() 
+            Global.select_site_dropdown.items = Global.site_options.keys()
+        else:
+          msg = "Row has not been inserted to the database, because of " + ret
+      elif action in ["edit","update"]:
+        ret = anvil.server.call("row_update",table_name,row_list)
+        # if success then goto list contexts
+        if ret[:2] == "OK":
+          msg = "Row has been successfully updated in the database."
+        else:
+          msg = "Row has not been updated in the database, because of " + ret
       else:
-        row_list[col[0]] = col[1]["field"].text
-      # set empty fields to None
-      if row_list[col[0]] in ["","\n"]:
-        row_list[col[0]] = None
-    #
-    print(table_name,row_list)
-    #
-    if action in ["add","insert"]:
-      ret = anvil.server.call("row_add",table_name,row_list)
-      # if success then goto list contexts
-      if ret[:2] == "OK":
-        msg = "Row has been successfully inserted to the database."
-        # if a site has been added, update the site selection dropdown
-        if table_name == "site":
-          Global.site_options = FunctionsB.set_select_site_dropdown_options() 
-          Global.select_site_dropdown.items = Global.site_options.keys()
-      else:
-        msg = "Row has not been inserted to the database, because of " + ret
-    elif action in ["edit","update"]:
-      ret = anvil.server.call("row_update",table_name,row_list)
-      # if success then goto list contexts
-      if ret[:2] == "OK":
-        msg = "Row has been successfully updated in the database."
-      else:
-        msg = "Row has not been updated in the database, because of " + ret
-    else:
-      msg = "Unknown action: " + action
-    alert(content=msg)
+        msg = "Unknown action: " + action
+      alert(content=msg)
      
-    #else:
-    #  alert("Please correct the field(s) with errors before submitting.")
+    else:
+      self.validator.show_all_errors()
+      alert("There are errors in the form input")
     
     pass
 

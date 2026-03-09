@@ -13,9 +13,13 @@ components:
           margin: ['8', null, '4', null]
         text: 'User email:'
       type: Label
-    - layout_properties: {grid_position: 'AXENSZ,CLYXTT'}
+    - layout_properties: {grid_position: 'AXENSZ,CLYXTT YXYRPU,ZPZLBV'}
       name: user_email_value
       properties: {role: outlined}
+      type: TextBox
+    - layout_properties: {grid_position: 'AXENSZ,CLYXTT FJSRPM,UXZGAE'}
+      name: user_email_value_error
+      properties: {foreground: '#FF0000', role: outlined, text: '', visible: false}
       type: TextBox
     - layout_properties: {grid_position: 'AXENSZ,HGMECB'}
       name: label_5
@@ -46,9 +50,13 @@ components:
         text: 'Firstname:'
       type: Label
     - event_bindings: {change: firstname_change}
-      layout_properties: {grid_position: 'UPVGJU,EMOZTP'}
+      layout_properties: {grid_position: 'UPVGJU,EMOZTP OCUVNR,EGOFUC'}
       name: firstname
       properties: {hide_text: false, role: outlined}
+      type: TextBox
+    - layout_properties: {grid_position: 'UPVGJU,EMOZTP COMILR,HCVHGJ'}
+      name: firstname_error
+      properties: {foreground: '#FF0000', role: outlined, text: '', visible: false}
       type: TextBox
     - layout_properties: {grid_position: 'UPVGJU,KXHIUO'}
       name: label_6
@@ -63,9 +71,13 @@ components:
         text: 'Lastname:'
       type: Label
     - event_bindings: {change: lastname_change}
-      layout_properties: {grid_position: 'XZCQZZ,LMXPEZ'}
+      layout_properties: {grid_position: 'XZCQZZ,LMXPEZ DHSOWR,HCRNRX'}
       name: lastname
       properties: {role: outlined}
+      type: TextBox
+    - layout_properties: {grid_position: 'XZCQZZ,LMXPEZ HNKIZD,VAUJGY'}
+      name: lastname_error
+      properties: {foreground: '#FF0000', role: outlined, text: '', visible: false}
       type: TextBox
     - layout_properties: {grid_position: 'XZCQZZ,GWODOX'}
       name: label_10
@@ -80,11 +92,15 @@ components:
         text: 'Initials:'
       type: Label
     - event_bindings: {change: initials_change}
-      layout_properties: {grid_position: 'XIYRDV,RONMFK'}
+      layout_properties: {grid_position: 'XIYRDV,RONMFK ZCHIRW,WSOICP'}
       name: initials
       properties:
         margin: ['0', null, null, null]
         role: outlined
+      type: TextBox
+    - layout_properties: {grid_position: 'XIYRDV,RONMFK CMKWJV,OSRPLO'}
+      name: initials_error
+      properties: {foreground: '#FF0000', role: outlined, visible: false}
       type: TextBox
     - layout_properties: {grid_position: 'XIYRDV,UNNVRR'}
       name: label_11

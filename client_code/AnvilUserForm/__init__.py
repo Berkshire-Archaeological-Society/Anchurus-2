@@ -1,5 +1,6 @@
 from ._anvil_designer import AnvilUserFormTemplate
 from anvil import *
+import re
 import anvil.google.auth, anvil.google.drive
 from anvil.google.drive import app_files
 import anvil.server
@@ -9,7 +10,7 @@ import anvil.tables.query as q
 from anvil.tables import app_tables
 
 from .. import Global
-from ..Validation import Validator
+from ..validation import Validator
 
 class AnvilUserForm(AnvilUserFormTemplate):
   def __init__(self, **properties):
@@ -22,16 +23,27 @@ class AnvilUserForm(AnvilUserFormTemplate):
     #
     self.validator = Validator()
     # set validation on fields
-    self.validator.regex(component=self.user_email_value,
-                         events=['lost_focus', 'change'],
-                         pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$",
-                         required=True,
-                         message="Please enter a correct email address")
-    self.validator.regex(component=self.initials,
-                         events=['lost_focus', 'change'],
-                         pattern="^[A-Z]{2}[A-Za-z0-9]$",
-                         required=True,
-                         message="Please enter the two capital letter initials of the user, followed by a letter or digit")
+    self.user_email_value_error.text = "Enter a correct email format."
+    # regex "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" = ^S allows empty string |(or) optional '-' number 1-9999 (no 0's) 
+    self.validator.require(
+      self.user_email_value,
+      ['change', 'lost_focus'],
+      lambda tb: re.fullmatch(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$", tb.text),
+      self.user_email_value_error
+    )
+    self.firstname_error.text = "You must enter a firstname."
+    self.validator.require_text_field(self.firstname,self.firstname_error)
+    
+    self.lastname_error.text = "You must enter a lastname."
+    self.validator.require_text_field(self.lastname,self.lastname_error)
+
+    self.initials_error.text = "Please enter the two capital letter initials of the user, followed by a letter or digit."
+    self.validator.require(
+      self.initials,
+      ['change', 'lost_focus'],
+      lambda tb: re.fullmatch(r"^[A-Z]{2}[A-Za-z0-9]$", tb.text),
+      self.initials_error
+    )
     #
     self.user_role_value.items = Global.system_user_role_options
     self.user_status_value.items = Global.user_status_options
@@ -92,26 +104,31 @@ class AnvilUserForm(AnvilUserFormTemplate):
   def submit_changes_click(self, **event_args):
     """This method is called when the button is clicked"""
     #print("New values for ",Global.user_items["email"], ": ", Global.user_role,Global.user_status)
-    # extract field values fom from
-    Global.username = self.user_email_value.text
-    Global.password = self.password_text_box.text
-    Global.user_firstname = self.firstname.text
-    Global.user_lastname = self.lastname.text
-    Global.user_initials = self.initials.text
-    if self.user_status_value.selected_value == "True":
-      Global.user_status = True
+    if self.validator.is_valid() and self.user_status_value.selected_value is not None and self.user_role_value.selected_value is not None:
+      #alert("All input values are valid")
+      # extract field values fom from
+      Global.username = self.user_email_value.text
+      Global.password = self.password_text_box.text
+      Global.user_firstname = self.firstname.text
+      Global.user_lastname = self.lastname.text
+      Global.user_initials = self.initials.text
+      if self.user_status_value.selected_value == "True":
+        Global.user_status = True
+      else:
+        Global.user_status = False
+      Global.system_user_role = self.user_role_value.selected_value
+      #
+      if Global.action in ["Edit AnvilUser","Edit Anviluser","edit anviluser"]: 
+        msg = anvil.server.call('system_user_update',Global.username, Global.system_user_role,Global.user_status,Global.user_initials,Global.user_firstname,Global.user_lastname)
+      elif Global.action in ["Insert AnvilUser","Insert Anviluser","insert anviluser"]:
+        msg = anvil.server.call('system_user_insert',Global.username,Global.password,Global.system_user_role,Global.user_status,Global.user_initials,Global.user_firstname,Global.user_lastname)
+      else:
+        msg = "Unknown action: " + Global.action
+      n = Notification(msg)
+      n.show()
     else:
-      Global.user_status = False
-    Global.system_user_role = self.user_role_value.selected_value
-    #
-    if Global.action in ["Edit AnvilUser","Edit Anviluser","edit anviluser"]: 
-      msg = anvil.server.call('system_user_update',Global.username, Global.system_user_role,Global.user_status,Global.user_initials,Global.user_firstname,Global.user_lastname)
-    elif Global.action in ["Insert AnvilUser","Insert Anviluser","insert anviluser"]:
-      msg = anvil.server.call('system_user_insert',Global.username,Global.password,Global.system_user_role,Global.user_status,Global.user_initials,Global.user_firstname,Global.user_lastname)
-    else:
-      msg = "Unknown action: " + Global.action
-    n = Notification(msg)
-    n.show()
+      self.validator.show_all_errors()
+      alert("Please make sure all fields that are required have a correct value.")
     pass
 
   def firstname_change(self, **event_args):
