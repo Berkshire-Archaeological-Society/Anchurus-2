@@ -11,7 +11,8 @@ import anvil.tables.query as q
 from anvil.tables import app_tables
 from anvil_extras.Quill import Quill
 
-from ..Validation import Validator
+#from ..Validation import Validator
+from ..validation import Validator
 from .. import FunctionsB
 from .. import Global
 
@@ -102,43 +103,44 @@ class RowForm(RowFormTemplate):
         input.foreground = "#ffffff"
         input.background = "#000000"
       #
-      if column_name in ["YearEnd","YearStart"]:
-        self.validator.regex(component=input,
-                           events=['lost_focus', 'change'],
-                           pattern="^-?\d{1,4}(?:BC|AD)?$",
-                           required=False,
-                           message="Please enter a valid year YYYY BC|AD (or -YYYY for BC year)")
-      elif column_name in ["Year"]:   
-        self.validator.regex(component=input,
-                                       events=['lost_focus', 'change'],
-                                       pattern="^\d{4}$",
-                                       required=True,
-                                       message="Please enter a valid year in YYYY format")
-      elif column_name in ["Email"]:
-        self.validator.regex(component=input,
-                             events=['lost_focus', 'change'],
-                             pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$",
-                             required=True,
-                             message="Please enter a correct email address")
-      elif column_type.find("int") != -1:
-        self.validator.integer(component=input,
-                               events=['lost_focus', 'change'])
+      #if column_name in ["YearEnd","YearStart"]:
+        #self.validator.regex(component=input,
+        #                   events=['lost_focus', 'change'],
+        #                   pattern="^-?\d{1,4}(?:BC|AD)?$",
+        #                   required=False,
+        #                   message="Please enter a valid year YYYY BC|AD (or -YYYY for BC year)")
+      #elif column_name in ["Year"]:   
+        #self.validator.regex(component=input,
+        #                               events=['lost_focus', 'change'],
+        #                               pattern="^\d{4}$",
+        #                               required=True,
+        #                               message="Please enter a valid year in YYYY format")
+      #elif column_name in ["Email"]:
+        #self.validator.regex(component=input,
+        #                     events=['lost_focus', 'change'],
+        #                     pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$",
+        #                     required=True,
+        #                     message="Please enter a correct email address")
+      #elif column_type.find("int") != -1:
+        #self.validator.integer(component=input,
+        #                       events=['lost_focus', 'change'])
         #self.validator.regex(component=input,
         #                     events=['lost_focus', 'change'],
         #                     pattern="^\d*$",
         #                    required=True,
         #                     message="Please enter a valid whole number")
-      elif column_type.find("decimal") != -1 or column_type.find("float") != -1 or column_type.find("double") != -1:
-        dec_type = re.findall(r'\d+',column_type)
+      #elif column_type.find("decimal") != -1 or column_type.find("float") != -1 or column_type.find("double") != -1:
+        #dec_type = re.findall(r'\d+',column_type)
         # regex ^\d{0,x}\.?\d{1,y}
-        pattern_string = "^\d{0," + str(int(dec_type[0])-int(dec_type[1])) + "}\.?\d{1," + str(int(dec_type[1])) + "}$"
-        print(dec_type[0],dec_type[1])
-        msg = "Please enter a valid number in the form " + "x" * (int(dec_type[0]) - int(dec_type[1])) + "." + "x" * int(dec_type[1])
-        self.validator.regex(component=input,
-                             events=['lost_focus', 'change'],
-                             pattern=pattern_string,
-                             required=True,
-                             message=msg)
+        #pattern_string = "^\d{0," + str(int(dec_type[0])-int(dec_type[1])) + "}\.?\d{1," + str(int(dec_type[1])) + "}$"
+        #print(dec_type[0],dec_type[1])
+        #msg = "Please enter a valid number in the form " + "x" * (int(dec_type[0]) - int(dec_type[1])) + "." + "x" * int(dec_type[1])
+        
+        #self.validator.regex(component=input,
+        #                     events=['lost_focus', 'change'],
+        #                     pattern=pattern_string,
+        #                     required=True,
+        #                     message=msg)
       # add more validations for fields if required
       #elif  column_name in ["RecordStatus"]:
       #  self.validator.regex(component=input,
@@ -146,13 +148,12 @@ class RowForm(RowFormTemplate):
       #                       pattern="(?i)^(registered|planned|dated|grouped|report)$",
       #                       required=True,
       #                       message="This lists the states of this context record. Pick one or more of Registered, Planned, Dated, Grouped, Report.")      
-      elif  column_name in ["ContextType"]:
-        self.validator.regex(component=input,
-                             events=['lost_focus', 'change'],
-                             pattern="(?i)^(deposit|fill|cut|structure|feature)$",
-                             required=True,
-                             message="Pick one of Deposit, Fill, Cut, Strucure or Feature.")      
-
+      #elif  column_name in ["ContextType"]:
+        #self.validator.regex(component=input,
+        #                     events=['lost_focus', 'change'],
+        #                     pattern="(?i)^(deposit|fill|cut|structure|feature)$",
+        #                     required=True,
+        #                     message="Pick one of Deposit, Fill, Cut, Strucure or Feature.")      
       # end of validation 
       
       # spedial case when Field is RegistrationDate: Pre-fill is for Insert and also block edit contents
