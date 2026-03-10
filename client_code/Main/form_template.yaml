@@ -139,7 +139,7 @@ components:
           placeholder: Import
           tooltip: import
         type: DropDown
-      - layout_properties: {width: 69}
+      - layout_properties: {width: 78.333251953125}
         name: query_drop_down
         properties: {font_size: 13, include_placeholder: true, placeholder: Query}
         type: DropDown
@@ -175,7 +175,7 @@ components:
       type: FlowPanel
     layout_properties: {full_width_row: true, grid_position: 'TQCWAS,XHRUHC WFHHAS,ZHZVPY'}
     name: menu_middle
-    properties: {background: 'theme:Primary', col_widths: '{"ZMXKSM":15,"GYVRON":30,"BHRWOL":15}'}
+    properties: {background: 'theme:Primary', col_widths: '{"ZMXKSM":10,"GYVRON":40,"BHRWOL":10}'}
     type: ColumnPanel
   - components:
     - components:

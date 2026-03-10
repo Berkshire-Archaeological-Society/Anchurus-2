@@ -1105,7 +1105,7 @@ Changes to the standard Theme.css are below
   font-weight: 500;
   background-color:  %color:Primary 500%;;
   color: white;
-  min-height: 40px;
+  min-height: 30px;
   text-align: center;
   padding: 0 0px 0 0px; /* 0 72px 0 72px; */
   z-index: 1;
@@ -1117,29 +1117,29 @@ Changes to the standard Theme.css are below
 
 .content{
   /*  adjusted for the footer  */
-  margin-bottom: 70px;
+  margin-bottom: 50px;
 }
 
 .footer a, .footer a.anvil-component {
-  padding: 5px;
+  padding: 1px;
   /*   margin: 8px 0 0; */
-  border-radius: 20px;
+  border-radius: 10px;
 }
 
 footer a, .footer .anvil-component {
   display: block;
   color: white;
-  line-height: 30px;
+  line-height: 20px;
   min-width: 30px;
-  min-height: 30px;
-  margin: 4px 0;
+  min-height: 20px;
+  margin: 0px 0;
 }
 .footer a:hover, .footer a:active {
   color: #eee; text-decoration: none;
   background-color: %color:Primary 700%;
 }
 .footer a .link-text {
-  padding: 0 4px;
+  padding: 0 0px;
 }
 
 /* Target all data grid column headers */
@@ -1148,3 +1148,29 @@ footer a, .footer .anvil-component {
   /* color: #ffffff; /* Example: White text color */
 }
 
+/* DataGrid add Horizontal Scroll to compact datagrid */
+.anvil-role-compact-grid {
+  overflow: hidden; /* Fix background of auto-header when it's rounded (tonal-grid) */
+}
+
+.anvil-role-compact-grid .data-grid-child-panel {
+  overflow-x: auto;
+}
+.anvil-role-compact-grid .anvil-data-row-panel {
+  flex-wrap: nowrap;
+  width: fit-content; /* Fix background*/
+}
+
+/* This targets the specific cells inside the Data Grid */
+.anvil-role-compact-grid .data-grid-child-panel .column-panel-row-template .data-row-col {
+  padding-top: 2px !important;
+  padding-bottom: 2px !important;
+  min-height: unset !important;
+}
+
+/* This targets the text and components inside the cells */
+.anvil-role-compact-grid .anvil-component {
+  margin-top: 0px !important;
+  margin-bottom: 0px !important;
+  line-height: 1.2 !important;
+}

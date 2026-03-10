@@ -185,7 +185,8 @@ class TableList(TableListTemplate):
     self.table.columns = Global.work_area[Global.current_work_area_name]["table"].columns
    
     # Set table role to horizontal scroll
-    self.table.role = "horizontal-scroll"
+    #self.table.role = "horizontal-scroll"
+    self.table.role = "compact-grid"
     
     # save self in Global.work_area
     Global.work_area[Global.current_work_area_name]["self"] = self
