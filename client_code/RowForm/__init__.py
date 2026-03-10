@@ -122,7 +122,7 @@ class RowForm(RowFormTemplate):
         )
 
       elif column_name == Global.table_name.capitalize()+"Id":
-        input_error.text = "Enter a correct Id"
+        input_error.text = "You have to enter an Id"
         input_error.foreground ="#FF0000"
         # 
         self.validator.require_text_field(input,input_error)
@@ -139,7 +139,7 @@ class RowForm(RowFormTemplate):
         )
 
       elif column_name in ["Email"]:
-        input_error.text = "Enter a correct email address"
+        input_error.text = "You must enter an email address"
         input_error.foreground ="#FF0000"
         # regex "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" = valid email address
         self.validator.require(
@@ -175,23 +175,38 @@ class RowForm(RowFormTemplate):
           input_error
         )
       
-      #elif  column_name in ["RecordStatus"]:
-      #  self.validator.regex(component=input,
-      #                       events=['lost_focus', 'change'],
-      #                       pattern="(?i)^(registered|planned|dated|grouped|report)$",
-      #                       required=True,
-      #                       message="This lists the states of this context record. Pick one or more of Registered, Planned, Dated, Grouped, Report.")      
-      elif  column_name in ["ContextType"]:
-        input_error.text = "Enter one of 'Deposit|Fill|Cut|Structure|Feature'"
+      elif column_name in ["RecordStatus"]:
+        # 1. Define your allowed words
+        allowed_words = ['registered','planned','dated','grouped','report']
+        # 2. Build the "OR" part of the rgex: 
+        choices = r'(?:' + '|'.join(map(re.escape, allowed_words)) + r')'
+        # 3. Assemble the full pattern
+        # Starts with a choice, followed by zero or more (comma + choice)
+        pattern_string = rf'^(?i){choices}(?:\s*,\s*{choices})*$'
+        input_error.text = "You must enter a list of " + str(allowed_words)
         input_error.foreground ="#FF0000"
-        # regex "(?i)^(deposit|fill|cut|structure|feature)$" = valid email address
         self.validator.require(
           input,
           ['change', 'lost_focus'],
-          lambda tb: re.fullmatch(r"(?i)^(Deposit|Fill|Cut|Structure|Feature)$", tb.text),
+          lambda tb: re.fullmatch(pattern_string, tb.text),
           input_error
         )
-     
+      elif column_name in ["ContextType"]:
+        # 1. Define your allowed words
+        allowed_words = ['deposit','fill','cut','structure','feature']
+        # 2. Build the "OR" part of the rgex: 
+        choices = r'(?:' + '|'.join(map(re.escape, allowed_words)) + r')'
+        # 3. Assemble the full pattern
+        # Starts with a choice, followed by zero or more (comma + choice)
+        pattern_string = rf'^(?i){choices}(?:\s*,\s*{choices})*$'
+        input_error.text = "You must enter a list of " + str(allowed_words)
+        input_error.foreground ="#FF0000"
+        self.validator.require(
+          input,
+          ['change', 'lost_focus'],
+          lambda tb: re.fullmatch(r'^(?i)^(?:deposit|fill|cut|structure|feature)$', tb.text),
+          input_error
+        )     
       # end of validation 
       
       # spedial case when Field is RegistrationDate: Pre-fill is for Insert and also block edit contents
