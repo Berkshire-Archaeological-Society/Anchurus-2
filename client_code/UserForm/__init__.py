@@ -1,4 +1,4 @@
-from ._anvil_designer import AnvilUserFormTemplate
+from ._anvil_designer import UserFormTemplate
 from anvil import *
 import re
 import anvil.google.auth, anvil.google.drive
@@ -12,7 +12,7 @@ from anvil.tables import app_tables
 from .. import Global
 from ..validation import Validator
 
-class AnvilUserForm(AnvilUserFormTemplate):
+class UserForm(UserFormTemplate):
   def __init__(self, **properties):
     # Set Form properties and Data Bindings.
     self.init_components(**properties)

@@ -2,7 +2,7 @@ components:
 - components:
   - layout_properties: {full_width_row: true, grid_position: 'JKONWX,USNEJR'}
     name: label_1
-    properties: {font_size: 24, text: List of Registered Anvil Users}
+    properties: {font_size: 24, text: List of Registered Users}
     type: Label
   layout_properties: {full_width_row: true, grid_position: 'LYIUJG,WRVCWB'}
   name: sub_header
@@ -14,7 +14,7 @@ components:
   type: TextBox
 - components:
   - name: repeating_panel_1
-    properties: {item_template: ListAnvilUsers.RowTemplate2}
+    properties: {item_template: ListUsers.RowTemplate2}
     type: RepeatingPanel
   layout_properties: {full_width_row: true, grid_position: 'GVFZBW,UNPKFM'}
   name: table

@@ -1,4 +1,4 @@
-from ._anvil_designer import ListAnvilUsersTemplate
+from ._anvil_designer import ListUsersTemplate
 from anvil import *
 import anvil.google.auth, anvil.google.drive
 from anvil.google.drive import app_files
@@ -11,7 +11,7 @@ from anvil.tables import app_tables
 from .. import Global
 from .. import FunctionsB
 
-class ListAnvilUsers(ListAnvilUsersTemplate):
+class ListUsers(ListUsersTemplate):
   def list_users_refresh(self, **event_args):
     # this function does the filling of the table contents
     self.UsersList.items = anvil.server.call('users_get')

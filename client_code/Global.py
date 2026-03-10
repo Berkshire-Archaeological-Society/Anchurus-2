@@ -16,7 +16,7 @@ import anvil.users
 #
 main_form = ""
 separator = "------------------"
-sys_admin_action_list = ["List Anvilusers","Edit AnvilUser","Insert Anviluser","Import Anvilusers",separator,"List Site","Edit Site","Add Site"]
+sys_admin_action_list = ["List Users","Edit User","Insert User","Import Users",separator,"List Site","Edit Site","Add Site"]
 site_admin_action_list = [separator,"List SiteUser","Edit SiteUsers","Add SiteUser","Import SiteUsers"]
 admin_action_list_not_implemented = [separator]
 user_action_list = ["Select Site",separator,
@@ -33,13 +33,13 @@ insert_action_dropdown = ["Context","Find","Anomoly","Interpretation"]
 file_action_dropdown = ["Import",separator,"Save"]
 view_action_dropdown = []
 help_action_dropdown = ["Anchurus Website"]
-sys_admin_action_dropdown = [("List Users","List Anvilusers"),("Insert User","Insert Anviluser"),("Import Users","Import Anvilusers"),separator,("List DBDiary","List dbdiary"),separator,("List Sites","List Site"),("Insert Site","Insert Site")]
+sys_admin_action_dropdown = [("List Users","List Users"),("Insert User","Insert User"),("Import Users","Import Users"),separator,("List DBDiary","List dbdiary"),separator,("List Sites","List Site"),("Insert Site","Insert Site")]
 site_admin_action_dropdown = [(separator,separator),("List Site Users","List sys_siteuserrole"),("Insert Site User","Add sys_siteuserrole"),("Import Site Users","Import sys_siteuserrole")]
 #
 import_action_dropdown = ["context","find"]
 #
 #
-action_forms_with_refresh = ["TableList","RowForm","ListAnvilUsers","ListSites","ListContexts","ListFinds","ListAreas","BulkUpload","Add Area","List Areas"]
+action_forms_with_refresh = ["TableList","RowForm","ListUsers","ListSites","ListContexts","ListFinds","ListAreas","BulkUpload","Add Area","List Areas"]
 #action_forms_with_print = ["ListUsers","ListSites","ListContexts","ListFinds","ListAreas","List Areas","View Context","View Find","View Area"]
 #action_forms_with_print = ["ListContexts","ListFinds","TableList","RowForm"]
 action_forms_with_print = []
@@ -222,7 +222,7 @@ help_introduction = """
 <p>
 Welcome <user>.
 </p>
-<p>You have successfully logged into the Anchurus-II Web service Application.
+<p>You have successfully logged into the Anchurus-II Web Application.
 </p>
 <p>
 Please select a site. If a site you require access to, is not in the 'Select Site' list, please contact the Project Manager for that site to provide you with access.
