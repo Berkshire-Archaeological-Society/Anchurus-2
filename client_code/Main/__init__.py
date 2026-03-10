@@ -275,6 +275,7 @@ class Main(MainTemplate):
       Global.dummy_btn2.remove_from_parent() 
 
     Global.work_area[work_area_name]["button"] = Button(text=work_area_name,align="left",tooltip="select workspace")
+    Global.work_area[work_area_name]["button"].role = None
     self.work_area_list.add_component(Global.work_area[work_area_name]["button"])
     Global.work_area[work_area_name]["button"].add_event_handler('click', self.work_area_click)
     
