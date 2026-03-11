@@ -84,13 +84,11 @@ class ImportForm(ImportFormTemplate):
   def download_csv_template_click(self, **event_args):
     """This method is called when the button is clicked"""
     table_info = anvil.server.call("describe_table",Global.table_name)
-    print(table_info)
     data_list = {}
     for column in table_info:
-      if column["COLUMN_NAME"] != "DBAcontrol":
-        data_list[column["COLUMN_NAME"]] = ""
+        data_list[column["COLUMN_NAME"]] = None
     print(data_list) 
     csv_name = "Template_" + Global.table_name + ".csv"
-    csv_file = anvil.server.call('create_csv',data_list,csv_name)
+    csv_file = anvil.server.call('create_csv',[data_list],csv_name)
     anvil.media.download(csv_file)
     pass
