@@ -929,7 +929,9 @@ class Main(MainTemplate):
   def download_csv_click(self, **event_args):
     """This method is called when the button is clicked"""
     # call server-side function create_csv to create a csv file and download this to user Download folder
-    csv_file = anvil.server.call('create_csv',Global.work_area[Global.current_work_area_name]["data_list"],"Anchurus_list_form_export.csv")
+    file_name = Global.action + " " + Global.table_name + ".csv"
+    print(file_name)
+    csv_file = anvil.server.call('create_csv',Global.work_area[Global.current_work_area_name]["data_list"],file_name)
     anvil.media.download(csv_file)
     pass
 
