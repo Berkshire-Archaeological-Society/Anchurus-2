@@ -22,7 +22,7 @@ class ImportForm(ImportFormTemplate):
     # Set Form properties and Data Bindings.
     self.init_components(**properties)
     # Any code you write here will run before the form opens.
-    self.Import_title.text = "Here you can import csv files for importing to the Database. You can download a template csv file if needed."
+    self.Import_title.text = "Here you can import csv files for importing to the Database."
     Global.table_name = Global.action.split(" ")[1].lower()
     self.selected_table.text = Global.table_name
 
@@ -83,9 +83,14 @@ class ImportForm(ImportFormTemplate):
   @handle("download_csv_template", "click")
   def download_csv_template_click(self, **event_args):
     """This method is called when the button is clicked"""
-    table_info = anvil.server("describe_table",Global.table_name)
-    #data_list =  
+    table_info = anvil.server.call("describe_table",Global.table_name)
+    print(table_info)
+    data_list = {}
+    for column in table_info:
+      if column["COLUMN_NAME"] != "DBAcontrol":
+        data_list[column["COLUMN_NAME"]] = ""
+    print(data_list) 
     csv_name = "Template_" + Global.table_name + ".csv"
-    csv_file = anvil.server.call('create_csv',Global.work_area[Global.current_work_area_name]["data_list"],csv_name)
+    csv_file = anvil.server.call('create_csv',data_list,csv_name)
     anvil.media.download(csv_file)
     pass
