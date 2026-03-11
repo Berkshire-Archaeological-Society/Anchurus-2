@@ -929,8 +929,14 @@ class Main(MainTemplate):
   def download_csv_click(self, **event_args):
     """This method is called when the button is clicked"""
     # call server-side function create_csv to create a csv file and download this to user Download folder
-    file_name = Global.action + " " + Global.table_name + ".csv"
-    print(file_name)
+    file_name = Global.action + ".csv"
+    # add a row to the data_list with ORDINAL VALUES of columns; this can be used on server to 
+    # reorder columns in data_list
+    # data_list = {}
+    #for col in Global.work_area[Global.current_work_area_name]["table"].columns:
+    #  data_list[col["data_key"]] = column["ORDINAL_POSITION"]
+    #print(data_list) 
+    #csv_file = anvil.server.call('create_csv',[data_list],file_name)
     csv_file = anvil.server.call('create_csv',Global.work_area[Global.current_work_area_name]["data_list"],file_name)
     anvil.media.download(csv_file)
     pass

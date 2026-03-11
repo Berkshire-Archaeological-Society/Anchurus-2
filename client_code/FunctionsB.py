@@ -131,6 +131,7 @@ def table_list_refresh(self):
   # This function does the filling of the table contents
   # 1. call server function '"table_name"s_get', which retrieves all rows of the table_name for the given site
   self.repeating_panel_1.items = anvil.server.call("table_get",Global.site_id,Global.table_name)
+  #print(self.repeating_panel_1.items)
   if len(self.repeating_panel_1.items) > 0 and Global.query_view:
     # reset table columns if we have rows. This will able to receive views, not just fixed table columns
     column_list = self.repeating_panel_1.items[0].keys()

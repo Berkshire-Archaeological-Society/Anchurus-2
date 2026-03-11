@@ -85,8 +85,9 @@ class ImportForm(ImportFormTemplate):
     """This method is called when the button is clicked"""
     table_info = anvil.server.call("describe_table",Global.table_name)
     data_list = {}
+    data_list["_template"] = -1
     for column in table_info:
-        data_list[column["COLUMN_NAME"]] = None
+        data_list[column["COLUMN_NAME"]] = column["ORDINAL_POSITION"]
     print(data_list) 
     csv_name = "Template_" + Global.table_name + ".csv"
     csv_file = anvil.server.call('create_csv',[data_list],csv_name)
