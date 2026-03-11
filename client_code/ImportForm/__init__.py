@@ -25,6 +25,7 @@ class ImportForm(ImportFormTemplate):
     self.Import_title.text = "Here you can import csv files for importing to the Database. You can download a template csv file if needed."
     Global.table_name = Global.action.split(" ")[1].lower()
     self.selected_table.text = Global.table_name
+
     Global.main_form.mb_left.visible = False
     Global.main_form.mb_middle.visible = False
 
@@ -77,4 +78,14 @@ class ImportForm(ImportFormTemplate):
     self.upload_file.clear()
     self.selected_file_name.text = ""
     self.message_log.text = ""
+    pass
+
+  @handle("download_csv_template", "click")
+  def download_csv_template_click(self, **event_args):
+    """This method is called when the button is clicked"""
+    table_info = anvil.server("describe_table",Global.table_name)
+    #data_list =  
+    csv_name = "Template_" + Global.table_name + ".csv"
+    csv_file = anvil.server.call('create_csv',Global.work_area[Global.current_work_area_name]["data_list"],csv_name)
+    anvil.media.download(csv_file)
     pass
