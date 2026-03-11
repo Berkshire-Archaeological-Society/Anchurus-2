@@ -1,6 +1,10 @@
 components:
 - components:
   - layout_properties: {}
+    name: ws_name
+    properties: {font_size: 14, role: outlined}
+    type: TextBox
+  - layout_properties: {}
     name: title
     properties:
       spacing:

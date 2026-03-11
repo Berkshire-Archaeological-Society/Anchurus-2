@@ -57,6 +57,7 @@ class RowForm(RowFormTemplate):
     self.validator = Validator()
     
     # we need to find out which table we are dealing with
+    self.ws_name.text = Global.current_work_area_name
     self.title.text = "This form is to " + Global.action
     # get table information
     #print("In RowForm: ",Global.table_name)

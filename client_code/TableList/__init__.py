@@ -142,7 +142,8 @@ class TableList(TableListTemplate):
     #
     self.page_info = page_info
     self.site_id = site_id
-    self.title.text = "This form is to " + action + ": " + anvil.server.call("db_table_comment", Global.table_name)
+    self.ws_name.text = Global.current_work_area_name
+    self.title.text = anvil.server.call("db_table_comment", Global.table_name)
     # Any code you write here will run before the form open
     # Global.site_id is only None when form called from server side (e.g. printing form)
     if Global.site_id is None:
