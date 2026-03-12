@@ -1100,7 +1100,7 @@ Changes to the standard Theme.css are below
   left: 240px;
   bottom: 0px;
   /* top: 140px; */
-  width: 100%;
+  width: calc(100% - 240px);
   font-size: 20px;
   font-weight: 500;
   background-color:  %color:Primary 500%;;

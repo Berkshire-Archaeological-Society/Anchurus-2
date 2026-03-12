@@ -17,7 +17,7 @@ import anvil.users
 main_form = ""
 separator = "------------------"
 sys_admin_action_list = ["List Users","Edit User","Insert User","Import Users",separator,"List Site","Edit Site","Add Site"]
-site_admin_action_list = [separator,"List SiteUser","Edit SiteUsers","Add SiteUser","Import SiteUsers"]
+site_admin_action_list = [separator,"List UserRole","Edit UserRole","Add UserRole","Import UserRoles"]
 admin_action_list_not_implemented = [separator]
 user_action_list = ["Select Site",separator,
                     "List Contexts","Add Context","Bulk Upload Contexts",separator,

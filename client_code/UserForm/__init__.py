@@ -48,7 +48,7 @@ class UserForm(UserFormTemplate):
     self.user_role_value.items = Global.system_user_role_options
     self.user_status_value.items = Global.user_status_options
     self.title.text = "This form is for inserting a new user"
-    if Global.action == "Edit AnvilUser":
+    if Global.action == "Edit User":
       self.title.text = "This form is for updating details of a user"
       print(Global.action,Global.user_items["email"])
       self.user_email_value.text = Global.user_items["email"]
@@ -104,6 +104,7 @@ class UserForm(UserFormTemplate):
   def submit_changes_click(self, **event_args):
     """This method is called when the button is clicked"""
     #print("New values for ",Global.user_items["email"], ": ", Global.user_role,Global.user_status)
+    self.validator.show_all_errors()
     if self.validator.is_valid() and self.user_status_value.selected_value is not None and self.user_role_value.selected_value is not None:
       #alert("All input values are valid")
       # extract field values fom from
@@ -118,9 +119,9 @@ class UserForm(UserFormTemplate):
         Global.user_status = False
       Global.system_user_role = self.user_role_value.selected_value
       #
-      if Global.action in ["Edit AnvilUser","Edit Anviluser","edit anviluser"]: 
+      if Global.action in ["Edit User","Edit user","edit anviluser"]: 
         msg = anvil.server.call('system_user_update',Global.username, Global.system_user_role,Global.user_status,Global.user_initials,Global.user_firstname,Global.user_lastname)
-      elif Global.action in ["Insert AnvilUser","Insert Anviluser","insert anviluser"]:
+      elif Global.action in ["Insert User","Insert user","insert user"]:
         msg = anvil.server.call('system_user_insert',Global.username,Global.password,Global.system_user_role,Global.user_status,Global.user_initials,Global.user_firstname,Global.user_lastname)
       else:
         msg = "Unknown action: " + Global.action
