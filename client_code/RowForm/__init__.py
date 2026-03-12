@@ -115,10 +115,11 @@ class RowForm(RowFormTemplate):
         input_error.text = "Enter a correct year format ([-][1-9999][AD|BC])"
         input_error.foreground ="#FF0000"
         # regex "^$|^-?(?!0+$)\d{1,4}(?:BC|AD)?$" = ^S allows empty string |(or) optional '-' number 1-9999 (no 0's) optionally followed by AD/BC
+        # ^$|^(?!0+$) to not allow a 0 but atm re moved from test
         self.validator.require(
           input,
           ['change', 'lost_focus'],
-          lambda tb: re.fullmatch(r"^$|^-?(?!0+$)\d{1,4}(?:BC|AD)?$", tb.text),
+          lambda tb: re.fullmatch(r"^(-?[0-9]{1,4}|)$", tb.text),
           input_error
         )
 
@@ -132,10 +133,11 @@ class RowForm(RowFormTemplate):
         input_error.text = "Enter a correct year format (1-9999])"
         input_error.foreground ="#FF0000"
         # regex "^$|^(?!0+$)\d{1,4}?$" = ^S allows empty string |(or) optional '-' number 1-9999 (no 0's) 
+        # ^$|^(?!0+$) is for checking and not allowing 0's
         self.validator.require(
           input,
           ['change', 'lost_focus'],
-          lambda tb: re.fullmatch(r"^$|^-?(?!0+$)\d{1,4}?$", tb.text),
+          lambda tb: re.fullmatch(r"^(-?[0-9]{1,4}|)$", tb.text),
           input_error
         )
 
@@ -293,7 +295,7 @@ class RowForm(RowFormTemplate):
     #print("Submit button clicked: ",Global.action)
     action = Global.action.split(" ")[0].lower()
     table_name = Global.action.split(" ")[1].lower()
-    
+    self.validator.show_all_errors()
     if self.validator.is_valid():
       # all validated input fields are ok
       row_list = {}
