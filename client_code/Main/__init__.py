@@ -262,7 +262,10 @@ class Main(MainTemplate):
     Global.work_area[work_area_name] = {}
     Global.work_area[work_area_name]["action"] = action
     Global.current_work_area_name = work_area_name
-
+    
+    # save table_info in work_area structure
+    Global.work_area[work_area_name]["table_info"] = table_info
+    
     # set menu_select_opti0ns as invisible
     Global.work_area[Global.current_work_area_name]["menu_select_options"] = self.fp_select_options
     Global.work_area[Global.current_work_area_name]["menu_select_options"].visible = False
@@ -935,7 +938,7 @@ class Main(MainTemplate):
     col_order = {}
     for column in Global.work_area[Global.current_work_area_name]["table"].columns:
       print(column)
-      col_order[column["data_key"]] = column["ORDINAL_POSITION"]
+      #col_order[column["data_key"]] = Global.work_area[Global.current_work_area_name]["table_info"][column["data_key"] column["ORDINAL_POSITION"]
     #print(data_list) 
     #csv_file = anvil.server.call('create_csv',[data_list],file_name)
     csv_file = anvil.server.call('create_csv',Global.work_area[Global.current_work_area_name]["data_list"],[col_order],file_name)
