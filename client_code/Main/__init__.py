@@ -230,6 +230,7 @@ class Main(MainTemplate):
     #print("Click work area, action: ",action)
     # For all actions not in Admin_action_list check ID field for creating unique work_area name
     if action not in Global.sys_admin_action_list and action not in Global.site_admin_action_list:
+      # need to check if this works for dynamic tables like SQL query
       # add first Primary Key ID field when view or edit
       table_info = anvil.server.call("describe_table",action.split(" ")[1].lower())
       primary_key_list = []
@@ -933,6 +934,7 @@ class Main(MainTemplate):
     # create ordinal_position list of columns 
     col_order = {}
     for column in Global.work_area[Global.current_work_area_name]["table"].columns:
+      print(column)
       col_order[column["data_key"]] = column["ORDINAL_POSITION"]
     #print(data_list) 
     #csv_file = anvil.server.call('create_csv',[data_list],file_name)
