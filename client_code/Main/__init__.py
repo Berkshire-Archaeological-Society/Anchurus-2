@@ -227,12 +227,14 @@ class Main(MainTemplate):
 
     # set name of work_area to be action name
     work_area_name = action
+    # get table_info ( needto check how we do this for dynamic tables (query))
+    table_info = anvil.server.call("describe_table",action.split(" ")[1].lower())
+    
     #print("Click work area, action: ",action)
     # For all actions not in Admin_action_list check ID field for creating unique work_area name
     if action not in Global.sys_admin_action_list and action not in Global.site_admin_action_list:
       # need to check if this works for dynamic tables like SQL query
       # add first Primary Key ID field when view or edit
-      table_info = anvil.server.call("describe_table",action.split(" ")[1].lower())
       primary_key_list = []
       for column in table_info:
         if column["COLUMN_KEY"] == "PRI":

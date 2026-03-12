@@ -1097,7 +1097,7 @@ Changes to the standard Theme.css are below
 /* Footer bar */
 .footer {
   position: fixed;
-  left: 0px;
+  left: 240px;
   bottom: 0px;
   /* top: 140px; */
   width: 100%;
