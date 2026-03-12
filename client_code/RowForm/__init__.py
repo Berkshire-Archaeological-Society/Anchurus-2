@@ -112,10 +112,10 @@ class RowForm(RowFormTemplate):
         input.background = "#000000"
       #
       if column_name in ["YearEnd","YearStart"]:
-        input_error.text = "Enter a correct year format ([-][1-9999][AD|BC])"
+        input_error.text = "Enter a correct year format ([-9999 until 9999])"
         input_error.foreground ="#FF0000"
-        # regex "^$|^-?(?!0+$)\d{1,4}(?:BC|AD)?$" = ^S allows empty string |(or) optional '-' number 1-9999 (no 0's) optionally followed by AD/BC
-        # ^$|^(?!0+$) to not allow a 0 but atm re moved from test
+        # regex "^(-?[0-9]{1,4}|)$" = any number between -9999 until 9999; empty string allowed
+        # 
         self.validator.require(
           input,
           ['change', 'lost_focus'],
@@ -130,14 +130,14 @@ class RowForm(RowFormTemplate):
         self.validator.require_text_field(input,input_error)
 
       elif column_name in ["Year","ContextYear","SurveyYear"]:   
-        input_error.text = "Enter a correct year format (1-9999])"
+        input_error.text = "Enter a correct year format."
         input_error.foreground ="#FF0000"
-        # regex "^$|^(?!0+$)\d{1,4}?$" = ^S allows empty string |(or) optional '-' number 1-9999 (no 0's) 
-        # ^$|^(?!0+$) is for checking and not allowing 0's
+        # regex "^(\d{4}|)$" = 4 digit number (year); empty string allowed 
+        # 
         self.validator.require(
           input,
           ['change', 'lost_focus'],
-          lambda tb: re.fullmatch(r"^(-?[0-9]{1,4}|)$", tb.text),
+          lambda tb: re.fullmatch(r"^(\d{4}|)$", tb.text),
           input_error
         )
 
