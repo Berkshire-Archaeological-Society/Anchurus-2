@@ -937,11 +937,10 @@ class Main(MainTemplate):
     # create ordinal_position list of columns 
     col_order = {}
     for column in Global.work_area[Global.current_work_area_name]["table"].columns:
-      #print(column)
-      print(Global.work_area[Global.current_work_area_name]["table_info"])
-      col_order[column["data_key"]] = Global.work_area[Global.current_work_area_name]["table_info"][column["data_key"]][column["ORDINAL_POSITION"]]
-    #print(data_list) 
-    #csv_file = anvil.server.call('create_csv',[data_list],file_name)
+      #print(column["data_key"])
+      position = next((item['ORDINAL_POSITION'] for item in Global.work_area[Global.current_work_area_name]["table_info"] if item['COLUMN_NAME'] == column["data_key"]),0)
+      col_order[column["data_key"]] = position
+    # make sure to send the col_list as a list []
     csv_file = anvil.server.call('create_csv',Global.work_area[Global.current_work_area_name]["data_list"],[col_order],file_name)
     anvil.media.download(csv_file)
     pass
