@@ -85,14 +85,19 @@ class ImportForm(ImportFormTemplate):
     """This method is called when the button is clicked"""
     # need to check when using this for a query dynamic table . Cannot use the describe_table call.
     # probably need other method to get columns position to pass on to create_csv
-    table_info = anvil.server.call("describe_table",Global.table_name)
-    # create empty data_list with column heading and a col_list with table ordinal_position 
-    data_list = {}
-    col_order = {}
-    for column in table_info:
+    if Global.table_name != "users":
+      table_info = anvil.server.call("describe_table",Global.table_name)
+      # create empty data_list with column heading and a col_list with table ordinal_position 
+      data_list = {}
+      col_order = {}
+      for column in table_info:
         data_list[column["COLUMN_NAME"]] = None
         col_order[column["COLUMN_NAME"]] = column["ORDINAL_POSITION"]
-    print(data_list) 
+      print(data_list) 
+    else:
+      # table users is a special case (for the Anvil users DB table)
+      data_list = {"email": None, "password": None, "systemrole": None, "initials": None, "firstname": None, "lastname": None}
+      col_order = {"email": 1, "password": 2, "systemrole": 3, "initials": 4, "firstname": 5, "lastname": 6}
     csv_name = "Template_" + Global.table_name + ".csv"
     csv_file = anvil.server.call('create_csv',[data_list],[col_order],csv_name)
     anvil.media.download(csv_file)
