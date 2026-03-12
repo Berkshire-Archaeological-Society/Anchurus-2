@@ -83,13 +83,17 @@ class ImportForm(ImportFormTemplate):
   @handle("download_csv_template", "click")
   def download_csv_template_click(self, **event_args):
     """This method is called when the button is clicked"""
+    # need to check when using this for a query table. Cannot use the describe_table call.
+    # probably need other method to get columns position to pass on to create_csv
     table_info = anvil.server.call("describe_table",Global.table_name)
+    # create empty data_list with column heading and a col_list with table ordinal_position 
     data_list = {}
-    data_list["_template"] = -1
+    col_order = {}
     for column in table_info:
-        data_list[column["COLUMN_NAME"]] = column["ORDINAL_POSITION"]
+        data_list[column["COLUMN_NAME"]] = None
+        col_order[column["COLUMN_NAME"]] = column["ORDINAL_POSITION"]
     print(data_list) 
     csv_name = "Template_" + Global.table_name + ".csv"
-    csv_file = anvil.server.call('create_csv',[data_list],csv_name)
+    csv_file = anvil.server.call('create_csv',[data_list],[col_order],csv_name)
     anvil.media.download(csv_file)
     pass
