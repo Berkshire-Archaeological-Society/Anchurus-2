@@ -938,7 +938,7 @@ class Main(MainTemplate):
     col_order = {}
     for column in Global.work_area[Global.current_work_area_name]["table"].columns:
       #print(column)
-      print(Global.work_area[Global.current_work_area_name]["table_info"][]
+      print(Global.work_area[Global.current_work_area_name]["table_info"])
       col_order[column["data_key"]] = Global.work_area[Global.current_work_area_name]["table_info"][column["data_key"]][column["ORDINAL_POSITION"]]
     #print(data_list) 
     #csv_file = anvil.server.call('create_csv',[data_list],file_name)
