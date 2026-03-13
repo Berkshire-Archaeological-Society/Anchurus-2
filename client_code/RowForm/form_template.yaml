@@ -2,7 +2,7 @@ components:
 - components:
   - layout_properties: {}
     name: ws_name
-    properties: {font_size: 14, role: outlined}
+    properties: {font_size: 14, foreground: 'theme:On Secondary', role: outlined}
     type: TextBox
   - layout_properties: {}
     name: title
