@@ -107,7 +107,6 @@ class Main(MainTemplate):
   # =========
   def work_area_click(self, **event_args):
     """" This function is called when the work area button is clicked. Here we make sure all the variable are set correct for the work area swap"""
-
     # Here the user clicked on a work_area button in the left navigation list, requested to go to a different work area.
     # first make all work_areas invisible and set button to be 'normal', i.e. not highlighted
     for name in Global.work_area:
@@ -118,15 +117,13 @@ class Main(MainTemplate):
     # now get the name of the button (work_area_name) that was clicked and make this and the associated work_area visible
     work_area = event_args['sender']
     Global.current_work_area_name = work_area.text
-    #print("Work area clicked: ",Global.current_work_area_name)
 
     # check if CTRL key was pressed when clicked. This is a workaround to use CTRL/Click to delete a workspace
     if event_args["keys"]["ctrl"]:
-      print("CTRL key was pressed when workspace button was clicked")
-      #print("Deleting work space: ", Global.current_work_area_name)
+      # delete workspace when CTRL is pressed when workspace clicked 
       Function.delete_workspace(Global.current_work_area_name)
     else:
-      # normal Click to make this workspace the current workspace
+      # normal Click: make this workspace the current workspace
       # Set Global.table_name linked with work_area_type
       Global.table_name = Global.work_area[Global.current_work_area_name]["action"].split(" ")[1].lower()
 
