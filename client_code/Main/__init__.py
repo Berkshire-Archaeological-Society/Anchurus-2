@@ -119,103 +119,111 @@ class Main(MainTemplate):
     work_area = event_args['sender']
     Global.current_work_area_name = work_area.text
     #print("Work area clicked: ",Global.current_work_area_name)
+
+    # check if CTRL key was pressed when clicked. This is a workaround to use CTRL/Click to delete a workspace
+    if event_args["keys"]["ctrl"]:
+      print("CTRL key was pressed when workspace button was clicked")
+      #print("Deleting work space: ", Global.current_work_area_name)
+      Function.delete_workspace(Global.current_work_area_name)
+    else:
+      # normal Click to make this workspace the current workspace
+      # Set Global.table_name linked with work_area_type
+      Global.table_name = Global.work_area[Global.current_work_area_name]["action"].split(" ")[1].lower()
+
+      # set Global variables for site information
+      Global.site_name = Global.work_area[Global.current_work_area_name]["site_name"]
+      Global.site_id = Global.work_area[Global.current_work_area_name]["site_id"]
+      Global.selected_site = ": " + Global.site_name
     
-    # Set Global.table_name linked with work_area_type
-    Global.table_name = Global.work_area[Global.current_work_area_name]["action"].split(" ")[1].lower()
+      # Fill header fields with work_area name and work_area Form name
+      # This was for old header, can prob removed
+      Global.header_work_area_name.text = Global.current_work_area_name
+      Global.header_work_area_type.text = str(type(Global.work_area[Global.current_work_area_name]["form"])).split(".")[2][:-2]
+      Global.header_site_name.text = Global.work_area[Global.current_work_area_name]["site_name"]
 
-    # set Global variables for site information
-    Global.site_name = Global.work_area[Global.current_work_area_name]["site_name"]
-    Global.site_id = Global.work_area[Global.current_work_area_name]["site_id"]
-    Global.selected_site = ": " + Global.site_name
+      # Show work_area and set focus on work_area_name
+      Global.work_area[Global.current_work_area_name]["form"].visible = True
+      Global.work_area[Global.current_work_area_name]["button"].bold = False
+      Global.work_area[Global.current_work_area_name]["button"].background = Global.button_highlight_background_clour
+
+      # make old header invisible
+      Global.header.visible = False
+      Global.wa_header_menu_bottom.visible = True
     
-    # Fill header fields with work_area name and work_area Form name
-    # This was for old header, can prob removed
-    Global.header_work_area_name.text = Global.current_work_area_name
-    Global.header_work_area_type.text = str(type(Global.work_area[Global.current_work_area_name]["form"])).split(".")[2][:-2]
-    Global.header_site_name.text = Global.work_area[Global.current_work_area_name]["site_name"]
-
-    # Show work_area and set focus on work_area_name
-    Global.work_area[Global.current_work_area_name]["form"].visible = True
-    Global.work_area[Global.current_work_area_name]["button"].bold = False
-    Global.work_area[Global.current_work_area_name]["button"].background = Global.button_highlight_background_clour
-
-    # make old header invisible
-    Global.header.visible = False
-    Global.wa_header_menu_bottom.visible = True
-    
-    # set menu_select_options as invisible
-    Global.work_area[Global.current_work_area_name]["menu_select_options"] = self.fp_select_options
-    Global.work_area[Global.current_work_area_name]["menu_select_options"].visible = False
-
-    Global.action_form_type = str(type(Global.work_area[Global.current_work_area_name]["form"])).split(".")[2][:-2]
-    #
-    #print("Work area action form type: ",Global.action_form_type)
-    if Global.work_area[Global.current_work_area_name]["action"].split(" ")[0] in ["View", "Edit", "Insert", "Add", "Import"] or Global.work_area[Global.current_work_area_name]["action"] == "List Anvilusers":
-      self.mb_middle.visible = False
-      self.mb_left.visible = False
-    elif Global.work_area[Global.current_work_area_name]["action"].split(" ")[0] in ["List"]:
-      self.mb_middle.visible = True
-      self.mb_left.visible = True
-
-    self.select_all.indeterminate = False
-    self.select_all.checked = False
-
-    # update status label (page control information) if work_space is a List (but not List Anvilusers (not using the TableList form))
-    if Global.work_area[Global.current_work_area_name]["action"].split(" ")[0] in ["List"] and Global.work_area[Global.current_work_area_name]["action"] != "List Anvilusers":
-      #print(Global.current_work_area_name)
-      FunctionsB.update_status_label(Global.work_area[Global.current_work_area_name]["self"])
-
-    if len(Global.work_area[Global.current_work_area_name]["selected_rows"]) == 0:
-      #print("work_area_click: ", Global.current_work_area_name, " 0 selected rows, disable menu")
+      # set menu_select_options as invisible
+      Global.work_area[Global.current_work_area_name]["menu_select_options"] = self.fp_select_options
       Global.work_area[Global.current_work_area_name]["menu_select_options"].visible = False
-      self.select_all.checked = False
-      self.select_all.indeterminate = False
-      #Global.work_area[Global.current_work_area_name]["self"].select_all
-    else:
-      #print("work_area_click: ", Global.current_work_area_name, " there are selected rows, enable menu")
-      Global.work_area[Global.current_work_area_name]["menu_select_options"].visible = True
-      page_num = int(Global.work_area[Global.current_work_area_name]["table"].get_page())
-      rows_per_page = int(Global.work_area[Global.current_work_area_name]["table"].rows_per_page)
-      total_rows = len(Global.work_area[Global.current_work_area_name]["self"].repeating_panel_1.items)
-      rest = total_rows - page_num * rows_per_page
-      #print(str(len(Global.work_area[Global.current_work_area_name]["selected_rows"])),str(rest),str(Global.rows_per_page))
-      if str(len(Global.work_area[Global.current_work_area_name]["selected_rows"])) == str(Global.rows_per_page) or str(len(Global.work_area[Global.current_work_area_name]["selected_rows"])) == str(rest):
-        self.select_all.checked = True 
-      else:
-        self.select_all.indeterminate = True
-    
-    #self.select_all.checked = Global.work_area[Global.current_work_area_name]["self"].select_all.checked
-    #self.select_all.indeterminate = Global.work_area[Global.current_work_area_name]["self"].select_all.indeterminate
 
-    # Set selected buttons on Header for work area type
-    if Global.action_form_type in Global.action_forms_with_refresh:
-      # Make refresh button visible for Global.action_form_type
-      Global.header_refresh_button.visible = True
-      self.refresh.visible = True
-    else:
-      Global.header_refresh_button.visible = False
-      self.refresh.visible = False
-    if Global.action_form_type in Global.action_forms_with_print:
-      # Make print button visible for Global.action_form_type
-      Global.header_print_button.visible = True
-      self.print.visible = True
-    else:
-      Global.header_print_button.visible = False
-      self.print.visible = False
-    if Global.action_form_type in Global.action_forms_with_download:
-      # Make download button visible for Global.action_form_type
-      Global.header_download_button.visible = True
-      self.download_csv.visible = True
-    else:
-      Global.header_download_button.visible = False
-      self.download_csv.visible = False
-    if Global.action_form_type in Global.action_forms_with_filter and Global.work_area[Global.current_work_area_name]["data_list"]:
-      # Make filter button visible for Global.action_form_type if data_list is not empty
-      Global.header_filter_button.visible = True
-      self.filter_cols.visible = True
-    else:
-      Global.header_filter_button.visible = False
-      self.filter_cols.visible = False
+      Global.action_form_type = str(type(Global.work_area[Global.current_work_area_name]["form"])).split(".")[2][:-2]
+      
+      #print("Work area action form type: ",Global.action_form_type)
+      if Global.work_area[Global.current_work_area_name]["action"].split(" ")[0] in ["View", "Edit", "Insert", "Add", "Import"] or Global.work_area[Global.current_work_area_name]["action"] == "List Anvilusers":
+        self.mb_middle.visible = False
+        self.mb_left.visible = False
+      elif Global.work_area[Global.current_work_area_name]["action"].split(" ")[0] in ["List"]:
+        self.mb_middle.visible = True
+        self.mb_left.visible = True
+
+      self.select_all.indeterminate = False
+      self.select_all.checked = False
+
+      # update status label (page control information) if work_space is a List (but not List Anvilusers (not using the TableList form))
+      if Global.work_area[Global.current_work_area_name]["action"].split(" ")[0] in ["List"] and Global.work_area[Global.current_work_area_name]["action"] != "List Anvilusers":
+        #print(Global.current_work_area_name)
+        FunctionsB.update_status_label(Global.work_area[Global.current_work_area_name]["self"])
+
+      if len(Global.work_area[Global.current_work_area_name]["selected_rows"]) == 0:
+        #print("work_area_click: ", Global.current_work_area_name, " 0 selected rows, disable menu")
+        Global.work_area[Global.current_work_area_name]["menu_select_options"].visible = False
+        self.select_all.checked = False
+        self.select_all.indeterminate = False
+        #Global.work_area[Global.current_work_area_name]["self"].select_all
+      else:
+        #print("work_area_click: ", Global.current_work_area_name, " there are selected rows, enable menu")
+        Global.work_area[Global.current_work_area_name]["menu_select_options"].visible = True
+        page_num = int(Global.work_area[Global.current_work_area_name]["table"].get_page())
+        rows_per_page = int(Global.work_area[Global.current_work_area_name]["table"].rows_per_page)
+        total_rows = len(Global.work_area[Global.current_work_area_name]["self"].repeating_panel_1.items)
+        rest = total_rows - page_num * rows_per_page
+        #print(str(len(Global.work_area[Global.current_work_area_name]["selected_rows"])),str(rest),str(Global.rows_per_page))
+        if str(len(Global.work_area[Global.current_work_area_name]["selected_rows"])) == str(Global.rows_per_page) or str(len(Global.work_area[Global.current_work_area_name]["selected_rows"])) == str(rest):
+          self.select_all.checked = True 
+        else:
+          self.select_all.indeterminate = True
+    
+      #self.select_all.checked = Global.work_area[Global.current_work_area_name]["self"].select_all.checked
+      #self.select_all.indeterminate = Global.work_area[Global.current_work_area_name]["self"].select_all.indeterminate
+
+      # Set selected buttons on Header for work area type
+      if Global.action_form_type in Global.action_forms_with_refresh:
+        # Make refresh button visible for Global.action_form_type
+        Global.header_refresh_button.visible = True
+        self.refresh.visible = True
+      else:
+        Global.header_refresh_button.visible = False
+        self.refresh.visible = False
+      if Global.action_form_type in Global.action_forms_with_print:
+        # Make print button visible for Global.action_form_type
+        Global.header_print_button.visible = True
+        self.print.visible = True
+      else:
+        Global.header_print_button.visible = False
+        self.print.visible = False
+      if Global.action_form_type in Global.action_forms_with_download:
+        # Make download button visible for Global.action_form_type
+        Global.header_download_button.visible = True
+        self.download_csv.visible = True
+      else:
+        Global.header_download_button.visible = False
+        self.download_csv.visible = False
+      if Global.action_form_type in Global.action_forms_with_filter and Global.work_area[Global.current_work_area_name]["data_list"]:
+        # Make filter button visible for Global.action_form_type if data_list is not empty
+        Global.header_filter_button.visible = True
+        self.filter_cols.visible = True
+      else:
+        Global.header_filter_button.visible = False
+        self.filter_cols.visible = False
+    
   pass
 
   def create_new_work_area(self,action):
