@@ -321,10 +321,10 @@ class RowForm(RowFormTemplate):
         if row_list[col[0]] in ["","\n"]:
           row_list[col[0]] = None
       #
-      #print(table_name,row_list)
+      print(Global.action, table_name, row_list)
       #
       if action in ["add","insert"]:
-        ret = anvil.server.call("row_add",table_name,row_list)
+        ret = anvil.server.call("row_insert",table_name,row_list)
         # if success then goto list contexts
         if ret[:2] == "OK":
           msg = "Row has been successfully inserted to the database."
