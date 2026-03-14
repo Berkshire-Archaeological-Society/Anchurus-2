@@ -191,6 +191,10 @@ class Main(MainTemplate):
       #self.select_all.checked = Global.work_area[Global.current_work_area_name]["self"].select_all.checked
       #self.select_all.indeterminate = Global.work_area[Global.current_work_area_name]["self"].select_all.indeterminate
 
+      # set edit_row and delete_row visibilty that were saved in create workspace 
+      self.edit_row.visible = Global.work_area[Global.current_work_area_name]["visibility_edit_row"]
+      self.delete_row.visible = Global.work_area[Global.current_work_area_name]["visibility_delete_row"] 
+
       # Set selected buttons on Header for work area type
       if Global.action_form_type in Global.action_forms_with_refresh:
         # Make refresh button visible for Global.action_form_type
@@ -357,7 +361,16 @@ class Main(MainTemplate):
 
       self.select_all.indeterminate = False
       self.select_all.checked = False
+      
+      # for table dbdiary disable edit_row and delete_row button
+      if Global.table_name == "dbdiary":
+        self.edit_row.visible = False
+        self.delete_row.visible = False
 
+      # safe edit_row and delete_row visibilty so that at click woekspace they can be set
+      Global.work_area[Global.current_work_area_name]["visibility_edit_row"] = self.edit_row.visible
+      Global.work_area[Global.current_work_area_name]["visibility_delete_row"] = self.delete_row.visible
+        
       # Set selected buttons on Header for work area type
       Global.action_form_type = Global.header_work_area_type.text
       #print(Global.action_form_type)
@@ -566,10 +579,10 @@ class Main(MainTemplate):
         elif Global.site_user_role in ["Viewer"]:
           self.list_dropdown.visible = True
           self.view_row.visible = True
-          self.insert_dropdown.visible = False
-          self.import_dropdown.visible = False
           self.edit_row.visible = False
+          self.insert_dropdown.visible = False
           self.delete_row.visible = False
+          self.import_dropdown.visible = False
         else:
           # unknown role
           msg = "Unkown User Role identified: " + str(Global.site_user_role)
@@ -579,10 +592,10 @@ class Main(MainTemplate):
           self.admin_dropdown.visible = False
           self.list_dropdown.visible = False
           self.view_row.visible = False
-          self.insert_dropdown.visible = False
-          self.import_dropdown.visible = False
           self.edit_row.visible = False
+          self.insert_dropdown.visible = False
           self.delete_row.visible = False
+          self.import_dropdown.visible = False
       else:
         msg = "Not found a role for you in site " + self.select_site_dropdown.selected_value + ". Please contact the Project Manager."
         Global.site_name = self.select_site_dropdown.selected_value
