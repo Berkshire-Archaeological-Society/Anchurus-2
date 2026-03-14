@@ -119,7 +119,7 @@ class UserForm(UserFormTemplate):
         Global.user_status = False
       Global.system_user_role = self.user_role_value.selected_value
       #
-      if Global.action in ["Edit User","Edit user","edit anviluser"]: 
+      if Global.action in ["Edit User","Edit user","edit user"]: 
         msg = anvil.server.call('system_user_update',Global.username, Global.system_user_role,Global.user_status,Global.user_initials,Global.user_firstname,Global.user_lastname)
       elif Global.action in ["Insert User","Insert user","insert user"]:
         msg = anvil.server.call('system_user_insert',Global.username,Global.password,Global.system_user_role,Global.user_status,Global.user_initials,Global.user_firstname,Global.user_lastname)

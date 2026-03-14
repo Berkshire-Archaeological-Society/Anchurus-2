@@ -154,7 +154,7 @@ class Main(MainTemplate):
       Global.action_form_type = str(type(Global.work_area[Global.current_work_area_name]["form"])).split(".")[2][:-2]
       
       #print("Work area action form type: ",Global.action_form_type)
-      if Global.work_area[Global.current_work_area_name]["action"].split(" ")[0] in ["View", "Edit", "Insert", "Add", "Import"] or Global.work_area[Global.current_work_area_name]["action"] == "List Anvilusers":
+      if Global.work_area[Global.current_work_area_name]["action"].split(" ")[0] in ["View", "Edit", "Insert", "Add", "Import"] or Global.work_area[Global.current_work_area_name]["action"] == "List Users":
         self.mb_middle.visible = False
         self.mb_left.visible = False
       elif Global.work_area[Global.current_work_area_name]["action"].split(" ")[0] in ["List"]:
@@ -164,8 +164,8 @@ class Main(MainTemplate):
       self.select_all.indeterminate = False
       self.select_all.checked = False
 
-      # update status label (page control information) if work_space is a List (but not List Anvilusers (not using the TableList form))
-      if Global.work_area[Global.current_work_area_name]["action"].split(" ")[0] in ["List"] and Global.work_area[Global.current_work_area_name]["action"] != "List Anvilusers":
+      # update status label (page control information) if work_space is a List (but not List Users (not using the TableList form))
+      if Global.work_area[Global.current_work_area_name]["action"].split(" ")[0] in ["List"] and Global.work_area[Global.current_work_area_name]["action"] != "List Users":
         #print(Global.current_work_area_name)
         FunctionsB.update_status_label(Global.work_area[Global.current_work_area_name]["self"])
 
@@ -235,8 +235,10 @@ class Main(MainTemplate):
     # get table_info ( needto check how we do this for dynamic tables (query))
     table_info = anvil.server.call("describe_table",action.split(" ")[1].lower())
     
-    #print("Click work area, action: ",action)
+    print("Click work area, action: ",action)
     # For all actions not in Admin_action_list check ID field for creating unique work_area name
+    print(Global.sys_admin_action_list)
+    print(Global.site_admin_action_list)
     if action not in Global.sys_admin_action_list and action not in Global.site_admin_action_list:
       # need to check if this works for dynamic tables like SQL query
       # add first Primary Key ID field when view or edit
@@ -346,7 +348,7 @@ class Main(MainTemplate):
       Global.action_form_type = Global.header_work_area_type.text
       #
       # Only show page controls for List Table action
-      if Global.work_area[Global.current_work_area_name]["action"].split(" ")[0] in ["View", "Edit", "Insert", "Add", "Import"] or Global.work_area[Global.current_work_area_name]["action"] == "List Anvilusers":
+      if Global.work_area[Global.current_work_area_name]["action"].split(" ")[0] in ["View", "Edit", "Insert", "Add", "Import"] or Global.work_area[Global.current_work_area_name]["action"] == "List Users":
         self.mb_middle.visible = False
         self.mb_left.visible = False
       elif Global.work_area[Global.current_work_area_name]["action"].split(" ")[0] in ["List"]:

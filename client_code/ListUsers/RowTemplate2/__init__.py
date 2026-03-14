@@ -20,7 +20,7 @@ class RowTemplate2(RowTemplate2Template):
   def edit_user_button_click(self, **event_args):
     """This method is called when the button is clicked"""
     Global.user_items = self.item
-    Global.action = "Edit AnvilUser"
+    Global.action = "Edit User"
     if Global.main_form:  # Important to check if the form exists
       # Create new work_area "Edit User" and set focus on this new work_area 
       Global.main_form.create_new_work_area(Global.action)
@@ -32,7 +32,7 @@ class RowTemplate2(RowTemplate2Template):
   def delete_user_button_click(self, **event_args):
     """This method is called when the button is clicked"""
     Global.user_items = self.item
-    Global.action = "Delete AnvilUser"
+    Global.action = "Delete User"
     if Global.main_form:  # Important to check if the form exists
       #print(Global.user_items)
       if confirm(f"Do you really want to delete the user {Global.user_items['email']}?"):
