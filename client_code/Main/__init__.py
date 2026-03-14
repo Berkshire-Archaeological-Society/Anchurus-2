@@ -239,10 +239,7 @@ class Main(MainTemplate):
     # get table_info ( needto check how we do this for dynamic tables (query))
     table_info = anvil.server.call("describe_table",action.split(" ")[1].lower())
     
-    print("Click work area, action: ",action)
     # For all actions not in Admin_action_list check ID field for creating unique work_area name
-    print(Global.sys_admin_action_list)
-    print(Global.site_admin_action_list)
     if action not in Global.sys_admin_action_list and action not in Global.site_admin_action_list:
       # need to check if this works for dynamic tables like SQL query
       # add first Primary Key ID field when view or edit
@@ -471,14 +468,14 @@ class Main(MainTemplate):
     """This method is called when the button is clicked"""
     user = anvil.users.signup_with_form(allow_cancel=True)
     if user is not None:
-      print(str(user["email"]))
+      #print(str(user["email"]))
     
       # notify user that the Project Leader will have to check and enable the user account
       alert("Thank you for registering. Your account registration request will need to be verified. You will be notified as soon as this has been completed.")
       msg = ("Hi,\n\nUser %s has requested an account for the system %s.\n"
            "Please check the new user account, complete the registration and enable the account.\n"
            % (user["email"],Global.organisation ))
-      print(msg)
+      #print(msg)
       anvil.server.call("send_email","New user registration",msg,"tony.bakker@berksarch.co.uk")
       # go back to login screen
       self.logout_click()
@@ -739,7 +736,7 @@ class Main(MainTemplate):
   # Functions on the header for the work area
   def selection_change(self, **event_args):
     #
-    print("selection_change in Main")
+    #print("selection_change in Main")
     rows = [row for row in Global.work_area[Global.current_work_area_name]["self"].repeating_panel_1.get_components()]
     any_checked = any(row.btn_select.checked for row in rows)
     all_checked = all(row.btn_select.checked for row in rows)

@@ -251,7 +251,7 @@ class RowForm(RowFormTemplate):
         #print(column_name,action)
         Global.work_area[Global.current_work_area_name]["data_list"][0][column_name] = Global.site_id
         input.text = Global.work_area[Global.current_work_area_name]["data_list"][0][column_name]
-        print(input.text)
+        #print(input.text)
         if input.text == "None":
           input.text = ""
           cur_len = 0
@@ -321,7 +321,7 @@ class RowForm(RowFormTemplate):
         if row_list[col[0]] in ["","\n"]:
           row_list[col[0]] = None
       #
-      print(Global.action, table_name, row_list)
+      #print(Global.action, table_name, row_list)
       #
       if action in ["add","insert"]:
         ret = anvil.server.call("row_insert",table_name,row_list)

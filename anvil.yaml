@@ -103,7 +103,7 @@ services:
   server_config: {}
   source: /runtime/services/google.yml
 - client_config: {}
-  server_config: {custom_smtp: true, smtp_encryption: starttls, smtp_host: smtp.gmail.com, smtp_password: 7OyQOIAw5lgqL3GkJBrVcuCnHYXXQYPMSzssZTf/eyeHImQPV3/AwqZ771cETWl9nRO39B5354159RoNq4pH3XC7M/XYZI2BI8wDmEldYL/0PTUAdSMe7KSfVfX0TzD5jGpgWsOeR77U4muVlEXvjF2H70yNCVdQz0Vq/jNEewHQ/WCn6i6fvK4=, smtp_port: 587, smtp_user: mail-server@berksarch.co.uk, test_mode: false}
+  server_config: {custom_smtp: true, smtp_encryption: starttls, smtp_host: smtp.gmail.com, smtp_password: F+X594mgaF3vFGi3Xe7CnWKTJd5ti0FWA7Z9ibu9qYTC/KuQNLRLRIg6bG4FDwtvehsZJIVgcpkhqkXkJlCt29svwmeRdcmgvuI+dTJuTzeBERCgNmnmm4W4cNBivaFr82zSu7nFK5FAzveBYvYmeMOtX2jw/jud5Z6bKN0AMQh9Q8U=, smtp_port: 585, smtp_user: mail.server@berksarch.co.uk, test_mode: false}
   source: /runtime/services/anvil/email.yml
 - client_config: {}
   server_config: {}
