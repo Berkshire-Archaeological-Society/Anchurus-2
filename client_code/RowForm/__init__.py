@@ -20,12 +20,17 @@ class RowForm(RowFormTemplate):
   def input_change(self, **event_args):
     """This method is called when the text in this text box is edited"""
     column = event_args["sender"].placeholder
+    # add * to column if field is required
+    #print(Global.work_area[Global.current_work_area_name]["table_info"])
+    col = column
+    if next((item['IS_NULLABLE'] for item in Global.work_area[Global.current_work_area_name]["table_info"] if item['COLUMN_NAME'] == column),0) != "YES":
+      col = "* " + column
     #print(str(type(event_args["sender"])))
     if str(type(event_args["sender"])) == "<class 'anvil_extras.Quill.Quill'>":
-      self.form_fields[column]["header"].text = column + " (" + str(len(self.form_fields[column]["field"].get_html())) + "/" + str(self.form_fields[column]["length"]) + "):"
+      self.form_fields[column]["header"].text = col + " (" + str(len(self.form_fields[column]["field"].get_html())) + "/" + str(self.form_fields[column]["length"]) + "):"
     else:
       if str(type(event_args["sender"])) != "<class 'anvil.DatePicker'>":
-        self.form_fields[column]["header"].text = column + " (" + str(len(self.form_fields[column]["field"].text)) + "/" + str(self.form_fields[column]["length"]) + "):"
+        self.form_fields[column]["header"].text = col + " (" + str(len(self.form_fields[column]["field"].text)) + "/" + str(self.form_fields[column]["length"]) + "):"
   pass
   
   def __init__(self, site_id, table_name, data_list, action, page_info, **properties):
@@ -60,13 +65,13 @@ class RowForm(RowFormTemplate):
     self.ws_name.text = Global.current_work_area_name
     self.title.text = "This form is to " + Global.action
     # get table information
-    #print("In RowForm: ",Global.table_name)
-    table_info = anvil.server.call("describe_table",Global.table_name)
+    #table_info = anvil.server.call("describe_table",Global.table_name)
     # And then we need to create all the fields based on table information 
     # loop over table columns
     self.field_details = {}
     self.form_fields = {}
-    for item in table_info:
+    #for item in table_info:
+    for item in Global.work_area[Global.current_work_area_name]["table_info"]:
       column_name = item["COLUMN_NAME"]
       column_type = item["COLUMN_TYPE"]
       # types can be varchar(length),int(length),text,float,double,date
@@ -272,7 +277,12 @@ class RowForm(RowFormTemplate):
         cur_len = 0
         
       # create column header with column_name and column_description in one flowpanel (col_header)
-      col = column_name + " (" + str(cur_len) + "/" + str(max_length) + "):" 
+      # add * to column name name if required
+      if item["IS_NULLABLE"] == "YES":
+        col = ""
+      else:
+        col = "* "
+      col = col + column_name + " (" + str(cur_len) + "/" + str(max_length) + "):" 
       lab = Label(text=col,font_size=14,tag=column_name)
       col_description = Label(text=item["COLUMN_COMMENT"],font_size=14)
       col_header = FlowPanel()
