@@ -106,11 +106,19 @@ class RowForm(RowFormTemplate):
       
       # set specific validation checks for the various fields
       # if column is Primary Key or a known special column then make it un-editable when action is View or Edit 
-      if Global.table_name != "site" and ((action == "view") or (action in ["edit"] and item["COLUMN_KEY"] == "PRI") or (action in ["insert"] and item["COLUMN_NAME"] == "SiteId") or column_name in ["DBAcontrol","RegistrationDate"]):
+      #if Global.table_name != "site" and ((action == "view") or (action in ["edit"] and item["COLUMN_KEY"] == "PRI") or (action in ["insert"] and item["COLUMN_NAME"] == "SiteId") or column_name in ["DBAcontrol","RegistrationDate"]):
+      if (
+          not (action in ["insert","add"] and item["COLUMN_NAME"] == "SiteId" and Global.table_name == "site") and 
+          ((action == "view") or (action in ["edit"] and item["COLUMN_KEY"] == "PRI") or
+           (action in ["insert"] and item["COLUMN_NAME"] == "SiteId") or column_name in ["DBAcontrol","RegistrationDate"])
+         ):
+      #if ((action == "view") or (action in ["edit"] and item["COLUMN_KEY"] == "PRI") or (action in ["insert"] and item["COLUMN_NAME"] == "SiteId") or column_name in ["DBAcontrol","RegistrationDate"]):
         input.enabled = False
         input.foreground = "#ffffff"
         input.background = "#000000"
       #
+      
+        
       if column_name in ["YearEnd","YearStart"]:
         input_error.text = "Enter a correct year format ([-9999 until 9999])"
         input_error.foreground ="#FF0000"
@@ -259,7 +267,7 @@ class RowForm(RowFormTemplate):
           cur_len = len(input.text)
 
       if Global.table_name == "site" and column_name == "SiteId" and action in ["insert","add"]:
-        # for Table site make sure that SiteId column filed is empty when action is insert,add
+        # for Table site make sure that SiteId column field is empty when action is insert,add
         input.text = "" 
         cur_len = 0
         

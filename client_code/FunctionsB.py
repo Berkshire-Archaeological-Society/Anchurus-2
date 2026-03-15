@@ -79,8 +79,8 @@ def refresh_click(self):
     list_users_refresh(self)
   elif Global.work_area[Global.current_work_area_name]["form_type"] == "TableList":
     table_list_refresh(self)
-  elif Global.work_area[Global.current_work_area_name]["form_type"] == "ListUsers":
-    list_anvil_users_refresh(self)
+#  elif Global.work_area[Global.current_work_area_name]["form_type"] == "ListUsers":
+#    list_anvil_users_refresh(self)
   else:
     msg = "Refresh not yet implemented."
     n = Notification(msg)
