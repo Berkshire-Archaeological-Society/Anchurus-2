@@ -180,12 +180,15 @@ class TableList(TableListTemplate):
       else:
         field_name = column_data["COLUMN_NAME"]
       column_list.append(field_name)
-    # now create the table columns    
+    # now create the table columns and put them in the work area
     FunctionsB.create_table_columns(column_list,Global.work_area[Global.current_work_area_name])
     
     self.table.columns = Global.work_area[Global.current_work_area_name]["table"].columns
-   
-    # Set table role to horizontal scroll
+    # limit contents of columns to limit (50?) chars 
+    #for column in column_list:
+    #  self.table.columns[column][:50] + "..." if len(self.table.columns[column] or "") > 50 else self.item['column_name']
+    
+    #Set table role to horizontal scroll
     #self.table.role = "horizontal-scroll"
     self.table.role = "compact-grid"
     
