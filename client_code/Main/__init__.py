@@ -38,6 +38,8 @@ class Main(MainTemplate):
     Global.admin_domain = globals_from_config["admin_domain"]
     Global.admin_user = globals_from_config["admin_user"]
     Global.admin_user_initials = globals_from_config["admin_user_initials"]
+
+    Global.selected_highlight_colour = globals_from_config["highlight_colour"]
     
     # add Header component (but make it invisible)
     Global.header = Header()
