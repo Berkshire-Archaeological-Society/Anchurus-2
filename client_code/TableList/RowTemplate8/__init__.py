@@ -48,7 +48,7 @@ class RowTemplate8(RowTemplate8Template):
   def __init__(self, **properties):
     # Set Form properties and Data Bindings.
     self.init_components(**properties)
-
+    
     # Any code you write here will run before the form opens.
     # create the view and edit button for the row and set button click event handlers
     self.btn_select = CheckBox(text='',align='left',tooltip="select row")
@@ -61,15 +61,16 @@ class RowTemplate8(RowTemplate8Template):
 
     #Global.work_area[Global.current_work_area_name]["table"] 
     #Global.work_area[Global.current_work_area_name]["table_info"] 
-    for column_data in Global.work_area[Global.current_work_area_name]["table_info"]:
-      # limit columns
-      if Global.table_name not in ["anvilusers","anviluser"]:
-        field_name = column_data["name"]
-      else:
-        field_name = column_data["COLUMN_NAME"]
-    # limit contents of columns to limit (50?) chars 
-    for column in column_list:
-      if self.table.columns[column]["CHARACTER_MAXIMUN_LENGTH"] > 50:
-        self.table.columns[column][:50] + "..." if len(self.table.columns[column] or "") > 50 else self.item['column_name']
+    print(self.item)
+    for column in self.item:
+      
+
+    #for column_data in Global.work_area[Global.current_work_area_name]["table_info"]:
+    #  # limit columns text only for non anvil tables columns
+    #  if Global.table_name not in ["anvilusers","anviluser"]:
+    #    col_name = column_data["name"]
+    #    # limit contents of columns to limit (50?) chars 
+    #    if column_data["CHARACTER_MAXIMUN_LENGTH"] > 50:
+    #      self.table.columns[col_name][:50] + "..." if len(self.table.columns[col_name] or "") > 50 else self.table.columns[col_name]
 
 
