@@ -190,7 +190,7 @@ class TableList(TableListTemplate):
     #self.table.role = "horizontal-scroll"
     self.table.role = "compact-grid"
     
-    # save self in Global.work_area
+    # save TableList self in Global.work_area
     Global.work_area[Global.current_work_area_name]["self"] = self
 
     #self.table_list_refresh()

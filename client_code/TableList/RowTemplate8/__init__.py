@@ -59,10 +59,8 @@ class RowTemplate8(RowTemplate8Template):
 
     self.add_component(self.item['select'], column='1')
 
-    #Global.work_area[Global.current_work_area_name]["self"].repeating_panel_1.get_components()
-    for component in self.get_components():
-      print(component)
-      
+    #print(Global.work_area[Global.current_work_area_name]["self"].repeating_panel_1.items)
+    
     for column in self.item:
       if column != "select":
 
@@ -74,7 +72,8 @@ class RowTemplate8(RowTemplate8Template):
         if len(self.item[column]) > limit:
           # limit contents of columns to limit chars (just to show two lines in column field)
           #self.item[column].tooltip = self.item[column]
-          self.item[column] = self.item[column][:limit] + " (...)"
+          
+          self.item[column][:limit] + " (...)"
 
 
 
