@@ -59,3 +59,17 @@ class RowTemplate8(RowTemplate8Template):
 
     self.add_component(self.item['select'], column='1')
 
+    #Global.work_area[Global.current_work_area_name]["table"] 
+    #Global.work_area[Global.current_work_area_name]["table_info"] 
+    for column_data in Global.work_area[Global.current_work_area_name]["table_info"]:
+      # limit columns
+      if Global.table_name not in ["anvilusers","anviluser"]:
+        field_name = column_data["name"]
+      else:
+        field_name = column_data["COLUMN_NAME"]
+    # limit contents of columns to limit (50?) chars 
+    for column in column_list:
+      if self.table.columns[column]["CHARACTER_MAXIMUN_LENGTH"] > 50:
+        self.table.columns[column][:50] + "..." if len(self.table.columns[column] or "") > 50 else self.item['column_name']
+
+
