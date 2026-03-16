@@ -61,18 +61,24 @@ class RowTemplate8(RowTemplate8Template):
 
     #Global.work_area[Global.current_work_area_name]["table"] 
     #Global.work_area[Global.current_work_area_name]["table_info"] 
-    print(self.item)
-    print(Global.work_area[Global.current_work_area_name]["table"])
-    print
+    #print(self.item)
+    #print(Global.work_area[Global.current_work_area_name]["table"])
+    #print(Global.work_area[Global.current_work_area_name]["table_info"])
+    #Global.work_area[Global.current_work_area_name]["data_list"] is self.repeating_panel.items
     for column in self.item:
-      
+      if column != "select":
+        #print(column)
+        #print(len(self.item[column]))
+        #for item in Global.work_area[Global.current_work_area_name]["table_info"]:
+        #  print(item)
+        # retrieve the data_type max_len for the column
+        #dt_max_len = next((item['CHARACTER_MAXIMUM_LENGTH'] for item in Global.work_area[Global.current_work_area_name]["table_info"] if item['COLUMN_NAME'] == column), None)
+        #print(dt_max_len)
+        # max chars for columns width set to 50 - make it a Global variable (set at configuration per column)
+        limit = 93
+        if len(self.item[column]) > limit:
+          # limit contents of columns to limit chars (just to show two lines in column field)
+          self.item[column] = self.item[column][:limit] + "..."
 
-    #for column_data in Global.work_area[Global.current_work_area_name]["table_info"]:
-    #  # limit columns text only for non anvil tables columns
-    #  if Global.table_name not in ["anvilusers","anviluser"]:
-    #    col_name = column_data["name"]
-    #    # limit contents of columns to limit (50?) chars 
-    #    if column_data["CHARACTER_MAXIMUN_LENGTH"] > 50:
-    #      self.table.columns[col_name][:50] + "..." if len(self.table.columns[col_name] or "") > 50 else self.table.columns[col_name]
 
 
