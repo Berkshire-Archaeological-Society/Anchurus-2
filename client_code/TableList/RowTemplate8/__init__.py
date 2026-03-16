@@ -59,26 +59,22 @@ class RowTemplate8(RowTemplate8Template):
 
     self.add_component(self.item['select'], column='1')
 
-    #Global.work_area[Global.current_work_area_name]["table"] 
-    #Global.work_area[Global.current_work_area_name]["table_info"] 
-    #print(self.item)
-    #print(Global.work_area[Global.current_work_area_name]["table"])
-    #print(Global.work_area[Global.current_work_area_name]["table_info"])
-    #Global.work_area[Global.current_work_area_name]["data_list"] is self.repeating_panel.items
+    #Global.work_area[Global.current_work_area_name]["self"].repeating_panel_1.get_components()
+    for component in self.get_components():
+      print(component)
+      
     for column in self.item:
       if column != "select":
-        #print(column)
-        #print(len(self.item[column]))
-        #for item in Global.work_area[Global.current_work_area_name]["table_info"]:
-        #  print(item)
-        # retrieve the data_type max_len for the column
+
         #dt_max_len = next((item['CHARACTER_MAXIMUM_LENGTH'] for item in Global.work_area[Global.current_work_area_name]["table_info"] if item['COLUMN_NAME'] == column), None)
-        #print(dt_max_len)
-        # max chars for columns width set to 50 - make it a Global variable (set at configuration per column)
+
+        # max chars for columns width set to X - make it a Global variable (set at configuration per column)
+        # this is depending width of column (ratio roughly two pixels per c)
         limit = 93
         if len(self.item[column]) > limit:
           # limit contents of columns to limit chars (just to show two lines in column field)
-          self.item[column] = self.item[column][:limit] + "..."
+          #self.item[column].tooltip = self.item[column]
+          self.item[column] = self.item[column][:limit] + " (...)"
 
 
 
