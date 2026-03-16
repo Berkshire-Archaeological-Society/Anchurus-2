@@ -62,6 +62,8 @@ class RowTemplate8(RowTemplate8Template):
     #Global.work_area[Global.current_work_area_name]["table"] 
     #Global.work_area[Global.current_work_area_name]["table_info"] 
     print(self.item)
+    print(Global.work_area[Global.current_work_area_name]["table"])
+    print
     for column in self.item:
       
 
