@@ -63,12 +63,11 @@ class RowTemplate8(RowTemplate8Template):
 
     char_limit = 93
     #print(Global.work_area[Global.current_work_area_name]["self"].repeating_panel_1.items)
-    print(self.item)    
     # Iterate through the columns and create a Label for each  
     columns = Global.work_area[Global.current_work_area_name]["table"].columns
     for col in columns:
       col_name = col['data_key']
-      print(col_name)
+      #print(col_name)
       if col_name != "select": # ignore select button column
         raw_text = self.item.get(col_name, "")
 
