@@ -73,7 +73,7 @@ class RowTemplate8(RowTemplate8Template):
           # limit contents of columns to limit chars (just to show two lines in column field)
           #self.item[column].tooltip = self.item[column]
           
-          self.item[column][:limit] + " (...)"
+          self.label_self.item[column][:limit] + " (...)"
 
 
 
