@@ -821,10 +821,9 @@ class Main(MainTemplate):
 
   def delete_row_click(self, **event_args):
     """This method is called when the button is clicked"""
-          message = "\nYou have seleted to delete from table " + Global.table_name.capitalize() + "\n\n"
+    message = "\nYou have seleted to delete from table " + Global.table_name.capitalize() + "\n\n"
     for row in Global.work_area[Global.current_work_area_name]["selected_rows"]:
       Global.table_items = row
-
       # select PRI Keys 
       #Global.work_area[Global.current_work_area_name]["table_info"]
       for item in Global.work_area[Global.current_work_area_name]["table_info"]:
@@ -832,7 +831,8 @@ class Main(MainTemplate):
           col_name = item["COLUMN_NAME"]
           Global.action = "Delete " + Global.table_name.capitalize()
           message = message + col_name + " " + row[col_name] + " "
-
+      message = message + "\n"
+      
     # ask confirmation to delete selected rows
     message = message + "\n\nDo you wish to continue?\n\nNote: This action is not yet implemented!"
     confirm(message)
