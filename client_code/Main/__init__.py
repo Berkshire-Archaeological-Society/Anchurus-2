@@ -823,6 +823,7 @@ class Main(MainTemplate):
     """This method is called when the button is clicked"""
     message = "\nYou have seleted to delete the follow(ing) row(s) from table " + Global.table_name.capitalize() + "\n\n"
     rows_to_delete = {}
+    # loop through selected rows
     for row in Global.work_area[Global.current_work_area_name]["selected_rows"]:
       Global.table_items = row
       # select PRI Keys 
@@ -839,8 +840,9 @@ class Main(MainTemplate):
     message = message + "\n\nDo you wish to continue?\n\nNote: This action is not yet implemented!"
     if confirm(message):
       # confirmation to delete the slected rows
-    else
-     
+      # call server function to do the actual deletion
+      msg = anvil.server.call('delete_row',Global.table_name,rows_to_delete)
+      alert(msg)
     pass
 
   def first_page_click(self, **event_args):
