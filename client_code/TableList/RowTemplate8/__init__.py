@@ -59,33 +59,33 @@ class RowTemplate8(RowTemplate8Template):
 
     self.add_component(self.item['select'], column='1')
 
-    #print(Global.work_area[Global.current_work_area_name]["self"].repeating_panel_1.items)
+    #dt_max_len = next((item['CHARACTER_MAXIMUM_LENGTH'] for item in Global.work_area[Global.current_work_area_name]["table_info"] if item['COLUMN_NAME'] == column), None)
+
     char_limit = 93
-    print("start char limit check for row")
-    print(self.item)
-    for component in self.get_components():
-      print(component.name)
-      if isinstance(component, CheckBox):
-        for key in ["Description1","Description2"]:
-          val = self.item.get(key)
-          if val and len(str(val)) > char_limit:
-            # Apply the limit logic
-            #component.text = f"{str(val)[:char_limit]} ..."
-            component.tooltip = str(val)
+    #print(Global.work_area[Global.current_work_area_name]["self"].repeating_panel_1.items)
+    print(self.item)    
+    # Iterate through the columns and create a Label for each  
+    columns = Global.work_area[Global.current_work_area_name]["table"].columns
+    for col in columns:
+      col_name = col['data_key']
+      print(col_name)
+      if col_name != "select": # ignore select button column
+        raw_text = self.item.get(col_name, "")
+
+        # Apply the character limit logic
+        display_text = str(raw_text)
+        if len(display_text) > char_limit:
+          display_text = display_text[:char_limit] + "..."
+
+          # Create the Label component and set tooltip with full text
+          lbl = Label(text=display_text)
+          lbl.tooltip = str(raw_text)
           
-    #for column in self.item:
-    #  if column != "select":
+          # Add the label to this row
+          # We add it to 'self' because RowTemplate is a DataRowPanel
+          self.add_component(lbl, column=col['id'])
 
-        #dt_max_len = next((item['CHARACTER_MAXIMUM_LENGTH'] for item in Global.work_area[Global.current_work_area_name]["table_info"] if item['COLUMN_NAME'] == column), None)
 
-        # max chars for columns width set to X - make it a Global variable (set at configuration per column)
-        # this is depending width of column (ratio roughly two pixels per c)
-        #limit = 93
-        #if len(self.item[column]) > limit:
-        #  # limit contents of columns to limit chars (just to show two lines in column field)
-        #  #self.item[column].tooltip = self.item[column]
-        #  
-        #  self.label_self.item[column][:limit] + " (...)"
 
 
 
