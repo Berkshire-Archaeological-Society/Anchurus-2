@@ -832,12 +832,15 @@ class Main(MainTemplate):
           col_name = item["COLUMN_NAME"]
           Global.action = "Delete " + Global.table_name.capitalize()
           message = message + col_name + " " + row[col_name] + " "
-          rows_to_delete
+          rows_to_delete[col_name] = row[col_name]
       message = message + "\n"
       
     # ask confirmation to delete selected rows
     message = message + "\n\nDo you wish to continue?\n\nNote: This action is not yet implemented!"
-    confirm(message)
+    if confirm(message):
+      # confirmation to delete the slected rows
+    else
+     
     pass
 
   def first_page_click(self, **event_args):
