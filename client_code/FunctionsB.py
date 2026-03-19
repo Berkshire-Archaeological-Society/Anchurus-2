@@ -117,7 +117,8 @@ def create_table_columns(column_list,work_area):
       col_width = 250
     if column in Global.table_colwidth_300:
       col_width = 300
-    #
+    if column in Global.table_colwidth_350:
+      col_width = 350    #
     if (column == "DBAcontrol" and Global.table_name == "dbdiary") or column not in ["select","DBAcontrol"]:
       # do not create a columns for DBAControl and select
       id = id + 1

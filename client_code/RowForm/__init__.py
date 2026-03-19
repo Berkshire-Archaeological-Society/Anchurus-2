@@ -345,9 +345,18 @@ class RowForm(RowFormTemplate):
       submit_btn.add_event_handler("click",self.submit_btn_click)
       self.column_panel_1.add_component(submit_btn)
 
+      # Add a Execute SQL command button if View Query
+    if Global.action in ["View Query","View query"]:     
+      execute_sql_btn = Button(text="Execute SQL command",role="outlined-button")
+      execute_sql_btn.add_event_handler("click",self.execute_sql_btn_click)
+      self.column_panel_1.add_component(execute_sql_btn)
     # For this work_area form the page_info details are all set to 0; this is for when the server print function calls this form
     Global.work_area[Global.current_work_area_name]["page_info"] = {"page_num": 0, "rows_per_page": 0, "total_rows": 0}
 
+  def execute_sql_btn_click(self, **event_args):
+    print("Execute SQL command button pressed")
+    pass
+    
   def submit_btn_click(self, **event_args):
     """This method is called when the button is clicked"""
     #print("Submit button clicked: ",Global.action)

@@ -33,7 +33,7 @@ insert_action_dropdown = ["Context","Find","Anomoly","Interpretation"]
 file_action_dropdown = ["Import",separator,"Save"]
 view_action_dropdown = []
 help_action_dropdown = ["Anchurus Website"]
-query_action_dropdown = [("List Query","List query"),("Import Query","Import query")]
+query_action_dropdown = [("List Query","List query"),("Insert Query","Insert query"),("Import Query","Import query")]
 sys_admin_action_dropdown = [("List Users","List Users"),("Insert User","Insert User"),("Import Users","Import Users"),separator,("List DBDiary","List dbdiary"),separator,("List Sites","List Site"),("Insert Site","Insert Site")]
 site_admin_action_dropdown = [(separator,separator),("List Site Users","List sys_userrole"),("Insert Site User","Insert sys_userrole"),("Import Site Users","Import sys_userrole")]
 #
@@ -178,10 +178,11 @@ table_colwidth_80 = ["ContextId","AreaId","YearStart","YearEnd","Workflow","BoxI
 table_colwidth_90 = ["FindId"]
 table_colwidth_100 = ["DBAcontrol","GazControl","FindGroupId","ContextYear","ContextType","PackageType","SmallFindId","FromSample","RecordStatus","SiteId","Role"]
 table_colwidth_120 = ["SiteId"]
-table_colwidth_140 = ["RegistrationDate","DatesAssignedBy","StemBoreSizemm","ContextName1","ContextName2","FindName1","FindName2"]
+table_colwidth_140 = ["RegistrationDate","DatesAssignedBy","StemBoreSizemm","ContextName1","ContextName2","FindName1","FindName2","PermittedOperations"]
 table_colwidth_200 = ["Address"]
 table_colwidth_250 = []
-table_colwidth_300 = ["Description","URL","Activity","email","Email","Description1","Description2"]
+table_colwidth_300 = ["Description","URL","Activity","email","Email","Description1","Description2","WhatItDoes"]
+table_colwidth_350 = ["SQL_command"]
 table_colwidth_default = 110
 #
 title = system + "\n\n" + organisation

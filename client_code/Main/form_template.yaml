@@ -139,7 +139,8 @@ components:
           placeholder: Import
           tooltip: import
         type: DropDown
-      - layout_properties: {width: 78.333251953125}
+      - event_bindings: {}
+        layout_properties: {width: 78.333251953125}
         name: query_dropdown
         properties: {font_size: 13, include_placeholder: true, placeholder: Query}
         type: DropDown

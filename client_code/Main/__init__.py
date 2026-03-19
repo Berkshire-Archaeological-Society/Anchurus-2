@@ -720,7 +720,7 @@ class Main(MainTemplate):
 
     self.import_dropdown.selected_value = None
     pass
-    
+
   def help_dropdown_change(self, **event_args):
     """ This Function is called when the users selects an option form the Help dropdown"""
     """This method is called when an item is selected"""
@@ -1082,4 +1082,13 @@ class Main(MainTemplate):
     if self.username_dropdown.selected_value == "Logout":
       self.logout_click()
 
+    pass
+
+  @handle("query_dropdown", "change")
+  def query_dropdown_change(self, **event_args):
+    """This method is called when an item is selected"""
+    #print(self.query_dropdown.selected_value)
+    Global.action = self.query_dropdown.selected_value
+    self.create_new_work_area(Global.action)
+    self.query_dropdown.selected_value = None
     pass
