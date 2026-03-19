@@ -123,7 +123,7 @@ class RowForm(RowFormTemplate):
         input.background = "#000000"
       #
       
-        
+      # start validaton for fields 
       if column_name in ["YearEnd","YearStart"]:
         input_error.text = "Enter a correct year format ([-9999 until 9999])"
         input_error.foreground ="#FF0000"
@@ -208,14 +208,14 @@ class RowForm(RowFormTemplate):
           input_error
         )
 
-      elif column_name in ["Role"]:
+      elif column_name in ["Role2"]:
         # 1. Define your allowed words
-        allowed_words = ['administrator','manager','editor','viewer']
+        allowed_words = ['Administrator','Manager']
         # 2. Build the "OR" part of the rgex: 
         choices = r'(?:' + '|'.join(map(re.escape, allowed_words)) + r')'
         # 3. Assemble the full pattern
         # Starts with a choice, followed by zero or more (comma + choice)
-        pattern_string = rf'^(?i){choices}(?:\s*,\s*{choices})*$'
+        pattern_string = rf'^(?i){choices}*$'
         input_error.text = "You must enter one of " + str(allowed_words)
         input_error.foreground ="#FF0000"
         self.validator.require(
@@ -224,15 +224,15 @@ class RowForm(RowFormTemplate):
           lambda tb: re.fullmatch(pattern_string, tb.text),
           input_error
         )
-
-      elif column_name in ["Enabled"]:
+      
+      elif column_name in ["Enabled","Role"]:
         # 1. Define your allowed words
-        allowed_words = ['True','False']
+        allowed_words = ['Adminstrator','False']
         # 2. Build the "OR" part of the rgex: 
         choices = r'(?:' + '|'.join(map(re.escape, allowed_words)) + r')'
         # 3. Assemble the full pattern
         # Starts with a choice, followed by zero or more (comma + choice)
-        pattern_string = rf'^(?i){choices}(?:\s*,\s*{choices})*$'
+        pattern_string = rf'^(?i){choices}*$'
         input_error.text = "You must enter one of " + str(allowed_words)
         input_error.foreground ="#FF0000"
         self.validator.require(
