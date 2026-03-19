@@ -566,14 +566,16 @@ class Main(MainTemplate):
           self.list_dropdown.visible = True
           self.view_row.visible = True        
           self.edit_row.visible = True
-          self.insert_dropdown.visible = True     
+          self.insert_dropdown.visible = True 
+          self.query_dropdown.visible = True 
           self.delete_row.visible = True
           self.import_dropdown.visible = True
         elif Global.site_user_role in ["Editor"]:
           self.list_dropdown.visible = True
           self.view_row.visible = True        
           self.edit_row.visible = True
-          self.insert_dropdown.visible = True     
+          self.insert_dropdown.visible = True 
+          self.query_dropdown.visible = False 
           self.delete_row.visible = False
           self.import_dropdown.visible = False
         elif Global.site_user_role in ["Viewer"]:
@@ -581,6 +583,7 @@ class Main(MainTemplate):
           self.view_row.visible = True
           self.edit_row.visible = False
           self.insert_dropdown.visible = False
+          self.query_dropdown.visible = False 
           self.delete_row.visible = False
           self.import_dropdown.visible = False
         else:

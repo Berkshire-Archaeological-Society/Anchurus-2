@@ -193,12 +193,12 @@ class RowForm(RowFormTemplate):
       
       elif column_name in ["RecordStatus"]:
         # 1. Define your allowed words
-        allowed_words = ['registered','planned','dated','grouped','report']
+        allowed_words = ['Registered','Planned','Dated','Grouped','Report']
         # 2. Build the "OR" part of the rgex: 
         choices = r'(?:' + '|'.join(map(re.escape, allowed_words)) + r')'
         # 3. Assemble the full pattern
         # Starts with a choice, followed by zero or more (comma + choice)
-        pattern_string = rf'^(?i){choices}(?:\s*,\s*{choices})*$'
+        pattern_string = rf'^{choices}(?:\s*,\s*{choices})*$'
         input_error.text = "You must enter a list of " + str(allowed_words)
         input_error.foreground ="#FF0000"
         self.validator.require(
@@ -208,31 +208,34 @@ class RowForm(RowFormTemplate):
           input_error
         )
 
-      elif column_name in ["Role2"]:
+      elif column_name in ["Role"]:
         # 1. Define your allowed words
-        allowed_words = ['Administrator','Manager']
+        allowed_words = ['Manager',"Editor","Viewer"]
         # 2. Build the "OR" part of the rgex: 
         choices = r'(?:' + '|'.join(map(re.escape, allowed_words)) + r')'
         # 3. Assemble the full pattern
         # Starts with a choice, followed by zero or more (comma + choice)
-        pattern_string = rf'^(?i){choices}*$'
+        pattern_string = rf'^{choices}*$'
+        #print(pattern_string)
         input_error.text = "You must enter one of " + str(allowed_words)
         input_error.foreground ="#FF0000"
+        # TB: do not understand by using pattern_string does not work (compared to previous one (Column Enabled))
         self.validator.require(
           input,
           ['change', 'lost_focus'],
-          lambda tb: re.fullmatch(pattern_string, tb.text),
+          lambda tb: re.fullmatch(r'^(?:Manager|Editor|Viewer)$', tb.text),
           input_error
-        )
+         )
       
-      elif column_name in ["Enabled","Role"]:
+      elif column_name in ["Enabled"]:
         # 1. Define your allowed words
-        allowed_words = ['Adminstrator','False']
+        allowed_words = ['True','False']
         # 2. Build the "OR" part of the rgex: 
         choices = r'(?:' + '|'.join(map(re.escape, allowed_words)) + r')'
         # 3. Assemble the full pattern
         # Starts with a choice, followed by zero or more (comma + choice)
-        pattern_string = rf'^(?i){choices}*$'
+        pattern_string = rf'^{choices}*$'
+        #print(pattern_string)
         input_error.text = "You must enter one of " + str(allowed_words)
         input_error.foreground ="#FF0000"
         self.validator.require(
@@ -244,18 +247,20 @@ class RowForm(RowFormTemplate):
       
       elif column_name in ["ContextType"]:
         # 1. Define your allowed words
-        allowed_words = ['deposit','fill','cut','structure','feature']
+        allowed_words = ['Deposit','Fill','Cut','Structure','Feature']
         # 2. Build the "OR" part of the rgex: 
         choices = r'(?:' + '|'.join(map(re.escape, allowed_words)) + r')'
         # 3. Assemble the full pattern
         # Starts with a choice, followed by zero or more (comma + choice)
-        pattern_string = rf'^(?i){choices}(?:\s*,\s*{choices})*$'
+        pattern_string = rf'^{choices}$'
+        #print(pattern_string)
         input_error.text = "You must enter one of " + str(allowed_words)
         input_error.foreground ="#FF0000"
+        # TB: do not understand by using pattern_string does not work (compared to previous one (Column Enabled))
         self.validator.require(
           input,
           ['change', 'lost_focus'],
-          lambda tb: re.fullmatch(r'^(?i)^(?:deposit|fill|cut|structure|feature)$', tb.text),
+          lambda tb: re.fullmatch(r'^(?:Deposit|Fill|Cut|Structure|Feature)$', tb.text),
           input_error
         )     
       # end of validation 
