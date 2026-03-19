@@ -33,6 +33,7 @@ insert_action_dropdown = ["Context","Find","Anomoly","Interpretation"]
 file_action_dropdown = ["Import",separator,"Save"]
 view_action_dropdown = []
 help_action_dropdown = ["Anchurus Website"]
+query_action_dropdown = [("List Query","List query"),("Import Query","Import query")]
 sys_admin_action_dropdown = [("List Users","List Users"),("Insert User","Insert User"),("Import Users","Import Users"),separator,("List DBDiary","List dbdiary"),separator,("List Sites","List Site"),("Insert Site","Insert Site")]
 site_admin_action_dropdown = [(separator,separator),("List Site Users","List sys_userrole"),("Insert Site User","Insert sys_userrole"),("Import Site Users","Import sys_userrole")]
 #

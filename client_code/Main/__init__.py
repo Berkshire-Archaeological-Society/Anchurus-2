@@ -77,6 +77,7 @@ class Main(MainTemplate):
     self.insert_dropdown.items = Global.insert_action_dropdown
     self.list_dropdown.items = Global.list_action_dropdown
     self.admin_dropdown.items = Global.sys_admin_action_dropdown
+    self.query_dropdown.items = Global.query_action_dropdown
     #self.file_dropdown.items = Global.file_list
     #self.view_dropdown.items = Global.view_action_dropdown
     self.help_dropdown.items = Global.help_action_dropdown
