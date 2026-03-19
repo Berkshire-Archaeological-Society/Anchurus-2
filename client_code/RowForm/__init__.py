@@ -207,6 +207,41 @@ class RowForm(RowFormTemplate):
           lambda tb: re.fullmatch(pattern_string, tb.text),
           input_error
         )
+
+      elif column_name in ["Role"]:
+        # 1. Define your allowed words
+        allowed_words = ['Administrator','Manager','Editor','Viewer']
+        # 2. Build the "OR" part of the rgex: 
+        choices = r'(?:' + '|'.join(map(re.escape, allowed_words)) + r')'
+        # 3. Assemble the full pattern
+        # Starts with a choice, followed by zero or more (comma + choice)
+        pattern_string = rf'^(?i){choices}(?:\s*,\s*{choices})*$'
+        input_error.text = "You must enter one of " + str(allowed_words)
+        input_error.foreground ="#FF0000"
+        self.validator.require(
+          input,
+          ['change', 'lost_focus'],
+          lambda tb: re.fullmatch(pattern_string, tb.text),
+          input_error
+        )
+
+      elif column_name in ["Enabled"]:
+        # 1. Define your allowed words
+        allowed_words = ['True','False']
+        # 2. Build the "OR" part of the rgex: 
+        choices = r'(?:' + '|'.join(map(re.escape, allowed_words)) + r')'
+        # 3. Assemble the full pattern
+        # Starts with a choice, followed by zero or more (comma + choice)
+        pattern_string = rf'^(?i){choices}(?:\s*,\s*{choices})*$'
+        input_error.text = "You must enter one of " + str(allowed_words)
+        input_error.foreground ="#FF0000"
+        self.validator.require(
+          input,
+          ['change', 'lost_focus'],
+          lambda tb: re.fullmatch(pattern_string, tb.text),
+          input_error
+        )
+      
       elif column_name in ["ContextType"]:
         # 1. Define your allowed words
         allowed_words = ['deposit','fill','cut','structure','feature']
@@ -215,7 +250,7 @@ class RowForm(RowFormTemplate):
         # 3. Assemble the full pattern
         # Starts with a choice, followed by zero or more (comma + choice)
         pattern_string = rf'^(?i){choices}(?:\s*,\s*{choices})*$'
-        input_error.text = "You must enter a list of " + str(allowed_words)
+        input_error.text = "You must enter one of " + str(allowed_words)
         input_error.foreground ="#FF0000"
         self.validator.require(
           input,

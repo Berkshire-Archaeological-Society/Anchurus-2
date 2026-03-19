@@ -78,7 +78,8 @@ def create_work_space(type,data_list):
   elif type == "Help":
     work_space = Help()
   else:
-    #print("Unknown Type - no known workspace")
+    msg = "Unknown workspace to create: " + type
+    print(msg)
     work_space = "Unknown"
   return work_space
 
