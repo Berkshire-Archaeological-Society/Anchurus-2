@@ -355,6 +355,12 @@ class RowForm(RowFormTemplate):
 
   def execute_sql_btn_click(self, **event_args):
     print("Execute SQL command button pressed")
+    msg, data_list = anvil.server.call("execute_sql_command",)
+    if msg[0: 4 == "FAIL":
+      alert(msg)
+    else:
+      # SQL command completed successfully and returned a data_list. Create a new TableList workspace
+      
     pass
     
   def submit_btn_click(self, **event_args):
