@@ -210,7 +210,7 @@ class RowForm(RowFormTemplate):
 
       elif column_name in ["Role"]:
         # 1. Define your allowed words
-        allowed_words = ['Administrator','Manager','Editor','Viewer']
+        allowed_words = ['administrator','manager','editor','viewer']
         # 2. Build the "OR" part of the rgex: 
         choices = r'(?:' + '|'.join(map(re.escape, allowed_words)) + r')'
         # 3. Assemble the full pattern

@@ -34,7 +34,7 @@ file_action_dropdown = ["Import",separator,"Save"]
 view_action_dropdown = []
 help_action_dropdown = ["Anchurus Website"]
 sys_admin_action_dropdown = [("List Users","List Users"),("Insert User","Insert User"),("Import Users","Import Users"),separator,("List DBDiary","List dbdiary"),separator,("List Sites","List Site"),("Insert Site","Insert Site")]
-site_admin_action_dropdown = [(separator,separator),("List Site Users","List sys_siteuserrole"),("Insert Site User","Insert sys_userrole"),("Import Site Users","Import sys_siteuserrole")]
+site_admin_action_dropdown = [(separator,separator),("List Site Users","List sys_userrole"),("Insert Site User","Insert sys_userrole"),("Import Site Users","Import sys_userrole")]
 #
 import_action_dropdown = ["context","find"]
 #
@@ -146,7 +146,7 @@ login_options = {"Sign in", "Sign out"}
 #
 organisation = ""
 query_view = False
-view_queries = ["sys_siteuserrole"]
+view_queries = ["sys_userrole"]
 #
 # The following variable rows_per_page has to be set to 0, to make sure the print function prints the whole table
 # During startup of the client (i.e. browser URL click of website) this value can be overwritten by a value for this
