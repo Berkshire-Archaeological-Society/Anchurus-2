@@ -66,7 +66,7 @@ class TableList(TableListTemplate):
     self.select_all.checked = False
   pass
   
-  def table_list_refresh(self, **event_args):
+  def table_list_refresh_old(self, **event_args):
     # This function does the filling of the table contents
     # 1. call server function '"table_name"s_get', which retrieves all rows of the table_name for the given site
     self.repeating_panel_1.items = anvil.server.call("table_get",Global.site_id,Global.table_name)

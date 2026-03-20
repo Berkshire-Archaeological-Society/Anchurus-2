@@ -131,15 +131,18 @@ def create_table_columns(column_list,work_area):
 def table_list_refresh(self):
   # This function does the filling of the table contents
   # 1. call server function '"table_name"s_get', which retrieves all rows of the table_name for the given site
+  # This only work for a true DB table refresh. If table is 'qresult' (i.e. a query result) then assign repeating_panel_1 to the Globa.table_items)
   if Global.table_name != "qresult":
     self.repeating_panel_1.items = anvil.server.call("table_get",Global.site_id,Global.table_name)
   else:
-    self.repeating_panel_1.items = G
+    self.repeating_panel_1.items = Global.table_items
+  print(len(self.repeating_panel_1.items))
+  print(Global.query_view)
   #print(self.repeating_panel_1.items)
   if len(self.repeating_panel_1.items) > 0 and Global.query_view:
     # reset table columns if we have rows. This will able to receive views, not just fixed table columns
     column_list = self.repeating_panel_1.items[0].keys()
-    #print(column_list)
+    print(column_list)
     create_table_columns(column_list,Global.work_area[Global.current_work_area_name])
 
   # 2. set nr of rows per page from Global variable (which is defined by a parameter in the server-side config file)

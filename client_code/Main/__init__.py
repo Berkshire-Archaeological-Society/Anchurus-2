@@ -243,21 +243,25 @@ class Main(MainTemplate):
     table_info = [] 
     # get table_info , works only for a true DB table. If not we have to create the table_info dictionary list ourselves   
     if action.split(" ")[1].lower() != "qresult":
+      Global.query_view = False
       table_info = anvil.server.call("describe_table",action.split(" ")[1].lower())
     else:
+      Global.query_view = True
       col_info = {}
+      pos = 0
       for col in Global.table_items[0]:
         # loop through columns of first row table_item
+        pos = pos + 1
         col_info["COLUMN_NAME"] = col
-        col_info["COLUMN_TYPE"] = "VARCHAR"
+        col_info["COLUMN_TYPE"] = "varchar(30)"
         col_info["COLUMN_KEY"] = ""
-        col_info["IS_NULLABLE"] = "TRUE"
-        col_info["COLUMN_DEFAULT"] = ""
-        col_info["CHARACTER_MAXIMUM_LENGTH"] = ""
+        col_info["IS_NULLABLE"] = "YES"
+        col_info["COLUMN_DEFAULT"] = None
+        col_info["CHARACTER_MAXIMUM_LENGTH"] = 65535
         col_info["COLUMN_COMMENT"] = ""
-        col_info["ORDINAL_POSITION"] = ""
+        col_info["ORDINAL_POSITION"] = pos
         table_info.append(col_info)
-    print(table_info)
+    #print(table_info)
     
     # For all actions not in Admin_action_list check ID field for creating unique work_area name
     if action not in Global.sys_admin_action_list and action not in Global.site_admin_action_list and action not in ["List Qresult","List qresult"]:
