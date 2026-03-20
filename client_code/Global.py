@@ -111,6 +111,7 @@ area_id = None
 area_options = {}
 dummy_btn1 = {}
 dummy_btn2 = {}
+column_order = {}
 context_id = None
 context_items = {}
 context_options = {}

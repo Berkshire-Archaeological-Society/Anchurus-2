@@ -124,7 +124,9 @@ def create_table_columns(column_list,work_area):
       id = id + 1
       columns_titles.append({"id": id, "title": column, "data_key": column, "width": col_width, "expand": True })
     # assign the columns titles to the grid columns
-  #print(columns_titles)
+  #
+  print("in create_table_columns")
+  print(columns_titles)
   work_area["table"].columns = columns_titles
   return
   

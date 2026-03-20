@@ -317,11 +317,12 @@ class RowForm(RowFormTemplate):
         cur_len = 0
         
       # create column header with column_name and column_description in one flowpanel (col_header)
-      # add * to column name name if required
+      # add * to column name if inoout for field is mandatory
       if item["IS_NULLABLE"] == "YES":
         col = ""
       else:
         col = "* "
+        
       col = col + column_name + " (" + str(cur_len) + "/" + str(max_length) + "):" 
       lab = Label(text=col,font_size=14,tag=column_name)
       col_description = Label(text=item["COLUMN_COMMENT"],font_size=14)
@@ -362,13 +363,16 @@ class RowForm(RowFormTemplate):
     Global.query_id = next((str(item[1]['field'].text) for item in list(formfields) if item[0] == "QueryId"),0)
     command = next((str(item[1]['field'].getText()) for item in list(formfields) if item[0] == "SQL_command"),0)
     #print(command)
-    msg, data_list = anvil.server.call("execute_sql_command",command)
+    msg, data_list, column_order = anvil.server.call("execute_sql_command",command)
+    print("after execute_sql_commnd")
+    print(column_order)
     # Check msg for succes or FAIL
     if msg[0: 4] == "FAIL":
       alert(msg)
     else:
       # SQL command completed successfully and returned a data_list. Create a new TableList workspace
       #print(msg)
+      Global.column_order = column_order
       Global.table_items = data_list
       Global.table_name = "qresult"
       Global.action = "List " + Global.table_name.capitalize()

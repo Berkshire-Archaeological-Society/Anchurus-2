@@ -250,7 +250,7 @@ class Main(MainTemplate):
       Global.query_view = True
       col_info = {}
       pos = 0
-      print(Global.table_items)
+      #print(Global.table_items)
       for col in Global.table_items[0]:
         # loop through columns of first row table_item
         pos = pos + 1

@@ -175,6 +175,8 @@ class TableList(TableListTemplate):
       Global.query_view = False
     else:
       Global.query_view = True
+      print("in table_list init if query_view is True,Global.column_order")
+      print(Global.column_order)
       col_info = {}
       pos = 0
       for col in Global.table_items[0]:
@@ -187,8 +189,9 @@ class TableList(TableListTemplate):
         col_info["COLUMN_DEFAULT"] = None
         col_info["CHARACTER_MAXIMUM_LENGTH"] = 65535
         col_info["COLUMN_COMMENT"] = ""
-        col_info["ORDINAL_POSITION"] = pos
-        table_info.append(col_info)#print(table_info)
+        col_info["ORDINAL_POSITION"] = Global.column_order[col]
+        table_info.append(col_info)
+        #print(table_info)
 
     # add table to work_area data structure for Global.current_work_area_name
     Global.work_area[Global.current_work_area_name]["table"] = self.table
@@ -210,6 +213,8 @@ class TableList(TableListTemplate):
         field_name = column_data["COLUMN_NAME"]
       column_list.append(field_name)
     # now create the table columns and put them in the work area
+    print("TableList - init")
+    print(column_list)
     FunctionsB.create_table_columns(column_list,Global.work_area[Global.current_work_area_name])
     
     self.table.columns = Global.work_area[Global.current_work_area_name]["table"].columns
