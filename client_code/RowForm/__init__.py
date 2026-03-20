@@ -360,7 +360,16 @@ class RowForm(RowFormTemplate):
       alert(msg)
     else:
       # SQL command completed successfully and returned a data_list. Create a new TableList workspace
-      
+      Global.table_items = row
+      #print("View button for row: ",row)
+      Global.action = "View " + Global.table_name.capitalize()
+      if Global.main_form:  # Important to check if the form exists
+        # Create new work_area "View Context" and set focus on this new work_area
+        #print("From repatingPanel row calling create_new_work_area for:",Global.action)
+        Global.main_form.create_new_work_area(Global.action)
+      else:
+        print("Main form not found!")
+
     pass
     
   def submit_btn_click(self, **event_args):
