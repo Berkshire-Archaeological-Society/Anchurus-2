@@ -250,10 +250,12 @@ class Main(MainTemplate):
       Global.query_view = True
       col_info = {}
       pos = 0
-      #print(Global.table_items)
-      for col in Global.table_items[0]:
+      tmp_table_info = []
+      #print(Global.column_order)
+      for col in Global.column_order:
         # loop through columns of first row table_item
-        pos = pos + 1
+        #print(col)
+        col_info = {}
         col_info["COLUMN_NAME"] = col
         col_info["COLUMN_TYPE"] = "varchar(30)"
         col_info["COLUMN_KEY"] = ""
@@ -261,9 +263,11 @@ class Main(MainTemplate):
         col_info["COLUMN_DEFAULT"] = None
         col_info["CHARACTER_MAXIMUM_LENGTH"] = 65535
         col_info["COLUMN_COMMENT"] = ""
-        col_info["ORDINAL_POSITION"] = pos
-        table_info.append(col_info)
-    #print(table_info)
+        col_info["ORDINAL_POSITION"] = Global.column_order[col]
+        #print(col_info)
+        tmp_table_info.append(col_info)
+      # sort table_info in ORDINAL_POSITION
+      table_info = sorted(tmp_table_info, key=lambda x: x['ORDINAL_POSITION'])
     
     # For all actions not in Admin_action_list check ID field for creating unique work_area name
     if action not in Global.sys_admin_action_list and action not in Global.site_admin_action_list and action not in ["List Qresult","List qresult"]:
@@ -337,6 +341,7 @@ class Main(MainTemplate):
     
     # create a new work_space and add this to the work_area_list and add component to main     
     #print("Main create_new_work_area: ",self)
+    #print("Call to cerate_work_space")
     form_result = Function.create_work_space(action,Global.table_items)
     if form_result != "Unknown":
       #print(action, work_area_name, Global.work_area)

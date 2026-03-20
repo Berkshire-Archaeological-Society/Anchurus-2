@@ -364,8 +364,8 @@ class RowForm(RowFormTemplate):
     command = next((str(item[1]['field'].getText()) for item in list(formfields) if item[0] == "SQL_command"),0)
     #print(command)
     msg, data_list, column_order = anvil.server.call("execute_sql_command",command)
-    print("after execute_sql_commnd")
-    print(column_order)
+    #print("after execute_sql_commnd")
+    #print(column_order)
     # Check msg for succes or FAIL
     if msg[0: 4] == "FAIL":
       alert(msg)

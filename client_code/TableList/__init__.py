@@ -175,13 +175,14 @@ class TableList(TableListTemplate):
       Global.query_view = False
     else:
       Global.query_view = True
-      print("in table_list init if query_view is True,Global.column_order")
-      print(Global.column_order)
-      col_info = {}
-      pos = 0
-      for col in Global.table_items[0]:
+      #print("in table_list init if query_view is True value of Global.column_order")
+      #print(Global.column_order)
+      #print(Global.table_items[0])
+      tmp_table_info = []
+      for col in Global.column_order:
         # loop through columns of first row table_item
-        pos = pos + 1
+        #print(col)
+        col_info = {}
         col_info["COLUMN_NAME"] = col
         col_info["COLUMN_TYPE"] = "varchar(30)"
         col_info["COLUMN_KEY"] = ""
@@ -190,8 +191,11 @@ class TableList(TableListTemplate):
         col_info["CHARACTER_MAXIMUM_LENGTH"] = 65535
         col_info["COLUMN_COMMENT"] = ""
         col_info["ORDINAL_POSITION"] = Global.column_order[col]
-        table_info.append(col_info)
-        #print(table_info)
+        #print(col_info)
+        tmp_table_info.append(col_info)
+      # sort table_info in ORDINAL_POSITION
+      table_info = sorted(tmp_table_info, key=lambda x: x['ORDINAL_POSITION'])
+      #print(table_info)
 
     # add table to work_area data structure for Global.current_work_area_name
     Global.work_area[Global.current_work_area_name]["table"] = self.table
@@ -203,6 +207,8 @@ class TableList(TableListTemplate):
     # (Field:, Type:, Null:, Key:, Default:, Extra:)
 
     # first make column list
+    #print("TableList - init - make columns list from table_info")
+    #print(table_info)
     column_list = []
     for column_data in table_info:
       # Select Column name:
@@ -213,8 +219,8 @@ class TableList(TableListTemplate):
         field_name = column_data["COLUMN_NAME"]
       column_list.append(field_name)
     # now create the table columns and put them in the work area
-    print("TableList - init")
-    print(column_list)
+    
+    #print("Calling create_table_columns from TableList init")
     FunctionsB.create_table_columns(column_list,Global.work_area[Global.current_work_area_name])
     
     self.table.columns = Global.work_area[Global.current_work_area_name]["table"].columns
