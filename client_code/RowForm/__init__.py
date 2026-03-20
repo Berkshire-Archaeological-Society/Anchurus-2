@@ -355,14 +355,20 @@ class RowForm(RowFormTemplate):
 
   def execute_sql_btn_click(self, **event_args):
     print("Execute SQL command button pressed")
-    msg, data_list = anvil.server.call("execute_sql_command",)
-    if msg[0: 4 == "FAIL":
+    formfields = self.form_fields.items()
+    print(list(formfields)[7])
+    #command = next((item['SQL_COMMAND'] for item in self.form_fields.items() if item['SQL_command'] == column),0)
+    command = next((str(item[1]['field'].getText()) for item in list(formfields) if item[0] == "SQL_command"),0)
+    print(command)
+    msg, data_list = anvil.server.call("execute_sql_command",command)
+    # Check msg for succes or FAIL
+    if msg[0: 4] == "FAIL":
       alert(msg)
     else:
       # SQL command completed successfully and returned a data_list. Create a new TableList workspace
-      Global.table_items = row
-      #print("View button for row: ",row)
-      Global.action = "View " + Global.table_name.capitalize()
+      Global.table_items = data_list
+      Global.table_name = "qresult"
+      Global.action = "List " + Global.table_name.capitalize()
       if Global.main_form:  # Important to check if the form exists
         # Create new work_area "View Context" and set focus on this new work_area
         #print("From repatingPanel row calling create_new_work_area for:",Global.action)
