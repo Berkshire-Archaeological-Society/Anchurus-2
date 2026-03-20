@@ -276,7 +276,11 @@ class Main(MainTemplate):
           work_area_name = action.split(" ")[0] + " " + Global.table_items[primary_key_list[0]]
         else:
           work_area_name = action.split(" ")[0] + " " + Global.table_items[primary_key_list[1]]
-        
+
+    # for List Qresult we add the QueryId
+    if action in ["List Qresult","List qresult"]:
+      work_area_name = work_area_name +" " + Global.query_id
+      
     # check if work_area_name exists and keep counter
     if (Global.work_area.get(work_area_name) is None):
       if Global.action_seq_no.get(work_area_name) is None:

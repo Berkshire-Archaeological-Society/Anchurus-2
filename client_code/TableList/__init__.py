@@ -66,28 +66,28 @@ class TableList(TableListTemplate):
     self.select_all.checked = False
   pass
   
-  def table_list_refresh_old(self, **event_args):
-    # This function does the filling of the table contents
-    # 1. call server function '"table_name"s_get', which retrieves all rows of the table_name for the given site
-    self.repeating_panel_1.items = anvil.server.call("table_get",Global.site_id,Global.table_name)
-    
-    # 2. set nr of rows per page from Global variable (which is defined by a parameter in the server-side config file)
-    #if Global.rows_per_page is not None:
-    self.table.rows_per_page = Global.rows_per_page
-    if len(self.page_info) != 0:# this means this form is called from the server (print function)
-      self.table.rows_per_page = self.page_info["rows_per_page"]
-      self.table.set_page(self.page_info["page_num"])
-      
-    # 3.save the list of items in the Global 'work-area' dictionary
-    if Global.current_work_area_name is not None:
-      Global.work_area[Global.current_work_area_name]["data_list"] = self.repeating_panel_1.items
-       
-    # Trigger the initial update
-    self.update_status_label()
-    
-    # Display the total number of rows
-    self.information.text = Global.table_name
-  pass
+  #def table_list_refresh_old(self, **event_args):
+  #  # This function does the filling of the table contents
+  #  # 1. call server function '"table_name"s_get', which retrieves all rows of the table_name for the given site
+  #  self.repeating_panel_1.items = anvil.server.call("table_get",Global.site_id,Global.table_name)
+  #  
+  #  # 2. set nr of rows per page from Global variable (which is defined by a parameter in the server-side config file)
+  #  #if Global.rows_per_page is not None:
+  #  self.table.rows_per_page = Global.rows_per_page
+  #  if len(self.page_info) != 0:# this means this form is called from the server (print function)
+  #    self.table.rows_per_page = self.page_info["rows_per_page"]
+  #    self.table.set_page(self.page_info["page_num"])
+  #    
+  #  # 3.save the list of items in the Global 'work-area' dictionary
+  #  if Global.current_work_area_name is not None:
+  #    Global.work_area[Global.current_work_area_name]["data_list"] = self.repeating_panel_1.items
+  #     
+  #  # Trigger the initial update
+  #  self.update_status_label()
+  #  
+  #  # Display the total number of rows
+  #  self.information.text = Global.table_name
+  #pass
 
   def view_button_click(self, **event_args):
     """This handler is called by the dynamically created button."""
@@ -158,10 +158,30 @@ class TableList(TableListTemplate):
     # set table_name to one of "context", "find", from the action Global variable 
       Global.table_name = Global.action.split(" ")[1].lower()
     
-    #print(Global.table_name)
-    # get the Table information form the Database
-    table_info = anvil.server.call("describe_table", Global.table_name)
-    #print(table_info)
+    print(Global.table_name)
+    Global.query_view = False
+    table_info = [] 
+    # get table_info, works only for a true DB table. If not (e.g. table is 'qresult') we have to create the table_info dictionary list ourselves   
+    if Global.table_name != "qresult":
+      # get the Table information form the Database
+      table_info = anvil.server.call("describe_table", Global.table_name)
+      Global.query_view = False
+    else:
+      Global.query_view = True
+      col_info = {}
+      pos = 0
+      for col in Global.table_items[0]:
+        # loop through columns of first row table_item
+        pos = pos + 1
+        col_info["COLUMN_NAME"] = col
+        col_info["COLUMN_TYPE"] = "varchar(30)"
+        col_info["COLUMN_KEY"] = ""
+        col_info["IS_NULLABLE"] = "YES"
+        col_info["COLUMN_DEFAULT"] = None
+        col_info["CHARACTER_MAXIMUM_LENGTH"] = 65535
+        col_info["COLUMN_COMMENT"] = ""
+        col_info["ORDINAL_POSITION"] = pos
+        table_info.append(col_info)#print(table_info)
 
     # add table to work_area data structure for Global.current_work_area_name
     Global.work_area[Global.current_work_area_name]["table"] = self.table

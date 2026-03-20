@@ -147,6 +147,7 @@ login_options = {"Sign in", "Sign out"}
 #
 organisation = ""
 query_view = False
+query_id = ""
 view_queries = ["sys_userrole"]
 #
 # The following variable rows_per_page has to be set to 0, to make sure the print function prints the whole table
