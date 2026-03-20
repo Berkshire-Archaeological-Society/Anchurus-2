@@ -366,6 +366,7 @@ class RowForm(RowFormTemplate):
       alert(msg)
     else:
       # SQL command completed successfully and returned a data_list. Create a new TableList workspace
+      print("msg")
       Global.table_items = data_list
       Global.table_name = "qresult"
       Global.action = "List " + Global.table_name.capitalize()
