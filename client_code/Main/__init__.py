@@ -119,7 +119,7 @@ class Main(MainTemplate):
     
     # now get the name of the button (work_area_name) that was clicked and make this and the associated work_area visible
     work_area = event_args['sender']
-    print("Clicked workspace ",work_area)
+    #print("Clicked workspace ",work_area)
     Global.current_work_area_name = work_area.text
 
     # check if CTRL key was pressed when clicked. This is a workaround to use CTRL/Click to delete a workspace
