@@ -354,12 +354,12 @@ class RowForm(RowFormTemplate):
     Global.work_area[Global.current_work_area_name]["page_info"] = {"page_num": 0, "rows_per_page": 0, "total_rows": 0}
 
   def execute_sql_btn_click(self, **event_args):
-    print("Execute SQL command button pressed")
+    #print("Execute SQL command button pressed")
     formfields = self.form_fields.items()
-    print(list(formfields)[7])
-    #command = next((item['SQL_COMMAND'] for item in self.form_fields.items() if item['SQL_command'] == column),0)
+    #print(list(formfields)[7])
+    # SQL_Command is a <class 'anvil_extras.Quill.Quill'> object as it is a text datatype so needs to get the test with the Quill method getText()
     command = next((str(item[1]['field'].getText()) for item in list(formfields) if item[0] == "SQL_command"),0)
-    print(command)
+    #print(command)
     msg, data_list = anvil.server.call("execute_sql_command",command)
     # Check msg for succes or FAIL
     if msg[0: 4] == "FAIL":
