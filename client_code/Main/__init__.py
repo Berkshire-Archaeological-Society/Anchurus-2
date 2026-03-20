@@ -195,7 +195,8 @@ class Main(MainTemplate):
       #self.select_all.checked = Global.work_area[Global.current_work_area_name]["self"].select_all.checked
       #self.select_all.indeterminate = Global.work_area[Global.current_work_area_name]["self"].select_all.indeterminate
 
-      # set edit_row and delete_row visibilty that were saved in create workspace 
+      # set edit_row and delete_row visibilty that were saved in create workspace
+      self.view_row.visible = Global.work_area[Global.current_work_area_name]["visibility_view_row"]
       self.edit_row.visible = Global.work_area[Global.current_work_area_name]["visibility_edit_row"]
       self.delete_row.visible = Global.work_area[Global.current_work_area_name]["visibility_delete_row"] 
 
@@ -391,8 +392,14 @@ class Main(MainTemplate):
       if Global.table_name == "dbdiary":
         self.edit_row.visible = False
         self.delete_row.visible = False
-
+      # for table dbdiary disable edit_row and delete_row button
+      if Global.table_name == "qresult":
+        self.view_row.visible = False
+        self.edit_row.visible = False
+        self.delete_row.visible = False
+        
       # safe edit_row and delete_row visibilty so that at click woekspace they can be set
+      Global.work_area[Global.current_work_area_name]["visibility_view_row"] = self.view_row.visible
       Global.work_area[Global.current_work_area_name]["visibility_edit_row"] = self.edit_row.visible
       Global.work_area[Global.current_work_area_name]["visibility_delete_row"] = self.delete_row.visible
         

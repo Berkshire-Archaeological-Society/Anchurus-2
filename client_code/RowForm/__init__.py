@@ -358,6 +358,7 @@ class RowForm(RowFormTemplate):
     formfields = self.form_fields.items()
     #print(list(formfields)[7])
     # SQL_Command is a <class 'anvil_extras.Quill.Quill'> object as it is a text datatype so needs to get the test with the Quill method getText()
+    Global.query_info = formfields
     Global.query_id = next((str(item[1]['field'].text) for item in list(formfields) if item[0] == "QueryId"),0)
     command = next((str(item[1]['field'].getText()) for item in list(formfields) if item[0] == "SQL_command"),0)
     #print(command)
@@ -367,7 +368,7 @@ class RowForm(RowFormTemplate):
       alert(msg)
     else:
       # SQL command completed successfully and returned a data_list. Create a new TableList workspace
-      print(msg)
+      #print(msg)
       Global.table_items = data_list
       Global.table_name = "qresult"
       Global.action = "List " + Global.table_name.capitalize()

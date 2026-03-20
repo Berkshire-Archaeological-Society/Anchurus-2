@@ -143,7 +143,14 @@ class TableList(TableListTemplate):
     self.page_info = page_info
     self.site_id = site_id
     self.ws_name.text = Global.current_work_area_name
-    self.title.text = anvil.server.call("db_table_comment", Global.table_name)
+    if Global.table_name != "qresult":
+      self.title.text = anvil.server.call("db_table_comment", Global.table_name)
+    else:
+      print(Global.query_info)
+      qname = next((str(item[1]['field'].text) for item in list(Global.query_info) if item[0] == "QueryName"),0)
+      qwhat = next((str(item[1]['field'].text) for item in list(Global.query_info) if item[0] == "WhatItDoes"),0)
+      self.title.text = str(qname) + " - " + str(qwhat)
+      
     # Any code you write here will run before the form open
     # Global.site_id is only None when form called from server side (e.g. printing form)
     if Global.site_id is None:
@@ -158,7 +165,7 @@ class TableList(TableListTemplate):
     # set table_name to one of "context", "find", from the action Global variable 
       Global.table_name = Global.action.split(" ")[1].lower()
     
-    print(Global.table_name)
+    #print(Global.table_name)
     Global.query_view = False
     table_info = [] 
     # get table_info, works only for a true DB table. If not (e.g. table is 'qresult') we have to create the table_info dictionary list ourselves   
