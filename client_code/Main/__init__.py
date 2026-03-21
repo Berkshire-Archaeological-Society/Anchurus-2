@@ -272,16 +272,31 @@ class Main(MainTemplate):
     # For all actions not in Admin_action_list check ID field for creating unique work_area name
     if action not in Global.sys_admin_action_list and action not in Global.site_admin_action_list and action not in ["List Qresult","List qresult"]:
       # need to check if this works for dynamic tables like SQL query
+      # trying to make a work_area_name suitabe for action and table (i.e. (List |[E|V]-|Insert )<table_name> <main-pri_id>)
       # add first Primary Key ID field when view or edit
       primary_key_list = []
-      for column in table_info:
-        if column["COLUMN_KEY"] == "PRI":
-          primary_key_list.append(column["COLUMN_NAME"])
+      
+      if action.split(" ")[1] in ["dbdiary","Dbdiary"]:
+         primary_key_list.append("DBAcontrol")
+      else:
+        for column in table_info:
+          if column["COLUMN_KEY"] == "PRI":
+            primary_key_list.append(column["COLUMN_NAME"])
       if action.split(" ")[0].lower() in ["view","edit"]:
-        if len(primary_key_list) == 1:
-          work_area_name = action.split(" ")[0] + " " + Global.table_items[primary_key_list[0]]
+        work_area_name = ""
+        if action.split(" ")[1].lower() != "dbdiary":
+          if action.split(" ")[0].lower() ==  "view":
+            work_area_name = "V-"
+          else:
+            work_area_name = "E-"
+        if action.split(" ")[1] == "Sys_userrole":
+          work_area_name = work_area_name + action.split(" ")[1][8:]
         else:
-          work_area_name = action.split(" ")[0] + " " + Global.table_items[primary_key_list[1]]
+          work_area_name = work_area_name + action.split(" ")[1]
+        if len(primary_key_list) == 1:
+          work_area_name = work_area_name + " " + Global.table_items[primary_key_list[0]]
+        else:
+          work_area_name = work_area_name + " " + Global.table_items[primary_key_list[1]]
 
     # for List Qresult we add the QueryId
     if action in ["List Qresult","List qresult"]:
