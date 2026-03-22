@@ -145,16 +145,12 @@ class UserForm(UserFormTemplate):
   @handle("showhide_password_checkbox", "change")
   def showhide_password_checkbox_change(self, **event_args):
     """This method is called when this checkbox is checked or unchecked"""
-    #self.showhide_password_checkbox.visible = False
     if self.showhide_password_checkbox.checked:
       self.password_text_box.text = self.tag.password
       self.password_text_box.hide_text = False
-      #self.password_text_box.enabled = True
       self.showhide_password_checkbox.text = 'Hide Password'
     else:
-      #self.password_text_box.text = '*' * len(self.tag.password)
       self.password_text_box.hide_text = True
-      #self.password_text_box.enabled = False
       self.showhide_password_checkbox.text = 'Show Password'
     pass
 

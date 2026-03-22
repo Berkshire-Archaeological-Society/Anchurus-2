@@ -24,22 +24,19 @@ components:
   type: ColumnPanel
 - components:
   - components:
-    - layout_properties: {full_width_row: true, grid_position: 'SAUUAH,HPGUPD'}
+    - layout_properties: {expand: true}
       name: image_1
       properties:
         height: 61.666656494140625
         horizontal_align: left
         margin: [null, '0', null, '0']
-        source: _/theme/logo-test.png
+        source: _/theme/logo.png
       type: Image
-    layout_properties: {full_width_row: true, grid_position: 'TQCWAS,GKRBIS'}
+    layout_properties: {full_width_row: true, grid_position: 'TQCWAS,YMGKQQ'}
     name: title_panel
-    properties:
-      col_widths: '{"HPGUPD":15}'
-      spacing:
-        margin: [null, '0', null, '0']
-    type: ColumnPanel
-  - layout_properties: {full_width_row: true, grid_position: 'TQCWAS,TTAQIP BFIXZO,NUKNZN'}
+    properties: {}
+    type: FlowPanel
+  - layout_properties: {grid_position: 'TQCWAS,FYTACE HOKGJG,JSNQVL'}
     name: app_title
     properties:
       align: left
@@ -50,7 +47,7 @@ components:
         margin: ['5', '0', null, '0']
         padding: ['0', null, 0.9090908893868948, null]
     type: Label
-  - layout_properties: {full_width_row: true, grid_position: 'TQCWAS,TTAQIP MYAVJD,YVDUYZ'}
+  - layout_properties: {grid_position: 'TQCWAS,FYTACE RIYEVB,MMSCKR'}
     name: organisation
     properties:
       align: left
@@ -429,7 +426,7 @@ components:
   properties:
     background: ''
     col_spacing: none
-    col_widths: '{"GKRBIS":5,"XHRUHC":45,"TTAQIP":10}'
+    col_widths: '{"XHRUHC":40,"YMGKQQ":4,"FYTACE":16}'
     role: null
     spacing:
       margin: ['0', null, null, null]
