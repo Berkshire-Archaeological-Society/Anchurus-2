@@ -140,7 +140,7 @@ components:
           tooltip: import
         type: DropDown
       - event_bindings: {}
-        layout_properties: {width: 78.333251953125}
+        layout_properties: {width: 92.3297779296875}
         name: query_dropdown
         properties: {font_size: 13, include_placeholder: true, placeholder: Query}
         type: DropDown

@@ -342,7 +342,7 @@ class Main(MainTemplate):
 
     #limit button text to first limit_workspace_name_btn_text chars and set tooltip to shown full text
     tooltip_text = "select workspace " + work_area_name
-    limit_workspace_name_btn_text = 22
+    limit_workspace_name_btn_text = 25
     Global.work_area[work_area_name]["button"] = Button(text=work_area_name[:limit_workspace_name_btn_text],align="left",tooltip=tooltip_text)
     Global.work_area[work_area_name]["button"].role = "primary-color"
     self.work_area_list.add_component(Global.work_area[work_area_name]["button"])
