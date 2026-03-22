@@ -86,7 +86,7 @@ components:
     - layout_properties: {grid_position: 'OBVCGK,SOSGGL'}
       name: image_1
       properties:
-        height: 69.33331298828125
+        height: 78.5555419921875
         horizontal_align: left
         margin: [null, '0', null, '0']
         source: _/theme/logo.png
@@ -121,12 +121,22 @@ components:
       - event_bindings: {change: select_site_dropdown_change}
         layout_properties: {width: 150.03139697265624}
         name: select_site_dropdown
-        properties: {font_size: 13, include_placeholder: true, placeholder: Select Site, tooltip: select site}
+        properties:
+          font_size: 13
+          include_placeholder: true
+          margin: ['5', '0', null, '4']
+          placeholder: Select Site
+          tooltip: select site
         type: DropDown
       - event_bindings: {change: site_summary_change}
-        layout_properties: {width: 166}
+        layout_properties: {width: 145.44739697265624}
         name: site_summary
-        properties: {font_size: 13, include_placeholder: true, placeholder: Site Summary, tooltip: site summary}
+        properties:
+          font_size: 13
+          include_placeholder: true
+          margin: [null, '0', null, '4']
+          placeholder: Site Summary
+          tooltip: site summary
         type: DropDown
       layout_properties: {full_width_row: true, grid_position: 'QBIUMU,LPGJNI'}
       name: mt_left
@@ -136,9 +146,13 @@ components:
       type: FlowPanel
     - components:
       - event_bindings: {change: username_dropdown_change}
-        layout_properties: {width: 329}
+        layout_properties: {width: 288.1566259765625}
         name: username_dropdown
-        properties: {font_size: 13, include_placeholder: true, tooltip: username}
+        properties:
+          font_size: 13
+          include_placeholder: true
+          margin: [null, '0', null, '0']
+          tooltip: username
         type: DropDown
       - layout_properties: {}
         name: user_role
@@ -146,7 +160,7 @@ components:
           font_size: 13
           foreground: '#FFFFFF'
           spacing:
-            margin: ['8', null, null, null]
+            margin: ['8', '0', null, '0']
             padding: ['0', null, '0', null]
         type: Label
       - event_bindings: {click: logout_click}
@@ -175,25 +189,42 @@ components:
         - event_bindings: {change: help_dropdown_change}
           layout_properties: {width: 75}
           name: help_dropdown
-          properties: {font_size: 13, include_placeholder: true, placeholder: Help, tooltip: help}
+          properties:
+            font_size: 13
+            include_placeholder: true
+            margin: ['0', null, null, null]
+            placeholder: Help
+            tooltip: help
           type: DropDown
         layout_properties: {full_width_row: true, grid_position: 'WPNVXE,ZMXKSM'}
         name: mm_left
         properties:
           background: theme:Primary
+          gap: none
           spacing:
-            margin: ['0', null, null, null]
+            margin: ['0', null, null, '0']
+            padding: [null, '0', null, null]
         type: FlowPanel
       - components:
         - event_bindings: {change: list_dropdown_change}
           layout_properties: {}
           name: list_dropdown
-          properties: {font_size: 13, include_placeholder: true, placeholder: List, tooltip: list}
+          properties:
+            font_size: 13
+            include_placeholder: true
+            margin: ['0', '4', null, '4']
+            placeholder: List
+            tooltip: list
           type: DropDown
         - event_bindings: {change: insert_dropdown_change}
           layout_properties: {}
           name: insert_dropdown
-          properties: {font_size: 13, include_placeholder: true, placeholder: Insert, tooltip: insert}
+          properties:
+            font_size: 13
+            include_placeholder: true
+            margin: ['0', '4', null, '4']
+            placeholder: Insert
+            tooltip: insert
           type: DropDown
         - event_bindings: {change: import_dropdown_change}
           layout_properties: {}
@@ -202,18 +233,24 @@ components:
             font_size: 13
             include_placeholder: true
             items: []
+            margin: ['0', '4', null, '4']
             placeholder: Import
             tooltip: import
           type: DropDown
         - event_bindings: {}
           layout_properties: {width: 92.3297779296875}
           name: query_dropdown
-          properties: {font_size: 13, include_placeholder: true, placeholder: Query}
+          properties:
+            font_size: 13
+            include_placeholder: true
+            margin: [-1.1111111405455043, '4', null, '4']
+            placeholder: Query
           type: DropDown
         layout_properties: {grid_position: 'WPNVXE,GYVRON'}
         name: mm_middle
         properties:
           align: center
+          gap: none
           spacing:
             margin: ['0', '0', null, '0']
         type: FlowPanel
@@ -228,7 +265,7 @@ components:
             border: ''
             font_size: 13
             include_placeholder: true
-            margin: ['5', '0', null, '0']
+            margin: ['0', '0', null, '0']
             placeholder: Admin
             tooltip: admin actions
           type: DropDown
@@ -237,8 +274,9 @@ components:
         properties:
           align: right
           background: theme:Primary
+          gap: none
           spacing:
-            margin: ['0', null, null, null]
+            margin: ['0', null, null, '0']
         type: FlowPanel
       layout_properties: {grid_position: 'MMDTPN,DMQBFC'}
       name: menu_middle
@@ -246,7 +284,7 @@ components:
       type: ColumnPanel
     layout_properties: {full_width_row: true, grid_position: 'XRHQDB,TSHPZF'}
     name: menu_top
-    properties: {background: 'theme:Primary', col_widths: '{"LPGJNI":30,"SCFEUE":30}'}
+    properties: {background: 'theme:Primary', col_widths: '{"LPGJNI":25,"SCFEUE":35}'}
     type: ColumnPanel
   - components:
     - components:
