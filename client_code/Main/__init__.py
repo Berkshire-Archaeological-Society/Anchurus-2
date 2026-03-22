@@ -28,7 +28,6 @@ class Main(MainTemplate):
     # Set Form properties and Data Bindings.
     self.init_components(**properties)
     # Any code you write here will run before the form opens.
-    
     # get client variable settings from server configuration file
     globals_from_config = anvil.server.call("client_globals")
     Global.rows_per_page = globals_from_config["rows_per_page"]
@@ -40,7 +39,9 @@ class Main(MainTemplate):
     Global.admin_user_initials = globals_from_config["admin_user_initials"]
 
     Global.selected_highlight_colour = globals_from_config["highlight_colour"]
-    
+    #
+    document.title = Global.system + "-" + Global.organisation
+
     # add Header component (but make it invisible)
     Global.header = Header()
     self.add_component(Global.header, slot='header_slot')
@@ -118,9 +119,11 @@ class Main(MainTemplate):
       Global.work_area[name]["button"].background = Global.button_normal_background_clour
     
     # now get the name of the button (work_area_name) that was clicked and make this and the associated work_area visible
-    work_area = event_args['sender']
+
+    # full workspace name is in tooltip, strip first 17 chars ("select workspace")
+    work_area = event_args['sender'].tooltip[17:]
     #print("Clicked workspace ",work_area)
-    Global.current_work_area_name = work_area.text
+    Global.current_work_area_name = work_area
 
     # check if CTRL key was pressed when clicked. This is a workaround to use CTRL/Click to delete a workspace
     if event_args["keys"]["ctrl"]:
@@ -271,7 +274,7 @@ class Main(MainTemplate):
     
     # For all actions not in Admin_action_list check ID field for creating unique work_area name
     if action not in Global.sys_admin_action_list and action not in Global.site_admin_action_list and action not in ["List Qresult","List qresult"]:
-      # need to check if this works for dynamic tables like SQL query
+      # 
       # trying to make a work_area_name suitabe for action and table (i.e. (List |[E|V]-|Insert )<table_name> <main-pri_id>)
       # add first Primary Key ID field when view or edit
       primary_key_list = []
@@ -337,7 +340,10 @@ class Main(MainTemplate):
       Global.dummy_btn1.remove_from_parent() 
       Global.dummy_btn2.remove_from_parent() 
 
-    Global.work_area[work_area_name]["button"] = Button(text=work_area_name,align="left",tooltip="select workspace")
+    #limit button text to first limit_workspace_name_btn_text chars and set tooltip to shown full text
+    tooltip_text = "select workspace " + work_area_name
+    limit_workspace_name_btn_text = 22
+    Global.work_area[work_area_name]["button"] = Button(text=work_area_name[:limit_workspace_name_btn_text],align="left",tooltip=tooltip_text)
     Global.work_area[work_area_name]["button"].role = "primary-color"
     self.work_area_list.add_component(Global.work_area[work_area_name]["button"])
     Global.work_area[work_area_name]["button"].add_event_handler('click', self.work_area_click)
@@ -364,8 +370,8 @@ class Main(MainTemplate):
       #print(Global.work_area[work_area_name]["form"])
       self.add_component(Global.work_area[work_area_name]["form"])
        
-      # set button name to new work_area_name
-      Global.work_area[work_area_name]["button"].text = work_area_name
+      # set button name to new work_area_name (limit to first limit_workspace_name_btn_text chars - tooltip shows full name)
+      Global.work_area[work_area_name]["button"].text = work_area_name[:limit_workspace_name_btn_text]
       Global.work_area[work_area_name]["form_type"] = str(type(Global.work_area[work_area_name]["form"])).split(".")[2][:-2]
       #
       Global.work_area[work_area_name]["site_name"] = Global.site_name
