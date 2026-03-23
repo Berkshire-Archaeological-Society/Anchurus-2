@@ -50,7 +50,7 @@ class UserForm(UserFormTemplate):
     self.title.text = "This form is for inserting a new user"
     if Global.action == "Edit User":
       self.title.text = "This form is for updating details of a user"
-      print(Global.action,Global.user_items["email"])
+      #print(Global.action,Global.user_items["email"])
       self.user_email_value.text = Global.user_items["email"]
       self.user_email_value.enabled = False
       self.user_email_value.foreground = "#ffffff"
@@ -64,7 +64,7 @@ class UserForm(UserFormTemplate):
       #
       self.firstname.text = Global.user_items["firstname"]
       self.lastname.text = Global.user_items["lastname"]
-      print(Global.user_items["systemrole"])
+      #print(Global.user_items["systemrole"])
       if Global.user_items["systemrole"] is None:
         self.user_role_value.selected_value = "None"
       else:
@@ -121,7 +121,7 @@ class UserForm(UserFormTemplate):
 
       # check if initials is unique
       msg = anvil.server.call("check_initials",Global.user_initials)
-      print(msg)
+      #print(msg)
       if msg[:5] == "ERROR":
         alert("This initials string is already in use. Please choose another 3 chars string.")
       else:
