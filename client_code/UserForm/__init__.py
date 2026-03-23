@@ -118,18 +118,24 @@ class UserForm(UserFormTemplate):
       else:
         Global.user_status = False
       Global.system_user_role = self.user_role_value.selected_value
-      #
-      if Global.action in ["Edit User","Edit user","edit user"]: 
-        msg = anvil.server.call('system_user_update',Global.username, Global.system_user_role,Global.user_status,Global.user_initials,Global.user_firstname,Global.user_lastname)
-      elif Global.action in ["Insert User","Insert user","insert user"]:
-        msg = anvil.server.call('system_user_insert',Global.username,Global.password,Global.system_user_role,Global.user_status,Global.user_initials,Global.user_firstname,Global.user_lastname)
+
+      # check if initials is unique
+      msg = anvil.server.call("check_initials",Global.user_initials)
+      if msg == "ERROR":
+        alert("This initials string is already in use. Please choose another 3 chars string.")
       else:
-        msg = "Unknown action: " + Global.action
-      n = Notification(msg)
-      n.show()
-    else:
-      self.validator.show_all_errors()
-      alert("Please make sure all fields that are required have a correct value.")
+        #
+        if Global.action in ["Edit User","Edit user","edit user"]: 
+          msg = anvil.server.call('system_user_update',Global.username, Global.system_user_role,Global.user_status,Global.user_initials,Global.user_firstname,Global.user_lastname)
+        elif Global.action in ["Insert User","Insert user","insert user"]:
+          msg = anvil.server.call('system_user_insert',Global.username,Global.password,Global.system_user_role,Global.user_status,Global.user_initials,Global.user_firstname,Global.user_lastname)
+        else:
+          msg = "Unknown action: " + Global.action
+        n = Notification(msg)
+        n.show()
+      else:
+        self.validator.show_all_errors()
+        alert("Please make sure all fields that are required have a correct value.")
     pass
 
   def firstname_change(self, **event_args):
