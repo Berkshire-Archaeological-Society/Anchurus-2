@@ -491,7 +491,7 @@ class Main(MainTemplate):
       Global.help_page_form.help_page_text.add_component(rt)
       
       self.username_dropdown.placeholder = Global.username
-      self.username_dropdown.items = ["Logout"]
+      self.username_dropdown.items = ["Change password","Logout"]
 
       # notify server side of login
       Global.ip_address = anvil.server.call("user_authentication")
@@ -1134,12 +1134,16 @@ class Main(MainTemplate):
   def username_dropdown_change(self, **event_args):
     """ This Function is called when the users has selected the logout option of the username dropdown """
     """This method is called when an item is selected"""
-    # This dropdown change means that the user selected for a Logout
-    # as the only selection available in the dropdown list is Logout
+    # There are two options: Change password or LogoW
     # But we just check in case it is not ;)
-    if self.username_dropdown.selected_value == "Logout":
-      self.logout_click()
+    if self.username_dropdown.selected_value == "Change password":
+      anvil.users.change_password_with_form(require_old_password=True)
 
+    elif self.username_dropdown.selected_value == "Logout":
+      self.logout_click()
+    
+    #clear selected option
+    self.username_dropdown.selected_value = None
     pass
 
   @handle("query_dropdown", "change")
