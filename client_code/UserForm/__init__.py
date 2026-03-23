@@ -121,7 +121,8 @@ class UserForm(UserFormTemplate):
 
       # check if initials is unique
       msg = anvil.server.call("check_initials",Global.user_initials)
-      if msg == "ERROR":
+      print(msg)
+      if msg[:5] == "ERROR":
         alert("This initials string is already in use. Please choose another 3 chars string.")
       else:
         #
