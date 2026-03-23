@@ -39,7 +39,8 @@ class Main(MainTemplate):
     Global.admin_user_initials = globals_from_config["admin_user_initials"]
 
     Global.selected_highlight_colour = globals_from_config["highlight_colour"]
-    #
+    
+    # set the title of a browser tab to be system (which is application name Anchurus-II R2 ) + organisation name (which is realy the anchurus system name)
     document.title = Global.system + "-" + Global.organisation
 
     # add Header component (but make it invisible)
