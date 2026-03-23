@@ -133,9 +133,9 @@ class UserForm(UserFormTemplate):
           msg = "Unknown action: " + Global.action
         n = Notification(msg)
         n.show()
-      else:
-        self.validator.show_all_errors()
-        alert("Please make sure all fields that are required have a correct value.")
+    else:
+     self.validator.show_all_errors()
+     alert("Please make sure all fields that are required have a correct value.")
     pass
 
   def firstname_change(self, **event_args):

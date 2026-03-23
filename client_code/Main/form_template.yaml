@@ -192,7 +192,7 @@ components:
           properties:
             font_size: 13
             include_placeholder: true
-            margin: ['0', null, null, null]
+            margin: ['0', null, null, '0']
             placeholder: Help
             tooltip: help
           type: DropDown
