@@ -25,9 +25,15 @@ class RowForm(RowFormTemplate):
     col = column
     if next((item['IS_NULLABLE'] for item in Global.work_area[Global.current_work_area_name]["table_info"] if item['COLUMN_NAME'] == column),0) != "YES":
       col = "* " + column
-    #print(str(type(event_args["sender"])))
+    print(column)
+    print(str(type(event_args["sender"])))
     if str(type(event_args["sender"])) == "<class 'anvil_extras.Quill.Quill'>":
-      self.form_fields[column]["header"].text = col + " (" + str(len(self.form_fields[column]["field"].get_html())) + "/" + str(self.form_fields[column]["length"]) + "):"
+      # self.form_fields[column]["header"].text = col + " (" + str(len(self.form_fields[column]["field"].get_html())) + "/" + str(self.form_fields[column]["length"]) + "):"
+      print(self.form_fields[column])
+      print(self.form_fields[column]["header"])
+      print(self.form_fields[column]["field"])
+      print(self.form_fields[column]["length"])
+      self.form_fields[column]["header"].text = col + " (" + str(len(self.form_fields[column]["field"].getText())) + "/" + str(self.form_fields[column]["length"]) + "):"
     else:
       if str(type(event_args["sender"])) != "<class 'anvil.DatePicker'>":
         self.form_fields[column]["header"].text = col + " (" + str(len(self.form_fields[column]["field"].text)) + "/" + str(self.form_fields[column]["length"]) + "):"
@@ -279,16 +285,16 @@ class RowForm(RowFormTemplate):
       # if action is View or Edit then fill all fields
       if action in ["edit","update","view"]:
         if str(type(input)) == "<class 'anvil_extras.Quill.Quill'>":
-          html_text = Global.work_area[Global.current_work_area_name]["data_list"][0][column_name]
-          #if html_text == "None":
-          #  html_text = ""
-          delta = input.clipboard.convert(html_text)
-          #delta = input.content(html_text)
-          #print(delta)
+          text = Global.work_area[Global.current_work_area_name]["data_list"][0][column_name]
+
+          # Manually create the Delta instead of using the clipboard
+          delta = {"ops": [{"insert": text}]}
+          # Apply it
           input.setContents(delta, 'silent')
+
           cur_len = 0
-          if html_text is not None:
-            cur_len = len(html_text)
+          if text is not None:
+            cur_len = len(text)
           if action == "view":
             input.enable(False)
             input.background = "#052014CC"
@@ -403,13 +409,13 @@ class RowForm(RowFormTemplate):
           row_list[col[0]] = col[1]["field"].getText()
           #delta = col[1]["field"].getContents()
           #print("Quill Value is: ",row_list[col[0]])
-          #row_list[col[0]] = col[1]["field"].clipboard.convert(html_text)
+          #row_list[col[0]] = col[1]["field"].clipboard.convert(text)
           #Global.work_area[Global.current_work_area_name]["data_list"][0][column_name]
-          #delta = col[1]["field"].clipboard.convert(html_text)
+          #delta = col[1]["field"].clipboard.convert(text)
           #col[1]["field"].setContents(delta, 'silent')
           #cur_len = 0
-          #if html_text is not None:
-            #cur_len = len(html_text)
+          #if text is not None:
+            #cur_len = len(text)
         elif str(type(col[1]["field"])) == "<class 'anvil.DatePicker'>":
           row_list[col[0]] = col[1]["field"].date
         else:
