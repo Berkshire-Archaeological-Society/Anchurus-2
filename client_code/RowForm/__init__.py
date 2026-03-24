@@ -308,7 +308,7 @@ class RowForm(RowFormTemplate):
           if input.text is not None:
             cur_len = len(input.text)
             
-      if Global.table_name != "Site" and column_name == "SiteId" and action in ["edit","insert","add"]: # pre-set SiteId when
+      if Global.table_name.lower() != "site" and column_name == "SiteId" and action in ["edit","insert","add"]: # pre-set SiteId when
         #print(column_name,action)
         Global.work_area[Global.current_work_area_name]["data_list"][0][column_name] = Global.site_id
         input.text = Global.work_area[Global.current_work_area_name]["data_list"][0][column_name]
@@ -319,7 +319,7 @@ class RowForm(RowFormTemplate):
         if input.text is not None:
           cur_len = len(input.text)
 
-      if Global.table_name == "site" and column_name == "SiteId" and action in ["insert","add"]:
+      if Global.table_name.lower() == "site" and column_name == "SiteId" and action in ["insert","add"]:
         # for Table site make sure that SiteId column field is empty when action is insert,add
         input.text = "" 
         cur_len = 0
