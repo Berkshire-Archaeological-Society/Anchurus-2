@@ -45,6 +45,35 @@ class RowTemplate8(RowTemplate8Template):
     Global.action = "Select " + Global.table_name.capitalize()
   pass
 
+  def format_cell_text(text, max_chars=100):
+    if not text:
+      return ""
+
+    # 1. Split into lines
+    lines = text.splitlines()
+    was_truncated = False
+
+    # 2. Check for newline limit (Max 2 lines)
+    if len(lines) > 2:
+      # Take the first two and mark as truncated
+      text_to_process = "\n".join(lines[:2])
+      was_truncated = True
+    else:
+      text_to_process = "\n".join(lines)
+
+    # 3. Check for character limit
+    if len(text_to_process) > max_chars:
+      # Slice it and mark as truncated
+      text_to_process = text_to_process[:max_chars]
+      was_truncated = True
+
+    # 4. Apply a single ellipsis if EITHER limit was hit
+    if was_truncated:
+      # Strip trailing spaces/newlines so the '...' sits flush
+      return text_to_process.rstrip() + "..."
+
+    return text_to_process
+  
   def __init__(self, **properties):
     # Set Form properties and Data Bindings.
     self.init_components(**properties)
@@ -69,20 +98,15 @@ class RowTemplate8(RowTemplate8Template):
       col_name = col['data_key']
       #print(col_name)
       if col_name != "select": # ignore select button column
-        raw_text = self.item.get(col_name, "")
-
-        # Apply the character limit logic
-        display_text = str(raw_text)
-        if len(display_text) > char_limit:
-          display_text = display_text[:char_limit] + "..."
-
-          # Create the Label component and set tooltip with full text
-          lbl = Label(text=display_text)
-          lbl.tooltip = str(raw_text)
+        raw_text = self.item.get(col_name, "") 
+        display_text = format_cell_text(raw_text, char_limit)
+        
+        lbl = Label(text=display_text)
+        lbl.tooltip = str(raw_text)
           
-          # Add the label to this row
-          # We add it to 'self' because RowTemplate is a DataRowPanel
-          self.add_component(lbl, column=col['id'])
+        # Add the label to this row
+        # We add it to 'self' because RowTemplate is a DataRowPanel
+        self.add_component(lbl, column=col['id'])
 
 
 

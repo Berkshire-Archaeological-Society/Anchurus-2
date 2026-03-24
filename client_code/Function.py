@@ -96,6 +96,35 @@ def delete_workspace(work_area_name):
   Global.main_form.menu_bottom.visible = False
   return
 
+def format_cell_text(text, max_chars=100):
+  if not text:
+   return ""
+
+  # 1. Split into lines
+  lines = text.splitlines()
+  was_truncated = False
+
+  # 2. Check for newline limit (Max 2 lines)
+  if len(lines) > 2:
+    # Take the first two and mark as truncated
+    text_to_process = "\n".join(lines[:2])
+    was_truncated = True
+  else:
+    text_to_process = "\n".join(lines)
+
+  # 3. Check for character limit
+  if len(text_to_process) > max_chars:
+    # Slice it and mark as truncated
+    text_to_process = text_to_process[:max_chars]
+    was_truncated = True
+
+    # 4. Apply a single ellipsis if EITHER limit was hit
+    if was_truncated:
+      # Strip trailing spaces/newlines so the '...' sits flush
+      return text_to_process.rstrip() + "..."
+
+    return text_to_process
+
 def delete_all_workspace(work_area_list):
   return
 
