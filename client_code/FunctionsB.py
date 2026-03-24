@@ -137,6 +137,7 @@ def table_list_refresh(self):
   if Global.table_name != "qresult":
     self.repeating_panel_1.items = anvil.server.call("table_get",Global.site_id,Global.table_name)
   else:
+    # qresult refresh is just re-pointing to Global.table_items - there is no DB table  
     self.repeating_panel_1.items = Global.table_items
     
   #print(len(self.repeating_panel_1.items))
