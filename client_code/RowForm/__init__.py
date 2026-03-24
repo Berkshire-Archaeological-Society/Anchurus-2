@@ -66,6 +66,7 @@ class RowForm(RowFormTemplate):
     self.title.text = "This form is to " + Global.action
     # get table information
     #table_info = anvil.server.call("describe_table",Global.table_name)
+   
     # And then we need to create all the fields based on table information 
     # loop over table columns
     self.field_details = {}
@@ -282,6 +283,7 @@ class RowForm(RowFormTemplate):
           #if html_text == "None":
           #  html_text = ""
           delta = input.clipboard.convert(html_text)
+          #delta = input.content(html_text)
           #print(delta)
           input.setContents(delta, 'silent')
           cur_len = 0
