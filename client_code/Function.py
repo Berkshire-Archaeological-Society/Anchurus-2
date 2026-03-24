@@ -119,11 +119,11 @@ def format_cell_text(text, max_chars=100):
     was_truncated = True
 
   # 4. Apply a single ellipsis if EITHER limit was hit
-    if was_truncated:
-      # Strip trailing spaces/newlines so the '...' sits flush
-      return text_to_process.rstrip() + "..."
+  if was_truncated:
+    # Strip trailing spaces/newlines so the '...' sits flush
+    return text_to_process.rstrip() + "..."
 
-    return text_to_process
+  return text_to_process
 
 def delete_all_workspace(work_area_list):
   return

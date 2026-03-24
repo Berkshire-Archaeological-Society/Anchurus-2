@@ -293,8 +293,9 @@ class Main(MainTemplate):
             work_area_name = "V-"
           else:
             work_area_name = "E-"
-        if action.split(" ")[1] == "Sys_userrole":
-          work_area_name = work_area_name + action.split(" ")[1][8:]
+        pr
+        if action.split(" ")[1].lower() == "sys_userrole":
+          work_area_name = work_area_name + action.split(" ")[1][-8:]
         else:
           work_area_name = work_area_name + action.split(" ")[1]
         if len(primary_key_list) == 1:
