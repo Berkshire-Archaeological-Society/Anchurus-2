@@ -118,7 +118,7 @@ def format_cell_text(text, max_chars=100):
     text_to_process = text_to_process[:max_chars]
     was_truncated = True
 
-    # 4. Apply a single ellipsis if EITHER limit was hit
+  # 4. Apply a single ellipsis if EITHER limit was hit
     if was_truncated:
       # Strip trailing spaces/newlines so the '...' sits flush
       return text_to_process.rstrip() + "..."
