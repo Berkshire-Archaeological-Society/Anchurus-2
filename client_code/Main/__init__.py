@@ -245,6 +245,9 @@ class Main(MainTemplate):
 
     # set name of work_area to be action name
     work_area_name = action
+    if action.lower() == "list sys_userrole":
+      work_area_name = action.split(" ")[0] + " " + action.split(" ")[1][-8:]
+
     table_info = [] 
     # get table_info , works only for a true DB table. If not we have to create the table_info dictionary list ourselves   
     if action.split(" ")[1].lower() != "qresult":
@@ -280,7 +283,7 @@ class Main(MainTemplate):
       # add first Primary Key ID field when view or edit
       primary_key_list = []
       
-      if action.split(" ")[1] in ["dbdiary","Dbdiary"]:
+      if action.split(" ")[1].lower() == "dbdiary":
          primary_key_list.append("DBAcontrol")
       else:
         for column in table_info:
@@ -293,7 +296,6 @@ class Main(MainTemplate):
             work_area_name = "V-"
           else:
             work_area_name = "E-"
-        pr
         if action.split(" ")[1].lower() == "sys_userrole":
           work_area_name = work_area_name + action.split(" ")[1][-8:]
         else:
