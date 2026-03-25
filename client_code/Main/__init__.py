@@ -978,7 +978,7 @@ class Main(MainTemplate):
       column_headings.remove("SiteId")
       column_headings.remove("DBAcontrol")
       # sort column names
-      column_headings.sort()
+      #column_headings.sort()
 
     # 1. Define the options you want to display
     option_id = 0
@@ -1017,7 +1017,7 @@ class Main(MainTemplate):
       all_columns_titles = [col["title"] for col in Global.work_area[Global.current_work_area_name]["table"].columns if "title" in col]
       #remove columns with empty title
       cleaned_list = [item for item in all_columns_titles if item != ""]
-      cleaned_list.sort()
+      #cleaned_list.sort()
       all_columns_titles = cleaned_list
 
       # create columns_to_hide (difference between all_columns and selected_columns)
