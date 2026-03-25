@@ -162,8 +162,8 @@ class Main(MainTemplate):
       Global.action_form_type = str(type(Global.work_area[Global.current_work_area_name]["form"])).split(".")[2][:-2]
       
       #print("Work area action form type: ",Global.action_form_type)
-      #if Global.work_area[Global.current_work_area_name]["action"].split(" ")[0] in ["View", "Edit", "Insert", "Add", "Import"] or Global.work_area[Global.current_work_area_name]["action"] == "List Users":
-      if Global.work_area[Global.current_work_area_name]["action"].split(" ")[0] in ["View", "Edit", "Insert", "Add", "Import"]:
+      if Global.work_area[Global.current_work_area_name]["action"].split(" ")[0] in ["View", "Edit", "Insert", "Add", "Import"] or Global.work_area[Global.current_work_area_name]["action"] == "List Users":
+      #if Global.work_area[Global.current_work_area_name]["action"].split(" ")[0] in ["View", "Edit", "Insert", "Add", "Import"]:
         self.mb_middle.visible = False
         self.mb_left.visible = False
       elif Global.work_area[Global.current_work_area_name]["action"].split(" ")[0] in ["List"]:
@@ -413,8 +413,8 @@ class Main(MainTemplate):
       Global.action_form_type = Global.header_work_area_type.text
       #
       # Only show page controls for List Table action
-      #if Global.work_area[Global.current_work_area_name]["action"].split(" ")[0] in ["View", "Edit", "Insert", "Add", "Import"] or Global.work_area[Global.current_work_area_name]["action"] == "List Users":
-      if Global.work_area[Global.current_work_area_name]["action"].split(" ")[0] in ["View", "Edit", "Insert", "Add", "Import"]:
+      if Global.work_area[Global.current_work_area_name]["action"].split(" ")[0] in ["View", "Edit", "Insert", "Add", "Import"] or Global.work_area[Global.current_work_area_name]["action"] == "List Users":
+      #if Global.work_area[Global.current_work_area_name]["action"].split(" ")[0] in ["View", "Edit", "Insert", "Add", "Import"]:
         self.mb_middle.visible = False
         self.mb_left.visible = False
       elif Global.work_area[Global.current_work_area_name]["action"].split(" ")[0] in ["List"]:

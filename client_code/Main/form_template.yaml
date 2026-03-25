@@ -119,7 +119,7 @@ components:
   - components:
     - components:
       - event_bindings: {change: select_site_dropdown_change}
-        layout_properties: {width: 150.03139697265624}
+        layout_properties: {width: 240.5181552734375}
         name: select_site_dropdown
         properties:
           font_size: 13
@@ -147,7 +147,7 @@ components:
       type: FlowPanel
     - components:
       - event_bindings: {change: username_dropdown_change}
-        layout_properties: {width: 288.1566259765625}
+        layout_properties: {width: 318.88905859375}
         name: username_dropdown
         properties:
           font_size: 13
@@ -286,7 +286,7 @@ components:
       type: ColumnPanel
     layout_properties: {full_width_row: true, grid_position: 'XRHQDB,TSHPZF'}
     name: menu_top
-    properties: {background: 'theme:Primary', col_widths: '{"LPGJNI":25,"SCFEUE":35}'}
+    properties: {background: 'theme:Primary', col_widths: '{"LPGJNI":30,"SCFEUE":30}'}
     type: ColumnPanel
   - components:
     - components:
