@@ -959,11 +959,12 @@ class Main(MainTemplate):
       column_headings = list(Global.work_area[Global.current_work_area_name]["data_list"][0].keys())
 
     # remove special columns
-    column_headings.remove("select")
+    #print(column_headings)
+    #column_headings.remove("select")
     column_headings.remove("SiteId")
     column_headings.remove("DBAcontrol")
     # sort column names
-    column_headings.sort()
+    #column_headings.sort()
     # extract table columns names
     #print(Global.work_area[Global.current_work_area_name]["columns_show"])
     #print(Global.work_area[Global.current_work_area_name]["table"].columns)
@@ -973,7 +974,7 @@ class Main(MainTemplate):
       # Get the keys (which are the column headings) from the first item
       column_headings = list(Global.work_area[Global.current_work_area_name]["data_list"][0].keys())
       # remove special columns
-      column_headings.remove("select")
+      #column_headings.remove("select")
       column_headings.remove("SiteId")
       column_headings.remove("DBAcontrol")
       # sort column names
@@ -1036,6 +1037,7 @@ class Main(MainTemplate):
 
       # make the filter 'live'
       Global.work_area[Global.current_work_area_name]["table"].columns = Global.work_area[Global.current_work_area_name]["table"].columns
+      FunctionsB.table_list_refresh(Global.work_area[Global.current_work_area_name]["self"])
     pass
 
   def download_csv_click(self, **event_args):
