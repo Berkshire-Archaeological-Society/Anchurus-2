@@ -213,7 +213,7 @@ class TableList(TableListTemplate):
     for column_data in table_info:
       # Select Column name:
       # anvil users table uses different title for columns names (name) compared to the Database (Field)
-      if Global.table_name in ["anvilusers","anviluser"]:
+      if Global.table_name in ["users","user"]:
         field_name = column_data["name"]
       else:
         field_name = column_data["COLUMN_NAME"]
