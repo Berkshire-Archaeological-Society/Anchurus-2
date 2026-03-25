@@ -424,8 +424,13 @@ class Main(MainTemplate):
       self.select_all.indeterminate = False
       self.select_all.checked = False
       
+      self.view_row.visible = True
+      self.edit_row.visible = True if Global.site_user_role in ["Editor"] or Global.system_user_role == "System Administrator" else False
+      self.delete_row.visible = True if Global.site_user_role in ["Manager"] or Global.system_user_role == "System Administrator" else False
+      
       # for table dbdiary disable edit_row and delete_row button
       if Global.table_name == "dbdiary":
+        self.view_row.visible = True
         self.edit_row.visible = False
         self.delete_row.visible = False
       # for table dbdiary disable edit_row and delete_row button
@@ -953,37 +958,15 @@ class Main(MainTemplate):
   def filter_cols_click(self, **event_args):
     """This method is called when the button is clicked"""
     """ Here we allow the user to filter columns to be viewed"""
-    # extract table columns names
-    if Global.work_area[Global.current_work_area_name]["data_list"]:
-      # Get the keys (which are the column headings) from the first item
-      column_headings = list(Global.work_area[Global.current_work_area_name]["data_list"][0].keys())
-
-    # remove special columns
-    #print(column_headings)
-    #column_headings.remove("select")
-    column_headings.remove("SiteId")
-    column_headings.remove("DBAcontrol")
-    # sort column names
-    #column_headings.sort()
-    # extract table columns names
-    #print(Global.work_area[Global.current_work_area_name]["columns_show"])
-    #print(Global.work_area[Global.current_work_area_name]["table"].columns)
-    column_headings = []
-    #print(Global.work_area[Global.current_work_area_name]["data_list"])
-    if Global.work_area[Global.current_work_area_name]["data_list"]:
-      # Get the keys (which are the column headings) from the first item
-      column_headings = list(Global.work_area[Global.current_work_area_name]["data_list"][0].keys())
-      # remove special columns
-      #column_headings.remove("select")
-      column_headings.remove("SiteId")
-      column_headings.remove("DBAcontrol")
-      # sort column_headings
-      column_headings.sort(column_headings, key=lambda x: column_headings.get(x,999))
-    
+    # extract table columns names and sort them is the correct order (from DB table)
+    col_order = Global.work_area[Global.current_work_area_name]["col_order"]
+    # remove DBAcontrol column name as it is not in the table
+    col_order.pop("DBAcontrol")
+    col_order_sorted = sorted(col_order, key=lambda x: col_order.get(x,999))
     # 1. Define the options you want to display
     option_id = 0
     options_data = []
-    for column_name in column_headings:
+    for column_name in col_order_sorted:
       option_id = option_id + 1
       options_data.append({'text': column_name, 'id': option_id})
 

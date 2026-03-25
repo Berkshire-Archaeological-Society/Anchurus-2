@@ -25,14 +25,14 @@ class RowForm(RowFormTemplate):
     col = column
     if next((item['IS_NULLABLE'] for item in Global.work_area[Global.current_work_area_name]["table_info"] if item['COLUMN_NAME'] == column),0) != "YES":
       col = "* " + column
-    print(column)
-    print(str(type(event_args["sender"])))
+    #print(column)
+    #print(str(type(event_args["sender"])))
     if str(type(event_args["sender"])) == "<class 'anvil_extras.Quill.Quill'>":
       # self.form_fields[column]["header"].text = col + " (" + str(len(self.form_fields[column]["field"].get_html())) + "/" + str(self.form_fields[column]["length"]) + "):"
-      print(self.form_fields[column])
-      print(self.form_fields[column]["header"])
-      print(self.form_fields[column]["field"])
-      print(self.form_fields[column]["length"])
+      #print(self.form_fields[column])
+      #print(self.form_fields[column]["header"])
+      #print(self.form_fields[column]["field"])
+      #print(self.form_fields[column]["length"])
       self.form_fields[column]["header"].text = col + " (" + str(len(self.form_fields[column]["field"].getText())) + "/" + str(self.form_fields[column]["length"]) + "):"
     else:
       if str(type(event_args["sender"])) != "<class 'anvil.DatePicker'>":

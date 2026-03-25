@@ -136,9 +136,8 @@ def table_list_refresh(self):
   # This only work for a true DB table refresh. If table is 'qresult' (i.e. a query result) then assign repeating_panel_1 to the Globa.table_items)
   if Global.table_name != "qresult":
     data_list = anvil.server.call("table_get",Global.site_id,Global.table_name)
-    #Global.col_order = col_order
-    print(data_list)
-    self.repeating_panel_1.items = data_list
+    Global.col_order = data_list[1]
+    self.repeating_panel_1.items = data_list[0]
   else:
     # qresult refresh is just re-pointing to Global.table_items - there is no DB table  
     self.repeating_panel_1.items = Global.table_items
