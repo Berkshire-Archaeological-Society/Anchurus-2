@@ -977,9 +977,9 @@ class Main(MainTemplate):
       #column_headings.remove("select")
       column_headings.remove("SiteId")
       column_headings.remove("DBAcontrol")
-      # sort column names
-      #column_headings.sort()
-
+      # sort column_headings
+      column_headings.sort(column_headings, key=lambda x: column_headings.get(x,999))
+    
     # 1. Define the options you want to display
     option_id = 0
     options_data = []

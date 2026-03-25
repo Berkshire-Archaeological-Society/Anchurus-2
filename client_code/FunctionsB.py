@@ -135,7 +135,10 @@ def table_list_refresh(self):
   # 1. call server function '"table_name"s_get', which retrieves all rows of the table_name for the given site
   # This only work for a true DB table refresh. If table is 'qresult' (i.e. a query result) then assign repeating_panel_1 to the Globa.table_items)
   if Global.table_name != "qresult":
-    self.repeating_panel_1.items = anvil.server.call("table_get",Global.site_id,Global.table_name)
+    data_list = anvil.server.call("table_get",Global.site_id,Global.table_name)
+    #Global.col_order = col_order
+    print(data_list)
+    self.repeating_panel_1.items = data_list
   else:
     # qresult refresh is just re-pointing to Global.table_items - there is no DB table  
     self.repeating_panel_1.items = Global.table_items
@@ -159,7 +162,8 @@ def table_list_refresh(self):
   # 3.save the list of items in the Global 'work-area' dictionary
   if Global.current_work_area_name is not None:
     Global.work_area[Global.current_work_area_name]["data_list"] = self.repeating_panel_1.items
-
+    Global.work_area[Global.current_work_area_name]["col_order"] = Global.col_order
+    
   # Trigger the initial update only if not a print action
   if not Global.print_action:
     update_status_label(self)
