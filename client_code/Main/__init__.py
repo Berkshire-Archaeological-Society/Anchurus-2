@@ -162,7 +162,8 @@ class Main(MainTemplate):
       Global.action_form_type = str(type(Global.work_area[Global.current_work_area_name]["form"])).split(".")[2][:-2]
       
       #print("Work area action form type: ",Global.action_form_type)
-      if Global.work_area[Global.current_work_area_name]["action"].split(" ")[0] in ["View", "Edit", "Insert", "Add", "Import"] or Global.work_area[Global.current_work_area_name]["action"] == "List Users":
+      #if Global.work_area[Global.current_work_area_name]["action"].split(" ")[0] in ["View", "Edit", "Insert", "Add", "Import"] or Global.work_area[Global.current_work_area_name]["action"] == "List Users":
+      if Global.work_area[Global.current_work_area_name]["action"].split(" ")[0] in ["View", "Edit", "Insert", "Add", "Import"]:
         self.mb_middle.visible = False
         self.mb_left.visible = False
       elif Global.work_area[Global.current_work_area_name]["action"].split(" ")[0] in ["List"]:
@@ -205,33 +206,34 @@ class Main(MainTemplate):
       self.delete_row.visible = Global.work_area[Global.current_work_area_name]["visibility_delete_row"] 
 
       # Set selected buttons on Header for work area type
+      #print(Global.table_name)
       if Global.action_form_type in Global.action_forms_with_refresh:
         # Make refresh button visible for Global.action_form_type
-        Global.header_refresh_button.visible = True
-        self.refresh.visible = True
+        # do not do this for users table
+        self.refresh.visible = True if Global.table_name != "users" else False
       else:
-        Global.header_refresh_button.visible = False
+        #Global.header_refresh_button.visible = False
         self.refresh.visible = False
       if Global.action_form_type in Global.action_forms_with_print:
         # Make print button visible for Global.action_form_type
-        Global.header_print_button.visible = True
+        #Global.header_print_button.visible = True
         self.print.visible = True
       else:
-        Global.header_print_button.visible = False
+        #Global.header_print_button.visible = False
         self.print.visible = False
       if Global.action_form_type in Global.action_forms_with_download:
         # Make download button visible for Global.action_form_type
-        Global.header_download_button.visible = True
-        self.download_csv.visible = True
+        #Global.header_download_button.visible = True
+        self.download_csv.visible = True if Global.table_name != "users" else False
       else:
-        Global.header_download_button.visible = False
+        #Global.header_download_button.visible = False
         self.download_csv.visible = False
       if Global.action_form_type in Global.action_forms_with_filter and Global.work_area[Global.current_work_area_name]["data_list"]:
         # Make filter button visible for Global.action_form_type if data_list is not empty
-        Global.header_filter_button.visible = True
-        self.filter_cols.visible = True
+        #Global.header_filter_button.visible = True
+        self.filter_cols.visible = True if Global.table_name != "users" else False
       else:
-        Global.header_filter_button.visible = False
+        #Global.header_filter_button.visible = False
         self.filter_cols.visible = False
     
   pass
@@ -285,6 +287,8 @@ class Main(MainTemplate):
       
       if action.split(" ")[1].lower() == "dbdiary":
          primary_key_list.append("DBAcontrol")
+      elif action.split(" ")[1].lower() == "users":
+        primary_key_list.append("email")
       else:
         for column in table_info:
           if column["COLUMN_KEY"] == "PRI":
@@ -409,7 +413,8 @@ class Main(MainTemplate):
       Global.action_form_type = Global.header_work_area_type.text
       #
       # Only show page controls for List Table action
-      if Global.work_area[Global.current_work_area_name]["action"].split(" ")[0] in ["View", "Edit", "Insert", "Add", "Import"] or Global.work_area[Global.current_work_area_name]["action"] == "List Users":
+      #if Global.work_area[Global.current_work_area_name]["action"].split(" ")[0] in ["View", "Edit", "Insert", "Add", "Import"] or Global.work_area[Global.current_work_area_name]["action"] == "List Users":
+      if Global.work_area[Global.current_work_area_name]["action"].split(" ")[0] in ["View", "Edit", "Insert", "Add", "Import"]:
         self.mb_middle.visible = False
         self.mb_left.visible = False
       elif Global.work_area[Global.current_work_area_name]["action"].split(" ")[0] in ["List"]:
@@ -439,9 +444,8 @@ class Main(MainTemplate):
       #print(Global.action_form_type)
       if Global.action_form_type in Global.action_forms_with_refresh:
         # make Refresh button visible if action_form_type has refresh function (i.e. in list Global.action_forms_with_refresh) 
-        #Global.header_refresh_button.visible = True
-        self.refresh.visible = True
-        #print("set refresh button")
+        # do not do this for users table
+        self.refresh.visible = True if Global.table_name != "users" else False
       else:
         #Global.header_refresh_button.visible = False
         self.refresh.visible = False
@@ -456,14 +460,14 @@ class Main(MainTemplate):
       if Global.action_form_type in Global.action_forms_with_download:
         # Make download button visible for Global.action_form_type
         #Global.header_download_button.visible = True
-        self.download_csv.visible = True
+        self.download_csv.visible = True if Global.table_name != "users" else False
       else:
         #Global.header_download_button.visible = False
         self.download_csv.visible = False
       if Global.action_form_type in Global.action_forms_with_filter and Global.work_area[work_area_name]["data_list"]:
         # Make filter button visible for Global.action_form_type if data_list is not empty
         #Global.header_filter_button.visible = True
-        self.filter_cols.visible = True
+        self.filter_cols.visible = True if Global.table_name != "users" else False
       else:
         #Global.header_filter_button.visible = False
         self.filter_cols.visible = False
@@ -1040,9 +1044,13 @@ class Main(MainTemplate):
     file_name = Global.action + ".csv"
     # create ordinal_position list of columns 
     col_order = {}
+    position = 0
     for column in Global.work_area[Global.current_work_area_name]["table"].columns:
       #print(column["data_key"])
-      position = next((item['ORDINAL_POSITION'] for item in Global.work_area[Global.current_work_area_name]["table_info"] if item['COLUMN_NAME'] == column["data_key"]),0)
+      if Global.table_name != "users":
+        position = next((item['ORDINAL_POSITION'] for item in Global.work_area[Global.current_work_area_name]["table_info"] if item['COLUMN_NAME'] == column["data_key"]),0)
+      else:
+        position = position + 1
       col_order[column["data_key"]] = position
     # make sure to send the col_list as a list []
     csv_file = anvil.server.call('create_csv',Global.work_area[Global.current_work_area_name]["data_list"],[col_order],file_name)

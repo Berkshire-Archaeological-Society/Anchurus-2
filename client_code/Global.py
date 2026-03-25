@@ -39,10 +39,7 @@ site_admin_action_dropdown = [(separator,separator),("List Site Users","List sys
 #
 import_action_dropdown = ["context","find"]
 #
-#
 action_forms_with_refresh = ["TableList","RowForm","ListUsers","ListSites","ListContexts","ListFinds","ListAreas","BulkUpload","Add Area","List Areas"]
-#action_forms_with_print = ["ListUsers","ListSites","ListContexts","ListFinds","ListAreas","List Areas","View Context","View Find","View Area"]
-#action_forms_with_print = ["ListContexts","ListFinds","TableList","RowForm"]
 action_forms_with_print = []
 action_forms_with_download = ["ListContexts","ListFinds","TableList"]
 action_forms_with_filter = ["ListContexts","ListFinds","TableList"]
@@ -69,6 +66,8 @@ gh_help_list = {}
 gh_list_list = {}
 gh_insert_list = {}
 gh_admin_list = {}
+#
+ignore_users_columns = ["remembered_logins","n_password_failures","password_hash","confirmed_email","email_confirmation_key","signed_up","remembered_logins","mfa","last_login"]
 #
 work_area = {}
 # variable for work area header menu options 
@@ -181,9 +180,9 @@ table_colwidth_80 = ["ContextId","AreaId","YearStart","YearEnd","Workflow","BoxI
 table_colwidth_90 = ["FindId"]
 table_colwidth_100 = ["DBAcontrol","GazControl","FindGroupId","ContextYear","ContextType","PackageType","SmallFindId","FromSample","RecordStatus","SiteId","Role"]
 table_colwidth_120 = ["SiteId"]
-table_colwidth_140 = ["RegistrationDate","DatesAssignedBy","StemBoreSizemm","ContextName1","ContextName2","FindName1","FindName2","PermittedOperations"]
+table_colwidth_140 = ["RegistrationDate","DatesAssignedBy","StemBoreSizemm","ContextName1","ContextName2","FindName1","FindName2","PermittedOperations","systemrole","SiteName"]
 table_colwidth_200 = ["Address"]
-table_colwidth_250 = []
+table_colwidth_250 = ["last_login"]
 table_colwidth_300 = ["Description","URL","Activity","email","Email","Description1","Description2","WhatItDoes"]
 table_colwidth_350 = ["SQL_command"]
 table_colwidth_default = 110

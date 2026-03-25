@@ -215,6 +215,9 @@ class TableList(TableListTemplate):
       # anvil users table uses different title for columns names (name) compared to the Database (Field)
       if Global.table_name in ["users","user"]:
         field_name = column_data["name"]
+        # ignore following columns of the users table
+        if field_name in Global.ignore_users_columns:
+          continue
       else:
         field_name = column_data["COLUMN_NAME"]
       column_list.append(field_name)

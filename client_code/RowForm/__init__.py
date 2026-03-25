@@ -79,8 +79,15 @@ class RowForm(RowFormTemplate):
     self.form_fields = {}
     #for item in table_info:
     for item in Global.work_area[Global.current_work_area_name]["table_info"]:
-      column_name = item["COLUMN_NAME"]
-      column_type = item["COLUMN_TYPE"]
+      #print(item)
+      if Global.table_name == "users":
+        column_name = item["name"]
+        if column_name in Global.ignore_users_columns:
+          continue
+        column_type = item["type"]
+      else:
+        column_name = item["COLUMN_NAME"]
+        column_type = item["COLUMN_TYPE"]
       # types can be varchar(length),int(length),text,float,double,date
       # type text can be 65535 char so need to be a TextArea, other can be a TextBox
       # create the label and the input field
@@ -98,6 +105,18 @@ class RowForm(RowFormTemplate):
         max_length = 10
         # add event handler for when input field is changed to update the character count
         input.add_event_handler('change',self.input_change)
+      elif column_type == "string":
+        input = TextBox(placeholder=column_name)
+        input.add_event_handler('change',self.input_change)
+        max_length = 100
+      elif column_type == "bool":
+        input = TextBox(placeholder=column_name)
+        input.add_event_handler('change',self.input_change)
+        max_length = 5
+      elif column_type == "datetime":
+        input = TextBox(placeholder=column_name)
+        input.add_event_handler('change',self.input_change)
+        max_length = 30
       else:
         # by default create TextBox fields
         input = TextBox(placeholder=column_name)
@@ -117,12 +136,18 @@ class RowForm(RowFormTemplate):
       input_error.visible = False
       
       # set specific validation checks for the various fields
+      if Global.table_name == "users":
+        cname = "name"
+        prim_key = True if item[cname] == "email" else False
+      else:
+        cname = "COLUMN_NAME"
+        prim_key = True if item["COLUMN_KEY"] == "PRI"  else False
       # if column is Primary Key or a known special column then make it un-editable when action is View or Edit 
-      #if Global.table_name != "site" and ((action == "view") or (action in ["edit"] and item["COLUMN_KEY"] == "PRI") or (action in ["insert"] and item["COLUMN_NAME"] == "SiteId") or column_name in ["DBAcontrol","RegistrationDate"]):
+      # if Global.table_name != "site" and ((action == "view") or (action in ["edit"] and item["COLUMN_KEY"] == "PRI") or (action in ["insert"] and item["COLUMN_NAME"] == "SiteId") or column_name in ["DBAcontrol","RegistrationDate"]):
       if (
-          not (action in ["insert","add"] and item["COLUMN_NAME"] == "SiteId" and Global.table_name == "site") and 
-          ((action == "view") or (action in ["edit"] and item["COLUMN_KEY"] == "PRI") or
-           (action in ["insert"] and item["COLUMN_NAME"] == "SiteId") or column_name in ["DBAcontrol","RegistrationDate"])
+          not (action in ["insert","add"] and Global.table_name == "site" and item[cname] == "SiteId") and 
+          ((action == "view") or (action in ["edit"] and prim_key) or
+           (action in ["insert"] and item[cname] == "SiteId") or column_name in ["DBAcontrol","RegistrationDate"])
          ):
       #if ((action == "view") or (action in ["edit"] and item["COLUMN_KEY"] == "PRI") or (action in ["insert"] and item["COLUMN_NAME"] == "SiteId") or column_name in ["DBAcontrol","RegistrationDate"]):
         input.enabled = False
@@ -326,14 +351,15 @@ class RowForm(RowFormTemplate):
         
       # create column header with column_name and column_description in one flowpanel (col_header)
       # add * to column name if inoout for field is mandatory
-      if item["IS_NULLABLE"] == "YES":
+      if Global.table_name != "users" and item["IS_NULLABLE"] == "YES":
         col = ""
       else:
         col = "* "
         
       col = col + column_name + " (" + str(cur_len) + "/" + str(max_length) + "):" 
       lab = Label(text=col,font_size=14,tag=column_name)
-      col_description = Label(text=item["COLUMN_COMMENT"],font_size=14)
+      col_comment = "" if Global.table_name == "users" else item["COLUMN_COMMENT"]
+      col_description = Label(text=col_comment,font_size=14)
       col_header = FlowPanel()
       col_header.add_component(lab)
       col_header.add_component(col_description)

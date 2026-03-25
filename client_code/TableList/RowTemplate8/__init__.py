@@ -54,14 +54,13 @@ class RowTemplate8(RowTemplate8Template):
     # create the view and edit button for the row and set button click event handlers
     self.btn_select = CheckBox(text='',align='left',tooltip="select row")
     self.btn_select.set_event_handler('change',self.btn_select_click)
-    #print(self.item)
-    if Global.table_name != "users":
-      self.item['select'] = self.btn_select
+    
     self.spacing_above = 'none'
     self.spacing_below = 'none'
 
-    if Global.table_name != "users":
-      self.add_component(self.item['select'], column='1')
+    # add button to column 1 (select column)
+    #if Global.table_name != "user":
+    self.add_component(self.btn_select, column='1')
 
     #dt_max_len = next((item['CHARACTER_MAXIMUM_LENGTH'] for item in Global.work_area[Global.current_work_area_name]["table_info"] if item['COLUMN_NAME'] == column), None)
 
@@ -69,14 +68,16 @@ class RowTemplate8(RowTemplate8Template):
     #print(Global.work_area[Global.current_work_area_name]["self"].repeating_panel_1.items)
     # Iterate through the columns and create a Label for each  
     columns = Global.work_area[Global.current_work_area_name]["table"].columns
-    print(columns)
+    #print(columns)
     for col in columns:
       col_name = col['data_key']
       #print(col_name)
       if col_name != "select": # ignore select button column
         #raw_text = self.item.get(col_name, "") 
-        raw_text = self.item[col_name] 
-        display_text = Function.format_cell_text(raw_text, char_limit)
+        raw_text = self.item[col_name]
+        display_text = raw_text
+        if str(type(raw_text)) == "<class 'str'>":
+          display_text = Function.format_cell_text(raw_text, char_limit)
         
         lbl = Label(text=display_text)
         lbl.tooltip = str(raw_text)
@@ -84,8 +85,3 @@ class RowTemplate8(RowTemplate8Template):
         # Add the label to this row
         # We add it to 'self' because RowTemplate is a DataRowPanel
         self.add_component(lbl, column=col['id'])
-
-
-
-
-
