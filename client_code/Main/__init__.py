@@ -235,7 +235,7 @@ class Main(MainTemplate):
       else:
         #Global.header_filter_button.visible = False
         self.filter_cols.visible = False
-    
+      print(Global.work_area[Global.current_work_area_name].keys())
   pass
 
   def create_new_work_area(self,action):
