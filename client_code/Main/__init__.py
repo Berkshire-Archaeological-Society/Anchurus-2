@@ -238,9 +238,9 @@ class Main(MainTemplate):
       else:
         #Global.header_filter_button.visible = False
         self.filter_cols.visible = False
-      print(Global.work_area[Global.current_work_area_name].keys())
-      print(Global.work_area[Global.current_work_area_name]["data_list"])
-      print(Global.work_area[Global.current_work_area_name]["table"])
+      #print(Global.work_area[Global.current_work_area_name].keys())
+      #print(Global.work_area[Global.current_work_area_name]["data_list"])
+      #print(Global.work_area[Global.current_work_area_name]["table"])
 
   pass
 
