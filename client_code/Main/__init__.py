@@ -240,6 +240,7 @@ class Main(MainTemplate):
         self.filter_cols.visible = False
       #print(Global.work_area[Global.current_work_area_name].keys())
       #print(Global.work_area[Global.current_work_area_name]["data_list"])
+      # be carefull: not all work_ara have the table
       #print(Global.work_area[Global.current_work_area_name]["table"])
 
   pass
