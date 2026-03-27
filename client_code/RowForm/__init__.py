@@ -242,7 +242,7 @@ class RowForm(RowFormTemplate):
 
       elif column_name in ["Role"]:
         # 1. Define your allowed words
-        allowed_words = ['Manager',"Editor","Viewer"]
+        allowed_words = ["Manager","Editor","Viewer"]
         # 2. Build the "OR" part of the rgex: 
         choices = r'(?:' + '|'.join(map(re.escape, allowed_words)) + r')'
         # 3. Assemble the full pattern
@@ -397,7 +397,10 @@ class RowForm(RowFormTemplate):
     Global.query_id = next((str(item[1]['field'].text) for item in list(formfields) if item[0] == "QueryId"),0)
     command = next((str(item[1]['field'].getText()) for item in list(formfields) if item[0] == "SQL_command"),0)
     #print(command)
-    msg, data_list, column_order = anvil.server.call("execute_sql_command",command)
+    if command != "":
+      msg, data_list, column_order = anvil.server.call("execute_sql_command",command)
+    else:
+      msg = "FAIL: SQL command field is empty."
     #print("after execute_sql_commnd")
     #print(column_order)
     # Check msg for succes or FAIL
