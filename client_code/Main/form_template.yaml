@@ -127,7 +127,7 @@ components:
   - components:
     - components:
       - event_bindings: {change: select_site_dropdown_change}
-        layout_properties: {width: 240.5181552734375}
+        layout_properties: {width: 209.1826259765625}
         name: select_site_dropdown
         properties:
           font_size: 13
