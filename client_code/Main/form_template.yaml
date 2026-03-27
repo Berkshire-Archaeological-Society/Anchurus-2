@@ -29,7 +29,7 @@ components:
       properties:
         font_size: 10
         spacing:
-          margin: ['6', null, '0', '12']
+          margin: ['12', null, '0', '12']
           padding: ['0', null, '0', null]
       type: Label
     - layout_properties: {}
@@ -37,7 +37,15 @@ components:
       properties:
         font_size: 10
         spacing:
-          margin: ['6', null, '0', null]
+          margin: ['12', null, '0', null]
+          padding: ['0', null, '0', null]
+      type: Label
+    - layout_properties: {}
+      name: db_name
+      properties:
+        font_size: 10
+        spacing:
+          margin: ['12', null, null, null]
           padding: ['0', null, '0', null]
       type: Label
     layout_properties: {full_width_row: true, grid_position: 'DCRRVT,ZTIHLF'}
@@ -66,7 +74,7 @@ components:
         icon: fa:copyright
         icon_align: left
         spacing:
-          margin: ['6', '12', '0', null]
+          margin: ['12', '12', '0', null]
           padding: ['0', null, '0', null]
         text: Berkshire Archaeological Society
       type: Label
@@ -79,7 +87,7 @@ components:
     type: FlowPanel
   layout_properties: {slot: footer-slot}
   name: footer_column_panel
-  properties: {background: 'theme:Primary', col_widths: '{"ZTIHLF":12,"EOEARF":12,"RADSVC":12,"BNFCJM":9,"XEYKUI":15}'}
+  properties: {background: 'theme:Primary', col_widths: '{"ZTIHLF":20,"EOEARF":4,"RADSVC":12,"BNFCJM":9,"XEYKUI":15}'}
   type: ColumnPanel
 - components:
   - components:

@@ -35,6 +35,8 @@ class Main(MainTemplate):
     Global.organisation = globals_from_config["organisation"]
     Global.config_version = globals_from_config["version"]
     Global.admin_domain = globals_from_config["admin_domain"]
+    Global.db_name = globals_from_config["db_name"]
+    Global.admin_domain = globals_from_config["admin_domain"]
     Global.admin_user = globals_from_config["admin_user"]
     Global.admin_user_initials = globals_from_config["admin_user_initials"]
 
@@ -61,6 +63,7 @@ class Main(MainTemplate):
     self.organisation.text = Global.organisation
     self.app_name.text = document.head.querySelector('[name=title]').content
     self.config_version.text = "cfg " + Global.config_version
+    self.db_name.text = db + Global.
     
     # add the about_us_text (taken from Anchurus-2.cfg file) to the about_us_box text field by adding a Rich Text Component
     rt = RichText(content=Global.about_us_text,format="restricted_html")

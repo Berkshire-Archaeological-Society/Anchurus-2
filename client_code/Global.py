@@ -108,6 +108,7 @@ admin_user_initials = ""
 area_items = {}
 area_id = None
 area_options = {}
+db_name = ""
 dummy_btn1 = {}
 dummy_btn2 = {}
 column_order = {}
