@@ -551,17 +551,26 @@ class Main(MainTemplate):
     user = anvil.users.signup_with_form(allow_cancel=True)
     if user is not None:
       #print(str(user["email"]))
-      print(anvil.server.get_app_origin())
-      print(anvil.server.get_app_origin('published'))
+      #print(anvil.server.get_app_origin())
+      #print(anvil.server.get_app_origin('published'))
       # send email notification to Project leader of the BAS system to finish the registration and enable the account
       msg = ("\nDear Project Leader for %s of the Anchurus-II service,\n\n"
-             "User %s has registered for an account to access the Anchurus-II system %s.\n"
+             "User %s has registered for an account to access the Anchurus-II system %s (URL: %s).\n"
              "Please check the new user account, complete the registration and then enable the account.\n\n"
              "Kind regards,\n\nThe Anchurus-II service"
-             % (Global.organisation, user["email"], Global.organisation))
-      anvil.server.call("send_email","New user registration",msg,"tony.bakker@berksarch.co.uk")
+             % (Global.organisation, str(user["email"]), Global.organisation, anvil.server.get_app_origin('published')))
+      anvil.server.call("send_email","New user registration",msg,Global.admin_user)
       # notify user that the Project Leader will have to check and enable the user account
-      alert("Thank you for registering. Your account registration request has been sent to the project leader for verification. You will be notified as soon as this has been completed.")
+      msg = ("\nDear %s,\n\n"
+             "Thank you for registering for access to the Anchurus-II system %s (URL: %s)\n"
+             "The project leader has been notified and will contact you when the reistration has been validated.\n\n"
+             "Kind regards,\n\nThe Anchurus-II service"
+             % (str(user["email"]),Global.organisation,anvil.server.get_app_origin('published')))
+      subject = ("Registration Anchurus-II system %s" % (anvil.server.get_app_origin('published')))
+      anvil.server.call("send_email",subject,msg,str(user["email"]))
+      msg = ("Thank you for registering. Your account registration request has been sent to the project leader for verification.\n"
+             "You will be notified as soon as this has been completed. An email confirming your registration request has been sent to you.")
+      alert(msg)
       # go back to login screen
       self.logout_click()
     else:
