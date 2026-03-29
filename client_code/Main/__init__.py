@@ -553,9 +553,9 @@ class Main(MainTemplate):
       #print(str(user["email"]))
     
       # notify user that the Project Leader will have to check and enable the user account
-      alert("Thank you for registering. Your account registration request will need to be verified. You will be notified as soon as this has been completed.")
+      alert("Thank you for registering. Your account registration request has been sent to the project leader for verification. You will be notified as soon as this has been completed.")
       msg = ("\nDear Project Leader for %s of the Anchurus-II service,\n\n"
-             "User %s has requested an account to access the system %s.\n"
+             "User %s has registered for an account to access the Anchurus-II system %s.\n"
              "Please check the new user account, complete the registration and then enable the account.\n\n"
              "Kind regards,\n\nThe Anchurus-II service"
              % (Global.organisation, user["email"], Global.organisation))
