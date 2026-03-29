@@ -551,16 +551,17 @@ class Main(MainTemplate):
     user = anvil.users.signup_with_form(allow_cancel=True)
     if user is not None:
       #print(str(user["email"]))
-    
-      # notify user that the Project Leader will have to check and enable the user account
-      alert("Thank you for registering. Your account registration request has been sent to the project leader for verification. You will be notified as soon as this has been completed.")
+      print(anvil.server.get_app_origin())
+      print(anvil.server.get_app_origin('published'))
+      # send email notification to Project leader of the BAS system to finish the registration and enable the account
       msg = ("\nDear Project Leader for %s of the Anchurus-II service,\n\n"
              "User %s has registered for an account to access the Anchurus-II system %s.\n"
              "Please check the new user account, complete the registration and then enable the account.\n\n"
              "Kind regards,\n\nThe Anchurus-II service"
              % (Global.organisation, user["email"], Global.organisation))
-      # send email notification to Project leader of the BAS system to finish the registration and enable the account
       anvil.server.call("send_email","New user registration",msg,"tony.bakker@berksarch.co.uk")
+      # notify user that the Project Leader will have to check and enable the user account
+      alert("Thank you for registering. Your account registration request has been sent to the project leader for verification. You will be notified as soon as this has been completed.")
       # go back to login screen
       self.logout_click()
     else:
