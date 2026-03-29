@@ -563,7 +563,7 @@ class Main(MainTemplate):
       # notify user that the Project Leader will have to check and enable the user account
       msg = ("\nDear %s,\n\n"
              "Thank you for registering for access to the Anchurus-II system %s (URL: %s)\n"
-             "The project leader has been notified and will contact you when the reistration has been validated.\n\n"
+             "The project leader has been notified and will contact you when the registration has been validated.\n\n"
              "Kind regards,\n\nThe Anchurus-II service"
              % (str(user["email"]),Global.organisation,anvil.server.get_app_origin('published')))
       subject = ("Registration Anchurus-II system %s" % (anvil.server.get_app_origin('published')))

@@ -127,7 +127,7 @@ components:
   - components:
     - components:
       - event_bindings: {change: select_site_dropdown_change}
-        layout_properties: {width: 209.1826259765625}
+        layout_properties: {width: 187.5555419921875}
         name: select_site_dropdown
         properties:
           font_size: 13
@@ -155,7 +155,7 @@ components:
       type: FlowPanel
     - components:
       - event_bindings: {change: username_dropdown_change}
-        layout_properties: {width: 318.88905859375}
+        layout_properties: {width: 246.9998779296875}
         name: username_dropdown
         properties:
           font_size: 13
@@ -181,7 +181,7 @@ components:
           foreground: '#FFFFFF'
           icon: fa:remove
           spacing:
-            margin: [-1, '0', null, null]
+            margin: [-1, '0', null, '2']
             padding: [null, '0', '0', '0']
           text: ''
           tooltip: logout
@@ -294,7 +294,12 @@ components:
       type: ColumnPanel
     layout_properties: {full_width_row: true, grid_position: 'XRHQDB,TSHPZF'}
     name: menu_top
-    properties: {background: 'theme:Primary', col_widths: '{"LPGJNI":30,"SCFEUE":30}'}
+    properties:
+      background: theme:Primary
+      col_spacing: none
+      col_widths: '{"LPGJNI":30,"SCFEUE":30}'
+      spacing:
+        margin: [null, '0', null, '0']
     type: ColumnPanel
   - components:
     - components:
