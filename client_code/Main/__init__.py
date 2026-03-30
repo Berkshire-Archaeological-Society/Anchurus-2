@@ -213,7 +213,8 @@ class Main(MainTemplate):
       if Global.action_form_type in Global.action_forms_with_refresh:
         # Make refresh button visible for Global.action_form_type
         # do not do this for users table
-        self.refresh.visible = True if Global.table_name != "users" else False
+        #self.refresh.visible = True if Global.table_name != "users" else False
+        self.refresh.visible = True 
       else:
         #Global.header_refresh_button.visible = False
         self.refresh.visible = False
@@ -457,7 +458,8 @@ class Main(MainTemplate):
       if Global.action_form_type in Global.action_forms_with_refresh:
         # make Refresh button visible if action_form_type has refresh function (i.e. in list Global.action_forms_with_refresh) 
         # do not do this for users table
-        self.refresh.visible = True if Global.table_name != "users" else False
+        #self.refresh.visible = True if Global.table_name != "users" else False
+        self.refresh.visible = True 
       else:
         #Global.header_refresh_button.visible = False
         self.refresh.visible = False

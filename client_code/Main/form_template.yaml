@@ -12,7 +12,7 @@ components:
   - event_bindings: {click: register_button_click}
     layout_properties: {grid_position: 'FGKTJN,HUZFAM'}
     name: register_button
-    properties: {role: outlined-button, text: Register}
+    properties: {role: outlined-button, text: Sign Up}
     type: Button
   layout_properties: {slot: default}
   name: welcome_page

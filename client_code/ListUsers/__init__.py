@@ -12,18 +12,18 @@ from .. import Global
 from .. import FunctionsB
 
 class ListUsers(ListUsersTemplate):
-  def list_users_refresh(self, **event_args):
-    # this function does the filling of the table contents
-    self.UsersList.items = anvil.server.call('users_get')
-    self.table.rows_per_page = Global.rows_per_page
-    self.total_user_number.text = "Total number of Users: " + str(len(self.UsersList.items))
-  pass
+  #def list_users_refresh(self, **event_args):
+  #  # this function does the filling of the table contents
+  #  self.UsersList.items = anvil.server.call('users_get')
+  #  self.table.rows_per_page = Global.rows_per_page
+  #  self.total_user_number.text = "Total number of Users: " + str(len(self.UsersList.items))
+  #pass
   
   def __init__(self, **properties):
     # Set Form properties and Data Bindings.
     self.init_components(**properties)
     # Any code you write here will run before the form opens.
-    #print("in ListAvilUsers")
+    #print("in ListUsers")
     Global.help_page.visible = False
     Global.header.visible = False
     Global.main_form.menu_bottom.visible = True
