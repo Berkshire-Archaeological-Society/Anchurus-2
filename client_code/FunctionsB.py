@@ -181,10 +181,13 @@ def list_users_refresh(self):
 def set_select_site_dropdown_options():
   sites_list = anvil.server.call('sites_get_summary',Global.username)
   site_options = {}
-  for x in sites_list:
-    val_list = list(x.values())
-    option = val_list[0] + " - " + val_list[1]
-    site_options[option] = val_list[0]
+  if len(sites_list) == 0:
+    site_options = {"No Sites available": "No Sites Available"}
+  else:
+    for x in sites_list:
+      val_list = list(x.values())
+      option = val_list[0] + " - " + val_list[1]
+      site_options[option] = val_list[0]
   return site_options
 
 def list_anvil_users_refresh(self):

@@ -523,6 +523,15 @@ class Main(MainTemplate):
       Global.system_user_role = user["systemrole"]
       self.user_role.text = Global.system_user_role
 
+      # make menu bar variable visible
+      self.menu_block.visible = True
+      self.menu_top.visible = True
+      self.title_panel.visible = True
+      self.menu_middle.visible = True
+      self.mm_left.visible = True
+      self.mm_middle.visible = False      
+      
+      self.mm_right.visible = True
       if Global.system_user_role in ["System Administrator"]:
         self.menu_middle.visible = True
         self.mm_right.visible = True
@@ -534,10 +543,12 @@ class Main(MainTemplate):
         self.admin_dropdown.items = Global.sys_admin_action_dropdown
       
       # make menu bar variable visible
-      self.menu_block.visible = True
-      self.menu_top.visible = True
-      self.title_panel.visible = True
-
+      ##self.menu_block.visible = True
+      #self.menu_top.visible = True
+      #self.title_panel.visible = True
+      #self.menu_middle.visible = True
+      #self.mm_left.visible = True
+      
       Global.site_options = FunctionsB.set_select_site_dropdown_options()      
       self.select_site_dropdown.items = Global.site_options.keys()
       Global.select_site_dropdown = self.select_site_dropdown
@@ -592,7 +603,7 @@ class Main(MainTemplate):
     """ This Function is called when the users selects a site """
     """This method is called when an item is selected"""
     # print("select_site_dropdown selected")
-    if self.select_site_dropdown.selected_value is not None:
+    if self.select_site_dropdown.selected_value is not None and self.select_site_dropdown.selected_value != "No Sites available":
       # clear help_page_text 
       #Global.help_page.help_page_text.visible = True
       #Global.help_page.help_page_text.clear()
@@ -634,12 +645,17 @@ class Main(MainTemplate):
         if Global.system_user_role == "Site User":
           self.user_role.text = "Site " + Global.site_user_role
 
-        if Global.site_user_role == "Manager" or Global.system_user_role == "System Administrator" :
+        if Global.system_user_role == "System Administrator":
           # add site manager admin actions to admin dropdown
           options = Global.sys_admin_action_dropdown + Global.site_admin_action_dropdown
           self.admin_dropdown.items = options
           self.admin_dropdown.visible = True
-        
+        if Global.site_user_role == "Manager":
+          # add site manager admin actions to admin dropdown
+          options = Global.site_manager_action_dropdown + Global.site_admin_action_dropdown
+          self.admin_dropdown.items = options
+          self.admin_dropdown.visible = True
+          
         Global.site_name = self.select_site_dropdown.selected_value
         Global.site_id = Global.site_options[self.select_site_dropdown.selected_value]
         Global.selected_site = ": " + Global.site_name
@@ -703,6 +719,8 @@ class Main(MainTemplate):
         #self.select_site_dropdown.selected_value = None
         n = Notification(msg)
         n.show()
+    else:
+      self.select_site_dropdown.selected_value = None
     pass
 
   # Funtions for the menu options (Menu_middle) after the user selected a site
