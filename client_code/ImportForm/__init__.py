@@ -93,7 +93,7 @@ class ImportForm(ImportFormTemplate):
       for column in table_info:
         data_list[column["COLUMN_NAME"]] = None
         col_order[column["COLUMN_NAME"]] = column["ORDINAL_POSITION"]
-      print(data_list) 
+      #print(data_list) 
     else:
       # table users is a special case (for the Anvil users DB table)
       data_list = {"email": None, "password": None, "systemrole": None, "initials": None, "firstname": None, "lastname": None}
