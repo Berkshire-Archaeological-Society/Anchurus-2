@@ -252,11 +252,15 @@ class Main(MainTemplate):
     # First make sure the old header is invisible
     Global.header.visible = False
     Global.wa_header_menu_bottom.visible = True
-
-    # set name of work_area to be action name
+    
+    # set name of work_area to be action name with small modifications in some cases
     work_area_name = action
-    if action.lower() == "list sys_userrole":
-      work_area_name = action.split(" ")[0] + " " + action.split(" ")[1][-8:]
+    if action in ["List Users","Insert User","Import Users"]:
+      work_area_name = action.split(" ")[0] + " System " + action.split(" ")[1]
+    if action.split(" ")[1].lower() == "sys_userrole":
+      work_area_name = action.split(" ")[0] + " Site User"
+      if action.split(" ")[0] != "Insert":
+        work_area_name = work_area_name + "s"   
 
     table_info = [] 
     # get table_info , works only for a true DB table. If not we have to create the table_info dictionary list ourselves   
