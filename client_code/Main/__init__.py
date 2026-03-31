@@ -437,7 +437,7 @@ class Main(MainTemplate):
       self.select_all.checked = False
       
       self.view_row.visible = True
-      self.edit_row.visible = True if Global.site_user_role in ["Editor"] or Global.system_user_role == "System Administrator" else False
+      self.edit_row.visible = True if Global.site_user_role in ["Editor","Manager"] or Global.system_user_role == "System Administrator" else False
       self.delete_row.visible = True if Global.site_user_role in ["Manager"] or Global.system_user_role == "System Administrator" else False
       
       # for table dbdiary disable edit_row and delete_row button
