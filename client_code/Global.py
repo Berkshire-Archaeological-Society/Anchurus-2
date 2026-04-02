@@ -98,6 +98,80 @@ Quill_toolbarOptions = [
 ['clean']                                         # remove formatting button
 ]
 #
+role_access = {
+'Viewer': {
+    {'table': 'anomaly',      'list': "Yes", 'view': "Yes", 'Edit': 'No','Insert': 'No','Import': 'No','Export': 'No','Delete': 'No'},
+    {'table': 'context',      'list': "Yes", 'view': "Yes", 'Edit': 'No','Insert': 'No','Import': 'No','Export': 'No','Delete': 'No'},
+    {'table': 'find',         'list': "Yes", 'view': "Yes", 'Edit': 'No','Insert': 'No','Import': 'No','Export': 'No','Delete': 'No'},
+    {'table': 'findgoup',     'list': "Yes", 'view': "Yes", 'Edit': 'No','Insert': 'No','Import': 'No','Export': 'No','Delete': 'No'},
+    {'table': 'fs tables',    'list': "Yes", 'view': "Yes", 'Edit': 'No','Insert': 'No','Import': 'No','Export': 'No','Delete': 'No'},
+    {'table': 'ircollection', 'list': "Yes", 'view': "Yes", 'Edit': 'No','Insert': 'No','Import': 'No','Export': 'No','Delete': 'No'},
+    {'table': 'box',          'list': "Yes", 'view': "Yes", 'Edit': 'No','Insert': 'No','Import': 'No','Export': 'No','Delete': 'No'},
+    {'table': 'trackbox',     'list': "Yes", 'view': "Yes", 'Edit': 'No','Insert': 'No','Import': 'No','Export': 'No','Delete': 'No'},
+    {'table': 'phase',        'list': "Yes", 'view': "Yes", 'Edit': 'No','Insert': 'No','Import': 'No','Export': 'No','Delete': 'No'},
+    {'table': 'group',        'list': "Yes", 'view': "Yes", 'Edit': 'No','Insert': 'No','Import': 'No','Export': 'No','Delete': 'No'},
+    {'table': 'interpret',    'list': "Yes", 'view': "Yes", 'Edit': 'No','Insert': 'No','Import': 'No','Export': 'No','Delete': 'No'},
+    {'table': 'query',        'list': "No",  'view': "No", 'Edit': 'No','Insert': 'No','Import': 'No','Export': 'No','Delete': 'No'},
+    {'table': 'site',         'list': "No",  'view': "No", 'Edit': 'No','Insert': 'No','Import': 'No','Export': 'No','Delete': 'No'},
+    {'table': 'siteuser',     'list': "No",  'view': "No", 'Edit': 'No','Insert': 'No','Import': 'No','Export': 'No','Delete': 'No'},
+    {'table': 'dbdiary',      'list': "No",  'view': "No", 'Edit': 'No','Insert': 'No','Import': 'No','Export': 'No','Delete': 'No'},
+    {'table': 'users',        'list': "No",  'view': "No", 'Edit': 'No','Insert': 'No','Import': 'No','Export': 'No','Delete': 'No'}
+  },
+'Editor': {
+    {'table': 'anomaly',      'list': "Yes", 'view': "Yes", 'Edit': 'Yes','Insert': 'Yes','Import': 'Yes','Export': 'Yes','Delete': 'No'},
+    {'table': 'context',      'list': "Yes", 'view': "Yes", 'Edit': 'No','Insert': 'No','Import': 'No','Export': 'No','Delete': 'No'},
+    {'table': 'find',         'list': "Yes", 'view': "Yes", 'Edit': 'No','Insert': 'No','Import': 'No','Export': 'No','Delete': 'No'},
+    {'table': 'findgoup',     'list': "Yes", 'view': "Yes", 'Edit': 'No','Insert': 'No','Import': 'No','Export': 'No','Delete': 'No'},
+    {'table': 'fs tables',    'list': "Yes", 'view': "Yes", 'Edit': 'No','Insert': 'No','Import': 'No','Export': 'No','Delete': 'No'},
+    {'table': 'ircollection', 'list': "Yes", 'view': "Yes", 'Edit': 'No','Insert': 'No','Import': 'No','Export': 'No','Delete': 'No'},
+    {'table': 'box',          'list': "Yes", 'view': "Yes", 'Edit': 'No','Insert': 'No','Import': 'No','Export': 'No','Delete': 'No'},
+    {'table': 'trackbox',     'list': "Yes", 'view': "Yes", 'Edit': 'No','Insert': 'No','Import': 'No','Export': 'No','Delete': 'No'},
+    {'table': 'phase',        'list': "Yes", 'view': "Yes", 'Edit': 'No','Insert': 'No','Import': 'No','Export': 'No','Delete': 'No'},
+    {'table': 'group',        'list': "Yes", 'view': "Yes", 'Edit': 'No','Insert': 'No','Import': 'No','Export': 'No','Delete': 'No'},
+    {'table': 'interpret',    'list': "Yes", 'view': "Yes", 'Edit': 'No','Insert': 'No','Import': 'No','Export': 'No','Delete': 'No'},
+    {'table': 'query',        'list': "Yes", 'view': "Yes", 'Edit': 'No','Insert': 'No','Import': 'No','Export': 'No','Delete': 'No'},
+    {'table': 'site',         'list': "No",  'view': "No",  'Edit': 'No','Insert': 'No','Import': 'No','Export': 'No','Delete': 'No'},
+    {'table': 'siteuser',     'list': "No",  'view': "No",  'Edit': 'No','Insert': 'No','Import': 'No','Export': 'No','Delete': 'No'},
+    {'table': 'dbdiary',      'list': "No",  'view': "No",  'Edit': 'No','Insert': 'No','Import': 'No','Export': 'No','Delete': 'No'},
+    {'table': 'users',        'list': "No",  'view': "No",  'Edit': 'No','Insert': 'No','Import': 'No','Export': 'No','Delete': 'No'}
+  },
+'Manager': {
+    {'table': 'anomaly',      'list': "Yes", 'view': "Yes", 'Edit': 'No','Insert': 'No','Import': 'No','Export': 'No','Delete': 'No'},
+    {'table': 'context',      'list': "Yes", 'view': "Yes", 'Edit': 'No','Insert': 'No','Import': 'No','Export': 'No','Delete': 'No'},
+    {'table': 'find',         'list': "Yes", 'view': "Yes", 'Edit': 'No','Insert': 'No','Import': 'No','Export': 'No','Delete': 'No'},
+    {'table': 'findgoup',     'list': "Yes", 'view': "Yes", 'Edit': 'No','Insert': 'No','Import': 'No','Export': 'No','Delete': 'No'},
+    {'table': 'fs tables',    'list': "Yes", 'view': "Yes", 'Edit': 'No','Insert': 'No','Import': 'No','Export': 'No','Delete': 'No'},
+    {'table': 'ircollection', 'list': "Yes", 'view': "Yes", 'Edit': 'No','Insert': 'No','Import': 'No','Export': 'No','Delete': 'No'},
+    {'table': 'box',          'list': "Yes", 'view': "Yes", 'Edit': 'No','Insert': 'No','Import': 'No','Export': 'No','Delete': 'No'},
+    {'table': 'trackbox',     'list': "Yes", 'view': "Yes", 'Edit': 'No','Insert': 'No','Import': 'No','Export': 'No','Delete': 'No'},
+    {'table': 'phase',        'list': "Yes", 'view': "Yes", 'Edit': 'No','Insert': 'No','Import': 'No','Export': 'No','Delete': 'No'},
+    {'table': 'group',        'list': "Yes", 'view': "Yes", 'Edit': 'No','Insert': 'No','Import': 'No','Export': 'No','Delete': 'No'},
+    {'table': 'interpret',    'list': "Yes", 'view': "Yes", 'Edit': 'No','Insert': 'No','Import': 'No','Export': 'No','Delete': 'No'},
+    {'table': 'query',        'list': "Yes", 'view': "Yes", 'Edit': 'No','Insert': 'No','Import': 'No','Export': 'No','Delete': 'No'},
+    {'table': 'site',         'list': "Yes", 'view': "Yes", 'Edit': 'No','Insert': 'No','Import': 'No','Export': 'No','Delete': 'No'},
+    {'table': 'siteuser',     'list': "Yes", 'view': "Yes", 'Edit': 'No','Insert': 'No','Import': 'No','Export': 'No','Delete': 'No'},
+    {'table': 'dbdiary',      'list': "Yes", 'view': "Yes", 'Edit': 'No','Insert': 'No','Import': 'No','Export': 'No','Delete': 'No'},
+    {'table': 'users',        'list': "Yes", 'view': "Yes", 'Edit': 'No','Insert': 'No','Import': 'No','Export': 'No','Delete': 'No'}
+  },
+'Administrator': {
+    {'table': 'anomaly',      'list': "Yes", 'view': "Yes", 'Edit': 'No','Insert': 'No','Import': 'No','Export': 'No','Delete': 'No'},
+    {'table': 'context',      'list': "Yes", 'view': "Yes", 'Edit': 'No','Insert': 'No','Import': 'No','Export': 'No','Delete': 'No'},
+    {'table': 'find',         'list': "Yes", 'view': "Yes", 'Edit': 'No','Insert': 'No','Import': 'No','Export': 'No','Delete': 'No'},
+    {'table': 'findgoup',     'list': "Yes", 'view': "Yes", 'Edit': 'No','Insert': 'No','Import': 'No','Export': 'No','Delete': 'No'},
+    {'table': 'fs tables',    'list': "Yes", 'view': "Yes", 'Edit': 'No','Insert': 'No','Import': 'No','Export': 'No','Delete': 'No'},
+    {'table': 'ircollection', 'list': "Yes", 'view': "Yes", 'Edit': 'No','Insert': 'No','Import': 'No','Export': 'No','Delete': 'No'},
+    {'table': 'box',          'list': "Yes", 'view': "Yes", 'Edit': 'No','Insert': 'No','Import': 'No','Export': 'No','Delete': 'No'},
+    {'table': 'trackbox',     'list': "Yes", 'view': "Yes", 'Edit': 'No','Insert': 'No','Import': 'No','Export': 'No','Delete': 'No'},
+    {'table': 'phase',        'list': "Yes", 'view': "Yes", 'Edit': 'No','Insert': 'No','Import': 'No','Export': 'No','Delete': 'No'},
+    {'table': 'group',        'list': "Yes", 'view': "Yes", 'Edit': 'No','Insert': 'No','Import': 'No','Export': 'No','Delete': 'No'},
+    {'table': 'interpret',    'list': "Yes", 'view': "Yes", 'Edit': 'No','Insert': 'No','Import': 'No','Export': 'No','Delete': 'No'},
+    {'table': 'query',        'list': "Yes", 'view': "Yes", 'Edit': 'No','Insert': 'No','Import': 'No','Export': 'No','Delete': 'No'},
+    {'table': 'site',         'list': "Yes", 'view': "Yes", 'Edit': 'No','Insert': 'No','Import': 'No','Export': 'No','Delete': 'No'},
+    {'table': 'siteuser',     'list': "Yes", 'view': "Yes", 'Edit': 'No','Insert': 'No','Import': 'No','Export': 'No','Delete': 'No'},
+    {'table': 'dbdiary',      'list': "Yes", 'view': "Yes", 'Edit': 'No','Insert': 'No','Import': 'No','Export': 'No','Delete': 'No'},
+    {'table': 'users',        'list': "Yes", 'view': "Yes", 'Edit': 'No','Insert': 'No','Import': 'No','Export': 'No','Delete': 'No'}
+  }
+}
 button_normal_background_clour = "#DCE5DD"
 button_highlight_background_clour = "#CBEAD6"
 #
