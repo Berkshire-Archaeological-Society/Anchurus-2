@@ -127,7 +127,7 @@ components:
   - components:
     - components:
       - event_bindings: {change: select_site_dropdown_change}
-        layout_properties: {width: 187.5555419921875}
+        layout_properties: {expand: true, width: 187.5555419921875}
         name: select_site_dropdown
         properties:
           font_size: 14
@@ -137,7 +137,7 @@ components:
           tooltip: select site
         type: DropDown
       - event_bindings: {change: site_summary_change}
-        layout_properties: {width: 145.44739697265624}
+        layout_properties: {expand: true, width: 145.44739697265624}
         name: site_summary
         properties:
           font_size: 14
@@ -155,7 +155,7 @@ components:
       type: FlowPanel
     - components:
       - event_bindings: {change: username_dropdown_change}
-        layout_properties: {width: 246.9998779296875}
+        layout_properties: {expand: true, width: 246.9998779296875}
         name: username_dropdown
         properties:
           font_size: 14
@@ -266,7 +266,7 @@ components:
         type: FlowPanel
       - components:
         - event_bindings: {change: admin_dropdown_change}
-          layout_properties: {width: 75}
+          layout_properties: {expand: true, width: 75}
           name: admin_dropdown
           properties:
             align: left
