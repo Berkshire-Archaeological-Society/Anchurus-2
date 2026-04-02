@@ -130,7 +130,7 @@ components:
         layout_properties: {width: 187.5555419921875}
         name: select_site_dropdown
         properties:
-          font_size: 13
+          font_size: 14
           include_placeholder: true
           margin: ['5', '0', null, '4']
           placeholder: Select Site
@@ -140,7 +140,7 @@ components:
         layout_properties: {width: 145.44739697265624}
         name: site_summary
         properties:
-          font_size: 13
+          font_size: 14
           include_placeholder: true
           margin: [null, '0', null, '4']
           placeholder: Site Summary
@@ -158,7 +158,7 @@ components:
         layout_properties: {width: 246.9998779296875}
         name: username_dropdown
         properties:
-          font_size: 13
+          font_size: 14
           include_placeholder: true
           margin: [null, '0', null, '0']
           tooltip: username
@@ -166,7 +166,7 @@ components:
       - layout_properties: {}
         name: user_role
         properties:
-          font_size: 13
+          font_size: 14
           foreground: '#FFFFFF'
           spacing:
             margin: ['8', '0', null, '4']
@@ -200,7 +200,7 @@ components:
           layout_properties: {width: 75}
           name: help_dropdown
           properties:
-            font_size: 13
+            font_size: 14
             include_placeholder: true
             margin: ['0', null, null, '0']
             placeholder: Help
@@ -220,7 +220,7 @@ components:
           layout_properties: {}
           name: list_dropdown
           properties:
-            font_size: 13
+            font_size: 14
             include_placeholder: true
             margin: ['0', '4', null, '4']
             placeholder: List
@@ -230,7 +230,7 @@ components:
           layout_properties: {}
           name: insert_dropdown
           properties:
-            font_size: 13
+            font_size: 14
             include_placeholder: true
             margin: ['0', '4', null, '4']
             placeholder: Insert
@@ -240,7 +240,7 @@ components:
           layout_properties: {}
           name: import_dropdown
           properties:
-            font_size: 13
+            font_size: 14
             include_placeholder: true
             items: []
             margin: ['0', '4', null, '4']
@@ -251,7 +251,7 @@ components:
           layout_properties: {width: 92.3297779296875}
           name: query_dropdown
           properties:
-            font_size: 13
+            font_size: 14
             include_placeholder: true
             margin: [-1.1111111405455043, '4', null, '4']
             placeholder: Query
@@ -273,7 +273,7 @@ components:
             background: ''
             bold: false
             border: ''
-            font_size: 13
+            font_size: 14
             include_placeholder: true
             margin: ['0', '0', null, '0']
             placeholder: Admin
