@@ -160,7 +160,7 @@ components:
         properties:
           font_size: 14
           include_placeholder: true
-          margin: [null, '0', null, '0']
+          margin: [null, '0', null, '4']
           tooltip: username
         type: DropDown
       - layout_properties: {}
@@ -269,7 +269,7 @@ components:
           layout_properties: {expand: true, width: 75}
           name: admin_dropdown
           properties:
-            align: left
+            align: right
             background: ''
             bold: false
             border: ''
@@ -290,7 +290,7 @@ components:
         type: FlowPanel
       layout_properties: {full_width_row: true, grid_position: 'MMDTPN,DMQBFC'}
       name: menu_middle
-      properties: {background: 'theme:Primary', col_spacing: none, col_widths: '{"ZMXKSM":10,"GYVRON":40,"BHRWOL":10}'}
+      properties: {background: 'theme:Primary', col_spacing: none, col_widths: '{"ZMXKSM":10,"GYVRON":35,"BHRWOL":15}'}
       type: ColumnPanel
     layout_properties: {full_width_row: true, grid_position: 'XRHQDB,TSHPZF'}
     name: menu_top

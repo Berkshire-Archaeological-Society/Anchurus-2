@@ -14,7 +14,7 @@ components:
       properties:
         icon_align: left_edge
         spacing:
-          margin: [null, null, '0', null]
+          margin: ['0', null, '0', null]
           padding: [null, null, '4', null]
       type: Label
     layout_properties: {expand: true, width: 930}
