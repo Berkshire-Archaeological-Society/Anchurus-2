@@ -99,7 +99,7 @@ Quill_toolbarOptions = [
 ]
 #
 role_access = {
-'Viewer': {
+'Viewer': [
     {'table': 'anomaly',      'list': "Yes", 'view': "Yes", 'Edit': 'No','Insert': 'No','Import': 'No','Export': 'No','Delete': 'No'},
     {'table': 'context',      'list': "Yes", 'view': "Yes", 'Edit': 'No','Insert': 'No','Import': 'No','Export': 'No','Delete': 'No'},
     {'table': 'find',         'list': "Yes", 'view': "Yes", 'Edit': 'No','Insert': 'No','Import': 'No','Export': 'No','Delete': 'No'},
@@ -116,8 +116,8 @@ role_access = {
     {'table': 'siteuser',     'list': "No",  'view': "No",  'Edit': 'No','Insert': 'No','Import': 'No','Export': 'No','Delete': 'No'},
     {'table': 'dbdiary',      'list': "No",  'view': "No",  'Edit': 'No','Insert': 'No','Import': 'No','Export': 'No','Delete': 'No'},
     {'table': 'users',        'list': "No",  'view': "No",  'Edit': 'No','Insert': 'No','Import': 'No','Export': 'No','Delete': 'No'}
-  },
-'Editor': {
+  ],
+'Editor': [
     {'table': 'anomaly',      'list': "Yes", 'view': "Yes", 'Edit': 'Yes','Insert': 'Yes','Import': 'Yes','Export': 'Yes','Delete': 'No'},
     {'table': 'context',      'list': "Yes", 'view': "Yes", 'Edit': 'Yes','Insert': 'Yes','Import': 'Yes','Export': 'Yes','Delete': 'No'},
     {'table': 'find',         'list': "Yes", 'view': "Yes", 'Edit': 'Yes','Insert': 'Yes','Import': 'Yes','Export': 'Yes','Delete': 'No'},
@@ -134,8 +134,8 @@ role_access = {
     {'table': 'siteuser',     'list': "No",  'view': "No",  'Edit': 'No', 'Insert': 'No', 'Import': 'No', 'Export': 'No', 'Delete': 'No'},
     {'table': 'dbdiary',      'list': "No",  'view': "No",  'Edit': 'No', 'Insert': 'No', 'Import': 'No', 'Export': 'No', 'Delete': 'No'},
     {'table': 'users',        'list': "No",  'view': "No",  'Edit': 'No',' Insert': 'No', 'Import': 'No', 'Export': 'No', 'Delete': 'No'}
-  },
-'Manager': {
+  ] ,
+'Manager': [
     {'table': 'anomaly',      'list': "Yes", 'view': "Yes", 'Edit': 'No','Insert': 'No','Import': 'No','Export': 'No','Delete': 'No'},
     {'table': 'context',      'list': "Yes", 'view': "Yes", 'Edit': 'No','Insert': 'No','Import': 'No','Export': 'No','Delete': 'No'},
     {'table': 'find',         'list': "Yes", 'view': "Yes", 'Edit': 'No','Insert': 'No','Import': 'No','Export': 'No','Delete': 'No'},
@@ -152,8 +152,8 @@ role_access = {
     {'table': 'siteuser',     'list': "Yes", 'view': "Yes", 'Edit': 'No','Insert': 'No','Import': 'No','Export': 'No','Delete': 'No'},
     {'table': 'dbdiary',      'list': "Yes", 'view': "Yes", 'Edit': 'No','Insert': 'No','Import': 'No','Export': 'No','Delete': 'No'},
     {'table': 'users',        'list': "Yes", 'view': "Yes", 'Edit': 'No','Insert': 'No','Import': 'No','Export': 'No','Delete': 'No'}
-  },
-'Administrator': {
+  ],
+'Administrator': [
     {'table': 'anomaly',      'list': "Yes", 'view': "Yes", 'Edit': 'Yes','Insert': 'Yes','Import': 'Yes','Export': 'Yes','Delete': 'Yes'},
     {'table': 'context',      'list': "Yes", 'view': "Yes", 'Edit': 'Yes','Insert': 'Yes','Import': 'Yes','Export': 'Yes','Delete': 'Yes'},
     {'table': 'find',         'list': "Yes", 'view': "Yes", 'Edit': 'Yes','Insert': 'Yes','Import': 'Yes','Export': 'Yes','Delete': 'Yes'},
@@ -170,7 +170,7 @@ role_access = {
     {'table': 'siteuser',     'list': "Yes", 'view': "Yes", 'Edit': 'Yes','Insert': 'Yes','Import': 'Yes','Export': 'Yes','Delete': 'Yes'},
     {'table': 'dbdiary',      'list': "Yes", 'view': "Yes", 'Edit': 'No' ,'Insert': 'No', 'Import': 'No', 'Export': 'No' ,'Delete': 'No'},
     {'table': 'users',        'list': "Yes", 'view': "Yes", 'Edit': 'Yes','Insert': 'Yes','Import': 'Yes','Export': 'Yes','Delete': 'Yes'}
-  }
+  ]
 }
 button_normal_background_clour = "#DCE5DD"
 button_highlight_background_clour = "#CBEAD6"
@@ -251,18 +251,18 @@ table_name = ""
 table_items = {}
 
 # Specify names of columns in known colwidth (otherwise default colwidth is used)
-table_colwidth_60 = ["FillOf","Year","Count","Weight","DiaryId"]
-table_colwidth_70 = []
-table_colwidth_80 = ["ContextId","AreaId","YearStart","YearEnd","Workflow","BoxId","FromSample","FindType","Enabled"]
-table_colwidth_90 = ["FindId"]
-table_colwidth_100 = ["DBAcontrol","GazControl","FindGroupId","ContextYear","ContextType","PackageType","SmallFindId","FromSample","RecordStatus","SiteId","Role"]
-table_colwidth_120 = ["SiteId"]
-table_colwidth_140 = ["RegistrationDate","DatesAssignedBy","StemBoreSizemm","ContextName1","ContextName2","FindName1","FindName2","PermittedOperations","systemrole","SiteName"]
-table_colwidth_200 = ["Address"]
-table_colwidth_250 = ["last_login"]
-table_colwidth_300 = ["Description","URL","Activity","email","Email","Description1","Description2","WhatItDoes"]
-table_colwidth_350 = ["SQL_command"]
-table_colwidth_default = 110
+#table_colwidth_60 = ["FillOf","Year","Count","Weight","DiaryId"]
+#table_colwidth_70 = []
+#table_colwidth_80 = ["ContextId","AreaId","YearStart","YearEnd","Workflow","BoxId","FromSample","FindType","Enabled"]
+#table_colwidth_90 = ["FindId"]
+#table_colwidth_100 = ["DBAcontrol","GazControl","FindGroupId","ContextYear","ContextType","PackageType","SmallFindId","FromSample","RecordStatus","SiteId","Role"]
+#table_colwidth_120 = ["SiteId"]
+#table_colwidth_140 = ["RegistrationDate","DatesAssignedBy","StemBoreSizemm","ContextName1","ContextName2","FindName1","FindName2","PermittedOperations","systemrole","SiteName"]
+#table_colwidth_200 = ["Address"]
+#table_colwidth_250 = ["last_login"]
+#table_colwidth_300 = ["Description","URL","Activity","email","Email","Description1","Description2","WhatItDoes"]
+#table_colwidth_350 = ["SQL_command"]
+#table_colwidth_default = 110
 #
 title = system + "\n\n" + organisation
 sign_in_out_button_text = "Sign in"

@@ -6,6 +6,9 @@ import anvil.users
 import anvil.tables as tables
 import anvil.tables.query as q
 from anvil.tables import app_tables
+#
+import re
+
 # This is a module.
 # You can define variables and functions here, and use them from any form. For example, in a top-level form:
 #
@@ -90,35 +93,50 @@ def refresh_click(self):
 def create_table_columns(column_list,work_area):
   work_area["columns_show"] = []
   columns_titles = []
+  #first column is for the select button
   columns_titles.append({"id": 1, "title": "", "data_key": "select", "width": 30, "expand": False })
   id = 1
   for column in column_list:
     # Select Column "Field"
     work_area["columns_show"].append(column)
-    col_width = Global.table_colwidth_default
-    #col_width = 0
-    if column in Global.table_colwidth_60:
-      col_width = 60
-    if column in Global.table_colwidth_70:
-      col_width = 70
-    if column in Global.table_colwidth_80:
-      col_width = 80
-    if column in Global.table_colwidth_90:
-      col_width = 90
-    if column in Global.table_colwidth_100:
-      col_width = 100
-    if column in Global.table_colwidth_120:
-      col_width = 120
-    if column in Global.table_colwidth_140:
-      col_width = 140
-    if column in Global.table_colwidth_200:
-      col_width = 200
-    if column in Global.table_colwidth_250:
-      col_width = 250
-    if column in Global.table_colwidth_300:
+    # work out column width on various criteria
+    data_type = next(x["COLUMN_TYPE"] for x in work_area["table_info"] if x["COLUMN_NAME"] == column)
+    #print(column,data_type)
+    ratio = 8 # pixels per char
+    padding = 10 # padding
+    if data_type == "text" or ("varchar" in data_type and int(data_type.strip("varchar()")) > 50 ):
       col_width = 300
-    if column in Global.table_colwidth_350:
-      col_width = 350    #
+    elif data_type == "date":
+      col_width = (max(10,len(column))) * ratio + padding
+    else:
+      dt_len = re.findall(r'\d+', data_type)[0]
+      col_width = (max(int(dt_len),len(column))) * ratio + padding
+    #print(col_width)
+    #col_width = Global.table_colwidth_default
+    #col_width = 0
+    #if column in Global.table_colwidth_60:
+    #  col_width = 60
+    #if column in Global.table_colwidth_70:
+    #  col_width = 70
+    #if column in Global.table_colwidth_80:
+    #  col_width = 80
+    #if column in Global.table_colwidth_90:
+    #  col_width = 90
+    #if column in Global.table_colwidth_100:
+    #  col_width = 100
+    #if column in Global.table_colwidth_120:
+    #  col_width = 120
+    #if column in Global.table_colwidth_140:
+    #  col_width = 140
+    #if column in Global.table_colwidth_200:
+    #  col_width = 200
+    #if column in Global.table_colwidth_250:
+    #  col_width = 250
+    #if column in Global.table_colwidth_300:
+    #  col_width = 300
+    #if column in Global.table_colwidth_350:
+    #  col_width = 350    #
+    
     if (column == "DBAcontrol" and Global.table_name == "dbdiary") or column not in ["select","DBAcontrol"]:
       # do not create a columns for DBAControl and select
       id = id + 1
