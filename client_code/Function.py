@@ -108,7 +108,6 @@ def format_cell_text(text, max_chars=100):
   # if first line is longer that half of max_chars then on take first line; otherwise take first two lines
   if len(lines[0]) > max_chars / 2:
     text_to_process = "\n".join(lines[:1])
-    was_truncated = True
   else:
     if len(lines) > 2:
       # Take the first two and mark as truncated
