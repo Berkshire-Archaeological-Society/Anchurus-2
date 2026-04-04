@@ -399,6 +399,9 @@ class RowForm(RowFormTemplate):
     #print(command)
     if command != "":
       msg, data_list, column_order, Global.tmp_table_info = anvil.server.call("execute_sql_command",command)
+      print(data_list)
+      print(column_order)
+      print(Global.tmp_table_info)
     else:
       msg = "FAIL: SQL command field is empty."
     #print("after execute_sql_commnd")
