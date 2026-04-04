@@ -105,13 +105,17 @@ def format_cell_text(text, max_chars=100):
   was_truncated = False
 
   # 2. Check for newline limit (Max 2 lines)
-  if len(lines) > 2:
-    # Take the first two and mark as truncated
-    #if 
-    text_to_process = "\n".join(lines[:2])
+  # if first line is longer that half of max_chars then on take first line; otherwise take first two lines
+  if len(lines[0]) > max_chars / 2:
+    text_to_process = "\n".join(lines[:1])
     was_truncated = True
   else:
-    text_to_process = "\n".join(lines)
+    if len(lines) > 2:
+      # Take the first two and mark as truncated
+      text_to_process = "\n".join(lines[:2])
+      was_truncated = True
+    else:
+      text_to_process = "\n".join(lines)
 
   # 3. Check for character limit
   if len(text_to_process) > max_chars:
