@@ -248,6 +248,7 @@ system = "Anchurus-II R2"
 status = ""
 #
 table_name = ""
+tmp_table_info = []
 table_items = {}
 
 # Specify names of columns in known colwidth (otherwise default colwidth is used)

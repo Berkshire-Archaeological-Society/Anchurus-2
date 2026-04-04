@@ -195,7 +195,8 @@ class TableList(TableListTemplate):
         tmp_table_info.append(col_info)
       # sort table_info in ORDINAL_POSITION
       table_info = sorted(tmp_table_info, key=lambda x: x['ORDINAL_POSITION'])
-      #print(table_info)
+      table_info = Global.tmp_table_info
+      print(table_info)
 
     # add table to work_area data structure for Global.current_work_area_name
     Global.work_area[Global.current_work_area_name]["table"] = self.table
