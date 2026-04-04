@@ -357,7 +357,7 @@ components:
             tooltip: edit row
           type: Button
         - event_bindings: {click: delete_row_click}
-          layout_properties: {}
+          layout_properties: {expand: false}
           name: delete_row
           properties:
             foreground: theme:On Tertiary
@@ -367,6 +367,18 @@ components:
               padding: ['5', '0', '5', '0']
             text: ''
             tooltip: delete row
+          type: Button
+        - event_bindings: {}
+          layout_properties: {}
+          name: execute_sql
+          properties:
+            foreground: theme:On Tertiary
+            icon: fa:play
+            spacing:
+              margin: ['0', '0', null, null]
+              padding: ['0', '0', '0', '0']
+            text: ''
+            tooltip: execute SQL
           type: Button
         layout_properties: {width: 162.47982373046875}
         name: fp_select_options

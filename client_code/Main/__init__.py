@@ -207,6 +207,7 @@ class Main(MainTemplate):
       self.view_row.visible = Global.work_area[Global.current_work_area_name]["visibility_view_row"]
       self.edit_row.visible = Global.work_area[Global.current_work_area_name]["visibility_edit_row"]
       self.delete_row.visible = Global.work_area[Global.current_work_area_name]["visibility_delete_row"] 
+      self.execute_sql.visible = Global.work_area[Global.current_work_area_name]["visibility_execute_sql"] 
 
       # Set selected buttons on Header for work area type
       #print(Global.table_name)
@@ -439,23 +440,30 @@ class Main(MainTemplate):
       self.view_row.visible = True
       self.edit_row.visible = True if Global.site_user_role in ["Editor","Manager"] or Global.system_user_role == "System Administrator" else False
       self.delete_row.visible = True if Global.site_user_role in ["Manager"] or Global.system_user_role == "System Administrator" else False
-      
+      if Global.table_name == "query":
+        self.execute_sql.visible = True if Global.site_user_role in ["Manager"] or Global.system_user_role == "System Administrator" else False
+      else:
+        self.execute_sql.visible = False
+
       # for table dbdiary disable edit_row and delete_row button
       if Global.table_name == "dbdiary":
         self.view_row.visible = True
         self.edit_row.visible = False
         self.delete_row.visible = False
+        self.execute_sql.visible = False
       # for table dbdiary disable edit_row and delete_row button
       if Global.table_name == "qresult":
         self.view_row.visible = False
         self.edit_row.visible = False
         self.delete_row.visible = False
-        
+        self.execute_sql.visible = False
+
       # safe edit_row and delete_row visibilty so that at click woekspace they can be set
       Global.work_area[Global.current_work_area_name]["visibility_view_row"] = self.view_row.visible
       Global.work_area[Global.current_work_area_name]["visibility_edit_row"] = self.edit_row.visible
       Global.work_area[Global.current_work_area_name]["visibility_delete_row"] = self.delete_row.visible
-        
+      Global.work_area[Global.current_work_area_name]["visibility_execute_sql"] = self.execute_sql.visible
+
       # Set selected buttons on Header for work area type
       Global.action_form_type = Global.header_work_area_type.text
       #print(Global.action_form_type)
@@ -682,6 +690,7 @@ class Main(MainTemplate):
           self.insert_dropdown.visible = True 
           self.query_dropdown.visible = True 
           self.delete_row.visible = True
+          self.execute_sql.visible = True
           self.import_dropdown.visible = True
         elif Global.site_user_role in ["Editor"]:
           self.list_dropdown.visible = True
@@ -690,6 +699,7 @@ class Main(MainTemplate):
           self.insert_dropdown.visible = True 
           self.query_dropdown.visible = False 
           self.delete_row.visible = False
+          self.execute_sql.visible = False
           self.import_dropdown.visible = False
         elif Global.site_user_role in ["Viewer"]:
           self.list_dropdown.visible = True
@@ -698,6 +708,7 @@ class Main(MainTemplate):
           self.insert_dropdown.visible = False
           self.query_dropdown.visible = False 
           self.delete_row.visible = False
+          self.execute_sql.visible = False
           self.import_dropdown.visible = False
         else:
           # unknown role
@@ -711,6 +722,7 @@ class Main(MainTemplate):
           self.edit_row.visible = False
           self.insert_dropdown.visible = False
           self.delete_row.visible = False
+          self.execute_sql.visible = False
           self.import_dropdown.visible = False
       else:
         msg = "Not found a role for you in site " + self.select_site_dropdown.selected_value + ". Please contact the Project Manager."
@@ -1193,4 +1205,46 @@ class Main(MainTemplate):
     Global.action = self.query_dropdown.selected_value
     self.create_new_work_area(Global.action)
     self.query_dropdown.selected_value = None
+    pass
+
+  @handle("execute_sql", "click")
+  def execute_sql_click(self, **event_args):
+    """This method is called when the button is clicked"""
+    for row in Global.work_area[Global.current_work_area_name]["selected_rows"]:
+      Global.table_items = row
+      #formfields = self.form_fields.items()
+      print(row)
+      #formfields = row
+      # print(list(formfields)[7])
+      # 
+      Global.query_info = row
+      Global.query_id = row["QueryId"]
+      command = row["SQL_command"]
+      print(command)
+      if command != "":
+        msg, data_list, column_order, Global.tmp_table_info = anvil.server.call("execute_sql_command",command)
+        #print(data_list)
+        #print(column_order)
+        #print(Global.tmp_table_info)
+      else:
+        msg = "FAIL: SQL command field is empty."
+      
+      #print("after execute_sql_commnd")
+      #print(Global.tmp_table_info)
+      # Check msg for succes or FAIL
+      if msg[0: 4] == "FAIL":
+        alert(msg)
+      else:
+        # SQL command completed successfully and returned a data_list. Create a new TableList workspace
+        #print(msg)
+        Global.column_order = column_order
+        Global.table_items = data_list
+        Global.table_name = "qresult"
+        Global.action = "List " + Global.table_name.capitalize()
+        if Global.main_form:  # Important to check if the form exists
+          # Create new work_area "View Context" and set focus on this new work_area
+          #print("From repatingPanel row calling create_new_work_area for:",Global.action)
+          Global.main_form.create_new_work_area(Global.action)
+        else:
+          print("Main form not found!")
     pass
