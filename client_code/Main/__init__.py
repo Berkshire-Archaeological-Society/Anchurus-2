@@ -930,8 +930,7 @@ class Main(MainTemplate):
       #print("View button for row: ",row)
       Global.action = "View " + Global.table_name.capitalize()
       if Global.main_form:  # Important to check if the form exists
-        # Create new work_area "View Context" and set focus on this new work_area
-        #print("From repatingPanel row calling create_new_work_area for:",Global.action)
+        # Create new work_area 
         Global.main_form.create_new_work_area(Global.action)
       else:
         print("Main form not found!")
@@ -944,7 +943,7 @@ class Main(MainTemplate):
       Global.table_items = row
       Global.action = "Edit " + Global.table_name.capitalize()
       if Global.main_form:  # Important to check if the form exists
-        # Create new work_area "View Context" and set focus on this new work_area 
+        # Create new work_area  
         Global.main_form.create_new_work_area(Global.action)
       else:
         print("Main form not found!")
@@ -958,8 +957,7 @@ class Main(MainTemplate):
     for row in Global.work_area[Global.current_work_area_name]["selected_rows"]:
       Global.table_items = row
       delete_row_keys = {}
-      # select PRI Keys 
-      #Global.work_area[Global.current_work_area_name]["table_info"]
+      # select PRI Keys for rows to delete
       for item in Global.work_area[Global.current_work_area_name]["table_info"]:
         if item['COLUMN_KEY'] == "PRI":
           col_name = item["COLUMN_NAME"]
@@ -1012,8 +1010,8 @@ class Main(MainTemplate):
 
   def filter_cols_click(self, **event_args):
     """This method is called when the button is clicked"""
-    """ Here we allow the user to filter columns to be viewed"""
-    # extract table columns names and sort them is the correct order (from DB table)
+    # Here we allow the user to filter columns to be viewed
+    # extract table columns names and sort them in the order as set in the DB table
     col_order = Global.work_area[Global.current_work_area_name]["col_order"]
     # remove DBAcontrol column name as it is not in the table
     col_order.pop("DBAcontrol")
@@ -1082,6 +1080,7 @@ class Main(MainTemplate):
     """This method is called when the button is clicked"""
     # call server-side function create_csv to create a csv file and download this to user Download folder
     file_name = Global.action + ".csv"
+    
     # create ordinal_position list of columns 
     col_order = {}
     position = 0
@@ -1092,7 +1091,8 @@ class Main(MainTemplate):
       else:
         position = position + 1
       col_order[column["data_key"]] = position
-    # make sure to send the col_list as a list []
+      
+    # make sure to send the col_order as a list []
     csv_file = anvil.server.call('create_csv',Global.work_area[Global.current_work_area_name]["data_list"],[col_order],file_name)
     anvil.media.download(csv_file)
     pass
@@ -1105,12 +1105,6 @@ class Main(MainTemplate):
     tmp_name = Global.work_area[Global.current_work_area_name]["action"].split(" ")[1]
     table_name = tmp_name.lower()
 
-    # clear select column from data_list
-    #i = 0
-    #while i < len(Global.work_area[Global.current_work_area_name]["data_list"]):
-    #  Global.work_area[Global.current_work_area_name]["data_list"][i].pop("select")
-    #  i = i + 1
-
     # call the print_form at the server-side
     pdf_form = anvil.server.call('print_form',form,Global.site_id,table_name.strip(),
                                  Global.work_area[Global.current_work_area_name]["action"],
@@ -1122,14 +1116,13 @@ class Main(MainTemplate):
 
   def refresh_click(self, **event_args):
     """This method is called when the button is clicked"""
-    #print("Refresh clicked: ",Global.current_work_area_name)
-    #print(Global.work_area[Global.current_work_area_name])
+    # call refresh function for the work_area
     FunctionsB.refresh_click(Global.work_area[Global.current_work_area_name]["self"])
     pass
 
   def del_work_area_click(self, **event_args):
     """This method is called when the button is clicked"""
-    #print("Deleting work space: ", Global.current_work_area_name)
+    # call delete work_area function
     Function.delete_workspace(Global.current_work_area_name)
     pass
 
@@ -1159,7 +1152,6 @@ class Main(MainTemplate):
     self.menu_bottom.visible = False
 
     self.admin_dropdown.items = []
-
     self.username_dropdown.placeholder = Global.username
     self.username_dropdown.items = []
     Global.system_user_role = ""
@@ -1179,8 +1171,6 @@ class Main(MainTemplate):
     Global.work_area = {}
     Global.action_seq_no = {}
 
-    #components = self.get_components()
-    #print(f"{len(components)} components after deleting all workspaces")
     pass
 
   def username_dropdown_change(self, **event_args):
@@ -1201,7 +1191,7 @@ class Main(MainTemplate):
   @handle("query_dropdown", "change")
   def query_dropdown_change(self, **event_args):
     """This method is called when an item is selected"""
-    #print(self.query_dropdown.selected_value)
+    # ceate new work area for query action
     Global.action = self.query_dropdown.selected_value
     self.create_new_work_area(Global.action)
     self.query_dropdown.selected_value = None
@@ -1211,12 +1201,8 @@ class Main(MainTemplate):
   def execute_sql_click(self, **event_args):
     """This method is called when the button is clicked"""
     for row in Global.work_area[Global.current_work_area_name]["selected_rows"]:
+      # loop through all selected rows
       Global.table_items = row
-      #formfields = self.form_fields.items()
-      print(row)
-      #formfields = row
-      # print(list(formfields)[7])
-      # 
       Global.query_info = row
       Global.query_id = row["QueryId"]
       command = row["SQL_command"]
@@ -1229,21 +1215,17 @@ class Main(MainTemplate):
       else:
         msg = "FAIL: SQL command field is empty."
       
-      #print("after execute_sql_commnd")
-      #print(Global.tmp_table_info)
       # Check msg for succes or FAIL
       if msg[0: 4] == "FAIL":
         alert(msg)
       else:
-        # SQL command completed successfully and returned a data_list. Create a new TableList workspace
-        #print(msg)
+        # SQL command completed successfully and returned a data_list. Create a new TableList workspace for the results
         Global.column_order = column_order
         Global.table_items = data_list
         Global.table_name = "qresult"
         Global.action = "List " + Global.table_name.capitalize()
         if Global.main_form:  # Important to check if the form exists
-          # Create new work_area "View Context" and set focus on this new work_area
-          #print("From repatingPanel row calling create_new_work_area for:",Global.action)
+          # Create new work_area 
           Global.main_form.create_new_work_area(Global.action)
         else:
           print("Main form not found!")
