@@ -110,7 +110,8 @@ class RowForm(RowFormTemplate):
         input.add_event_handler('change',self.input_change)
         max_length = 100
       elif column_type == "bool":
-        input = TextBox(placeholder=column_name)
+        #input = TextBox(placeholder=column_name)
+        input = DropDown(items=["True", "False"],placeholder=column_name)
         input.add_event_handler('change',self.input_change)
         max_length = 5
       elif column_type == "datetime":
