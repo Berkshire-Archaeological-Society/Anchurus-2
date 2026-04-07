@@ -263,26 +263,65 @@ class Main(MainTemplate):
       if action.split(" ")[0] != "Insert":
         work_area_name = work_area_name + "s"   
 
+    Global.table_name = action.split(" ")[1].lower()
+    
+    #table_info = [] 
+    ## get table_info , works only for a true DB table. If not we have to create the table_info dictionary list ourselves   
+    #if action.split(" ")[1].lower() != "qresult":
+    #  Global.query_view = False
+    #  table_info = anvil.server.call("describe_table",action.split(" ")[1].lower())
+    #else:
+    #  # table is a result of a query so there is no describe_table is db
+    #  Global.query_view = True
+    #  col_info = {}
+    #  pos = 0
+    #  tmp_table_info = []
+    #  #print(Global.column_order)
+    #  for col in Global.column_order:
+    #    # loop through columns of first row table_item
+    #    #print(col)
+    #    col_info = {}
+    #    col_info["COLUMN_NAME"] = col
+    #    col_info["COLUMN_TYPE"] = "varchar(30)"
+    #    col_info["COLUMN_KEY"] = ""
+    #    col_info["IS_NULLABLE"] = "YES"
+    #    col_info["COLUMN_DEFAULT"] = None
+    #    col_info["CHARACTER_MAXIMUM_LENGTH"] = 65535
+    #    col_info["COLUMN_COMMENT"] = ""
+    #    col_info["ORDINAL_POSITION"] = Global.column_order[col]
+    #    #print(col_info)
+    #    tmp_table_info.append(col_info)
+    #  # sort table_info in ORDINAL_POSITION
+    #  table_info = sorted(tmp_table_info, key=lambda x: x['ORDINAL_POSITION'])
+
+    #####
+
+    print(Global.table_name)
     table_info = [] 
-    # get table_info , works only for a true DB table. If not we have to create the table_info dictionary list ourselves   
-    if action.split(" ")[1].lower() != "qresult":
+    # get table_info, works only for a true DB table. If not (e.g. table is 'qresult') we have to create the table_info dictionary list ourselves   
+    if Global.table_name != "qresult":
+      # get the Table information form the Database
+      table_info = anvil.server.call("describe_table", Global.table_name)
+      print("after call to describe_table")
+      print(table_info)
       Global.query_view = False
-      table_info = anvil.server.call("describe_table",action.split(" ")[1].lower())
     else:
       Global.query_view = True
-      col_info = {}
-      pos = 0
-      tmp_table_info = []
+      # Build the table_info structure froom the "describe table_info" from the execute_sql_command call saved in Global.tmp_table_info
+      #print("in table_list init if query_view is True value of Global.column_order")
       #print(Global.column_order)
+      #print(Global.table_items[0])
+      tmp_table_info = []
+      #print(Global.tmp_table_info)
       for col in Global.column_order:
         # loop through columns of first row table_item
         #print(col)
         col_info = {}
         col_info["COLUMN_NAME"] = col
-        col_info["COLUMN_TYPE"] = "varchar(30)"
-        col_info["COLUMN_KEY"] = ""
-        col_info["IS_NULLABLE"] = "YES"
-        col_info["COLUMN_DEFAULT"] = None
+        col_info["COLUMN_TYPE"] = next((str(item["Type"]) for item in list(Global.tmp_table_info) if item["Field"] == col),0)
+        col_info["COLUMN_KEY"] = next((str(item["Key"]) for item in list(Global.tmp_table_info) if item["Field"] == col),0)
+        col_info["IS_NULLABLE"] = next((str(item["Null"]) for item in list(Global.tmp_table_info) if item["Field"] == col),0)
+        col_info["COLUMN_DEFAULT"] = next((str(item["Default"]) for item in list(Global.tmp_table_info) if item["Field"] == col),0)
         col_info["CHARACTER_MAXIMUM_LENGTH"] = 65535
         col_info["COLUMN_COMMENT"] = ""
         col_info["ORDINAL_POSITION"] = Global.column_order[col]
@@ -290,6 +329,14 @@ class Main(MainTemplate):
         tmp_table_info.append(col_info)
       # sort table_info in ORDINAL_POSITION
       table_info = sorted(tmp_table_info, key=lambda x: x['ORDINAL_POSITION'])
+    
+    print(table_info)
+    
+
+    ########################
+
+
+
     
     # For all actions not in Admin_action_list check ID field for creating unique work_area name
     if action not in Global.sys_admin_action_list and action not in Global.site_admin_action_list and action not in ["List Qresult","List qresult"]:
@@ -348,14 +395,23 @@ class Main(MainTemplate):
     
     # save table_info in work_area structure
     Global.work_area[work_area_name]["table_info"] = table_info
+    print("Workarea create: is table_info already there?")
+    print(Global.work_area[Global.current_work_area_name]["table_info"])
+    print(Global.table_name)
     
     # set menu_select_opti0ns as invisible
     Global.work_area[Global.current_work_area_name]["menu_select_options"] = self.fp_select_options
     Global.work_area[Global.current_work_area_name]["menu_select_options"].visible = False
 
     # Set Global.table_name linked with work_area_type
-    Global.table_name = Global.work_area[work_area_name]["action"].split(" ")[1].lower()
+    #Global.table_name = Global.work_area[work_area_name]["action"].split(" ")[1].lower()
 
+
+
+
+
+
+    
     # create the button for the work_area in the navigation panel, add it to the work_area_list Column Panel and set event handler for when clicked
     if Global.dummy_btn1 != {}:
       Global.dummy_btn1.remove_from_parent() 
@@ -453,7 +509,7 @@ class Main(MainTemplate):
         self.execute_sql.visible = False
       # for table dbdiary disable edit_row and delete_row button
       if Global.table_name == "qresult":
-        self.view_row.visible = False
+        self.view_row.visible = True
         self.edit_row.visible = False
         self.delete_row.visible = False
         self.execute_sql.visible = False

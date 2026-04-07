@@ -162,46 +162,48 @@ class TableList(TableListTemplate):
       Global.work_area[Global.current_work_area_name] = {}
       Global.table_name = table_name
     else:
-    # set table_name to one of "context", "find", from the action Global variable 
+      # set table_name to one of "context", "find", from the action Global variable 
       Global.table_name = Global.action.split(" ")[1].lower()
-    
-    #print(Global.table_name)
-    Global.query_view = False
-    table_info = [] 
-    # get table_info, works only for a true DB table. If not (e.g. table is 'qresult') we have to create the table_info dictionary list ourselves   
-    if Global.table_name != "qresult":
-      # get the Table information form the Database
-      table_info = anvil.server.call("describe_table", Global.table_name)
-      Global.query_view = False
-    else:
-      Global.query_view = True
-      # Build the table_info structure froom the "describe table_info" from the execute_sql_command call saved in Global.tmp_table_info
-      #print("in table_list init if query_view is True value of Global.column_order")
-      #print(Global.column_order)
-      #print(Global.table_items[0])
-      tmp_table_info = []
-      #print(Global.tmp_table_info)
-      for col in Global.column_order:
-        # loop through columns of first row table_item
-        #print(col)
-        col_info = {}
-        col_info["COLUMN_NAME"] = col
-        col_info["COLUMN_TYPE"] = next((str(item["Type"]) for item in list(Global.tmp_table_info) if item["Field"] == col),0)
-        col_info["COLUMN_KEY"] = next((str(item["Key"]) for item in list(Global.tmp_table_info) if item["Field"] == col),0)
-        col_info["IS_NULLABLE"] = next((str(item["Null"]) for item in list(Global.tmp_table_info) if item["Field"] == col),0)
-        col_info["COLUMN_DEFAULT"] = next((str(item["Default"]) for item in list(Global.tmp_table_info) if item["Field"] == col),0)
-        col_info["CHARACTER_MAXIMUM_LENGTH"] = 65535
-        col_info["COLUMN_COMMENT"] = ""
-        col_info["ORDINAL_POSITION"] = Global.column_order[col]
-        #print(col_info)
-        tmp_table_info.append(col_info)
-      # sort table_info in ORDINAL_POSITION
-      table_info = sorted(tmp_table_info, key=lambda x: x['ORDINAL_POSITION'])
-      #print(table_info)
+
+    print("Tablelist init: is table_info already there?")
+    print(Global.work_area[Global.current_work_area_name]["table_info"])
+    print(Global.table_name)
+    #Global.query_view = False
+    #table_info = [] 
+    ## get table_info, works only for a true DB table. If not (e.g. table is 'qresult') we have to create the table_info dictionary list ourselves   
+    #if Global.table_name != "qresult":
+    #  # get the Table information form the Database
+    #  table_info = anvil.server.call("describe_table", Global.table_name)
+    #  Global.query_view = False
+    #else:
+    #  Global.query_view = True
+    #  # Build the table_info structure froom the "describe table_info" from the execute_sql_command call saved in Global.tmp_table_info
+    #  #print("in table_list init if query_view is True value of Global.column_order")
+    #  #print(Global.column_order)
+    #  #print(Global.table_items[0])
+    #  tmp_table_info = []
+    #  #print(Global.tmp_table_info)
+    #  for col in Global.column_order:
+    #    # loop through columns of first row table_item
+    #    #print(col)
+    #    col_info = {}
+    #    col_info["COLUMN_NAME"] = col
+    #    col_info["COLUMN_TYPE"] = next((str(item["Type"]) for item in list(Global.tmp_table_info) if item["Field"] == col),0)
+    #    col_info["COLUMN_KEY"] = next((str(item["Key"]) for item in list(Global.tmp_table_info) if item["Field"] == col),0)
+    #    col_info["IS_NULLABLE"] = next((str(item["Null"]) for item in list(Global.tmp_table_info) if item["Field"] == col),0)
+    #    col_info["COLUMN_DEFAULT"] = next((str(item["Default"]) for item in list(Global.tmp_table_info) if item["Field"] == col),0)
+    #    col_info["CHARACTER_MAXIMUM_LENGTH"] = 65535
+    #    col_info["COLUMN_COMMENT"] = ""
+    #    col_info["ORDINAL_POSITION"] = Global.column_order[col]
+    #    #print(col_info)
+    #    tmp_table_info.append(col_info)
+    #  # sort table_info in ORDINAL_POSITION
+    #  table_info = sorted(tmp_table_info, key=lambda x: x['ORDINAL_POSITION'])
+    #  #print(table_info)
 
     # add table to work_area data structure for Global.current_work_area_name
     Global.work_area[Global.current_work_area_name]["table"] = self.table
-    Global.work_area[Global.current_work_area_name]["table_info"] = table_info
+    #Global.work_area[Global.current_work_area_name]["table_info"] = table_info
     
     # Extract the columns names from the table_info
     # Frist column if for Select
@@ -212,8 +214,9 @@ class TableList(TableListTemplate):
     #print("TableList - init - make columns list from table_info")
     #print(table_info)
     column_list = []
-    for column_data in table_info:
-      # Select Column name:
+    for column_data in Global.work_area[Global.current_work_area_name]["table_info"]:
+    #for column_data in table_info:
+    # Select Column name:
       # anvil users table uses different title for columns names (name) compared to the Database (Field)
       if Global.table_name in ["users","user"]:
         field_name = column_data["name"]
