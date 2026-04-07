@@ -293,7 +293,7 @@ class Main(MainTemplate):
       table_info = sorted(tmp_table_info, key=lambda x: x['ORDINAL_POSITION'])
     
     # For all actions not in Admin_action_list check ID field for creating unique work_area name
-    print(action)
+    #print(action)
     if action not in Global.sys_admin_action_list and action not in Global.site_admin_action_list and action not in ["List Qresult","List qresult","View Qresult"]:
       # 
       # trying to make a work_area_name suitabe for action and table (i.e. (List |[E|V]-|Insert )<table_name> <main-pri_id>)
@@ -327,9 +327,6 @@ class Main(MainTemplate):
     # for List Qresult we add the QueryId
     if action in ["List Qresult","List qresult","View Qresult"]:
       work_area_name = work_area_name + " " + Global.query_id
-      if action == "View Qresult":
-        print 
-        work_area_name = work_area_name
       
     # check if work_area_name exists and keep counter
     if (Global.work_area.get(work_area_name) is None):
