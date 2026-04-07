@@ -111,40 +111,13 @@ def create_table_columns(column_list,work_area):
     else:
       dt_len = re.findall(r'\d+', data_type)[0]
       col_width = (max(int(dt_len),len(column))) * ratio + padding
-    #print(col_width)
-    #col_width = Global.table_colwidth_default
-    #col_width = 0
-    #if column in Global.table_colwidth_60:
-    #  col_width = 60
-    #if column in Global.table_colwidth_70:
-    #  col_width = 70
-    #if column in Global.table_colwidth_80:
-    #  col_width = 80
-    #if column in Global.table_colwidth_90:
-    #  col_width = 90
-    #if column in Global.table_colwidth_100:
-    #  col_width = 100
-    #if column in Global.table_colwidth_120:
-    #  col_width = 120
-    #if column in Global.table_colwidth_140:
-    #  col_width = 140
-    #if column in Global.table_colwidth_200:
-    #  col_width = 200
-    #if column in Global.table_colwidth_250:
-    #  col_width = 250
-    #if column in Global.table_colwidth_300:
-    #  col_width = 300
-    #if column in Global.table_colwidth_350:
-    #  col_width = 350    #
     
     if (column == "DBAcontrol" and Global.table_name == "dbdiary") or column not in ["select","DBAcontrol"]:
       # do not create a columns for DBAControl and select
       id = id + 1
       columns_titles.append({"id": id, "title": column, "data_key": column, "width": col_width, "expand": True })
-    # assign the columns titles to the grid columns
-  #
-  #print("in create_table_columns")
-  #print(columns_titles)
+  
+  # assign the columns titles to the grid columns
   work_area["table"].columns = columns_titles
   return
   
@@ -160,15 +133,6 @@ def table_list_refresh(self):
     # qresult refresh is just re-pointing to Global.table_items - there is no DB table  
     self.repeating_panel_1.items = Global.table_items
     
-  #print(len(self.repeating_panel_1.items))
-  #print(Global.query_view)
-  #print(self.repeating_panel_1.items)
-  #if len(self.repeating_panel_1.items) > 0 and Global.query_view:
-  #  # reset table columns if we have rows. This will able to receive views, not just fixed table columns
-  #  column_list = self.repeating_panel_1.items[0].keys()
-  #  #print(column_list)
-  #  create_table_columns(column_list,Global.work_area[Global.current_work_area_name])
-
   # 2. set nr of rows per page from Global variable (which is defined by a parameter in the server-side config file)
   #if Global.rows_per_page is not None:
   self.table.rows_per_page = Global.rows_per_page
