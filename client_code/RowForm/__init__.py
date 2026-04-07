@@ -125,8 +125,8 @@ class RowForm(RowFormTemplate):
         match = re.search(r'\d+',column_type)
         max_length = int(match.group())
         if column_type.find("decimal") != -1 or column_type.find("float") != -1 or column_type.find("double") != -1:
-          # for these data types add 1 to max _length as length does not take into account the decimal point
-          # (nor negative symbol but that is not applicable for us)
+          # for these data types (decimal, double, float) add 1 to max_length as length does not take into account the decimal point
+          # (nor for negative symbol but that is not applicable for us)
           max_length = max_length + 1
           
         # add event handler for when input field is changed to update the character counth
