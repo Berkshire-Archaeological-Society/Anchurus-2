@@ -118,6 +118,10 @@ class RowForm(RowFormTemplate):
         input = TextBox(placeholder=column_name)
         input.add_event_handler('change',self.input_change)
         max_length = 30
+      elif column_name in ["Enabled","Role","ContextType"]:
+        input = DropDown(placeholder=column_name)
+        input.add_event_handler('change',self.input_change)
+        max_length = 5
       else:
         # by default create TextBox fields
         input = TextBox(placeholder=column_name)
@@ -242,60 +246,52 @@ class RowForm(RowFormTemplate):
         )
 
       elif column_name in ["Role"]:
-        # 1. Define your allowed words
-        allowed_words = ["Manager","Editor","Viewer"]
-        # 2. Build the "OR" part of the rgex: 
-        choices = r'(?:' + '|'.join(map(re.escape, allowed_words)) + r')'
-        # 3. Assemble the full pattern
-        # Starts with a choice, followed by zero or more (comma + choice)
-        pattern_string = rf'^{choices}*$'
-        #print(pattern_string)
-        input_error.text = "You must enter one of " + str(allowed_words)
-        input_error.foreground ="#FF0000"
-        # TB: do not understand by using pattern_string does not work (compared to previous one (Column Enabled))
+        # 1. Define your allowed options for the DropDown
+        input.items = ["Manager","Editor","Viewer"]
+        input.include_placeholder = True 
+        input.placeholder = "Please select a role"
+        # 2. Configure the error label
+        input_error.text = "You must make a selectioon"
+        input_error.foreground = "#FF0000"
+        # 3. Use the validator to check the selected_value
         self.validator.require(
           input,
-          ['change', 'lost_focus'],
-          lambda tb: re.fullmatch(r'^(?:Manager|Editor|Viewer)$', tb.text),
+          ['change'],
+          lambda dd: dd.selected_value is not None,
           input_error
-         )
+        )
       
       elif column_name in ["Enabled"]:
-        # 1. Define your allowed words
-        allowed_words = ['True','False']
-        # 2. Build the "OR" part of the rgex: 
-        choices = r'(?:' + '|'.join(map(re.escape, allowed_words)) + r')'
-        # 3. Assemble the full pattern
-        # Starts with a choice, followed by zero or more (comma + choice)
-        pattern_string = rf'^{choices}*$'
-        #print(pattern_string)
-        input_error.text = "You must enter one of " + str(allowed_words)
-        input_error.foreground ="#FF0000"
+        # 1. Define your allowed options for the DropDown
+        input.items = ['True', 'False']
+        input.include_placeholder = True 
+        input.placeholder = "Please select 'True' or 'False'"
+        # 2. Configure the error label
+        input_error.text = "You must make a selection"
+        input_error.foreground = "#FF0000"
+        # 3. Use the validator to check the selected_value
         self.validator.require(
           input,
-          ['change', 'lost_focus'],
-          lambda tb: re.fullmatch(pattern_string, tb.text),
+          ['change'],
+          lambda dd: dd.selected_value is not None,
           input_error
         )
       
       elif column_name in ["ContextType"]:
-        # 1. Define your allowed words
-        allowed_words = ['Deposit','Fill','Cut','Structure','Feature']
-        # 2. Build the "OR" part of the rgex: 
-        choices = r'(?:' + '|'.join(map(re.escape, allowed_words)) + r')'
-        # 3. Assemble the full pattern
-        # Starts with a choice, followed by zero or more (comma + choice)
-        pattern_string = rf'^{choices}$'
-        #print(pattern_string)
-        input_error.text = "You must enter one of " + str(allowed_words)
-        input_error.foreground ="#FF0000"
-        # TB: do not understand by using pattern_string does not work (compared to previous one (Column Enabled))
+        # 1. Define your allowed options for the DropDown
+        input.items = ['Deposit','Fill','Cut','Structure','Feature']
+        input.include_placeholder = True 
+        input.placeholder = "Please select a type"
+        # 2. Configure the error label
+        input_error.text = "You must make a selection"
+        input_error.foreground = "#FF0000"
+        # 3. Use the validator to check the selected_value
         self.validator.require(
           input,
-          ['change', 'lost_focus'],
-          lambda tb: re.fullmatch(r'^(?:Deposit|Fill|Cut|Structure|Feature)$', tb.text),
+          ['change'],
+          lambda dd: dd.selected_value is not None,
           input_error
-        )     
+        )   
       # end of validation 
       
       # spedial case when Field is RegistrationDate: Pre-fill is for Insert and also block edit contents
@@ -436,7 +432,9 @@ class RowForm(RowFormTemplate):
       # all validated input fields are ok
       row_list = {}
       for col in self.form_fields.items():
+        #print(col)
         # Add Additional field validation (if needed) before submitting 
+        #print(str(type(col[1]["field"])))
         if str(type(col[1]["field"])) == "<class 'anvil_extras.Quill.Quill'>":
           # at the moment we only get the text of the Quill data, not the full rich text format - need extra column for that
           row_list[col[0]] = col[1]["field"].getText()
@@ -451,8 +449,11 @@ class RowForm(RowFormTemplate):
             #cur_len = len(text)
         elif str(type(col[1]["field"])) == "<class 'anvil.DatePicker'>":
           row_list[col[0]] = col[1]["field"].date
-        else:
+        elif str(type(col[1]["field"])) == "<class 'anvil.DropDown'>":
+          row_list[col[0]] = col[1]["field"].selected_value
+        elif str(type(col[1]["field"])) == "<class 'anvil.TextBox'>":
           row_list[col[0]] = col[1]["field"].text
+        
         # set empty fields to None
         if row_list[col[0]] in ["","\n"]:
           row_list[col[0]] = None
