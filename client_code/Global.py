@@ -188,6 +188,23 @@ db_name = ""
 dummy_btn1 = {}
 dummy_btn2 = {}
 column_order = {}
+column_with_dropdown = {
+  "Enabled" : {
+    "options"     : ["True", "False"], 
+    "placeholder" : "Please select 'True' or 'False'", 
+    "error"       : "You must make a selection"
+  }, 
+  "ContextType" : {
+    "options"     : ["Deposit","Fill","Cut","Structure","Feature"], 
+    "placeholder" : "Please select a type", 
+    "error"       : "You must make a selection"
+  },
+  "Role" : {
+    "options"     : ["Manager","Editor","Viewer"], 
+    "placeholder" : "Please select a role", 
+    "error"       : "You must make a selection"
+  }  
+}
 context_id = None
 context_items = {}
 context_options = {}

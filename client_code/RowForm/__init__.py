@@ -245,13 +245,13 @@ class RowForm(RowFormTemplate):
           input_error
         )
 
-      elif column_name in ["Role"]:
+      elif column_name in Global.column_with_dropdown.keys():
         # 1. Define your allowed options for the DropDown
-        input.items = ["Manager","Editor","Viewer"]
+        input.items = Global.column_with_dropdown[column_name]["options"]
         input.include_placeholder = True 
-        input.placeholder = "Please select a role"
+        input.placeholder = Global.column_with_dropdown[column_name]["placeholder"]
         # 2. Configure the error label
-        input_error.text = "You must make a selectioon"
+        input_error.text = Global.column_with_dropdown[column_name]["error"]
         input_error.foreground = "#FF0000"
         # 3. Use the validator to check the selected_value
         self.validator.require(
@@ -259,39 +259,7 @@ class RowForm(RowFormTemplate):
           ['change'],
           lambda dd: dd.selected_value is not None,
           input_error
-        )
-      
-      elif column_name in ["Enabled"]:
-        # 1. Define your allowed options for the DropDown
-        input.items = ['True', 'False']
-        input.include_placeholder = True 
-        input.placeholder = "Please select 'True' or 'False'"
-        # 2. Configure the error label
-        input_error.text = "You must make a selection"
-        input_error.foreground = "#FF0000"
-        # 3. Use the validator to check the selected_value
-        self.validator.require(
-          input,
-          ['change'],
-          lambda dd: dd.selected_value is not None,
-          input_error
-        )
-      
-      elif column_name in ["ContextType"]:
-        # 1. Define your allowed options for the DropDown
-        input.items = ['Deposit','Fill','Cut','Structure','Feature']
-        input.include_placeholder = True 
-        input.placeholder = "Please select a type"
-        # 2. Configure the error label
-        input_error.text = "You must make a selection"
-        input_error.foreground = "#FF0000"
-        # 3. Use the validator to check the selected_value
-        self.validator.require(
-          input,
-          ['change'],
-          lambda dd: dd.selected_value is not None,
-          input_error
-        )   
+        ) 
       # end of validation 
       
       # spedial case when Field is RegistrationDate: Pre-fill is for Insert and also block edit contents
