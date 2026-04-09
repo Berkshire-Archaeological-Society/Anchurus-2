@@ -118,7 +118,7 @@ class RowForm(RowFormTemplate):
         input = TextBox(placeholder=column_name)
         input.add_event_handler('change',self.input_change)
         max_length = 30
-      elif column_name in ["Enabled","Role","ContextType"]:
+      elif column_name in Global.column_with_dropdown.keys():
         input = DropDown(placeholder=column_name)
         input.add_event_handler('change',self.input_change)
         max_length = 5
@@ -161,15 +161,15 @@ class RowForm(RowFormTemplate):
       #
       
       # start validaton for fields 
-      if column_name in ["YearEnd","YearStart"]:
-        input_error.text = "Enter a correct year format ([-9999 until 9999])"
+      if column_name in ["YearEnd","YearStart","Year","ContextYear","SurveyYear"]:
+        input_error.text = "Enter a correct year format (-2147483648 to 2147483647)"
         input_error.foreground ="#FF0000"
-        # regex "^(-?[0-9]{1,4}|)$" = any number between -9999 until 9999; empty string allowed
+        # regex "^(-?[0-9]{1,10}|)$" = any number between -2147483648 to 2147483647; empty string allowed
         # 
         self.validator.require(
           input,
           ['change', 'lost_focus'],
-          lambda tb: re.fullmatch(r"^(-?[0-9]{1,4}|)$", tb.text),
+          lambda tb: re.fullmatch(r"^$|^(-?[0-9]{1,10}|)$", tb.text),
           input_error
         )
 
@@ -179,17 +179,17 @@ class RowForm(RowFormTemplate):
         # 
         self.validator.require_text_field(input,input_error)
 
-      elif column_name in ["Year","ContextYear","SurveyYear"]:   
-        input_error.text = "Enter a correct year format."
-        input_error.foreground ="#FF0000"
-        # regex "^(\d{4}|)$" = 4 digit number (year); empty string allowed 
-        # 
-        self.validator.require(
-          input,
-          ['change', 'lost_focus'],
-          lambda tb: re.fullmatch(r"^(\d{4}|)$", tb.text),
-          input_error
-        )
+      #elif column_name in ["Year","ContextYear","SurveyYear"]:   
+      #  input_error.text = "Enter a correct year format ((-2147483648 to 2147483647))"
+      #  input_error.foreground ="#FF0000"
+      #  # regex "^(\d{4}|)$" = 4 digit number (year); empty string allowed 
+      #  # 
+      #  self.validator.require(
+      #    input,
+      #    ['change', 'lost_focus'],
+      #    lambda tb: re.fullmatch(r"^(\d{4}|)$", tb.text),
+      #    input_error
+      #  )
 
       elif column_name in ["Email"]:
         input_error.text = "You must enter an email address"
