@@ -203,7 +203,12 @@ column_with_dropdown = {
     "options"     : ["Manager","Editor","Viewer"], 
     "placeholder" : "Please select a role", 
     "error"       : "You must make a selection"
-  }  
+  },
+  "SurveyMethod" : {
+    "options"     : ["BNG", "Aligned to BNG north", "Not aligned to BNG north"],
+    "placeholder" : "Please select a survey method", 
+    "error"       : "You must make a selection"    
+  }
 }
 context_id = None
 context_items = {}
