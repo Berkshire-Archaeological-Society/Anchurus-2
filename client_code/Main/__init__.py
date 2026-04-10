@@ -524,7 +524,7 @@ class Main(MainTemplate):
       Global.help_page_form.help_page_text.add_component(rt)
       
       self.username_dropdown.placeholder = Global.username
-      self.username_dropdown.items = ["Change password","Logout"]
+      self.username_dropdown.items = ["Change password","Save and Logout"]
 
       # notify server side of login
       Global.ip_address = anvil.server.call("user_authentication")
@@ -1183,7 +1183,16 @@ class Main(MainTemplate):
     if self.username_dropdown.selected_value == "Change password":
       anvil.users.change_password_with_form(require_old_password=True)
 
-    elif self.username_dropdown.selected_value == "Logout":
+    elif self.username_dropdown.selected_value == "Save and Logout":
+      name = "Saved_areas"
+      work_area_dict = {}
+      temp_work_area_name_list = list(Global.work_area.keys())
+      for work_area_name in temp_work_area_name_list:
+        print(Global.work_area[work_area_name]["action"])
+        work_area_dict[work_area_name]["action"] = Global.work_area[work_area_name]["action"]
+        
+      msg = anvil.server.call("save_work_areas",name,work_area_dict,Global.site_id)
+      alert(msg,title="Saving work area notification")
       self.logout_click()
     
     #clear selected option
