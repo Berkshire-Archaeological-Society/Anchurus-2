@@ -1,6 +1,31 @@
 allow_embedding: false
 correct_dependency_ids: {}
 db_schema:
+  save_workspace:
+    client: none
+    columns:
+    - admin_ui: {order: 0, width: 200}
+      client_hidden: false
+      name: datetime
+      type: datetime
+    - admin_ui: {order: 1, width: 200}
+      client_hidden: false
+      name: email
+      type: string
+    - admin_ui: {order: 2, width: 200}
+      client_hidden: false
+      name: action
+      type: string
+    - admin_ui: {order: 3, width: 200}
+      client_hidden: false
+      name: workarea_name
+      type: string
+    - admin_ui: {order: 1.5, width: 200}
+      client_hidden: false
+      name: site
+      type: string
+    server: full
+    title: Save_workspace
   users:
     client: none
     columns:
