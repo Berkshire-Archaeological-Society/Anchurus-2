@@ -1178,7 +1178,7 @@ class Main(MainTemplate):
   def username_dropdown_change(self, **event_args):
     """ This Function is called when the users has selected the logout option of the username dropdown """
     """This method is called when an item is selected"""
-    # There are two options: Change password or LogoW
+    # There are two options: Change password or 'Save and Logout'
     # But we just check in case it is not ;)
     if self.username_dropdown.selected_value == "Change password":
       anvil.users.change_password_with_form(require_old_password=True)
@@ -1187,8 +1187,9 @@ class Main(MainTemplate):
       name = "Saved_areas " + Global.site_id
       work_area_dict = {}
       temp_work_area_name_list = list(Global.work_area.keys())
+      # loop through all work_area and build a nested dictionary with further information
+      # may want to add more information (e.g. add column filter information of work area in order to restore it with the filter)
       for work_area_name in temp_work_area_name_list:
-        print(Global.work_area[work_area_name]["action"])
         work_area_dict[work_area_name] = {}
         work_area_dict[work_area_name]["action"] = Global.work_area[work_area_name]["action"]
         
