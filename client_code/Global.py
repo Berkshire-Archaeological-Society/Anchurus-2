@@ -20,17 +20,18 @@ sys_admin_action_list = ["List Users","Edit User","Insert User","Import Users",s
 site_manager_action_list = ["List Users",separator,"List Site","Edit Site","Add Site"]
 site_admin_action_list = [separator,"List UserRole","Edit UserRole","Add UserRole","Import UserRoles"]
 admin_action_list_not_implemented = [separator]
-user_action_list = ["Select Site",separator,
-                    "List Contexts","Add Context","Bulk Upload Contexts",separator,
-                    "List Finds", "Add Find","Bulk Upload Finds",separator,
-                    "List Anomalies","Add Anomaly",separator,
-                    "List Interpretations","Add Interpretation"
-                   ]
+#user_action_list = ["Select Site",separator,
+#                    "List Contexts","Add Context","Bulk Upload Contexts",separator,
+#                    "List Finds", "Add Find","Bulk Upload Finds",separator,
+#                    "List Anomalies","Add Anomaly",separator,
+#                    "List Interpretations","Add Interpretation"
+#                   ]
 # action_list_not_implemented should always contain the separator
-action_list_not_implemented = [separator,"Bulk Upload Finds","Draw","List Areas","Add Area","Add Anomaly"]
+#action_list_not_implemented = [separator,"Bulk Upload Finds","Draw","List Areas","Add Area","Add Anomaly"]
+action_list_not_implemented = []
 # the list_action_list is a list of the tables in DB (not yet sites)
-list_action_dropdown = ["Contexts","Finds","Anomolies","Interpretations"]
-insert_action_dropdown = ["Context","Find","Anomoly","Interpretation"]
+list_action_dropdown = []
+insert_action_dropdown = []
 file_action_dropdown = ["Import",separator,"Save"]
 view_action_dropdown = []
 help_action_dropdown = ["Anchurus Website"]
