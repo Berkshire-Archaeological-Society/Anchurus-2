@@ -851,9 +851,12 @@ class Main(MainTemplate):
     """This method is called when an item is selected"""
     #Global.main_form = get_open_form()
     Global.action = self.help_dropdown.selected_value
-    #print(Global.action)
     if Global.action == "Anchurus Website":
-      anvil.js.window.open("https://anchurus.co.uk", '_blank')
+      new_tab = anvil.js.window.open("https://anchurus.co.uk", '_blank')
+      if new_tab is None:
+        print("The window was blocked by a popup blocker!")
+      else:
+        print("Window opened successfully.")
     self.help_dropdown.selected_value = None
     pass
 
