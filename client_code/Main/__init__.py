@@ -1184,11 +1184,12 @@ class Main(MainTemplate):
       anvil.users.change_password_with_form(require_old_password=True)
 
     elif self.username_dropdown.selected_value == "Save and Logout":
-      name = "Saved_areas"
+      name = "Saved_areas " + Global.site_id
       work_area_dict = {}
       temp_work_area_name_list = list(Global.work_area.keys())
       for work_area_name in temp_work_area_name_list:
         print(Global.work_area[work_area_name]["action"])
+        work_area_dict[work_area_name] = {}
         work_area_dict[work_area_name]["action"] = Global.work_area[work_area_name]["action"]
         
       msg = anvil.server.call("save_work_areas",name,work_area_dict,Global.site_id)
