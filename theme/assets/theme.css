@@ -1176,3 +1176,10 @@ footer a, .footer .anvil-component {
   margin-bottom: 0px !important;
   line-height: 1.2 !important;
 }
+
+/* The '.anvil-role-' prefix is required to target your custom role */
+.anvil-role-tight-dropdown select.form-control {
+  padding-left: 2px !important;
+  /* Optional: reduce right padding too */
+  padding-right: 2px !important; 
+}
