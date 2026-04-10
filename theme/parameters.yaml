@@ -332,5 +332,3 @@ roles:
 - components: [TextBox, TextArea, DatePicker, DropDown]
   name: input-error
 - {components: null, name: compact-grid}
-- components: [Dropdpwn]
-  name: tight-dropdown

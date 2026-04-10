@@ -204,6 +204,7 @@ components:
             include_placeholder: true
             margin: ['0', null, null, '0']
             placeholder: Help
+            role: null
             tooltip: help
           type: DropDown
         layout_properties: {full_width_row: true, grid_position: 'WPNVXE,ZMXKSM'}
