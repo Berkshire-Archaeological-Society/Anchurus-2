@@ -253,6 +253,7 @@ class Main(MainTemplate):
     # First make sure the old header is invisible
     Global.header.visible = False
     Global.wa_header_menu_bottom.visible = True
+    Global.action = action
     
     # set name of work_area to be action name with small modifications in some cases
     work_area_name = action
@@ -568,13 +569,8 @@ class Main(MainTemplate):
       Global.help_page.visible = True
       Global.site_id = "not_selected"
 
-      # look for saved_workareas
-      name = "Saved_areas " + Global.site_id
-      rows = anvil.server.call("get_saved_workareas",name)
-      for row in rows:
-        for workarea in row["workarea_dict"].keys():
-          print(row["workarea_dict"][workarea]["action"])
-          self.create_new_work_area(row["workarea_dict"][workarea]["action"])
+      Function.restore_workareas()
+
     pass
 
   def register_button_click(self, **event_args):
@@ -742,6 +738,8 @@ class Main(MainTemplate):
         #self.select_site_dropdown.selected_value = None
         n = Notification(msg)
         n.show()
+      
+      Function.restore_workareas()
     else:
       self.select_site_dropdown.selected_value = None
     pass

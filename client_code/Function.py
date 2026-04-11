@@ -132,9 +132,12 @@ def format_cell_text(text, max_chars=100):
 def delete_all_workspace(work_area_list):
   return
 
-def save_work_areas():
-  # need to create a media object of the work_area list 
-  
-  success = anvil.server.call("save_work_areas", Global.work_area,Global.site_id) 
+def restore_workareas():
+  # look for saved_workareas
+  name = "Saved_areas " + Global.site_id
+  rows = anvil.server.call("get_saved_workareas",name)
+  for row in rows:
+    for workarea in row["workarea_dict"].keys():
+      print(row["workarea_dict"][workarea]["action"])
+      Global.main_form.create_new_work_area(row["workarea_dict"][workarea]["action"])
   return
-
