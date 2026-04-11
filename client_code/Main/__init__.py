@@ -738,7 +738,7 @@ class Main(MainTemplate):
         #self.select_site_dropdown.selected_value = None
         n = Notification(msg)
         n.show()
-      
+      #
       Function.restore_workareas()
     else:
       self.select_site_dropdown.selected_value = None

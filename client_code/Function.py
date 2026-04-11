@@ -138,6 +138,6 @@ def restore_workareas():
   rows = anvil.server.call("get_saved_workareas",name)
   for row in rows:
     for workarea in row["workarea_dict"].keys():
-      print(row["workarea_dict"][workarea]["action"])
+      #print(row["workarea_dict"][workarea]["action"])
       Global.main_form.create_new_work_area(row["workarea_dict"][workarea]["action"])
   return
