@@ -569,7 +569,12 @@ class Main(MainTemplate):
       Global.site_id = "not_selected"
 
       # look for saved_workareas
-      rows = anvil.server.call("get_saved_workarea",name)
+      name = "Saved_areas " + Global.site_id
+      rows = anvil.server.call("get_saved_workareas",name)
+      for row in rows:
+        for workarea in row["workarea_dict"].keys():
+          print work
+        
     pass
 
   def register_button_click(self, **event_args):
