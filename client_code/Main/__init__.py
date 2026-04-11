@@ -292,42 +292,48 @@ class Main(MainTemplate):
         tmp_table_info.append(col_info)
       # sort table_info in ORDINAL_POSITION
       table_info = sorted(tmp_table_info, key=lambda x: x['ORDINAL_POSITION'])
-    
-    # For all actions not in Admin_action_list check ID field for creating unique work_area name
-    #print(action)
-    if action not in Global.sys_admin_action_list and action not in Global.site_admin_action_list and action not in ["List Qresult","List qresult","View Qresult"]:
-      # 
-      # trying to make a work_area_name suitabe for action and table (i.e. (List |[E|V]-|Insert )<table_name> <main-pri_id>)
-      # add first Primary Key ID field when view or edit
-      primary_key_list = []
-      
-      if action.split(" ")[1].lower() == "dbdiary":
-         primary_key_list.append("DBAcontrol")
-      elif action.split(" ")[1].lower() == "users":
-        primary_key_list.append("email")
-      else:
-        for column in table_info:
-          if column["COLUMN_KEY"] == "PRI":
-            primary_key_list.append(column["COLUMN_NAME"])
-      if action.split(" ")[0].lower() in ["view","edit"]:
-        work_area_name = ""
-        if action.split(" ")[1].lower() != "dbdiary":
-          if action.split(" ")[0].lower() ==  "view":
-            work_area_name = "V-"
-          else:
-            work_area_name = "E-"
-        if action.split(" ")[1].lower() == "sys_userrole":
-          work_area_name = work_area_name + action.split(" ")[1][-8:]
-        else:
-          work_area_name = work_area_name + action.split(" ")[1]
-        if len(primary_key_list) == 1:
-          work_area_name = work_area_name + " " + Global.table_items[primary_key_list[0]]
-        else:
-          work_area_name = work_area_name + " " + Global.table_items[primary_key_list[1]]
 
-    # for List Qresult we add the QueryId
-    if action in ["List Qresult","List qresult","View Qresult"]:
-      work_area_name = work_area_name + " " + Global.query_id
+    # check is we are restoring work_areas (if so use that name for work_area_name)
+    if Global.restore_workarea_name == "":
+      # For all actions not in Admin_action_list check ID field for creating unique work_area name
+      print(action)
+      if action not in Global.sys_admin_action_list and action not in Global.site_admin_action_list and action not in ["List Qresult","List qresult","View Query","Edit Query"]:
+        # 
+        # trying to make a work_area_name suitabe for action and table (i.e. (List |[E|V]-|Insert )<table_name> <main-pri_id>)
+        # add first Primary Key ID field when view or edit
+        primary_key_list = []
+      
+        if action.split(" ")[1].lower() == "dbdiary":
+          primary_key_list.append("DBAcontrol")
+        elif action.split(" ")[1].lower() == "users":
+          primary_key_list.append("email")
+        else:
+          for column in table_info:
+            if column["COLUMN_KEY"] == "PRI":
+              primary_key_list.append(column["COLUMN_NAME"])
+        if action.split(" ")[0].lower() in ["view","edit"]:
+          work_area_name = ""
+          if action.split(" ")[1].lower() != "dbdiary":
+            if action.split(" ")[0].lower() ==  "view":
+              work_area_name = "V-"
+            else:
+              work_area_name = "E-"
+          if action.split(" ")[1].lower() == "sys_userrole":
+            work_area_name = work_area_name + action.split(" ")[1][-8:]
+          else:
+            work_area_name = work_area_name + action.split(" ")[1]
+          if len(primary_key_list) == 1:
+            work_area_name = work_area_name + " " + Global.table_items[primary_key_list[0]]
+          else:
+            work_area_name = work_area_name + " " + Global.table_items[primary_key_list[1]]
+      # for List Qresult we add the QueryId
+      if action in ["List Qresult","List qresult","View Query","Edit Query"]:
+        # problem with restore workarea
+        print(Global.query_id)
+        work_area_name = work_area_name + " " + Global.query_id
+    else:
+      # in restore workareas use the work_area_name of the savde work_area
+      work_area_name = Global.restore_workarea_name
       
     # check if work_area_name exists and keep counter
     if (Global.work_area.get(work_area_name) is None):
@@ -344,6 +350,7 @@ class Main(MainTemplate):
       Global.action_seq_no[work_area_name] += 1
       work_area_name = work_area_name + " (" + str(Global.action_seq_no[work_area_name]) + ")"
 
+    
     # create new 'empty row' in nested work_area dictionary for the new work_area_name
     Global.work_area[work_area_name] = {}
     Global.work_area[work_area_name]["action"] = action
@@ -1201,6 +1208,8 @@ class Main(MainTemplate):
         work_area_dict[work_area_name]["site_id"] = Global.work_area[work_area_name]["site_id"]
         work_area_dict[work_area_name]["site_name"] = Global.work_area[work_area_name]["site_name"]
         work_area_dict[work_area_name]["table_info"] = Global.work_area[work_area_name]["table_info"]
+        work_area_dict[work_area_name]["table_info"] = Global.work_area[work_area_name]["table_info"]
+        work_area_dict[work_area_name]["form_type"] = Global.work_area[work_area_name]["form_type"]
         if Global.work_area[Global.current_work_area_name]["form_type"] == "RowForm":
           # only for RowForm we need to keep the data_list (is one record); for a TableList form we will do a refresh 
           work_area_dict[work_area_name]["data_list"] = Global.work_area[work_area_name]["data_list"]

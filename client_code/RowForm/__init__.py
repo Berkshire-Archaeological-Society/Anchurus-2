@@ -78,6 +78,7 @@ class RowForm(RowFormTemplate):
     self.field_details = {}
     self.form_fields = {}
     #for item in table_info:
+    print(Global.work_area[Global.current_work_area_name]["table_info"])
     for item in Global.work_area[Global.current_work_area_name]["table_info"]:
       #print(item)
       if Global.table_name == "users":
@@ -264,7 +265,7 @@ class RowForm(RowFormTemplate):
       
       # spedial case when Field is RegistrationDate: Pre-fill is for Insert and also block edit contents
       cur_len = 0
-      #print(column_name)
+      print(column_name)
       if action in ["insert","add"] and column_name == "RegistrationDate":
         # force RegistrationDate
         input.text = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
@@ -274,6 +275,7 @@ class RowForm(RowFormTemplate):
 
       # if action is View or Edit then fill all fields
       if action in ["edit","update","view"]:
+        print(Global.work_area[Global.current_work_area_name]["data_list"][0])
         if str(type(input)) == "<class 'anvil_extras.Quill.Quill'>":
           text = Global.work_area[Global.current_work_area_name]["data_list"][0][column_name]
 
@@ -291,6 +293,7 @@ class RowForm(RowFormTemplate):
         elif str(type(input)) == "<class 'anvil.DatePicker'>":
           input.date = Global.work_area[Global.current_work_area_name]["data_list"][0][column_name]
         else:
+          print(Global.work_area[Global.current_work_area_name]["data_list"])
           input.text = Global.work_area[Global.current_work_area_name]["data_list"][0][column_name]
           if input.text == "None":
             input.text = ""
@@ -426,7 +429,7 @@ class RowForm(RowFormTemplate):
         if row_list[col[0]] in ["","\n"]:
           row_list[col[0]] = None
       #
-      #print(Global.action, table_name, row_list)
+      print(Global.action, table_name, row_list)
       #
       if action in ["add","insert"]:
         ret = anvil.server.call("row_insert",table_name,row_list)

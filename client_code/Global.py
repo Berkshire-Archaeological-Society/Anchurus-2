@@ -52,6 +52,7 @@ csv_file = None
 current_work_area = {}
 current_work_area_name = ""
 current_work_area_type = ""
+restore_workarea_name = ""
 # variables for work area header
 header = {}
 header_work_area_name = {}
