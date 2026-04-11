@@ -567,6 +567,9 @@ class Main(MainTemplate):
       # create a introduction message and add it to the introduction_message of the introduction_message block and make it visible
       Global.help_page.visible = True
       Global.site_id = "not_selected"
+
+      # look for saved_workareas
+      rows = anvil.server.call("get_saved_workarea",name)
     pass
 
   def register_button_click(self, **event_args):
