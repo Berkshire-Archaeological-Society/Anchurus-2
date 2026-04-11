@@ -573,8 +573,8 @@ class Main(MainTemplate):
       rows = anvil.server.call("get_saved_workareas",name)
       for row in rows:
         for workarea in row["workarea_dict"].keys():
-          print work
-        
+          print(row["workarea_dict"][workarea]["action"])
+          self.create_new_work_area(row["workarea_dict"][workarea]["action"])
     pass
 
   def register_button_click(self, **event_args):
