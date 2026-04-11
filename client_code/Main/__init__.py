@@ -1187,13 +1187,19 @@ class Main(MainTemplate):
       name = "Saved_areas " + Global.site_id
       work_area_dict = {}
       temp_work_area_name_list = list(Global.work_area.keys())
-      # loop through all work_area and build a nested dictionary with further information
+      # loop through all work_area and build a nested dictionary with further information (do not need to usee all of work_area dict)
       # may want to add more information (e.g. add column filter information of work area in order to restore it with the filter)
       for work_area_name in temp_work_area_name_list:
         work_area_dict[work_area_name] = {}
         work_area_dict[work_area_name]["action"] = Global.work_area[work_area_name]["action"]
+        work_area_dict[work_area_name]["site_id"] = Global.work_area[work_area_name]["site_id"]
+        work_area_dict[work_area_name]["site_name"] = Global.work_area[work_area_name]["site_name"]
+        work_area_dict[work_area_name]["table_info"] = Global.work_area[work_area_name]["table_info"]
+        if Global.work_area[Global.current_work_area_name]["form_type"] == "RowForm":
+          # only for RowForm we need to keep the data_list (is one record); for a TableList form we will do a refresh 
+          work_area_dict[work_area_name]["data_list"] = Global.work_area[work_area_name]["data_list"]
         
-      msg = anvil.server.call("save_work_areas",name,work_area_dict,Global.site_id)
+      msg = anvil.server.call("save_workareas",name,work_area_dict,Global.site_id)
       alert(msg,title="Saving work area notification")
       self.logout_click()
     
