@@ -1196,7 +1196,14 @@ class Main(MainTemplate):
     # There are two options: Change password or 'Save Env and Logout'
     # But we just check in case it is not ;)
     if self.username_dropdown.selected_value == "Change password":
+      user = anvil.users.get_user()
       anvil.users.change_password_with_form(require_old_password=True)
+      msg = ("\nDear %s %s,\n\n"
+             "Just to inform your password for the Anchurus-II service for %s has been updated.\n\n"
+             "The Anchurus-II service"
+             % (str(user["firtsname"]),str(user["lastname"]), Global.organisation, ))
+      alert(msg,title="Reset Password notification")
+      anvil.server.call("send_email","Password reset",msg,user["email"])
 
     elif self.username_dropdown.selected_value == "Save Env and Logout":
       name = "Saved_areas " + Global.site_id
