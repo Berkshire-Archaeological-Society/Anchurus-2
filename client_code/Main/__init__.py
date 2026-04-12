@@ -296,7 +296,7 @@ class Main(MainTemplate):
     # check is we are restoring work_areas (if so use that name for work_area_name)
     if Global.restore_workarea_name == "":
       # For all actions not in Admin_action_list check ID field for creating unique work_area name
-      print(action)
+      #print(action)
       if action not in Global.sys_admin_action_list and action not in Global.site_admin_action_list and action not in ["List Qresult","List qresult","View Query","Edit Query"]:
         # 
         # trying to make a work_area_name suitabe for action and table (i.e. (List |[E|V]-|Insert )<table_name> <main-pri_id>)
@@ -329,7 +329,9 @@ class Main(MainTemplate):
       # for List Qresult we add the QueryId
       if action in ["List Qresult","List qresult","View Query","Edit Query"]:
         # problem with restore workarea
-        print(Global.query_id)
+        if action.split(" ")[0] in ["View", "Edit"]:
+          Global.query_id = Global.table_items["QueryId"]
+          #print(Global.query_id)
         work_area_name = work_area_name + " " + Global.query_id
     else:
       # in restore workareas use the work_area_name of the savde work_area
@@ -1218,7 +1220,8 @@ class Main(MainTemplate):
       alert(msg,title="Saving work area notification")
       self.logout_click()
     elif self.username_dropdown.selected_value == "Clear Env":
-      msg = anvil.server.call("clear_saved_workareas",name,work_area_dict,Global.site_id)
+      name = "Saved_areas " + Global.site_id
+      msg = anvil.server.call("clear_saved_workareas",name)
       alert(msg,title="Clearing work area notification")
     elif self.username_dropdown.selected_value == "Logout":
       self.logout_click()
@@ -1248,9 +1251,6 @@ class Main(MainTemplate):
       #print(command)
       if command != "":
         msg, data_list, column_order, Global.tmp_table_info = anvil.server.call("execute_sql_command",command)
-        #print(data_list)
-        #print(column_order)
-        #print(Global.tmp_table_info)
       else:
         msg = "FAIL: SQL command field is empty."
       

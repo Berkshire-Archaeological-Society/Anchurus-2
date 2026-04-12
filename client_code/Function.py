@@ -79,7 +79,7 @@ def create_work_space(type,data_list):
     work_space = Help()
   else:
     msg = "Unknown workspace to create: " + type
-    print(msg)
+    #print(msg)
     work_space = "Unknown"
   return work_space
 
@@ -129,9 +129,6 @@ def format_cell_text(text, max_chars=100):
 
   return text_to_process
 
-def delete_all_workspace(work_area_list):
-  return
-
 def restore_workareas():
   # look for saved_workareas
   name = "Saved_areas " + Global.site_id
@@ -144,9 +141,9 @@ def restore_workareas():
       if row["workarea_dict"][workarea]["form_type"] == "RowForm":
         # set Global.table_items if the from_type == RowForm (View, Edit of a row) and data_list should have only one row
         Global.table_items = row["workarea_dict"][workarea]["data_list"][0]
-        print("In restore")
-        print(Global.table_items)
-        print("now calling create_new_work_area")
+        #print("In restore")
+        #print(Global.table_items)
+        #print("now calling create_new_work_area")
       Global.main_form.create_new_work_area(row["workarea_dict"][workarea]["action"])
     Global.restore_workarea_name = ""
   return
