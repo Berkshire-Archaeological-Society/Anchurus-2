@@ -534,7 +534,7 @@ class Main(MainTemplate):
       Global.help_page_form.help_page_text.add_component(rt)
       
       self.username_dropdown.placeholder = Global.username
-      self.username_dropdown.items = ["Change password","Save Env and Logout","Clear Env","Logout"]
+      self.username_dropdown.items = ["Change password","Clear Env","Save Env and Logout","Logout"]
 
       # notify server side of login
       Global.ip_address = anvil.server.call("user_authentication")
