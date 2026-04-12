@@ -1096,7 +1096,7 @@ class Main(MainTemplate):
   def download_csv_click(self, **event_args):
     """This method is called when the button is clicked"""
     # call server-side function create_csv to create a csv file and download this to user Download folder
-    file_name = Global.action + ".csv"
+    file_name = Global.current_work_area_name + ".csv"
     
     # create ordinal_position list of columns 
     col_order = {}
