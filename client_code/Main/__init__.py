@@ -1210,10 +1210,12 @@ class Main(MainTemplate):
         work_area_dict[work_area_name]["site_id"] = Global.work_area[work_area_name]["site_id"]
         work_area_dict[work_area_name]["site_name"] = Global.work_area[work_area_name]["site_name"]
         work_area_dict[work_area_name]["table_info"] = Global.work_area[work_area_name]["table_info"]
-        work_area_dict[work_area_name]["table_info"] = Global.work_area[work_area_name]["table_info"]
         work_area_dict[work_area_name]["form_type"] = Global.work_area[work_area_name]["form_type"]
-        if Global.work_area[Global.current_work_area_name]["form_type"] == "RowForm":
+        #print(work_area_name)
+        #print(Global.work_area[work_area_name]["form_type"])
+        if Global.work_area[work_area_name]["form_type"] == "RowForm":
           # only for RowForm we need to keep the data_list (is one record); for a TableList form we will do a refresh 
+          #print(len(Global.work_area[work_area_name]["data_list"]))
           work_area_dict[work_area_name]["data_list"] = Global.work_area[work_area_name]["data_list"]
         
       msg = anvil.server.call("save_workareas",name,work_area_dict,Global.site_id)
