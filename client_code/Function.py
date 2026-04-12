@@ -110,9 +110,10 @@ def format_cell_text(text, max_chars=100):
     text_to_process = "\n".join(lines[:1])
   else:
     if len(lines) > 2:
-      # Take the first two and mark as truncated
-      text_to_process = "\n".join(lines[:2])
-      was_truncated = True
+      # Take the first two lines and mark as truncated
+      if len(lines[1]) < max_chars / 2:
+        text_to_process = "\n".join(lines[:2])
+        was_truncated = True
     else:
       text_to_process = "\n".join(lines)
 
