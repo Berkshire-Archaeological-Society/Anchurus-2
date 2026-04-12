@@ -111,9 +111,12 @@ def format_cell_text(text, max_chars=100):
   else:
     if len(lines) > 2:
       # Take the first two lines and mark as truncated
+      # check length secnd line 
       if len(lines[1]) < max_chars / 2:
         text_to_process = "\n".join(lines[:2])
-        was_truncated = True
+      else:
+        text_to_process = lines[0] + "\n" + lines[1][:int(max_chars/2)]
+      was_truncated = True
     else:
       text_to_process = "\n".join(lines)
 
