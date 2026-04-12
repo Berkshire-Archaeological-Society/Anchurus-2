@@ -1201,7 +1201,7 @@ class Main(MainTemplate):
       msg = ("\nDear %s %s,\n\n"
              "Just to inform your password for the Anchurus-II service for %s has been updated.\n\n"
              "The Anchurus-II service"
-             % (str(user["firtsname"]),str(user["lastname"]), Global.organisation, ))
+             % (str(user["firstname"]),str(user["lastname"]), Global.organisation, ))
       alert(msg,title="Reset Password notification")
       anvil.server.call("send_email","Password reset",msg,user["email"])
 
