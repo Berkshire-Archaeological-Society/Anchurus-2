@@ -534,7 +534,7 @@ class Main(MainTemplate):
       Global.help_page_form.help_page_text.add_component(rt)
       
       self.username_dropdown.placeholder = Global.username
-      self.username_dropdown.items = ["Change password","Clear Env","Save Env and Logout","Logout"]
+      self.username_dropdown.items = ["Change password","Clear Workspace Environment","Save Workspace Environment","Logout"]
 
       # notify server side of login
       Global.ip_address = anvil.server.call("user_authentication")
@@ -1193,7 +1193,6 @@ class Main(MainTemplate):
   def username_dropdown_change(self, **event_args):
     """ This Function is called when the users has selected the logout option of the username dropdown """
     """This method is called when an item is selected"""
-    # There are two options: Change password or 'Save Env and Logout'
     # But we just check in case it is not ;)
     if self.username_dropdown.selected_value == "Change password":
       user = anvil.users.get_user()
@@ -1206,7 +1205,7 @@ class Main(MainTemplate):
       n.show()
       anvil.server.call("send_email","Password reset",msg,user["email"])
 
-    elif self.username_dropdown.selected_value == "Save Env and Logout":
+    elif self.username_dropdown.selected_value == "Save Workspace Environment":
       name = "Saved_areas " + Global.site_id
       work_area_dict = {}
       temp_work_area_name_list = list(Global.work_area.keys())
@@ -1228,8 +1227,7 @@ class Main(MainTemplate):
         
       msg = anvil.server.call("save_workareas",name,work_area_dict,Global.site_id)
       alert(msg,title="Saving work area notification")
-      self.logout_click()
-    elif self.username_dropdown.selected_value == "Clear Env":
+    elif self.username_dropdown.selected_value == "Clear Workspace Environment":
       name = "Saved_areas " + Global.site_id
       msg = anvil.server.call("clear_saved_workareas",name)
       alert(msg,title="Clearing work area notification")
