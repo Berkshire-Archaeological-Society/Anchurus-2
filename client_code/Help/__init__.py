@@ -18,15 +18,15 @@ class Help(HelpTemplate):
     # Any code you write here will run before the form opens.
     
     print(Global.action)
+    Global.help_page_form = self
     user = anvil.users.get_user()
-    if Global.action == "Help Welcome":
+    if Global.action == "Help Introduction":
       Global.username = user["email"]
       Global.name = user["firstname"] + " " + user["lastname"]
       message = Global.help_introduction.replace("<user>",Global.name)
       rt = RichText(content=message,format="restricted_html")
       Global.help_page_form.help_page_text.add_component(rt)
     
-    Global.help_page_form = self
     #rt = RichText(content=Global.help_introduction,format="restricted_html")
     #self.help_page_text.add_component(rt)
-    self.help_page_text.visible = True
+    #self.help_page_text.visible = True

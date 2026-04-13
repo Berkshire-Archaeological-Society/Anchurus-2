@@ -52,7 +52,7 @@ class Main(MainTemplate):
     # add Help component (but make it invisible)
     Global.help_page = Help()
     self.add_component(Global.help_page, slot='help_slot')
-    Global.help_page.visible = False
+    #Global.help_page.visible = False
 
     # set Main title field with name of organisation (defined in Anchurus-2.cgf file from server)
     #Global.title_label = self.title
@@ -268,8 +268,8 @@ class Main(MainTemplate):
     Global.table_name = action.split(" ")[1].lower()
     table_info = [] 
     
-    if action == "Help Welcome":
-      work_area_name = "Welcome"
+    if action == "Help Introduction":
+      work_area_name = "Introduction"
     else:
       # get table_info, works only for a true DB table. If not (e.g. table is 'qresult') we have to create the table_info dictionary list ourselves   
       if Global.table_name != "qresult":
@@ -301,7 +301,7 @@ class Main(MainTemplate):
     if Global.restore_workarea_name == "":
       # For all actions not in Admin_action_list check ID field for creating unique work_area name
       #print(action)
-      if action not in Global.sys_admin_action_list and action not in Global.site_admin_action_list and action not in ["List Qresult","List qresult","View Query","Edit Query","Help Welcome"]:
+      if action not in Global.sys_admin_action_list and action not in Global.site_admin_action_list and action not in ["List Qresult","List qresult","View Query","Edit Query","Help Introduction"]:
         # 
         # trying to make a work_area_name suitabe for action and table (i.e. (List |[E|V]-|Insert )<table_name> <main-pri_id>)
         # add first Primary Key ID field when view or edit
@@ -531,12 +531,12 @@ class Main(MainTemplate):
       
       # when user is logged in, enable Action menu, username field and logout button, and disable content panel (welcome message)
       # also set username  to user email address
-      self.create_new_work_area("Help Welcome")
-      Global.username = user["email"]
-      Global.name = user["firstname"] + " " + user["lastname"]
-      message = Global.help_introduction.replace("<user>",Global.name)
-      rt = RichText(content=message,format="restricted_html")
-      Global.help_page_form.help_page_text.add_component(rt)
+      self.create_new_work_area("Help Introduction")
+      #Global.username = user["email"]
+      #Global.name = user["firstname"] + " " + user["lastname"]
+      #message = Global.help_introduction.replace("<user>",Global.name)
+      #rt = RichText(content=message,format="restricted_html")
+      #Global.help_page_form.help_page_text.add_component(rt)
       
       self.username_dropdown.placeholder = Global.username
       self.username_dropdown.items = ["Change password","Clear Workspace Environment","Save Workspace Environment","Logout"]
@@ -580,7 +580,7 @@ class Main(MainTemplate):
       Global.select_site_dropdown = self.select_site_dropdown
       
       # create a introduction message and add it to the introduction_message of the introduction_message block and make it visible
-      Global.help_page.visible = True
+      #Global.help_page.visible = True
       Global.site_id = "not_selected"
       
       Function.restore_workareas()
@@ -636,7 +636,7 @@ class Main(MainTemplate):
       # clear help_page_text 
       #Global.help_page.help_page_text.visible = True
       #Global.help_page.help_page_text.clear()
-      Global.help_page.visible = False
+      #Global.help_page.visible = False
       
       Global.site_name = self.select_site_dropdown.selected_value
       Global.site_id = Global.site_options[self.select_site_dropdown.selected_value]
@@ -653,7 +653,7 @@ class Main(MainTemplate):
       self.mm_left.visible = True
       self.mm_middle.visible = True
       self.mm_right.visible = True
-      Global.help_page.visible = True
+      #Global.help_page.visible = True
 
       #delete all work_areas and all work_area names/buttons
       temp_work_area_name_list = list(Global.work_area.keys())
@@ -667,7 +667,7 @@ class Main(MainTemplate):
       Global.site_user_role = anvil.server.call("user_authorisation",Global.site_options[self.select_site_dropdown.selected_value],Global.username)
       if Global.site_user_role != "unknown" or Global.system_user_role == "System Administrator":
         # user found with a role for the selected site
-        Global.help_page.visible = False
+        #Global.help_page.visible = False
         self.site_summary.visible = True
 
         # Update role text if system_role is not System Administrator
@@ -765,7 +765,7 @@ class Main(MainTemplate):
     # Action has been selected, but only take action if action in not a separator
     # save a link to the Main form in a Global variable 
     #Global.main_form = get_open_form()
-    Global.help_page.visible = False
+    #Global.help_page.visible = False
 
     Global.action = self.admin_dropdown.selected_value
 
@@ -1155,8 +1155,8 @@ class Main(MainTemplate):
     anvil.users.logout()
 
     # make help_page invisible
-    Global.help_page.visible = False
-    Global.help_page.help_page_text.clear()
+    #Global.help_page.visible = False
+    #Global.help_page.help_page_text.clear()
 
     # Welcome_page will show the login page
     self.welcome_page.visible = True
@@ -1217,6 +1217,8 @@ class Main(MainTemplate):
       # loop through all work_area and build a nested dictionary with further information (do not need to usee all of work_area dict)
       # may want to add more information (e.g. add column filter information of work area in order to restore it with the filter)
       for work_area_name in temp_work_area_name_list:
+        if work_area_name == "Introduction":
+          continue
         work_area_dict[work_area_name] = {}
         work_area_dict[work_area_name]["action"] = Global.work_area[work_area_name]["action"]
         work_area_dict[work_area_name]["site_id"] = Global.work_area[work_area_name]["site_id"]

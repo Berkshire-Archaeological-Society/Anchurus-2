@@ -323,7 +323,7 @@ components:
               margin: ['0', '0', null, null]
               padding: [null, '0', '0', '24']
             text: ''
-            tooltip: select all
+            tooltip: select page
           type: CheckBox
         layout_properties: {width: 70.09662373046875}
         name: fp_select_all
