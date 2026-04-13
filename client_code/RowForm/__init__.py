@@ -292,6 +292,8 @@ class RowForm(RowFormTemplate):
             input.background = "#052014CC"
         elif str(type(input)) == "<class 'anvil.DatePicker'>":
           input.date = Global.work_area[Global.current_work_area_name]["data_list"][0][column_name]
+        elif str(type(input)) == "<class 'anvil.DropDown'>":
+          input.selected_value = Global.work_area[Global.current_work_area_name]["data_list"][0][column_name]
         else:
           #print(Global.work_area[Global.current_work_area_name]["data_list"])
           input.text = Global.work_area[Global.current_work_area_name]["data_list"][0][column_name]
