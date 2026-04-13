@@ -1199,10 +1199,11 @@ class Main(MainTemplate):
       user = anvil.users.get_user()
       anvil.users.change_password_with_form(require_old_password=True)
       msg = ("\nDear %s %s,\n\n"
-             "Just to inform your password for the Anchurus-II service for %s has been updated.\n\n"
+             "Just to inform you that your password for the Anchurus-II service for %s has been updated.\n\n"
              "The Anchurus-II service"
              % (str(user["firstname"]),str(user["lastname"]), Global.organisation, ))
-      alert(msg,title="Reset Password notification")
+      n = Notification(msg)
+      n.show()
       anvil.server.call("send_email","Password reset",msg,user["email"])
 
     elif self.username_dropdown.selected_value == "Save Env and Logout":
