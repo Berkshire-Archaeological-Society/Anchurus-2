@@ -451,10 +451,10 @@ class Main(MainTemplate):
       self.select_all.checked = False
       
       self.view_row.visible = True
-      self.edit_row.visible = True if Global.site_user_role in ["Editor","Manager"] or Global.system_user_role == "System Administrator" else False
-      self.delete_row.visible = True if Global.site_user_role in ["Manager"] or Global.system_user_role == "System Administrator" else False
+      self.edit_row.visible = True if Global.site_user_role in ["Editor","Manager", "Site Leader"] or Global.system_user_role == "System Administrator" else False
+      self.delete_row.visible = True if Global.site_user_role in ["Manager","Site Leader"] or Global.system_user_role == "System Administrator" else False
       if Global.table_name == "query":
-        self.execute_sql.visible = True if Global.site_user_role in ["Manager"] or Global.system_user_role == "System Administrator" else False
+        self.execute_sql.visible = True if Global.site_user_role in ["Manager", "Site Leader"] or Global.system_user_role == "System Administrator" else False
       else:
         self.execute_sql.visible = False
 
@@ -672,16 +672,16 @@ class Main(MainTemplate):
 
         # Update role text if system_role is not System Administrator
         if Global.system_user_role == "Site User":
-          self.user_role.text = "Site " + Global.site_user_role
+          self.user_role.text = Global.site_user_role
 
         if Global.system_user_role == "System Administrator":
-          # add site manager admin actions to admin dropdown
+          # add site manager / sie leader admin actions to admin dropdown
           options = Global.sys_admin_action_dropdown + Global.site_admin_action_dropdown
           self.admin_dropdown.items = options
           self.admin_dropdown.visible = True
-        if Global.site_user_role == "Manager":
+        if Global.site_user_role in ["Manager","Site Leader"]:
           # add site manager admin actions to admin dropdown
-          options = Global.site_manager_action_dropdown + Global.site_admin_action_dropdown
+          options = Global.site_leader_action_dropdown + Global.site_admin_action_dropdown
           self.admin_dropdown.items = options
           self.admin_dropdown.visible = True
           
@@ -700,7 +700,7 @@ class Main(MainTemplate):
         self.mm_left.visible = True
         self.mm_middle.visible = True
         self.mm_right.visible = True
-        if Global.site_user_role in ["Manager"] or Global.system_user_role == "System Administrator":
+        if Global.site_user_role in ["Manager","Site Leader"] or Global.system_user_role == "System Administrator":
           self.list_dropdown.visible = True
           self.view_row.visible = True        
           self.edit_row.visible = True
@@ -742,7 +742,7 @@ class Main(MainTemplate):
           self.execute_sql.visible = False
           self.import_dropdown.visible = False
       else:
-        msg = "Not found a role for you in site " + self.select_site_dropdown.selected_value + ". Please contact the Project Manager."
+        msg = "Not found a role for you in site " + self.select_site_dropdown.selected_value + ". Please contact the Site Leader."
         Global.site_name = self.select_site_dropdown.selected_value
         Global.site_id = Global.site_options[self.select_site_dropdown.selected_value]
         Global.selected_site = ": " + Global.site_name

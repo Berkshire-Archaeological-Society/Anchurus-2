@@ -17,7 +17,7 @@ import anvil.users
 main_form = ""
 separator = "------------------"
 sys_admin_action_list = ["List Users","Edit User","Insert User","Import Users",separator,"List Site","Edit Site","Add Site"]
-site_manager_action_list = ["List Users",separator,"List Site","Edit Site","Add Site"]
+site_leader_action_list = ["List Users",separator,"List Site","Edit Site","Add Site"]
 site_admin_action_list = [separator,"List UserRole","Edit UserRole","Add UserRole","Import UserRoles"]
 admin_action_list_not_implemented = [separator]
 #user_action_list = ["Select Site",separator,
@@ -37,7 +37,7 @@ view_action_dropdown = []
 help_action_dropdown = ["Anchurus Website"]
 query_action_dropdown = [("List Query","List query"),("Insert Query","Insert query"),("Import Query ","Import query")]
 sys_admin_action_dropdown = [("List System Users","List Users"),("Insert System User","Insert User"),("Import System Users","Import Users"),separator,("List DBDiary","List dbdiary"),separator,("List Sites","List Site"),("Insert Site","Insert Site")]
-site_manager_action_dropdown = [("List System Users","List Users"),separator,("List DBDiary","List dbdiary"),separator,("List Sites","List Site")]
+site_leader_action_dropdown = [("List System Users","List Users"),separator,("List DBDiary","List dbdiary"),separator,("List Sites","List Site")]
 site_admin_action_dropdown = [(separator,separator),("List Site Users","List sys_userrole"),("Insert Site User","Insert sys_userrole"),("Import Site Users","Import sys_userrole")]
 #
 import_action_dropdown = ["context","find"]
@@ -137,7 +137,7 @@ role_access = {
     {'table': 'dbdiary',      'list': "No",  'view': "No",  'Edit': 'No', 'Insert': 'No', 'Import': 'No', 'Export': 'No', 'Delete': 'No'},
     {'table': 'users',        'list': "No",  'view': "No",  'Edit': 'No',' Insert': 'No', 'Import': 'No', 'Export': 'No', 'Delete': 'No'}
   ] ,
-'Manager': [
+'Site Leader': [
     {'table': 'anomaly',      'list': "Yes", 'view': "Yes", 'Edit': 'No','Insert': 'No','Import': 'No','Export': 'No','Delete': 'No'},
     {'table': 'context',      'list': "Yes", 'view': "Yes", 'Edit': 'No','Insert': 'No','Import': 'No','Export': 'No','Delete': 'No'},
     {'table': 'find',         'list': "Yes", 'view': "Yes", 'Edit': 'No','Insert': 'No','Import': 'No','Export': 'No','Delete': 'No'},
@@ -202,7 +202,7 @@ column_with_dropdown = {
     "error"       : "You must make a selection"
   },
   "Role" : {
-    "options"     : ["Manager","Editor","Viewer"], 
+    "options"     : ["Site Leader","Editor","Viewer"], 
     "placeholder" : "Please select a role", 
     "error"       : "You must make a selection"
   },
@@ -300,7 +300,7 @@ user_initials = ""
 system_user_role = ""
 site_user_role = ""
 user_status = ""
-site_user_role_options = {"Viewer","Editor","Manager","Administrator"}
+site_user_role_options = {"Viewer","Editor","Site Leader","Administrator"}
 system_user_role_options = {"Site User","System Administrator"}
 user_status_options = {"True", "False"}
 user_items = {}
@@ -331,7 +331,7 @@ Welcome <user>.
 <p>You have successfully logged into the Anchurus-II Web Application.
 </p>
 <p>
-Please select a site. If a site you require access to, is not in the 'Select Site' list, please contact the Project Manager for that site to provide you with access.
+Please select a site. If a site you require access to, is not in the 'Select Site' list, please contact the Site Leader for that site to provide you with access.
 <br>Once selected you can use the menu items to select your actions.</p>
 <p>
 <b>Note:</b> When changing/selecting a new site, all current workspaces will be deleted.</p>
