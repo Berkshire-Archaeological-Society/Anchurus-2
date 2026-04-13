@@ -268,7 +268,7 @@ select_site_dropdown = {}
 header_site_summary_information = {}
 system_name = ""
 SurveyMethod_options = {"BNG","Aligned to BNG north","Not aligned to BNG north"}
-system = "Anchurus-II R2"
+system = "Anchurus-II Web Application"
 status = ""
 #
 table_name = ""
