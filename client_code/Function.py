@@ -61,6 +61,9 @@ def create_work_space(type,data_list):
   #
   elif action == "import":
     work_space = ImportForm()
+  #  
+  elif action == "help":
+    work_space = Help()  
   #
   elif action in ["add","insert"]:
     work_space = RowForm("",table_name,data_list,type,page_info)

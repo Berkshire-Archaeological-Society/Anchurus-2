@@ -16,6 +16,16 @@ class Help(HelpTemplate):
     self.init_components(**properties)
     
     # Any code you write here will run before the form opens.
+    
+    print(Global.action)
+    user = anvil.users.get_user()
+    if Global.action == "Help Welcome":
+      Global.username = user["email"]
+      Global.name = user["firstname"] + " " + user["lastname"]
+      message = Global.help_introduction.replace("<user>",Global.name)
+      rt = RichText(content=message,format="restricted_html")
+      Global.help_page_form.help_page_text.add_component(rt)
+    
     Global.help_page_form = self
     #rt = RichText(content=Global.help_introduction,format="restricted_html")
     #self.help_page_text.add_component(rt)
