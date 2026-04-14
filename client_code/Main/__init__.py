@@ -263,7 +263,6 @@ class Main(MainTemplate):
       work_area_name = action.split(" ")[0] + " Site User"
       if action.split(" ")[0] != "Insert":
         work_area_name = work_area_name + "s"   
-    
       
     Global.table_name = action.split(" ")[1].lower()
     table_info = [] 
@@ -435,6 +434,7 @@ class Main(MainTemplate):
       #Global.header_work_area_type.text = str(type(Global.work_area[Global.current_work_area_name]["form"])).split(".")[2][:-2]
       #Global.header_work_area_type.enabled = False
       #print(Global.header_work_area_type.text)
+      Global.action_form_type = Global.work_area[work_area_name]["form_type"]
       #Global.action_form_type = Global.header_work_area_type.text.split(".")[2][:-2]
       #Global.action_form_type = Global.header_work_area_type.text
       #
@@ -496,6 +496,11 @@ class Main(MainTemplate):
       else:
         #Global.header_print_button.visible = False   
         self.print.visible = False
+      print(action)
+      print(Global.table_name)
+      print(Global.site_user_role)
+      print(Global.system_user_role)
+      print(Global.role_access.get(Global.site_user_role, {}).get(Global.table_name, {}).get(action.split(" ")[0], False))
       if Global.action_form_type in Global.action_forms_with_download:
         # Make download button visible for Global.action_form_type
         #Global.header_download_button.visible = True
@@ -503,6 +508,8 @@ class Main(MainTemplate):
       else:
         #Global.header_download_button.visible = False
         self.download_csv.visible = False
+      #print(Global.action_form_type)
+      #print(Global.action_forms_with_filter)
       if Global.action_form_type in Global.action_forms_with_filter and Global.work_area[work_area_name]["data_list"]:
         # Make filter button visible for Global.action_form_type if data_list is not empty
         #Global.header_filter_button.visible = True
@@ -510,7 +517,7 @@ class Main(MainTemplate):
       else:
         #Global.header_filter_button.visible = False
         self.filter_cols.visible = False
-
+      #print(self.filter_cols.visible)
       # reset action dropdown list
       #self.action_list.selected_value = None
     else:

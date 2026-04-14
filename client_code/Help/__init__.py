@@ -17,7 +17,7 @@ class Help(HelpTemplate):
     
     # Any code you write here will run before the form opens.
     
-    print(Global.action)
+    #print(Global.action)
     Global.help_page_form = self
     user = anvil.users.get_user()
     if Global.action == "Help Introduction":
