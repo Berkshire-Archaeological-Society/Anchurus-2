@@ -46,12 +46,12 @@ class Main(MainTemplate):
     document.title = Global.system + "-" + Global.organisation
 
     # add Header component (but make it invisible)
-    Global.header = Header()
-    self.add_component(Global.header, slot='header_slot')
-    Global.header.visible = False
+    #Global.header = Header()
+    #self.add_component(Global.header, slot='header_slot')
+    #Global.header.visible = False
     # add Help component (but make it invisible)
-    Global.help_page = Help()
-    self.add_component(Global.help_page, slot='help_slot')
+    #Global.help_page = Help()
+    #self.add_component(Global.help_page, slot='help_slot')
     #Global.help_page.visible = False
 
     # set Main title field with name of organisation (defined in Anchurus-2.cgf file from server)
@@ -145,9 +145,9 @@ class Main(MainTemplate):
     
       # Fill header fields with work_area name and work_area Form name
       # This was for old header, can prob removed
-      Global.header_work_area_name.text = Global.current_work_area_name
-      Global.header_work_area_type.text = str(type(Global.work_area[Global.current_work_area_name]["form"])).split(".")[2][:-2]
-      Global.header_site_name.text = Global.work_area[Global.current_work_area_name]["site_name"]
+      #Global.header_work_area_name.text = Global.current_work_area_name
+      #Global.header_work_area_type.text = str(type(Global.work_area[Global.current_work_area_name]["form"])).split(".")[2][:-2]
+      #Global.header_site_name.text = Global.work_area[Global.current_work_area_name]["site_name"]
 
       # Show work_area and set focus on work_area_name
       Global.work_area[Global.current_work_area_name]["form"].visible = True
@@ -155,7 +155,7 @@ class Main(MainTemplate):
       Global.work_area[Global.current_work_area_name]["button"].background = Global.button_highlight_background_clour
 
       # make old header invisible
-      Global.header.visible = False
+      #Global.header.visible = False
       Global.wa_header_menu_bottom.visible = True
     
       # set menu_select_options as invisible
@@ -203,12 +203,6 @@ class Main(MainTemplate):
       #self.select_all.checked = Global.work_area[Global.current_work_area_name]["self"].select_all.checked
       #self.select_all.indeterminate = Global.work_area[Global.current_work_area_name]["self"].select_all.indeterminate
 
-      # set edit_row and delete_row visibilty that were saved in create workspace
-      self.view_row.visible = Global.work_area[Global.current_work_area_name]["visibility_view_row"]
-      self.edit_row.visible = Global.work_area[Global.current_work_area_name]["visibility_edit_row"]
-      self.delete_row.visible = Global.work_area[Global.current_work_area_name]["visibility_delete_row"] 
-      self.execute_sql.visible = Global.work_area[Global.current_work_area_name]["visibility_execute_sql"] 
-
       # Set selected buttons on Header for work area type
       #print(Global.table_name)
       if Global.action_form_type in Global.action_forms_with_refresh:
@@ -245,13 +239,19 @@ class Main(MainTemplate):
       # be carefull: not all work_ara have the table
       #print(Global.work_area[Global.current_work_area_name]["table"])
 
+      # set edit_row and delete_row visibilty that were saved in create workspace
+      self.view_row.visible = Global.work_area[Global.current_work_area_name]["visibility_view_row"]
+      self.edit_row.visible = Global.work_area[Global.current_work_area_name]["visibility_edit_row"]
+      self.delete_row.visible = Global.work_area[Global.current_work_area_name]["visibility_delete_row"] 
+      self.execute_sql.visible = Global.work_area[Global.current_work_area_name]["visibility_execute_sql"] 
+
   pass
 
   def create_new_work_area(self,action):
     """ This Function is called when a user creates a new work area"""
     #
     # First make sure the old header is invisible
-    Global.header.visible = False
+    #Global.header.visible = False
     Global.wa_header_menu_bottom.visible = True
     Global.action = action
     
@@ -409,7 +409,7 @@ class Main(MainTemplate):
       Global.work_area[work_area_name]["form_type"] = str(type(Global.work_area[work_area_name]["form"])).split(".")[2][:-2]
       #
       Global.work_area[work_area_name]["site_name"] = Global.site_name
-      Global.header_site_name.text = Global.work_area[work_area_name]["site_name"]
+      #Global.header_site_name.text = Global.work_area[work_area_name]["site_name"]
       Global.work_area[work_area_name]["site_id"] = Global.site_id
     
       # set selected rows list to empty
@@ -430,16 +430,16 @@ class Main(MainTemplate):
       Global.work_area[work_area_name]["button"].bold = False
       Global.work_area[work_area_name]["button"].background = Global.button_highlight_background_clour
       #
-      Global.header_work_area_name.text = work_area_name
+      #Global.header_work_area_name.text = work_area_name
       Global.current_work_area_name = work_area_name
-      Global.header_work_area_type.text = str(type(Global.work_area[Global.current_work_area_name]["form"])).split(".")[2][:-2]
-      Global.header_work_area_type.enabled = False
+      #Global.header_work_area_type.text = str(type(Global.work_area[Global.current_work_area_name]["form"])).split(".")[2][:-2]
+      #Global.header_work_area_type.enabled = False
       #print(Global.header_work_area_type.text)
       #Global.action_form_type = Global.header_work_area_type.text.split(".")[2][:-2]
-      Global.action_form_type = Global.header_work_area_type.text
+      #Global.action_form_type = Global.header_work_area_type.text
       #
       # Only show page controls for List Table action
-      if Global.work_area[Global.current_work_area_name]["action"].split(" ")[0] in ["View", "Edit", "Insert", "Add", "Import"] or Global.work_area[Global.current_work_area_name]["action"] == "List Users":
+      if Global.work_area[Global.current_work_area_name]["action"].split(" ")[0] in ["View", "Edit", "Insert", "Add", "Import","Help"] or Global.work_area[Global.current_work_area_name]["action"] in ["List Users"]:
       #if Global.work_area[Global.current_work_area_name]["action"].split(" ")[0] in ["View", "Edit", "Insert", "Add", "Import"]:
         self.mb_middle.visible = False
         self.mb_left.visible = False
@@ -478,7 +478,7 @@ class Main(MainTemplate):
       Global.work_area[Global.current_work_area_name]["visibility_execute_sql"] = self.execute_sql.visible
 
       # Set selected buttons on Header for work area type
-      Global.action_form_type = Global.header_work_area_type.text
+      #Global.action_form_type = Global.header_work_area_type.text
       #print(Global.action_form_type)
       if Global.action_form_type in Global.action_forms_with_refresh:
         # make Refresh button visible if action_form_type has refresh function (i.e. in list Global.action_forms_with_refresh) 

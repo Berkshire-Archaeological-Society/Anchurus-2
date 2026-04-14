@@ -93,9 +93,9 @@ def delete_workspace(work_area_name):
   # now remove (pop) the work_area_name from lists
   Global.work_area.pop(work_area_name)
   # clear header and make it invisible
-  Global.header_work_area_name.text = ""
-  Global.header_work_area_type.text = ""
-  Global.header.visible = False
+  #Global.header_work_area_name.text = ""
+  #Global.header_work_area_type.text = ""
+  #Global.header.visible = False
   Global.main_form.menu_bottom.visible = False
   return
 

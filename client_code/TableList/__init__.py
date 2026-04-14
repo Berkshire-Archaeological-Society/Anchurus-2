@@ -135,7 +135,7 @@ class TableList(TableListTemplate):
     # Set Form properties and Data Bindings.
     self.init_components(**properties)
     # make old headers invisible
-    Global.header.visible = False
+    #Global.header.visible = False
     #self.column_panel_1.visible = False
     #
     self.repeating_panel_1.set_event_handler('x-selection-change', self.selection_change)
