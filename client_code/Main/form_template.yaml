@@ -530,7 +530,7 @@ components:
           spacing_above: none
           spacing_below: none
           text: ''
-          tooltip: close work area
+          tooltip: close workspace
         type: Button
       layout_properties: {full_width_row: true, grid_position: 'CNBXKD,HLMPXY'}
       name: mb_right
