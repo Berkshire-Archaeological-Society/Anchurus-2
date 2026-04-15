@@ -500,7 +500,7 @@ class Main(MainTemplate):
       print(Global.table_name)
       print(Global.site_user_role)
       print(Global.system_user_role)
-      print(Global.role_access.get(Global.site_user_role, {}).get(Global.table_name, {}).get(action.split(" ")[0], False))
+      print(Global.role_access.get(Global.site_user_role, {}).get(Global.table_name, {}).get(action.split(" ")[0], None))
       if Global.action_form_type in Global.action_forms_with_download:
         # Make download button visible for Global.action_form_type
         #Global.header_download_button.visible = True
@@ -666,6 +666,7 @@ class Main(MainTemplate):
       temp_work_area_name_list = list(Global.work_area.keys())
       for work_area_name in temp_work_area_name_list:
         Function.delete_workspace(work_area_name)
+        
       self.menu_bottom.visible = False
       self.site_summary.visible = False
       Global.action_seq_no = {}
@@ -691,7 +692,19 @@ class Main(MainTemplate):
           options = Global.site_leader_action_dropdown + Global.site_admin_action_dropdown
           self.admin_dropdown.items = options
           self.admin_dropdown.visible = True
-          
+
+        # Check role and set Query Dropdown list
+        print(Global.role_access.get(Global.site_user_role, {}).get("query", {}).get("List", None))
+        print(Global.role_access.get(Global.site_user_role, {}).get("query", {}).get("View", None))
+        print(Global.role_access.get(Global.site_user_role, {}).get("query", {}).get("Edit", None))
+        print(Global.role_access.get(Global.site_user_role, {}).get("query", {}).get("Insert", None))
+        print(Global.role_access.get(Global.site_user_role, {}).get("query", {}).get("Import", None))
+        print(Global.role_access.get(Global.site_user_role, {}).get("query", {}).get("Export", None))
+        print(Global.role_access.get(Global.site_user_role, {}).get("query", {}).get("Delete", None))
+
+        #if 
+        #    self.query_dropdown.items = Global.query_action_dropdown
+        
         Global.site_name = self.select_site_dropdown.selected_value
         Global.site_id = Global.site_options[self.select_site_dropdown.selected_value]
         Global.selected_site = ": " + Global.site_name
