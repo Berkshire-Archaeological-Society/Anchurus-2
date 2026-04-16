@@ -146,6 +146,7 @@ class TableList(TableListTemplate):
     if Global.table_name != "qresult":
       self.title.text = anvil.server.call("db_table_comment", Global.table_name)
     else:
+      print(Global.work_area[Global.current_work_area_name].keys())
       qname = next((str(item[1]['field'].text) for item in list(Global.query_info) if item[0] == "QueryName"),"")
       qwhat = next((str(item[1]['field'].text) for item in list(Global.query_info) if item[0] == "WhatItDoes"),"")
       if qname == "":
@@ -170,18 +171,7 @@ class TableList(TableListTemplate):
     # add table to work_area data structure for Global.current_work_area_name
     Global.work_area[Global.current_work_area_name]["table"] = self.table
 
-    #
-    table = Global.table_name
-    if Global.table_name[0:2] == Global.prefix_special_finds_table:
-      table = "fs tables"
-    role = "System Administrator"
-    if Global.system_user_role == "Site User":
-      role = Global.site_user_role
-    #print(role)
-    Global.main_form.edit_row.visible = Global.role_access.get(role, {}).get(table, {}).get("Edit", None)
-    Global.main_form.delete_row.visible = Global.role_access.get(role, {}).get(table, {}).get("Delete", None)
-    print("set edit_row: " + str(Global.main_form.edit_row.visible))
-    
+
     # Extract the columns names from the table_info
     # Frist column if for Select
     # The DESCRIBE result structure is:

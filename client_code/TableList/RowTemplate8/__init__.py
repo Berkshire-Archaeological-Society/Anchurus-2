@@ -68,6 +68,7 @@ class RowTemplate8(RowTemplate8Template):
     #print(Global.work_area[Global.current_work_area_name]["self"].repeating_panel_1.items)
     # Iterate through the columns and create a Label for each  
     columns = Global.work_area[Global.current_work_area_name]["table"].columns
+    #print(Global.current_work_area_name)
     #print(columns)
     for col in columns:
       col_name = col['data_key']

@@ -162,6 +162,7 @@ def restore_workareas():
         #print("In restore")
         #print(Global.table_items)
         #print("now calling create_new_work_area")
+        
       Global.main_form.create_new_work_area(row["workarea_dict"][workarea]["action"])
     Global.restore_workarea_name = ""
   return

@@ -246,6 +246,19 @@ class Main(MainTemplate):
       self.delete_row.visible = Global.work_area[Global.current_work_area_name]["visibility_delete_row"] 
       self.execute_sql.visible = Global.work_area[Global.current_work_area_name]["visibility_execute_sql"] 
 
+      #
+      table = Global.table_name
+      if Global.table_name[0:2] == Global.prefix_special_finds_table:
+        table = "fs tables"
+      role = "System Administrator"
+      if Global.system_user_role == "Site User":
+        role = Global.site_user_role
+      #print(role)
+      self.edit_row.visible = Global.role_access.get(role, {}).get(table, {}).get("Edit", None)
+      self.delete_row.visible = Global.role_access.get(role, {}).get(table, {}).get("Delete", None)
+      print("set edit_row: " + str(self.edit_row.visible))
+
+  
   pass
 
   def create_new_work_area(self,action):
@@ -478,6 +491,18 @@ class Main(MainTemplate):
         self.delete_row.visible = False
         self.execute_sql.visible = False
 
+      #
+      table = Global.table_name
+      if Global.table_name[0:2] == Global.prefix_special_finds_table:
+        table = "fs tables"
+      role = "System Administrator"
+      if Global.system_user_role == "Site User":
+        role = Global.site_user_role
+      #print(role)
+      self.edit_row.visible = Global.role_access.get(role, {}).get(table, {}).get("Edit", None)
+      self.delete_row.visible = Global.role_access.get(role, {}).get(table, {}).get("Delete", None)
+      print("set edit_row: " + str(self.edit_row.visible))
+      
       # safe edit_row and delete_row visibilty so that at click woekspace they can be set
       Global.work_area[Global.current_work_area_name]["visibility_view_row"] = self.view_row.visible
       Global.work_area[Global.current_work_area_name]["visibility_edit_row"] = self.edit_row.visible
@@ -1245,6 +1270,8 @@ class Main(MainTemplate):
         work_area_dict[work_area_name]["site_name"] = Global.work_area[work_area_name]["site_name"]
         work_area_dict[work_area_name]["table_info"] = Global.work_area[work_area_name]["table_info"]
         work_area_dict[work_area_name]["form_type"] = Global.work_area[work_area_name]["form_type"]
+        if Global.work_area[work_area_name].get("query_info"):
+          work_area_dict[work_area_name]["query_info"] = Global.work_area[work_area_name]["query_info"]
         #print(work_area_name)
         #print(Global.work_area[work_area_name]["form_type"])
         if Global.work_area[work_area_name]["form_type"] == "RowForm":
