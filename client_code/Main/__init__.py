@@ -251,6 +251,7 @@ class Main(MainTemplate):
     """ This Function is called when a user creates a new work area"""
     #
     # First make sure the old header is invisible
+    print("In create_new_work_area")
     #Global.header.visible = False
     Global.wa_header_menu_bottom.visible = True
     Global.action = action
@@ -496,11 +497,9 @@ class Main(MainTemplate):
       else:
         #Global.header_print_button.visible = False   
         self.print.visible = False
-      print(action)
-      print(Global.table_name)
-      print(Global.site_user_role)
-      print(Global.system_user_role)
-      print(Global.role_access.get(Global.site_user_role, {}).get(Global.table_name, {}).get(action.split(" ")[0], None))
+
+      Function.set_allowed_actions()
+      
       if Global.action_form_type in Global.action_forms_with_download:
         # Make download button visible for Global.action_form_type
         #Global.header_download_button.visible = True
@@ -555,7 +554,8 @@ class Main(MainTemplate):
       user = anvil.users.get_user()
       Global.system_user_role = user["systemrole"]
       self.user_role.text = Global.system_user_role
-
+      print(Global.system_user_role)
+      
       # make menu bar variable visible
       self.menu_block.visible = True
       self.menu_top.visible = True

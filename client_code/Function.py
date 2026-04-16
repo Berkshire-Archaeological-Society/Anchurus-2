@@ -136,6 +136,17 @@ def format_cell_text(text, max_chars=100):
 
   return text_to_process
 
+def set_allowed_actions():
+  # this function will set the buttons visible/invisible in the current workspace based on the access permissions on the user role for this site 
+  print("In set_allowed_actions")
+  print("Global.action: " + Global.action)
+  print("Global.current_work_area_name: " + Global.current_work_area_name)
+  print("Global.table_name: " + Global.table_name)
+  print("Global.site_user_role: " + Global.site_user_role)
+  print("Global.system_user_role: " + Global.system_user_role)
+  print("Permission: " + str(Global.role_access.get(Global.site_user_role, {}).get(Global.table_name, {}).get(Global.action.split(" ")[0], None)))
+  return
+
 def restore_workareas():
   # look for saved_workareas
   name = "Saved_areas " + Global.site_id
