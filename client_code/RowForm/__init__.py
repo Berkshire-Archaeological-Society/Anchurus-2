@@ -361,7 +361,8 @@ class RowForm(RowFormTemplate):
   def execute_sql_btn_click(self, **event_args):
     #print("Execute SQL command button pressed")
     formfields = self.form_fields.items()
-    #print(list(formfields)[7])
+    for col in formfields:
+      print(col)
     # SQL_Command is a <class 'anvil_extras.Quill.Quill'> object as it is a text datatype so needs to get the test with the Quill method getText()
     Global.query_info = formfields
     Global.query_id = next((str(item[1]['field'].text) for item in list(formfields) if item[0] == "QueryId"),0)
