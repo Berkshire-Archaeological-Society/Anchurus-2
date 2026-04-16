@@ -456,11 +456,11 @@ class Main(MainTemplate):
       self.view_row.visible = True
       self.edit_row.visible = True if Global.site_user_role in ["Editor","Manager", "Site Leader"] or Global.system_user_role == "System Administrator" else False
       self.delete_row.visible = True if Global.site_user_role in ["Manager","Site Leader"] or Global.system_user_role == "System Administrator" else False
-      #if Global.table_name == "query":
-      #  self.execute_sql.visible = True if Global.site_user_role in ["Manager", "Site Leader"] or Global.system_user_role == "System Administrator" else False
-      #else:
-      #  self.execute_sql.visible = False
-      self.execute_sql.visible = True
+      if Global.table_name == "query":
+        self.execute_sql.visible = True #if Global.site_user_role in ["Manager", "Site Leader"] or Global.system_user_role == "System Administrator" else False
+      else:
+        self.execute_sql.visible = False
+      #self.execute_sql.visible = True
       
       # for table dbdiary disable edit_row and delete_row button
       if Global.table_name == "dbdiary":
@@ -719,7 +719,7 @@ class Main(MainTemplate):
           self.insert_dropdown.visible = True 
           self.query_dropdown.visible = True 
           self.delete_row.visible = True
-          self.execute_sql.visible = True
+          self.execute_sql.visible = False
           self.import_dropdown.visible = True
         elif Global.site_user_role in ["Editor"]:
           self.list_dropdown.visible = True
@@ -728,7 +728,7 @@ class Main(MainTemplate):
           self.insert_dropdown.visible = True 
           self.query_dropdown.visible = True 
           self.delete_row.visible = False
-          self.execute_sql.visible = True
+          self.execute_sql.visible = False
           self.import_dropdown.visible = False
         elif Global.site_user_role in ["Viewer"]:
           self.list_dropdown.visible = True
@@ -737,7 +737,7 @@ class Main(MainTemplate):
           self.insert_dropdown.visible = False
           self.query_dropdown.visible = True 
           self.delete_row.visible = False
-          self.execute_sql.visible = True
+          self.execute_sql.visible = False
           self.import_dropdown.visible = False
         else:
           # unknown role
