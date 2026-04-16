@@ -308,7 +308,7 @@ class Main(MainTemplate):
         # trying to make a work_area_name suitabe for action and table (i.e. (List |[E|V]-|Insert )<table_name> <main-pri_id>)
         # add first Primary Key ID field when view or edit
         primary_key_list = []
-        print(action)
+        #print(action)
         if action.split(" ")[1].lower() == "dbdiary":
           primary_key_list.append("DBAcontrol")
         elif action.split(" ")[1].lower() == "users":
@@ -544,7 +544,7 @@ class Main(MainTemplate):
       user = anvil.users.get_user()
       Global.system_user_role = user["systemrole"]
       self.user_role.text = Global.system_user_role
-      print(Global.system_user_role)
+      #print(Global.system_user_role)
       
       # when user is logged in, enable Action menu, username field and logout button, and disable content panel (welcome message)
       # also set username  to user email address
@@ -1275,7 +1275,6 @@ class Main(MainTemplate):
   @handle("execute_sql", "click")
   def execute_sql_click(self, **event_args):
     """This method is called when the button is clicked"""
-    print("In execute_sql in main")
     for row in Global.work_area[Global.current_work_area_name]["selected_rows"]:
       # loop through all selected rows
       Global.table_items = row

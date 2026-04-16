@@ -24,8 +24,8 @@ class ListUsers(ListUsersTemplate):
     self.init_components(**properties)
     # Any code you write here will run before the form opens.
     #print("in ListUsers")
-    Global.help_page.visible = False
-    Global.header.visible = False
+    #Global.help_page.visible = False
+    #Global.header.visible = False
     Global.main_form.menu_bottom.visible = True
     #Global.main_form.mb_left.visible = False
     #Global.main_form.mb_middle.visible = False
