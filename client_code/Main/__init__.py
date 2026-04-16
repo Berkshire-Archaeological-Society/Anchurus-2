@@ -251,9 +251,9 @@ class Main(MainTemplate):
     """ This Function is called when a user creates a new work area"""
     #
     # First make sure the old header is invisible
-    print("In create_new_work_area")
-    print("Global.site_user_role: " + Global.site_user_role)
-    print("Global.system_user_role: " + Global.system_user_role)
+    #print("In create_new_work_area")
+    #print("Global.site_user_role: " + Global.site_user_role)
+    #print("Global.system_user_role: " + Global.system_user_role)
     #Global.header.visible = False
     Global.wa_header_menu_bottom.visible = True
     Global.action = action
@@ -308,11 +308,13 @@ class Main(MainTemplate):
         # trying to make a work_area_name suitabe for action and table (i.e. (List |[E|V]-|Insert )<table_name> <main-pri_id>)
         # add first Primary Key ID field when view or edit
         primary_key_list = []
-      
+        print(action)
         if action.split(" ")[1].lower() == "dbdiary":
           primary_key_list.append("DBAcontrol")
         elif action.split(" ")[1].lower() == "users":
           primary_key_list.append("email")
+        #elif action.split(" ")[1].lower() == "qresult":
+        #  primary_key_list.append("QueryId")
         else:
           for column in table_info:
             if column["COLUMN_KEY"] == "PRI":
@@ -328,10 +330,11 @@ class Main(MainTemplate):
             work_area_name = work_area_name + action.split(" ")[1][-8:]
           else:
             work_area_name = work_area_name + action.split(" ")[1]
-          if len(primary_key_list) == 1:
-            work_area_name = work_area_name + " " + Global.table_items[primary_key_list[0]]
-          else:
-            work_area_name = work_area_name + " " + Global.table_items[primary_key_list[1]]
+          if len(primary_key_list) > 0:
+            if len(primary_key_list) == 1:
+              work_area_name = work_area_name + " " + Global.table_items[primary_key_list[0]]
+            else:
+              work_area_name = work_area_name + " " + Global.table_items[primary_key_list[1]]
       # for List Qresult we add the QueryId
       if action in ["List Qresult","List qresult","View Query","Edit Query"]:
         # problem with restore workarea
@@ -460,7 +463,6 @@ class Main(MainTemplate):
         self.execute_sql.visible = True #if Global.site_user_role in ["Manager", "Site Leader"] or Global.system_user_role == "System Administrator" else False
       else:
         self.execute_sql.visible = False
-      #self.execute_sql.visible = True
       
       # for table dbdiary disable edit_row and delete_row button
       if Global.table_name == "dbdiary":
@@ -473,7 +475,7 @@ class Main(MainTemplate):
         self.view_row.visible = True
         self.edit_row.visible = False
         self.delete_row.visible = False
-        self.execute_sql.visible = True
+        self.execute_sql.visible = False
 
       # safe edit_row and delete_row visibilty so that at click woekspace they can be set
       Global.work_area[Global.current_work_area_name]["visibility_view_row"] = self.view_row.visible
