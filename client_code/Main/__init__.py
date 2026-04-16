@@ -1275,6 +1275,7 @@ class Main(MainTemplate):
   @handle("execute_sql", "click")
   def execute_sql_click(self, **event_args):
     """This method is called when the button is clicked"""
+    print("In execute_sql in main")
     for row in Global.work_area[Global.current_work_area_name]["selected_rows"]:
       # loop through all selected rows
       Global.table_items = row
