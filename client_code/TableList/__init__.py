@@ -147,8 +147,8 @@ class TableList(TableListTemplate):
       self.title.text = anvil.server.call("db_table_comment", Global.table_name)
     else:
       print(Global.query_info)
-      print(Global.query_info["QueryName"])
-      print(Global.query_info["WhatItDoes"])
+      #print(Global.query_info["QueryName"])
+      #print(Global.query_info["WhatItDoes"])
       qname = next((str(item[1]['field'].text) for item in list(Global.query_info) if item[0] == "QueryName"),0)
       qwhat = next((str(item[1]['field'].text) for item in list(Global.query_info) if item[0] == "WhatItDoes"),0)
       #self.title.text = str(qname) + " - " + str(qwhat)
