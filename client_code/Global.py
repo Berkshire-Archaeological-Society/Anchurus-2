@@ -136,12 +136,12 @@ role_access = {
   'group':           {'List': True,  'View': True,  'Edit': True,  'Insert': True,  'Import': True,  'Export': True,  'Delete': False},
   'set':             {'List': True,  'View': True,  'Edit': True,  'Insert': True,  'Import': True,  'Export': True,  'Delete': False},
   'interpretation':  {'List': True,  'View': True,  'Edit': True,  'Insert': True,  'Import': True,  'Export': True,  'Delete': False},
-  'query':           {'List': True,  'View': True,  'Edit': True,  'Insert': True,  'Import': True,  'Export': True,  'Delete': False},
+  'query':           {'List': True,  'View': True,  'Edit': False, 'Insert': False, 'Import': False, 'Export': False, 'Delete': False},
   'site':            {'List': False, 'View': False, 'Edit': False, 'Insert': False, 'Import': False, 'Export': False, 'Delete': False},
   'siteuser':        {'List': False, 'View': False, 'Edit': False, 'Insert': False, 'Import': False, 'Export': False, 'Delete': False},
   'userrole':        {'List': False, 'View': False, 'Edit': False, 'Insert': False, 'Import': False, 'Export': False, 'Delete': False},
   'dbdiary':         {'List': False, 'View': False, 'Edit': False, 'Insert': False, 'Import': False, 'Export': False, 'Delete': False},
-  'users':           {'List': False, 'View': False, 'Edit': False,' Insert': False, 'Import': False, 'Export': False, 'Delete': False}
+  'users':           {'List': False, 'View': False, 'Edit': False, 'Insert': False, 'Import': False, 'Export': False, 'Delete': False}
   } ,
 'Site Leader': {
   'anomaly':         {'List': True, 'View': True, 'Edit': True,  'Insert': True,  'Import': True,  'Export': True,  'Delete': True},
@@ -157,7 +157,7 @@ role_access = {
   'group':           {'List': True, 'View': True, 'Edit': True,  'Insert': True,  'Import': True,  'Export': True,  'Delete': True},
   'set':             {'List': True, 'View': True, 'Edit': True,  'Insert': True,  'Import': True,  'Export': True,  'Delete': True},
   'interpretation':  {'List': True, 'View': True, 'Edit': True,  'Insert': True,  'Import': True,  'Export': True,  'Delete': True},
-  'query':           {'List': True, 'View': True, 'Edit': False, 'Insert': False, 'Import': False, 'Export': False, 'Delete': False},
+  'query':           {'List': True, 'View': True, 'Edit': True,  'Insert': True,  'Import': True,  'Export': True,  'Delete': False},
   'site':            {'List': True, 'View': True, 'Edit': True,  'Insert': False, 'Import': False, 'Export': True,  'Delete': False},
   'siteuser':        {'List': True, 'View': True, 'Edit': True,  'Insert': True,  'Import': True,  'Export': True,  'Delete': True},
   'userrole':        {'List': True, 'View': True, 'Edit': True,  'Insert': True,  'Import': True,  'Export': True,  'Delete': True},
@@ -278,6 +278,7 @@ site_options = {}
 site_items = {}
 select_site_dropdown = {}
 header_site_summary_information = {}
+prefix_special_finds_table = ""
 system_name = ""
 SurveyMethod_options = {"BNG","Aligned to BNG north","Not aligned to BNG north"}
 system = "Anchurus-II Web Application"

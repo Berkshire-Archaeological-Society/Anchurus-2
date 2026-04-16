@@ -39,6 +39,7 @@ class Main(MainTemplate):
     Global.admin_domain = globals_from_config["admin_domain"]
     Global.admin_user = globals_from_config["admin_user"]
     Global.admin_user_initials = globals_from_config["admin_user_initials"]
+    Global.prefix_special_finds_table = globals_from_config["prefix_special_finds_table"]
 
     Global.selected_highlight_colour = globals_from_config["highlight_colour"]
     
@@ -696,6 +697,7 @@ class Main(MainTemplate):
         role = "System Administrator"
         if Global.system_user_role == "Site User":
           role = Global.site_user_role
+        #print(role)
         if Global.role_access.get(role, {}).get("query", {}).get("List", None):
           Global.query_action_dropdown.append(("List Query","List query"))
         if Global.role_access.get(role, {}).get("query", {}).get("Insert", None):
