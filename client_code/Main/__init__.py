@@ -252,6 +252,8 @@ class Main(MainTemplate):
     #
     # First make sure the old header is invisible
     print("In create_new_work_area")
+    print("Global.site_user_role: " + Global.site_user_role)
+    print("Global.system_user_role: " + Global.system_user_role)
     #Global.header.visible = False
     Global.wa_header_menu_bottom.visible = True
     Global.action = action
@@ -534,6 +536,12 @@ class Main(MainTemplate):
     if user is not None:
       # make welcome block of Main form invisible
       self.welcome_page.visible = False
+
+      # if user has system admin role, add system admin actions list and set it visible
+      user = anvil.users.get_user()
+      Global.system_user_role = user["systemrole"]
+      self.user_role.text = Global.system_user_role
+      print(Global.system_user_role)
       
       # when user is logged in, enable Action menu, username field and logout button, and disable content panel (welcome message)
       # also set username  to user email address
@@ -549,12 +557,6 @@ class Main(MainTemplate):
 
       # notify server side of login
       Global.ip_address = anvil.server.call("user_authentication")
-      
-      # if user has system admin role, add system admin actions list and set it visible
-      user = anvil.users.get_user()
-      Global.system_user_role = user["systemrole"]
-      self.user_role.text = Global.system_user_role
-      print(Global.system_user_role)
       
       # make menu bar variable visible
       self.menu_block.visible = True
@@ -654,13 +656,7 @@ class Main(MainTemplate):
       db_summary = anvil.server.call("db_get_summary",Global.site_id)
       self.site_summary.visible = True
       self.site_summary.items = db_summary
-      
-      #
-      self.menu_middle.visible = True
-      self.mm_left.visible = True
-      self.mm_middle.visible = True
-      self.mm_right.visible = True
-      #Global.help_page.visible = True
+
 
       #delete all work_areas and all work_area names/buttons
       temp_work_area_name_list = list(Global.work_area.keys())
@@ -714,12 +710,7 @@ class Main(MainTemplate):
         db_summary = anvil.server.call("db_get_summary",Global.site_id)
         self.site_summary.visible = True
         self.site_summary.items = db_summary
-  
-        #
-        self.menu_middle.visible = True
-        self.mm_left.visible = True
-        self.mm_middle.visible = True
-        self.mm_right.visible = True
+
         if Global.site_user_role in ["Manager","Site Leader"] or Global.system_user_role == "System Administrator":
           self.list_dropdown.visible = True
           self.view_row.visible = True        
@@ -773,6 +764,10 @@ class Main(MainTemplate):
         n = Notification(msg)
         n.show()
       #
+      self.menu_middle.visible = True
+      self.mm_left.visible = True
+      self.mm_middle.visible = True
+      self.mm_right.visible = True     
       Function.restore_workareas()
     else:
       self.select_site_dropdown.selected_value = None
