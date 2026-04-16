@@ -657,7 +657,6 @@ class Main(MainTemplate):
       self.site_summary.visible = True
       self.site_summary.items = db_summary
 
-
       #delete all work_areas and all work_area names/buttons
       temp_work_area_name_list = list(Global.work_area.keys())
       for work_area_name in temp_work_area_name_list:
@@ -689,17 +688,14 @@ class Main(MainTemplate):
           self.admin_dropdown.items = options
           self.admin_dropdown.visible = True
 
-        # Check role and set Query Dropdown list
-        print(Global.role_access.get(Global.site_user_role, {}).get("query", {}).get("List", None))
-        print(Global.role_access.get(Global.site_user_role, {}).get("query", {}).get("View", None))
-        print(Global.role_access.get(Global.site_user_role, {}).get("query", {}).get("Edit", None))
-        print(Global.role_access.get(Global.site_user_role, {}).get("query", {}).get("Insert", None))
-        print(Global.role_access.get(Global.site_user_role, {}).get("query", {}).get("Import", None))
-        print(Global.role_access.get(Global.site_user_role, {}).get("query", {}).get("Export", None))
-        print(Global.role_access.get(Global.site_user_role, {}).get("query", {}).get("Delete", None))
-
-        #if 
-        #    self.query_dropdown.items = Global.query_action_dropdown
+        # Check permissions and build Query Dropdown list
+        Global.query_action_dropdown = []
+        if Global.role_access.get(Global.site_user_role, {}).get("query", {}).get("List", None):
+          Global.query_action_dropdown.append(("List Query","List query"))
+        if Global.role_access.get(Global.site_user_role, {}).get("query", {}).get("Insert", None):
+          Global.query_action_dropdown.append(("Insert Query","Insert query"))
+        if Global.role_access.get(Global.site_user_role, {}).get("query", {}).get("Import", None):
+          Global.query_action_dropdown.append(("Import Query ","Import query"))
         
         Global.site_name = self.select_site_dropdown.selected_value
         Global.site_id = Global.site_options[self.select_site_dropdown.selected_value]
@@ -725,7 +721,7 @@ class Main(MainTemplate):
           self.view_row.visible = True        
           self.edit_row.visible = True
           self.insert_dropdown.visible = True 
-          self.query_dropdown.visible = False 
+          self.query_dropdown.visible = True 
           self.delete_row.visible = False
           self.execute_sql.visible = False
           self.import_dropdown.visible = False
@@ -734,7 +730,7 @@ class Main(MainTemplate):
           self.view_row.visible = True
           self.edit_row.visible = False
           self.insert_dropdown.visible = False
-          self.query_dropdown.visible = False 
+          self.query_dropdown.visible = True 
           self.delete_row.visible = False
           self.execute_sql.visible = False
           self.import_dropdown.visible = False
