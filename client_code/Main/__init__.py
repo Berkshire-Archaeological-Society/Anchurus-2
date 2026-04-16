@@ -82,7 +82,7 @@ class Main(MainTemplate):
     self.insert_dropdown.items = Global.insert_action_dropdown
     self.list_dropdown.items = Global.list_action_dropdown
     self.admin_dropdown.items = Global.sys_admin_action_dropdown
-    self.query_dropdown.items = Global.query_action_dropdown
+    #self.query_dropdown.items = Global.query_action_dropdown
     #self.file_dropdown.items = Global.file_list
     #self.view_dropdown.items = Global.view_action_dropdown
     self.help_dropdown.items = Global.help_action_dropdown
@@ -456,11 +456,12 @@ class Main(MainTemplate):
       self.view_row.visible = True
       self.edit_row.visible = True if Global.site_user_role in ["Editor","Manager", "Site Leader"] or Global.system_user_role == "System Administrator" else False
       self.delete_row.visible = True if Global.site_user_role in ["Manager","Site Leader"] or Global.system_user_role == "System Administrator" else False
-      if Global.table_name == "query":
-        self.execute_sql.visible = True if Global.site_user_role in ["Manager", "Site Leader"] or Global.system_user_role == "System Administrator" else False
-      else:
-        self.execute_sql.visible = False
-
+      #if Global.table_name == "query":
+      #  self.execute_sql.visible = True if Global.site_user_role in ["Manager", "Site Leader"] or Global.system_user_role == "System Administrator" else False
+      #else:
+      #  self.execute_sql.visible = False
+      self.execute_sql.visible = True
+      
       # for table dbdiary disable edit_row and delete_row button
       if Global.table_name == "dbdiary":
         self.view_row.visible = True
@@ -472,7 +473,7 @@ class Main(MainTemplate):
         self.view_row.visible = True
         self.edit_row.visible = False
         self.delete_row.visible = False
-        self.execute_sql.visible = False
+        self.execute_sql.visible = True
 
       # safe edit_row and delete_row visibilty so that at click woekspace they can be set
       Global.work_area[Global.current_work_area_name]["visibility_view_row"] = self.view_row.visible
@@ -690,12 +691,16 @@ class Main(MainTemplate):
 
         # Check permissions and build Query Dropdown list
         Global.query_action_dropdown = []
-        if Global.role_access.get(Global.site_user_role, {}).get("query", {}).get("List", None):
+        role = "System Administrator"
+        if Global.system_user_role == "Site User":
+          role = Global.site_user_role
+        if Global.role_access.get(role, {}).get("query", {}).get("List", None):
           Global.query_action_dropdown.append(("List Query","List query"))
-        if Global.role_access.get(Global.site_user_role, {}).get("query", {}).get("Insert", None):
+        if Global.role_access.get(role, {}).get("query", {}).get("Insert", None):
           Global.query_action_dropdown.append(("Insert Query","Insert query"))
-        if Global.role_access.get(Global.site_user_role, {}).get("query", {}).get("Import", None):
+        if Global.role_access.get(role, {}).get("query", {}).get("Import", None):
           Global.query_action_dropdown.append(("Import Query ","Import query"))
+        self.query_dropdown.items = Global.query_action_dropdown
         
         Global.site_name = self.select_site_dropdown.selected_value
         Global.site_id = Global.site_options[self.select_site_dropdown.selected_value]
@@ -723,7 +728,7 @@ class Main(MainTemplate):
           self.insert_dropdown.visible = True 
           self.query_dropdown.visible = True 
           self.delete_row.visible = False
-          self.execute_sql.visible = False
+          self.execute_sql.visible = True
           self.import_dropdown.visible = False
         elif Global.site_user_role in ["Viewer"]:
           self.list_dropdown.visible = True
@@ -732,7 +737,7 @@ class Main(MainTemplate):
           self.insert_dropdown.visible = False
           self.query_dropdown.visible = True 
           self.delete_row.visible = False
-          self.execute_sql.visible = False
+          self.execute_sql.visible = True
           self.import_dropdown.visible = False
         else:
           # unknown role
