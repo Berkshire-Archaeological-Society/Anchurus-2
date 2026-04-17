@@ -354,6 +354,7 @@ class Main(MainTemplate):
             else:
               work_area_name = work_area_name + " " + Global.table_items[primary_key_list[1]]
       # for List Qresult we add the QueryId
+      print("in creating work area name, checking QueryId "+Global.query_id)
       if action in ["List Qresult","List qresult","View Query","Edit Query"]:
         # problem with restore workarea
         if action.split(" ")[0] in ["View", "Edit"]:
@@ -1277,6 +1278,7 @@ class Main(MainTemplate):
         work_area_dict[work_area_name]["site_id"] = Global.work_area[work_area_name]["site_id"]
         work_area_dict[work_area_name]["site_name"] = Global.work_area[work_area_name]["site_name"]
         work_area_dict[work_area_name]["table_info"] = Global.work_area[work_area_name]["table_info"]
+        work_area_dict[work_area_name]["data_list"] = Global.work_area[work_area_name]["data_list"]
         print("In Save workarea environment. table_info is " + str(Global.work_area[work_area_name]["table_info"]))
         work_area_dict[work_area_name]["form_type"] = Global.work_area[work_area_name]["form_type"]
         if Global.work_area[work_area_name].get("query_info"):

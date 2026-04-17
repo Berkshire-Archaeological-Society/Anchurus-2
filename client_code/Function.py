@@ -155,6 +155,7 @@ def restore_workareas():
     for workarea in row["workarea_dict"].keys():
       print("in restore_workares: "+row["workarea_dict"][workarea]["action"])
       Global.restore_workarea_name = workarea
+      Global.table_items = row["workarea_dict"][workarea]["data_list"]
       #print (workarea)
       if row["workarea_dict"][workarea]["form_type"] == "RowForm":
         # set Global.table_items if the from_type == RowForm (View, Edit of a row) and data_list should have only one row
