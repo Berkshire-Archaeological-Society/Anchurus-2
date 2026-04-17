@@ -296,6 +296,7 @@ class Main(MainTemplate):
         Global.query_view = True
         # Build the table_info structure froom the "describe table_info" from the execute_sql_command call saved in Global.tmp_table_info
         tmp_table_info = []
+        print(Global.column_order)
         for col in Global.column_order:
           # loop through columns of first row table_item
           #print(col)
@@ -383,7 +384,7 @@ class Main(MainTemplate):
     
     # save table_info in work_area structure
     Global.work_area[work_area_name]["table_info"] = table_info
-    
+    Global.work_area[work_area_name]["column_order"] = Global.column_order
     # save the query_info (row selected with the QueryId)
     Global.work_area[Global.current_work_area_name]["query_info"] = Global.query_info
     
@@ -1276,6 +1277,9 @@ class Main(MainTemplate):
         if Global.work_area[work_area_name].get("query_info"):
           print("In Save workarea environment. Query_info is " + str(Global.query_info))
           work_area_dict[work_area_name]["query_info"] = Global.work_area[work_area_name]["query_info"]
+        if Global.work_area[work_area_name].get("column_order"):
+          work_area_dict[work_area_name]["column_order"] =  Global.work_area[work_area_name]["column_order"] 
+                
         #print(work_area_name)
         #print(Global.work_area[work_area_name]["form_type"])
         if Global.work_area[work_area_name]["form_type"] == "RowForm":
