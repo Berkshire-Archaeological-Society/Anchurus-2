@@ -167,8 +167,8 @@ def restore_workareas():
         print("In restore: query_info is " + str(Global.query_info))
       if row["workarea_dict"][workarea].get("column_order") is not None:
         Global.column_order = row["workarea_dict"][workarea]["column_order"]
-      if row["workarea_dict"][workarea].get("table_info") is not None:
-        Global.tmp_table_info = row["workarea_dict"][workarea]["table_info"]  
+      if row["workarea_dict"][workarea].get("tmp_table_info") is not None:
+        Global.tmp_table_info = row["workarea_dict"][workarea]["tmp_table_info"]  
         print("In restore: tmp_table_info is " + str(Global.tmp_table_info))
       Global.main_form.create_new_work_area(row["workarea_dict"][workarea]["action"])
     Global.restore_workarea_name = ""

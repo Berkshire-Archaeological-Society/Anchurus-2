@@ -305,10 +305,10 @@ class Main(MainTemplate):
           # Global.tmp_table_info already a list not need to use list(Global.tmp_table_info)
           for item in Global.tmp_table_info:
             print("in create_new_work_area: item of temp_table_info is "+str(item))
-          col_info["COLUMN_TYPE"] = next((str(item["COLUMN_TYPE"]) for item in Global.tmp_table_info if item["COLUMN_NAME"] == col),0)
-          col_info["COLUMN_KEY"] = next((str(item["COLUMN_KEY"]) for item in Global.tmp_table_info if item["COLUMN_NAME"] == col),0)
-          col_info["IS_NULLABLE"] = next((str(item["IS_NULLABLE"]) for item in Global.tmp_table_info if item["COLUMN_NAME"] == col),0)
-          col_info["COLUMN_DEFAULT"] = next((str(item["COLUMN_DEFAULT"]) for item in Global.tmp_table_info if item["COLUMN_NAME"] == col),0)
+          col_info["COLUMN_TYPE"] = next((str(item["Type"]) for item in Global.tmp_table_info if item["Field"] == col),0)
+          col_info["COLUMN_KEY"] = next((str(item["Key"]) for item in Global.tmp_table_info if item["Field"] == col),0)
+          col_info["IS_NULLABLE"] = next((str(item["Null"]) for item in Global.tmp_table_info if item["Field"] == col),0)
+          col_info["COLUMN_DEFAULT"] = next((str(item["Default"]) for item in Global.tmp_table_info if item["Field"] == col),0)
           col_info["CHARACTER_MAXIMUM_LENGTH"] = 65535
           col_info["COLUMN_COMMENT"] = ""
           col_info["ORDINAL_POSITION"] = Global.column_order[col]
@@ -388,6 +388,7 @@ class Main(MainTemplate):
     # save table_info in work_area structure
     Global.work_area[work_area_name]["table_info"] = table_info
     Global.work_area[work_area_name]["column_order"] = Global.column_order
+    Global.work_area[work_area_name]["tmp_table_info"] = Global.tmp_table_info
     # save the query_info (row selected with the QueryId)
     Global.work_area[Global.current_work_area_name]["query_info"] = Global.query_info
     
@@ -1282,7 +1283,9 @@ class Main(MainTemplate):
           print("In Save workarea environment. Query_info is " + str(Global.work_area[work_area_name]["query_info"]))
           work_area_dict[work_area_name]["query_info"] = Global.work_area[work_area_name]["query_info"]
         if Global.work_area[work_area_name].get("column_order"):
-          work_area_dict[work_area_name]["column_order"] =  Global.work_area[work_area_name]["column_order"] 
+          work_area_dict[work_area_name]["column_order"] =  Global.work_area[work_area_name]["column_order"]
+        if Global.work_area[work_area_name].get("tmp_table_info"):
+          work_area_dict[work_area_name]["tmp_table_info"] =  Global.work_area[work_area_name]["tmp_table_info"] 
                 
         #print(work_area_name)
         #print(Global.work_area[work_area_name]["form_type"])
