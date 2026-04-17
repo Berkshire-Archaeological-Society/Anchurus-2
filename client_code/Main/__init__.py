@@ -259,7 +259,7 @@ class Main(MainTemplate):
       print("set edit_row: " + str(self.edit_row.visible))
 
   
-  pass
+  pass # work_area_click
 
   def create_new_work_area(self,action):
     """ This Function is called when a user creates a new work area"""
@@ -354,7 +354,9 @@ class Main(MainTemplate):
             else:
               work_area_name = work_area_name + " " + Global.table_items[primary_key_list[1]]
       # for List Qresult we add the QueryId
-      print("in creating work area name, checking QueryId "+Global.query_id)
+      if action == "View Qresult":
+        print("in creating work area name; action is View Qresult. Checking QueryId "+Global.query_id)
+        work_area_name = work_area_name + " " + Global.query_id
       if action in ["List Qresult","List qresult","View Query","Edit Query"]:
         # problem with restore workarea
         if action.split(" ")[0] in ["View", "Edit"]:
@@ -632,7 +634,7 @@ class Main(MainTemplate):
       
       Function.restore_workareas()
 
-    pass
+    pass # create_new_work_area
 
   def register_button_click(self, **event_args):
     """ This Function is called when a user wants to register himself"""
@@ -1005,6 +1007,8 @@ class Main(MainTemplate):
       Global.table_items = row
       #print("View button for row: ",row)
       Global.action = "View " + Global.table_name.capitalize()
+      if Global.action == "View Qresult":
+        print("View_row click. Check Global.query_id: "+Global.query_id)
       if Global.main_form:  # Important to check if the form exists
         # Create new work_area 
         Global.main_form.create_new_work_area(Global.action)
