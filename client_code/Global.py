@@ -222,6 +222,11 @@ column_with_dropdown = {
     "options"     : ["BNG", "Aligned to BNG north", "Not aligned to BNG north"],
     "placeholder" : "Please select a survey method", 
     "error"       : "You must make a selection"    
+  },
+  "FindType" : {
+    "options"     : ["Bulk", "SmallFind", "Sample", "Group", "FindGroup"],
+    "placeholder" : "Please select a type", 
+    "error"       : "You must make a selection"    
   }
 }
 context_id = None

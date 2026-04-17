@@ -140,7 +140,14 @@ class RowForm(RowFormTemplate):
       # create input_error label used for validation
       input_error = TextBox(placeholder="Please enter the correct value")
       input_error.visible = False
-      
+
+      # create column header with column_name and column_description in one flowpanel (col_header)
+      # add * to column name if inoout for field is mandatory
+      if Global.table_name != "users" and item["IS_NULLABLE"] == "YES":
+        col = ""
+      else:
+        col = "*"
+        
       # set specific validation checks for the various fields
       if Global.table_name == "users":
         cname = "name"
@@ -174,7 +181,7 @@ class RowForm(RowFormTemplate):
           input_error
         )
 
-      elif column_name == Global.table_name.capitalize()+"Id":
+      elif column_name[-2:] == "Id" and col == "*": # Any column name ending with "Id" that is not "*" (required)
         input_error.text = "You have to enter an Id"
         input_error.foreground ="#FF0000"
         # 
@@ -261,6 +268,12 @@ class RowForm(RowFormTemplate):
           lambda dd: dd.selected_value is not None,
           input_error
         ) 
+      elif col == "*": # thie means the columns is required and has not yet been caught by previous checks
+        input_error.text = "This field is required"
+        input_error.foreground ="#FF0000"
+        # 
+        self.validator.require_text_field(input,input_error)
+
       # end of validation 
       
       # spedial case when Field is RegistrationDate: Pre-fill is for Insert and also block edit contents
@@ -304,7 +317,8 @@ class RowForm(RowFormTemplate):
             cur_len = len(input.text)
             
       if Global.table_name.lower() != "site" and column_name == "SiteId" and action in ["edit","insert","add"]: # pre-set SiteId when
-        #print(column_name,action)
+        #print("In RowForm. Column name, action, siteId : "+column_name+" "+action+" "+Global.site_id)
+        #print(Global.work_area[Global.current_work_area_name]["data_list"][0])
         Global.work_area[Global.current_work_area_name]["data_list"][0][column_name] = Global.site_id
         input.text = Global.work_area[Global.current_work_area_name]["data_list"][0][column_name]
         #print(input.text)
@@ -324,10 +338,11 @@ class RowForm(RowFormTemplate):
       if Global.table_name != "users" and item["IS_NULLABLE"] == "YES":
         col = ""
       else:
-        col = "* "
+        col = "*"
         
-      col = col + column_name + " (" + str(cur_len) + "/" + str(max_length) + "):" 
-      lab = Label(text=col,font_size=14,tag=column_name)
+      col = col + "<b>"+column_name+"</b>" + " (" + str(cur_len) + "/" + str(max_length) + "):" 
+      #lab = Label(text=col,font_size=14,tag=column_name)
+      lab = RichText(content=col,font_size=14,tag=column_name,format='restricted_html')
       col_comment = "" if Global.table_name == "users" else item["COLUMN_COMMENT"]
       col_description = Label(text=col_comment,font_size=14)
       col_header = FlowPanel()
