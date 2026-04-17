@@ -256,9 +256,7 @@ class Main(MainTemplate):
       #print(role)
       self.edit_row.visible = Global.role_access.get(role, {}).get(table, {}).get("Edit", None)
       self.delete_row.visible = Global.role_access.get(role, {}).get(table, {}).get("Delete", None)
-      print("set edit_row: " + str(self.edit_row.visible))
-
-  
+      #print("set edit_row: " + str(self.edit_row.visible))
   pass # work_area_click
 
   def create_new_work_area(self,action):
@@ -296,15 +294,15 @@ class Main(MainTemplate):
         Global.query_view = True
         # Build the table_info structure froom the "describe table_info" from the execute_sql_command call saved in Global.tmp_table_info
         tmp_table_info = []
-        print("in create_new_work_area: column_order is "+str(Global.column_order))
+        #print("in create_new_work_area: column_order is "+str(Global.column_order))
         for col in Global.column_order:
           # loop through columns of first row table_item
-          print("in create_new_work_area: col is "+str(col))
+          #print("in create_new_work_area: col is "+str(col))
           col_info = {}
           col_info["COLUMN_NAME"] = col
           # Global.tmp_table_info already a list not need to use list(Global.tmp_table_info)
-          for item in Global.tmp_table_info:
-            print("in create_new_work_area: item of temp_table_info is "+str(item))
+          #for item in Global.tmp_table_info:
+            #print("in create_new_work_area: item of temp_table_info is "+str(item))
           col_info["COLUMN_TYPE"] = next((str(item["Type"]) for item in Global.tmp_table_info if item["Field"] == col),0)
           col_info["COLUMN_KEY"] = next((str(item["Key"]) for item in Global.tmp_table_info if item["Field"] == col),0)
           col_info["IS_NULLABLE"] = next((str(item["Null"]) for item in Global.tmp_table_info if item["Field"] == col),0)
@@ -355,7 +353,7 @@ class Main(MainTemplate):
               work_area_name = work_area_name + " " + Global.table_items[primary_key_list[1]]
       # for List Qresult we add the QueryId
       if action == "View Qresult":
-        print("in creating work area name; action is View Qresult. Checking QueryId "+Global.query_id)
+        #print("in creating work area name; action is View Qresult. Checking QueryId "+Global.query_id)
         work_area_name = work_area_name + " " + Global.query_id
       if action in ["List Qresult","List qresult","View Query","Edit Query"]:
         # problem with restore workarea
@@ -512,7 +510,7 @@ class Main(MainTemplate):
       #print(role)
       self.edit_row.visible = Global.role_access.get(role, {}).get(table, {}).get("Edit", None)
       self.delete_row.visible = Global.role_access.get(role, {}).get(table, {}).get("Delete", None)
-      print("set edit_row: " + str(self.edit_row.visible))
+      #print("set edit_row: " + str(self.edit_row.visible))
       
       # safe edit_row and delete_row visibilty so that at click woekspace they can be set
       Global.work_area[Global.current_work_area_name]["visibility_view_row"] = self.view_row.visible
@@ -564,7 +562,7 @@ class Main(MainTemplate):
     else:
       n = Notification("This action has not yet been implemented.")
       n.show()
-    pass
+    pass # create_new_work_area
   
   def login_button_click(self, **event_args):
     """" This Function is called when the users logs in """
@@ -634,7 +632,7 @@ class Main(MainTemplate):
       
       Function.restore_workareas()
 
-    pass # create_new_work_area
+    pass # login_button_click
 
   def register_button_click(self, **event_args):
     """ This Function is called when a user wants to register himself"""
@@ -645,7 +643,7 @@ class Main(MainTemplate):
       #print(anvil.server.get_app_origin())
       #print(anvil.server.get_app_origin('published'))
       # send email notification to Project leader of the BAS system to finish the registration and enable the account
-      msg = ("\nDear Project Leader for %s of the Anchurus-II service,\n\n"
+      msg = ("\nDear Project Leader for %s of the Anchurus-II Web Application,\n\n"
              "User %s has registered for an account to access the Anchurus-II system %s (URL: %s).\n"
              "Please check the new user account, complete the registration and then enable the account.\n\n"
              "Kind regards,\n\nThe Anchurus-II service"
@@ -653,7 +651,7 @@ class Main(MainTemplate):
       anvil.server.call("send_email","New user registration",msg,Global.admin_user)
       # notify user that the Project Leader will have to check and enable the user account
       msg = ("\nDear %s,\n\n"
-             "Thank you for registering for access to the Anchurus-II system %s (URL: %s)\n"
+             "Thank you for registering for access to %s system of the Anchurus-II Web Application (URL: %s)\n"
              "The project leader has been notified and will contact you when the registration has been validated.\n\n"
              "Kind regards,\n\nThe Anchurus-II service"
              % (str(user["email"]),Global.organisation,anvil.server.get_app_origin('published')))
@@ -675,12 +673,12 @@ class Main(MainTemplate):
     #  #self.action_list.visible = True
     #  self.menu_top.visible = True
     #  self.welcome_page.visible = False
-    pass
+    pass # register_button_click
 
   def select_site_dropdown_change(self, **event_args):
     """ This Function is called when the users selects a site """
     """This method is called when an item is selected"""
-    # print("select_site_dropdown selected")
+    #print("select_site_dropdown selected")
     if self.select_site_dropdown.selected_value is not None and self.select_site_dropdown.selected_value != "No Sites available":
       # clear help_page_text 
       #Global.help_page.help_page_text.visible = True
@@ -812,7 +810,7 @@ class Main(MainTemplate):
       Function.restore_workareas()
     else:
       self.select_site_dropdown.selected_value = None
-    pass
+    pass # select_site_dropdown_change
 
   # Funtions for the menu options (Menu_middle) after the user selected a site
   def admin_dropdown_change(self, **event_args):
@@ -833,7 +831,7 @@ class Main(MainTemplate):
         
     # clear selected_value
     self.admin_dropdown.selected_value = None
-    pass
+    pass # admin_dropdown_change
 
   def insert_dropdown_change(self, **event_args):
     """ This Function is called when the users selects an option form the Insert dropdown"""
@@ -861,7 +859,7 @@ class Main(MainTemplate):
 
     # clear selected_value
     self.insert_dropdown.selected_value = None
-    pass
+    pass # insert_dropdown_change
 
   def list_dropdown_change(self, **event_args):
     """ This Function is called when the users selects an option form the List dropdown"""
@@ -889,7 +887,7 @@ class Main(MainTemplate):
         alert("Action not yet implemented.")
     
     self.list_dropdown.selected_value = None
-    pass
+    pass # list_dropdown_change
 
   def import_dropdown_change(self, **event_args):
     """This method is called when an item is selected"""
@@ -920,7 +918,7 @@ class Main(MainTemplate):
     # clear selected_value
 
     self.import_dropdown.selected_value = None
-    pass
+    pass # import_dropdown_change
 
   def help_dropdown_change(self, **event_args):
     """ This Function is called when the users selects an option form the Help dropdown"""
@@ -934,15 +932,14 @@ class Main(MainTemplate):
       else:
         print("Window opened successfully.")
     self.help_dropdown.selected_value = None
-    pass
+    pass # help_dropdown_change
 
   def site_summary_change(self, **event_args):
     """ This Function is called when the users selects an option form the Site Summary dropdown"""
     """This method is called when an item is selected"""
     # here we do not do anything except set the selected value of th dropdown to None
     self.site_summary.selected_value = None
-    pass
-
+    pass # site_summary_change
 
   # Functions on the header for the work area
   def selection_change(self, **event_args):
@@ -958,7 +955,7 @@ class Main(MainTemplate):
     ###Global.work_area[Global.current_work_area_name]["self"].select_all.indeterminate = not all_checked and any_checked
     Global.work_area[Global.current_work_area_name]["menu_select_options"].visible = any_checked
     #
-    pass
+    pass # selection_change
   
   def select_all_change(self, **event_args):
     """This method is called when this checkbox is checked or unchecked"""
@@ -998,7 +995,7 @@ class Main(MainTemplate):
 
     ###Global.work_area[Global.current_work_area_name]["self"].select_all.checked = checked
     self.select_all.checked = checked
-    pass
+    pass # select_all_change
     
   def view_row_click(self, **event_args):
     """This method is called when the button is clicked"""
@@ -1007,14 +1004,14 @@ class Main(MainTemplate):
       Global.table_items = row
       #print("View button for row: ",row)
       Global.action = "View " + Global.table_name.capitalize()
-      if Global.action == "View Qresult":
-        print("View_row click. Check Global.query_id: "+Global.query_id)
+      #if Global.action == "View Qresult":
+        #print("View_row click. Check Global.query_id: "+Global.query_id)
       if Global.main_form:  # Important to check if the form exists
         # Create new work_area 
         Global.main_form.create_new_work_area(Global.action)
       else:
         print("Main form not found!")
-    pass
+    pass # view_row_click
 
   def edit_row_click(self, **event_args):
     """This method is called when the button is clicked"""
@@ -1027,7 +1024,7 @@ class Main(MainTemplate):
         Global.main_form.create_new_work_area(Global.action)
       else:
         print("Main form not found!")
-    pass
+    pass # edit_row_click
 
   def delete_row_click(self, **event_args):
     """This method is called when the button is clicked"""
@@ -1056,28 +1053,28 @@ class Main(MainTemplate):
       # call server function to do the actual deletion
       msg = anvil.server.call('delete_row',Global.table_name,rows_to_delete)
       alert(msg)
-    pass
+    pass # delete_row_click
 
   def first_page_click(self, **event_args):
     """This method is called when the button is clicked"""
     FunctionsB.clear_selection(Global.work_area[Global.current_work_area_name]["self"])
     Global.work_area[Global.current_work_area_name]["self"].table.set_page(0)
     FunctionsB.update_status_label(Global.work_area[Global.current_work_area_name]["self"])
-    pass
-
+    pass # first_page_click
+ 
   def prev_page_click(self, **event_args):
     """This method is called when the button is clicked"""
     FunctionsB.clear_selection(Global.work_area[Global.current_work_area_name]["self"])
     Global.work_area[Global.current_work_area_name]["self"].table.set_page(Global.work_area[Global.current_work_area_name]["self"].table.get_page() - 1)
     FunctionsB.update_status_label(Global.work_area[Global.current_work_area_name]["self"])
-    pass
+    pass # prev_page_click
 
   def next_page_click(self, **event_args):
     """This method is called when the button is clicked"""
     FunctionsB.clear_selection(Global.work_area[Global.current_work_area_name]["self"])
     Global.work_area[Global.current_work_area_name]["self"].table.set_page(Global.work_area[Global.current_work_area_name]["self"].table.get_page() + 1)
     FunctionsB.update_status_label(Global.work_area[Global.current_work_area_name]["self"])
-    pass
+    pass # next_page_click
 
   def last_page_click(self, **event_args):
     """This method is called when the button is clicked"""
@@ -1086,7 +1083,7 @@ class Main(MainTemplate):
     total_rows = len(Global.work_area[Global.current_work_area_name]["self"].repeating_panel_1.items)
     Global.work_area[Global.current_work_area_name]["self"].table.set_page(total_rows // rows_per_page)
     FunctionsB.update_status_label(Global.work_area[Global.current_work_area_name]["self"])
-    pass
+    pass # last_page_click
 
   def filter_cols_click(self, **event_args):
     """This method is called when the button is clicked"""
@@ -1154,7 +1151,7 @@ class Main(MainTemplate):
       # make the filter 'live'
       Global.work_area[Global.current_work_area_name]["table"].columns = Global.work_area[Global.current_work_area_name]["table"].columns
       FunctionsB.table_list_refresh(Global.work_area[Global.current_work_area_name]["self"])
-    pass
+    pass # filter_cols_click
 
   def download_csv_click(self, **event_args):
     """This method is called when the button is clicked"""
@@ -1175,7 +1172,7 @@ class Main(MainTemplate):
     # make sure to send the col_order as a list []
     csv_file = anvil.server.call('create_csv',Global.work_area[Global.current_work_area_name]["data_list"],[col_order],file_name)
     anvil.media.download(csv_file)
-    pass
+    pass # download_csv_click
 
   def print_click(self, **event_args):
     """This method is called when the button is clicked"""
@@ -1192,19 +1189,19 @@ class Main(MainTemplate):
                                  Global.work_area[Global.current_work_area_name]["page_info"]
                                 )
     anvil.media.download(pdf_form)
-    pass
+    pass # print_click
 
   def refresh_click(self, **event_args):
     """This method is called when the button is clicked"""
     # call refresh function for the work_area
     FunctionsB.refresh_click(Global.work_area[Global.current_work_area_name]["self"])
-    pass
+    pass # refresh_click
 
   def del_work_area_click(self, **event_args):
     """This method is called when the button is clicked"""
     # call delete work_area function
     Function.delete_workspace(Global.current_work_area_name)
-    pass
+    pass # del_work_area_click
 
   def logout_click(self, **event_args):
     """This method is called when the button is clicked"""
@@ -1251,7 +1248,7 @@ class Main(MainTemplate):
     Global.work_area = {}
     Global.action_seq_no = {}
 
-    pass
+    pass # logout_click
 
   def username_dropdown_change(self, **event_args):
     """ This Function is called when the users has selected the logout option of the username dropdown """
@@ -1283,10 +1280,10 @@ class Main(MainTemplate):
         work_area_dict[work_area_name]["site_name"] = Global.work_area[work_area_name]["site_name"]
         work_area_dict[work_area_name]["table_info"] = Global.work_area[work_area_name]["table_info"]
         work_area_dict[work_area_name]["data_list"] = Global.work_area[work_area_name]["data_list"]
-        print("In Save workarea environment. table_info is " + str(Global.work_area[work_area_name]["table_info"]))
+        #print("In Save workarea environment. table_info is " + str(Global.work_area[work_area_name]["table_info"]))
         work_area_dict[work_area_name]["form_type"] = Global.work_area[work_area_name]["form_type"]
         if Global.work_area[work_area_name].get("query_info"):
-          print("In Save workarea environment. Query_info is " + str(Global.work_area[work_area_name]["query_info"]))
+          #print("In Save workarea environment. Query_info is " + str(Global.work_area[work_area_name]["query_info"]))
           work_area_dict[work_area_name]["query_info"] = Global.work_area[work_area_name]["query_info"]
         if Global.work_area[work_area_name].get("column_order"):
           work_area_dict[work_area_name]["column_order"] =  Global.work_area[work_area_name]["column_order"]
@@ -1315,7 +1312,7 @@ class Main(MainTemplate):
 
     #clear selected option
     self.username_dropdown.selected_value = None
-    pass
+    pass # username_dropdown_change
 
   @handle("query_dropdown", "change")
   def query_dropdown_change(self, **event_args):
@@ -1324,7 +1321,7 @@ class Main(MainTemplate):
     Global.action = self.query_dropdown.selected_value
     self.create_new_work_area(Global.action)
     self.query_dropdown.selected_value = None
-    pass
+    pass # query_dropdown_change
 
   @handle("execute_sql", "click")
   def execute_sql_click(self, **event_args):
@@ -1339,7 +1336,7 @@ class Main(MainTemplate):
       #print(command)
       if command != "":
         msg, data_list, column_order, Global.tmp_table_info = anvil.server.call("execute_sql_command",command)
-        print("after server call to exececute_sql_command. tmp_table_info is "+str(Global.tmp_table_info))
+        #print("after server call to exececute_sql_command. tmp_table_info is "+str(Global.tmp_table_info))
       else:
         msg = "FAIL: SQL command field is empty."
       
@@ -1349,7 +1346,7 @@ class Main(MainTemplate):
       else:
         # SQL command completed successfully and returned a data_list. Create a new TableList workspace for the results
         Global.column_order = column_order
-        print("after execute_sql_command. column_order is "+str(column_order))
+        #print("after execute_sql_command. column_order is "+str(column_order))
         Global.table_items = data_list
         Global.table_name = "qresult"
         Global.action = "List " + Global.table_name.capitalize()
@@ -1358,4 +1355,4 @@ class Main(MainTemplate):
           Global.main_form.create_new_work_area(Global.action)
         else:
           print("Main form not found!")
-    pass
+    pass # execute_sql_click

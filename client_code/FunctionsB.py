@@ -46,7 +46,7 @@ def update_status_label(self):
     Global.main_form.row_number_info.text = f"{start_row}-{end_row} of {total_rows}"
   else:
     # No need to display page control buttons as nr of rows is <= rows_per_page
-    # print("Make all page control invisible")
+    #print("Make all page control invisible")
     Global.main_form.last_page.enabled = False
     Global.main_form.next_page.enabled = False      
     Global.main_form.first_page.enabled = False
@@ -96,13 +96,13 @@ def create_table_columns(column_list,work_area):
   #first column is for the select button
   columns_titles.append({"id": 1, "title": "", "data_key": "select", "width": 30, "expand": False })
   id = 1
-  print("in create_table_columns: work_area[table_info] is: "+str(work_area["table_info"]))
+  #print("in create_table_columns: work_area[table_info] is: "+str(work_area["table_info"]))
   for column in column_list:
     # Select Column "Field"
     work_area["columns_show"].append(column)
     # work out column width on various criteria
     data_type = next(x["COLUMN_TYPE"] for x in work_area["table_info"] if x["COLUMN_NAME"] == column)
-    print("in create_table_columns: data_type is: "+data_type)
+    #print("in create_table_columns: data_type is: "+data_type)
     #print(column,data_type)
     ratio = 8 # pixels per char
     padding = 10 # padding

@@ -153,7 +153,7 @@ def restore_workareas():
   rows = anvil.server.call("get_saved_workareas",name)
   for row in rows:
     for workarea in row["workarea_dict"].keys():
-      print("in restore_workares: "+row["workarea_dict"][workarea]["action"])
+      #print("in restore_workares: "+row["workarea_dict"][workarea]["action"])
       Global.restore_workarea_name = workarea
       Global.table_items = row["workarea_dict"][workarea]["data_list"]
       #print (workarea)
@@ -165,12 +165,12 @@ def restore_workareas():
         #print("now calling create_new_work_area")
       if row["workarea_dict"][workarea].get("query_info") is not None:
         Global.query_info = row["workarea_dict"][workarea]["query_info"]
-        print("In restore: query_info is " + str(Global.query_info))
+        #print("In restore: query_info is " + str(Global.query_info))
       if row["workarea_dict"][workarea].get("column_order") is not None:
         Global.column_order = row["workarea_dict"][workarea]["column_order"]
       if row["workarea_dict"][workarea].get("tmp_table_info") is not None:
         Global.tmp_table_info = row["workarea_dict"][workarea]["tmp_table_info"]  
-        print("In restore: tmp_table_info is " + str(Global.tmp_table_info))
+        #print("In restore: tmp_table_info is " + str(Global.tmp_table_info))
       Global.main_form.create_new_work_area(row["workarea_dict"][workarea]["action"])
     Global.restore_workarea_name = ""
   return

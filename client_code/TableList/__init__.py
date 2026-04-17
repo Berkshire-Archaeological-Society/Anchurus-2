@@ -146,7 +146,7 @@ class TableList(TableListTemplate):
     if Global.table_name != "qresult":
       self.title.text = anvil.server.call("db_table_comment", Global.table_name)
     else:
-      print(Global.work_area[Global.current_work_area_name].keys())
+      #print(Global.work_area[Global.current_work_area_name].keys())
       qname = next((str(item[1]['field'].text) for item in list(Global.query_info) if item[0] == "QueryName"),"")
       qwhat = next((str(item[1]['field'].text) for item in list(Global.query_info) if item[0] == "WhatItDoes"),"")
       if qname == "":
