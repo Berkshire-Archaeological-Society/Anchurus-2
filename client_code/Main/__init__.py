@@ -296,16 +296,19 @@ class Main(MainTemplate):
         Global.query_view = True
         # Build the table_info structure froom the "describe table_info" from the execute_sql_command call saved in Global.tmp_table_info
         tmp_table_info = []
-        print(Global.column_order)
+        print("in create_new_work_area: column_order is "+str(Global.column_order))
         for col in Global.column_order:
           # loop through columns of first row table_item
-          #print(col)
+          print("in create_new_work_area: col is "+str(col))
           col_info = {}
           col_info["COLUMN_NAME"] = col
-          col_info["COLUMN_TYPE"] = next((str(item["Type"]) for item in list(Global.tmp_table_info) if item["Field"] == col),0)
-          col_info["COLUMN_KEY"] = next((str(item["Key"]) for item in list(Global.tmp_table_info) if item["Field"] == col),0)
-          col_info["IS_NULLABLE"] = next((str(item["Null"]) for item in list(Global.tmp_table_info) if item["Field"] == col),0)
-          col_info["COLUMN_DEFAULT"] = next((str(item["Default"]) for item in list(Global.tmp_table_info) if item["Field"] == col),0)
+          # Global.tmp_table_info already a list not need to use list(Global.tmp_table_info)
+          for item in Global.tmp_table_info:
+            print("in create_new_work_area: item of temp_table_info is "+str(item))
+          col_info["COLUMN_TYPE"] = next((str(item["Type"]) for item in Global.tmp_table_info if item["Field"] == col),0)
+          col_info["COLUMN_KEY"] = next((str(item["Key"]) for item in Global.tmp_table_info if item["Field"] == col),0)
+          col_info["IS_NULLABLE"] = next((str(item["Null"]) for item in Global.tmp_table_info if item["Field"] == col),0)
+          col_info["COLUMN_DEFAULT"] = next((str(item["Default"]) for item in Global.tmp_table_info if item["Field"] == col),0)
           col_info["CHARACTER_MAXIMUM_LENGTH"] = 65535
           col_info["COLUMN_COMMENT"] = ""
           col_info["ORDINAL_POSITION"] = Global.column_order[col]
@@ -1273,9 +1276,10 @@ class Main(MainTemplate):
         work_area_dict[work_area_name]["site_id"] = Global.work_area[work_area_name]["site_id"]
         work_area_dict[work_area_name]["site_name"] = Global.work_area[work_area_name]["site_name"]
         work_area_dict[work_area_name]["table_info"] = Global.work_area[work_area_name]["table_info"]
+        print("In Save workarea environment. table_info is " + str(Global.work_area[work_area_name]["table_info"]))
         work_area_dict[work_area_name]["form_type"] = Global.work_area[work_area_name]["form_type"]
         if Global.work_area[work_area_name].get("query_info"):
-          print("In Save workarea environment. Query_info is " + str(Global.query_info))
+          print("In Save workarea environment. Query_info is " + str(Global.work_area[work_area_name]["query_info"]))
           work_area_dict[work_area_name]["query_info"] = Global.work_area[work_area_name]["query_info"]
         if Global.work_area[work_area_name].get("column_order"):
           work_area_dict[work_area_name]["column_order"] =  Global.work_area[work_area_name]["column_order"] 
@@ -1326,6 +1330,7 @@ class Main(MainTemplate):
       #print(command)
       if command != "":
         msg, data_list, column_order, Global.tmp_table_info = anvil.server.call("execute_sql_command",command)
+        print("after server call to exececute_sql_command. tmp_table_info is "+str(Global.tmp_table_info))
       else:
         msg = "FAIL: SQL command field is empty."
       
@@ -1335,6 +1340,7 @@ class Main(MainTemplate):
       else:
         # SQL command completed successfully and returned a data_list. Create a new TableList workspace for the results
         Global.column_order = column_order
+        print("after execute_sql_command. column_order is "+str(column_order))
         Global.table_items = data_list
         Global.table_name = "qresult"
         Global.action = "List " + Global.table_name.capitalize()
