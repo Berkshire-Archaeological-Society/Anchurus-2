@@ -305,10 +305,10 @@ class Main(MainTemplate):
           # Global.tmp_table_info already a list not need to use list(Global.tmp_table_info)
           for item in Global.tmp_table_info:
             print("in create_new_work_area: item of temp_table_info is "+str(item))
-          col_info["COLUMN_TYPE"] = next((str(item["Type"]) for item in Global.tmp_table_info if item["Field"] == col),0)
-          col_info["COLUMN_KEY"] = next((str(item["Key"]) for item in Global.tmp_table_info if item["Field"] == col),0)
-          col_info["IS_NULLABLE"] = next((str(item["Null"]) for item in Global.tmp_table_info if item["Field"] == col),0)
-          col_info["COLUMN_DEFAULT"] = next((str(item["Default"]) for item in Global.tmp_table_info if item["Field"] == col),0)
+          col_info["COLUMN_TYPE"] = next((str(item["COLUMN_TYPE"]) for item in Global.tmp_table_info if item["COLUMN_NAME"] == col),0)
+          col_info["COLUMN_KEY"] = next((str(item["COLUMN_KEY"]) for item in Global.tmp_table_info if item["COLUMN_NAME"] == col),0)
+          col_info["IS_NULLABLE"] = next((str(item["IS_NULLABLE"]) for item in Global.tmp_table_info if item["COLUMN_NAME"] == col),0)
+          col_info["COLUMN_DEFAULT"] = next((str(item["COLUMN_DEFAULT"]) for item in Global.tmp_table_info if item["COLUMN_NAME"] == col),0)
           col_info["CHARACTER_MAXIMUM_LENGTH"] = 65535
           col_info["COLUMN_COMMENT"] = ""
           col_info["ORDINAL_POSITION"] = Global.column_order[col]
