@@ -162,7 +162,10 @@ def restore_workareas():
         #print("In restore")
         #print(Global.table_items)
         #print("now calling create_new_work_area")
-        
+      if row["workarea_dict"][workarea].get("query_info") is not None:
+        Global.query_info = row["workarea_dict"][workarea]["query_info"]
+        print("In restore. Query_info is " + str(Global.query_info))
+      
       Global.main_form.create_new_work_area(row["workarea_dict"][workarea]["action"])
     Global.restore_workarea_name = ""
   return

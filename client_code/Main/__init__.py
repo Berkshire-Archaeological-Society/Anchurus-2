@@ -357,7 +357,7 @@ class Main(MainTemplate):
           #print(Global.query_id)
         work_area_name = work_area_name + " " + Global.query_id
     else:
-      # in restore workareas use the work_area_name of the savde work_area
+      # in restore workareas use the work_area_name of the saved work_area
       work_area_name = Global.restore_workarea_name
       
     # check if work_area_name exists and keep counter
@@ -383,6 +383,9 @@ class Main(MainTemplate):
     
     # save table_info in work_area structure
     Global.work_area[work_area_name]["table_info"] = table_info
+    
+    # save the query_info (row selected with the QueryId)
+    Global.work_area[Global.current_work_area_name]["query_info"] = Global.query_info
     
     # set menu_select_opti0ns as invisible
     Global.work_area[Global.current_work_area_name]["menu_select_options"] = self.fp_select_options
@@ -1271,6 +1274,7 @@ class Main(MainTemplate):
         work_area_dict[work_area_name]["table_info"] = Global.work_area[work_area_name]["table_info"]
         work_area_dict[work_area_name]["form_type"] = Global.work_area[work_area_name]["form_type"]
         if Global.work_area[work_area_name].get("query_info"):
+          print("In Save workarea environment. Query_info is " + str(Global.query_info))
           work_area_dict[work_area_name]["query_info"] = Global.work_area[work_area_name]["query_info"]
         #print(work_area_name)
         #print(Global.work_area[work_area_name]["form_type"])
@@ -1280,11 +1284,15 @@ class Main(MainTemplate):
           work_area_dict[work_area_name]["data_list"] = Global.work_area[work_area_name]["data_list"]
         
       msg = anvil.server.call("save_workareas",name,work_area_dict,Global.site_id)
-      alert(msg,title="Saving work area notification")
+      n = Notification(msg)
+      n.show()
+      #alert(msg,title="Saving work area notification")
     elif self.username_dropdown.selected_value == "Clear Work Area Environment":
       name = "Saved_areas " + Global.site_id
       msg = anvil.server.call("clear_saved_workareas",name)
-      alert(msg,title="Clearing work area notification")
+      n = Notification(msg)
+      n.show()
+      #alert(msg,title="Clearing work area notification")
     elif self.username_dropdown.selected_value == "Logout":
       self.logout_click()
 
@@ -1308,6 +1316,7 @@ class Main(MainTemplate):
       # loop through all selected rows
       Global.table_items = row
       Global.query_info = row
+
       Global.query_id = row["QueryId"]
       command = row["SQL_command"]
       #print(command)
