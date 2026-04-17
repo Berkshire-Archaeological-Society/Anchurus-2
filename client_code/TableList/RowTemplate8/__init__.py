@@ -71,6 +71,7 @@ class RowTemplate8(RowTemplate8Template):
     columns = Global.work_area[Global.current_work_area_name]["table"].columns
     print("Work_area_name = "+Global.current_work_area_name)
     print("Columns is "+str(columns))
+    print("self.item is "+str(self.item))
     for col in columns:
       col_name = col['data_key']
       print("col_name = "+col_name)
