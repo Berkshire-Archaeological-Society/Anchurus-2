@@ -171,7 +171,6 @@ class TableList(TableListTemplate):
     # add table to work_area data structure for Global.current_work_area_name
     Global.work_area[Global.current_work_area_name]["table"] = self.table
 
-
     # Extract the columns names from the table_info
     # Frist column if for Select
     # The DESCRIBE result structure is:
