@@ -97,7 +97,7 @@ class RowForm(RowFormTemplate):
         #input = TextArea(tag=column_name)
         input = Quill(placeholder=column_name,toolbar=Global.Quill_toolbarOptions)
         max_length = 65535
-        #input.add_event_handler('x-text_change',self.input_change)
+        #input.add_event_handler('text_change',self.input_change)
       elif column_type == "date":
         # by default create TextBox fields
         input = DatePicker(placeholder=column_name,format="%Y-%m-%d")
@@ -105,23 +105,23 @@ class RowForm(RowFormTemplate):
         # date type is 10 long
         max_length = 10
         # add event handler for when input field is changed to update the character count
-        #input.add_event_handler('x-change',self.input_change)
+        #input.add_event_handler('change',self.input_change)
       elif column_type == "string":
         input = TextBox(placeholder=column_name)
-        input.add_event_handler('x-change',self.input_change)
+        input.add_event_handler('change',self.input_change)
         max_length = 100
       elif column_type == "bool":
         #input = TextBox(placeholder=column_name)
         input = DropDown(items=["True", "False"],placeholder=column_name)
-        input.add_event_handler('x-change',self.input_change)
+        input.add_event_handler('change',self.input_change)
         max_length = 5
       elif column_type == "datetime":
         input = TextBox(placeholder=column_name)
-        input.add_event_handler('x-change',self.input_change)
+        input.add_event_handler('change',self.input_change)
         max_length = 30
       elif column_name in Global.column_with_dropdown.keys():
         input = DropDown(placeholder=column_name)
-        input.add_event_handler('x-change',self.input_change)
+        input.add_event_handler('change',self.input_change)
         max_length = 5
       else:
         # by default create TextBox fields
@@ -135,7 +135,7 @@ class RowForm(RowFormTemplate):
           max_length = max_length + 1
           
         # add event handler for when input field is changed to update the character counth
-        input.add_event_handler('x-change',self.input_change)
+        input.add_event_handler('change',self.input_change)
 
       # create input_error label used for validation
       input_error = TextBox(placeholder="Please enter the correct value")
@@ -356,13 +356,13 @@ class RowForm(RowFormTemplate):
     # Add a Submit button if Edit or Add action
     if action in ["edit","add","insert"]:     #"Edit Context","Edit Find","Add Context","Add Find"]:
       submit_btn = Button(text="Submit",role="outlined-button")
-      submit_btn.add_event_handler("x-click",self.submit_btn_click)
+      submit_btn.add_event_handler("click",self.submit_btn_click)
       self.column_panel_1.add_component(submit_btn)
 
       # Add a Execute SQL command button if View Query
     if Global.action in ["View Query","View query"]:     
       execute_sql_btn = Button(text="Execute SQL command",role="outlined-button")
-      execute_sql_btn.add_event_handler("x-click",self.execute_sql_btn_click)
+      execute_sql_btn.add_event_handler("click",self.execute_sql_btn_click)
       self.column_panel_1.add_component(execute_sql_btn)
     # For this work_area form the page_info details are all set to 0; this is for when the server print function calls this form
     Global.work_area[Global.current_work_area_name]["page_info"] = {"page_num": 0, "rows_per_page": 0, "total_rows": 0}
