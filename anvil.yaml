@@ -20,7 +20,7 @@ db_schema:
       client_hidden: false
       name: name
       type: string
-    - admin_ui: {order: 2.5, width: 378}
+    - admin_ui: {order: 2.5, width: 728}
       client_hidden: false
       name: workarea_dict
       type: simpleObject
