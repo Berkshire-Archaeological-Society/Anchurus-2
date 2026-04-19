@@ -20,13 +20,15 @@ class RowForm(RowFormTemplate):
   def input_change(self, **event_args):
     """This method is called when the text in this text box is edited"""
     column = event_args["sender"].placeholder
+    print("In input_change for column: "+column)
     # add * to column if field is required
     #print(Global.work_area[Global.current_work_area_name]["table_info"])
-    col = column
     if next((item['IS_NULLABLE'] for item in Global.work_area[Global.current_work_area_name]["table_info"] if item['COLUMN_NAME'] == column),0) != "YES":
-      col = "* " + column
-    #print(column)
-    #print(str(type(event_args["sender"])))
+      col = "* " + "<b>&nbsp"+column+"</b>"
+    else:
+      col = "&nbsp&nbsp" + "<b>&nbsp"+column+"</b>"
+
+    print("Sender: "+str(type(event_args["sender"])))
     if str(type(event_args["sender"])) == "<class 'anvil_extras.Quill.Quill'>":
       # self.form_fields[column]["header"].text = col + " (" + str(len(self.form_fields[column]["field"].get_html())) + "/" + str(self.form_fields[column]["length"]) + "):"
       #print(self.form_fields[column])
@@ -34,9 +36,13 @@ class RowForm(RowFormTemplate):
       #print(self.form_fields[column]["field"])
       #print(self.form_fields[column]["length"])
       self.form_fields[column]["header"].text = col + " (" + str(len(self.form_fields[column]["field"].getText())) + "/" + str(self.form_fields[column]["length"]) + "):"
+      print(str(self.form_fields[column]["header"].text))
+
     else:
       if str(type(event_args["sender"])) != "<class 'anvil.DatePicker'>":
         self.form_fields[column]["header"].text = col + " (" + str(len(self.form_fields[column]["field"].text)) + "/" + str(self.form_fields[column]["length"]) + "):"
+      print(str(self.form_fields[column]["header"].text))
+
   pass
   
   def __init__(self, site_id, table_name, data_list, action, page_info, **properties):
@@ -97,7 +103,7 @@ class RowForm(RowFormTemplate):
         #input = TextArea(tag=column_name)
         input = Quill(placeholder=column_name,toolbar=Global.Quill_toolbarOptions)
         max_length = 65535
-        #input.add_event_handler('text_change',self.input_change)
+        input.add_event_handler('text_change',self.input_change)
       elif column_type == "date":
         # by default create TextBox fields
         input = DatePicker(placeholder=column_name,format="%Y-%m-%d")
@@ -105,7 +111,7 @@ class RowForm(RowFormTemplate):
         # date type is 10 long
         max_length = 10
         # add event handler for when input field is changed to update the character count
-        #input.add_event_handler('change',self.input_change)
+        input.add_event_handler('change',self.input_change)
       elif column_type == "string":
         input = TextBox(placeholder=column_name)
         input.add_event_handler('change',self.input_change)
