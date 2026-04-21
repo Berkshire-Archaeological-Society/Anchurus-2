@@ -35,13 +35,13 @@ class RowForm(RowFormTemplate):
       #print(self.form_fields[column]["header"])
       #print(self.form_fields[column]["field"])
       #print(self.form_fields[column]["length"])
-      self.form_fields[column]["header"].text = col + " (" + str(len(self.form_fields[column]["field"].getText())) + "/" + str(self.form_fields[column]["length"]) + "):"
-      print(str(self.form_fields[column]["header"].text))
+      self.form_fields[column]["header"].content = col + " (" + str(len(self.form_fields[column]["field"].getText())) + "/" + str(self.form_fields[column]["length"]) + "):"
+      print(str(self.form_fields[column]["header"].content))
 
     else:
       if str(type(event_args["sender"])) != "<class 'anvil.DatePicker'>":
-        self.form_fields[column]["header"].text = col + " (" + str(len(self.form_fields[column]["field"].text)) + "/" + str(self.form_fields[column]["length"]) + "):"
-      print(str(self.form_fields[column]["header"].text))
+        self.form_fields[column]["header"].content = col + " (" + str(len(self.form_fields[column]["field"].text)) + "/" + str(self.form_fields[column]["length"]) + "):"
+      print(str(self.form_fields[column]["header"].content))
 
   pass
   
@@ -119,15 +119,15 @@ class RowForm(RowFormTemplate):
       elif column_type == "bool":
         #input = TextBox(placeholder=column_name)
         input = DropDown(items=["True", "False"],placeholder=column_name)
-        input.add_event_handler('change',self.input_change)
+        #input.add_event_handler('change',self.input_change)
         max_length = 5
       elif column_type == "datetime":
         input = TextBox(placeholder=column_name)
-        input.add_event_handler('change',self.input_change)
+        #input.add_event_handler('change',self.input_change)
         max_length = 30
       elif column_name in Global.column_with_dropdown.keys():
         input = DropDown(placeholder=column_name)
-        input.add_event_handler('change',self.input_change)
+        #input.add_event_handler('change',self.input_change)
         max_length = 5
       else:
         # by default create TextBox fields
@@ -139,7 +139,6 @@ class RowForm(RowFormTemplate):
           # for these data types (decimal, double, float) add 1 to max_length as length does not take into account the decimal point
           # (nor for negative symbol but that is not applicable for us)
           max_length = max_length + 1
-          
         # add event handler for when input field is changed to update the character counth
         input.add_event_handler('change',self.input_change)
 
