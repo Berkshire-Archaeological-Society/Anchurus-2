@@ -34,9 +34,8 @@ class RowForm(RowFormTemplate):
       #print(self.form_fields[column]["field"])
       #print(self.form_fields[column]["length"])
       self.form_fields[column]["header"].text = col + " (" + str(len(self.form_fields[column]["field"].getText())) + "/" + str(self.form_fields[column]["length"]) + "):"
-    else:
-      if str(type(event_args["sender"])) == "<class 'anvil.TextBox'>":
-        self.form_fields[column]["header"].text = col + " (" + str(len(self.form_fields[column]["field"].text)) + "/" + str(self.form_fields[column]["length"]) + "):"
+    elif str(type(event_args["sender"])) == "<class 'anvil.TextBox'>":
+      self.form_fields[column]["header"].text = col + " (" + str(len(self.form_fields[column]["field"].text)) + "/" + str(self.form_fields[column]["length"]) + "):"
   pass
 
   def __init__(self, site_id, table_name, data_list, action, page_info, **properties):
