@@ -35,7 +35,7 @@ class RowForm(RowFormTemplate):
       #print(self.form_fields[column]["length"])
       self.form_fields[column]["header"].text = col + " (" + str(len(self.form_fields[column]["field"].getText())) + "/" + str(self.form_fields[column]["length"]) + "):"
     else:
-      if str(type(event_args["sender"])) != "<class 'anvil.DatePicker'>":
+      if str(type(event_args["sender"])) == "<class 'anvil.TextBox'>":
         self.form_fields[column]["header"].text = col + " (" + str(len(self.form_fields[column]["field"].text)) + "/" + str(self.form_fields[column]["length"]) + "):"
   pass
 
@@ -105,7 +105,7 @@ class RowForm(RowFormTemplate):
         # date type is 10 long
         max_length = 10
         # add event handler for when input field is changed to update the character count
-        input.add_event_handler('change',self.input_change)
+        #input.add_event_handler('change',self.input_change)
       elif column_type == "string":
         input = TextBox(placeholder=column_name)
         input.add_event_handler('change',self.input_change)
@@ -113,15 +113,15 @@ class RowForm(RowFormTemplate):
       elif column_type == "bool":
         #input = TextBox(placeholder=column_name)
         input = DropDown(items=["True", "False"],placeholder=column_name)
-        input.add_event_handler('change',self.input_change)
+        #input.add_event_handler('change',self.input_change)
         max_length = 5
       elif column_type == "datetime":
         input = TextBox(placeholder=column_name)
-        input.add_event_handler('change',self.input_change)
+        #input.add_event_handler('change',self.input_change)
         max_length = 30
       elif column_name in Global.column_with_dropdown.keys():
         input = DropDown(placeholder=column_name)
-        input.add_event_handler('change',self.input_change)
+        #input.add_event_handler('change',self.input_change)
         max_length = 5
       else:
         # by default create TextBox fields
@@ -323,8 +323,13 @@ class RowForm(RowFormTemplate):
         col = ""
       else:
         col = "* "
-
-      col = col + column_name + " (" + str(cur_len) + "/" + str(max_length) + "):" 
+      print(column_name)
+      print(str(type(input)))
+      if str(type(input)) in ["<class 'anvil_extras.Quill.Quill'>", "<class 'anvil.TextBox'>"]:
+        col = col + column_name + " (" + str(cur_len) + "/" + str(max_length) + "): " 
+      else:
+        col = col + column_name + ": "
+        
       lab = Label(text=col,font_size=14,tag=column_name)
       col_comment = "" if Global.table_name == "users" else item["COLUMN_COMMENT"]
       col_description = Label(text=col_comment,font_size=14)

@@ -1,4 +1,4 @@
-from ._anvil_designer import RowFormv039Template
+from ._anvil_designer import RowFormvRTTemplate
 from anvil import *
 import anvil.server
 import re
@@ -16,7 +16,7 @@ from ..validation import Validator
 from .. import FunctionsB
 from .. import Global
 
-class RowFormv039(RowFormv039Template):
+class RowFormvRT(RowFormvRTTemplate):
   def input_change(self, **event_args):
     """This method is called when the text in this text box is edited"""
     column = event_args["sender"].placeholder
