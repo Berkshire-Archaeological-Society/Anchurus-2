@@ -20,31 +20,25 @@ class RowForm(RowFormTemplate):
   def input_change(self, **event_args):
     """This method is called when the text in this text box is edited"""
     column = event_args["sender"].placeholder
-    print("In input_change for column: "+column)
     # add * to column if field is required
     #print(Global.work_area[Global.current_work_area_name]["table_info"])
+    col = column
     if next((item['IS_NULLABLE'] for item in Global.work_area[Global.current_work_area_name]["table_info"] if item['COLUMN_NAME'] == column),0) != "YES":
-      col = "* " + "<b>&nbsp"+column+"</b>"
-    else:
-      col = "&nbsp&nbsp" + "<b>&nbsp"+column+"</b>"
-
-    print("Sender: "+str(type(event_args["sender"])))
+      col = "* " + column
+    #print(column)
+    #print(str(type(event_args["sender"])))
     if str(type(event_args["sender"])) == "<class 'anvil_extras.Quill.Quill'>":
       # self.form_fields[column]["header"].text = col + " (" + str(len(self.form_fields[column]["field"].get_html())) + "/" + str(self.form_fields[column]["length"]) + "):"
       #print(self.form_fields[column])
       #print(self.form_fields[column]["header"])
       #print(self.form_fields[column]["field"])
       #print(self.form_fields[column]["length"])
-      self.form_fields[column]["header"].content = col + " (" + str(len(self.form_fields[column]["field"].getText())) + "/" + str(self.form_fields[column]["length"]) + "):"
-      print(str(self.form_fields[column]["header"].content))
-
+      self.form_fields[column]["header"].text = col + " (" + str(len(self.form_fields[column]["field"].getText())) + "/" + str(self.form_fields[column]["length"]) + "):"
     else:
       if str(type(event_args["sender"])) != "<class 'anvil.DatePicker'>":
-        self.form_fields[column]["header"].content = col + " (" + str(len(self.form_fields[column]["field"].text)) + "/" + str(self.form_fields[column]["length"]) + "):"
-      print(str(self.form_fields[column]["header"].content))
-
+        self.form_fields[column]["header"].text = col + " (" + str(len(self.form_fields[column]["field"].text)) + "/" + str(self.form_fields[column]["length"]) + "):"
   pass
-  
+
   def __init__(self, site_id, table_name, data_list, action, page_info, **properties):
     # Set Form properties and Data Bindings.
     self.init_components(**properties)
@@ -67,18 +61,18 @@ class RowForm(RowFormTemplate):
       #print(Global.work_area[Global.current_work_area_name]["action"])
       Global.table_name = Global.work_area[Global.current_work_area_name]["action"].split(" ")[1].lower()
       # Global.action.split(" ")[1].rstrip("s").lower()
-      
+
     action = Global.action.split(" ")[0].lower()
-    
+
     # Inititalize the validator
     self.validator = Validator()
-    
+
     # we need to find out which table we are dealing with
     self.ws_name.text = Global.current_work_area_name
     self.title.text = "This form is to " + Global.action
     # get table information
     #table_info = anvil.server.call("describe_table",Global.table_name)
-   
+
     # And then we need to create all the fields based on table information 
     # loop over table columns
     self.field_details = {}
@@ -119,15 +113,15 @@ class RowForm(RowFormTemplate):
       elif column_type == "bool":
         #input = TextBox(placeholder=column_name)
         input = DropDown(items=["True", "False"],placeholder=column_name)
-        #input.add_event_handler('change',self.input_change)
+        input.add_event_handler('change',self.input_change)
         max_length = 5
       elif column_type == "datetime":
         input = TextBox(placeholder=column_name)
-        #input.add_event_handler('change',self.input_change)
+        input.add_event_handler('change',self.input_change)
         max_length = 30
       elif column_name in Global.column_with_dropdown.keys():
         input = DropDown(placeholder=column_name)
-        #input.add_event_handler('change',self.input_change)
+        input.add_event_handler('change',self.input_change)
         max_length = 5
       else:
         # by default create TextBox fields
@@ -139,6 +133,7 @@ class RowForm(RowFormTemplate):
           # for these data types (decimal, double, float) add 1 to max_length as length does not take into account the decimal point
           # (nor for negative symbol but that is not applicable for us)
           max_length = max_length + 1
+
         # add event handler for when input field is changed to update the character counth
         input.add_event_handler('change',self.input_change)
 
@@ -146,13 +141,6 @@ class RowForm(RowFormTemplate):
       input_error = TextBox(placeholder="Please enter the correct value")
       input_error.visible = False
 
-      # create column header with column_name and column_description in one flowpanel (col_header)
-      # add * to column name if inoout for field is mandatory
-      if Global.table_name != "users" and item["IS_NULLABLE"] == "YES":
-        col = "&nbsp&nbsp"
-      else:
-        col = "*"
-        
       # set specific validation checks for the various fields
       if Global.table_name == "users":
         cname = "name"
@@ -163,16 +151,16 @@ class RowForm(RowFormTemplate):
       # if column is Primary Key or a known special column then make it un-editable when action is View or Edit 
       # if Global.table_name != "site" and ((action == "view") or (action in ["edit"] and item["COLUMN_KEY"] == "PRI") or (action in ["insert"] and item["COLUMN_NAME"] == "SiteId") or column_name in ["DBAcontrol","RegistrationDate"]):
       if (
-          not (action in ["insert","add"] and Global.table_name == "site" and item[cname] == "SiteId") and 
-          ((action == "view") or (action in ["edit"] and prim_key) or
-           (action in ["insert"] and item[cname] == "SiteId") or column_name in ["DBAcontrol","RegistrationDate"])
-         ):
-      #if ((action == "view") or (action in ["edit"] and item["COLUMN_KEY"] == "PRI") or (action in ["insert"] and item["COLUMN_NAME"] == "SiteId") or column_name in ["DBAcontrol","RegistrationDate"]):
+        not (action in ["insert","add"] and Global.table_name == "site" and item[cname] == "SiteId") and 
+        ((action == "view") or (action in ["edit"] and prim_key) or
+         (action in ["insert"] and item[cname] == "SiteId") or column_name in ["DBAcontrol","RegistrationDate"])
+      ):
+        #if ((action == "view") or (action in ["edit"] and item["COLUMN_KEY"] == "PRI") or (action in ["insert"] and item["COLUMN_NAME"] == "SiteId") or column_name in ["DBAcontrol","RegistrationDate"]):
         input.enabled = False
         input.foreground = "#ffffff"
         input.background = "#000000"
       #
-      
+
       # start validaton for fields 
       if column_name in ["YearEnd","YearStart","Year","ContextYear","SurveyYear"]:
         input_error.text = "Enter a correct year format (-2147483648 to 2147483647)"
@@ -186,7 +174,7 @@ class RowForm(RowFormTemplate):
           input_error
         )
 
-      elif column_name[-2:] == "Id" and col == "*": # Any column name ending with "Id" that is not "*" (required)
+      elif column_name == Global.table_name.capitalize()+"Id":
         input_error.text = "You have to enter an Id"
         input_error.foreground ="#FF0000"
         # 
@@ -214,7 +202,7 @@ class RowForm(RowFormTemplate):
           lambda tb: re.fullmatch(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$", tb.text),
           input_error
         )
-        
+
       elif column_type.find("int") != -1:
         input_error.text = "Please enter a valid whole number"
         input_error.foreground ="#FF0000"
@@ -240,7 +228,7 @@ class RowForm(RowFormTemplate):
           lambda tb: re.fullmatch(pattern_string, tb.text),
           input_error
         )
-      
+
       elif column_name in ["RecordStatus"]:
         # 1. Define your allowed words
         allowed_words = ['Registered','Planned','Dated','Grouped','Report']
@@ -273,15 +261,8 @@ class RowForm(RowFormTemplate):
           lambda dd: dd.selected_value is not None,
           input_error
         ) 
-      elif col == "*" and str(type(input)) != "<class 'anvil_extras.Quill.Quill'>": # this means the columns is required and has not yet been caught by previous checks
-        # exclude Quill component as we cannot add the validator for this.
-        input_error.text = "This field is required"
-        input_error.foreground ="#FF0000"
-        # 
-        self.validator.require_text_field(input,input_error)
-
       # end of validation 
-      
+
       # spedial case when Field is RegistrationDate: Pre-fill is for Insert and also block edit contents
       cur_len = 0
       #print(column_name)
@@ -311,8 +292,6 @@ class RowForm(RowFormTemplate):
             input.background = "#052014CC"
         elif str(type(input)) == "<class 'anvil.DatePicker'>":
           input.date = Global.work_area[Global.current_work_area_name]["data_list"][0][column_name]
-        elif str(type(input)) == "<class 'anvil.DropDown'>":
-          input.selected_value = Global.work_area[Global.current_work_area_name]["data_list"][0][column_name]
         else:
           #print(Global.work_area[Global.current_work_area_name]["data_list"])
           input.text = Global.work_area[Global.current_work_area_name]["data_list"][0][column_name]
@@ -321,10 +300,9 @@ class RowForm(RowFormTemplate):
             cur_len = 0
           if input.text is not None:
             cur_len = len(input.text)
-            
+
       if Global.table_name.lower() != "site" and column_name == "SiteId" and action in ["edit","insert","add"]: # pre-set SiteId when
-        #print("In RowForm. Column name, action, siteId : "+column_name+" "+action+" "+Global.site_id)
-        #print(Global.work_area[Global.current_work_area_name]["data_list"][0])
+        #print(column_name,action)
         Global.work_area[Global.current_work_area_name]["data_list"][0][column_name] = Global.site_id
         input.text = Global.work_area[Global.current_work_area_name]["data_list"][0][column_name]
         #print(input.text)
@@ -338,10 +316,16 @@ class RowForm(RowFormTemplate):
         # for Table site make sure that SiteId column field is empty when action is insert,add
         input.text = "" 
         cur_len = 0
-        
-      col = col + "<b>&nbsp"+column_name+"</b>" + " (" + str(cur_len) + "/" + str(max_length) + "):" 
-      #lab = Label(text=col,font_size=14,tag=column_name)
-      lab = RichText(content=col,font_size=14,tag=column_name,format='restricted_html')
+
+      # create column header with column_name and column_description in one flowpanel (col_header)
+      # add * to column name if inoout for field is mandatory
+      if Global.table_name != "users" and item["IS_NULLABLE"] == "YES":
+        col = ""
+      else:
+        col = "* "
+
+      col = col + column_name + " (" + str(cur_len) + "/" + str(max_length) + "):" 
+      lab = Label(text=col,font_size=14,tag=column_name)
       col_comment = "" if Global.table_name == "users" else item["COLUMN_COMMENT"]
       col_description = Label(text=col_comment,font_size=14)
       col_header = FlowPanel()
@@ -357,24 +341,25 @@ class RowForm(RowFormTemplate):
         self.column_panel_1.add_component(input,full_width_row=True)
         self.column_panel_1.add_component(input_error,full_width_row=True)
     # endof forloop item in table_info
-    
+
     # Add a Submit button if Edit or Add action
     if action in ["edit","add","insert"]:     #"Edit Context","Edit Find","Add Context","Add Find"]:
       submit_btn = Button(text="Submit",role="outlined-button")
       submit_btn.add_event_handler("click",self.submit_btn_click)
       self.column_panel_1.add_component(submit_btn)
 
-    # Add a Execute SQL command button if View Query
-    #if Global.action in ["View Query","View query"]:     
-    #  execute_sql_btn = Button(text="Execute SQL command",role="outlined-button")
-    #  execute_sql_btn.add_event_handler("click",self.execute_sql_btn_click)
-    #  self.column_panel_1.add_component(execute_sql_btn)
+      # Add a Execute SQL command button if View Query
+    if Global.action in ["View Query","View query"]:     
+      execute_sql_btn = Button(text="Execute SQL command",role="outlined-button")
+      execute_sql_btn.add_event_handler("click",self.execute_sql_btn_click)
+      self.column_panel_1.add_component(execute_sql_btn)
     # For this work_area form the page_info details are all set to 0; this is for when the server print function calls this form
     Global.work_area[Global.current_work_area_name]["page_info"] = {"page_num": 0, "rows_per_page": 0, "total_rows": 0}
 
   def execute_sql_btn_click(self, **event_args):
     #print("Execute SQL command button pressed")
     formfields = self.form_fields.items()
+    #print(list(formfields)[7])
     # SQL_Command is a <class 'anvil_extras.Quill.Quill'> object as it is a text datatype so needs to get the test with the Quill method getText()
     Global.query_info = formfields
     Global.query_id = next((str(item[1]['field'].text) for item in list(formfields) if item[0] == "QueryId"),0)
@@ -407,7 +392,7 @@ class RowForm(RowFormTemplate):
         print("Main form not found!")
 
     pass
-    
+
   def submit_btn_click(self, **event_args):
     """This method is called when the button is clicked"""
     #print("Submit button clicked: ",Global.action)
@@ -432,14 +417,14 @@ class RowForm(RowFormTemplate):
           #col[1]["field"].setContents(delta, 'silent')
           #cur_len = 0
           #if text is not None:
-            #cur_len = len(text)
+          #cur_len = len(text)
         elif str(type(col[1]["field"])) == "<class 'anvil.DatePicker'>":
           row_list[col[0]] = col[1]["field"].date
         elif str(type(col[1]["field"])) == "<class 'anvil.DropDown'>":
           row_list[col[0]] = col[1]["field"].selected_value
         elif str(type(col[1]["field"])) == "<class 'anvil.TextBox'>":
           row_list[col[0]] = col[1]["field"].text
-        
+
         # set empty fields to None
         if row_list[col[0]] in ["","\n"]:
           row_list[col[0]] = None
@@ -467,11 +452,11 @@ class RowForm(RowFormTemplate):
       else:
         msg = "Unknown action: " + action
       alert(content=msg)
-     
+
     else:
       self.validator.show_all_errors()
       alert("There are errors in the form input")
-    
+
     pass
 
   # a previous version of the submit function; to be check and moved relevant bits to current submit_btn_click function
