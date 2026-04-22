@@ -22,9 +22,12 @@ class RowForm(RowFormTemplate):
     column = event_args["sender"].placeholder
     # add * to column if field is required
     #print(Global.work_area[Global.current_work_area_name]["table_info"])
-    col = column
+    #col = column
+    col = "&nbsp" + "<b>&nbsp"+column+"</b>"
     if next((item['IS_NULLABLE'] for item in Global.work_area[Global.current_work_area_name]["table_info"] if item['COLUMN_NAME'] == column),0) != "YES":
-      col = "* " + column
+      #col = "* " + column
+      col = "*" + "<b>&nbsp"+column+"</b>"
+
     #print(column)
     #print(str(type(event_args["sender"])))
     if str(type(event_args["sender"])) == "<class 'anvil_extras.Quill.Quill'>":
@@ -33,9 +36,11 @@ class RowForm(RowFormTemplate):
       #print(self.form_fields[column]["header"])
       #print(self.form_fields[column]["field"])
       #print(self.form_fields[column]["length"])
-      self.form_fields[column]["header"].text = col + " (" + str(len(self.form_fields[column]["field"].getText())) + "/" + str(self.form_fields[column]["length"]) + "):"
+      #self.form_fields[column]["header"].text = col + " (" + str(len(self.form_fields[column]["field"].getText())) + "/" + str(self.form_fields[column]["length"]) + "):"
+      self.form_fields[column]["header"].content = col + " (" + str(len(self.form_fields[column]["field"].getText())) + "/" + str(self.form_fields[column]["length"]) + "):"
     elif str(type(event_args["sender"])) == "<class 'anvil.TextBox'>":
-      self.form_fields[column]["header"].text = col + " (" + str(len(self.form_fields[column]["field"].text)) + "/" + str(self.form_fields[column]["length"]) + "):"
+      #self.form_fields[column]["header"].text = col + " (" + str(len(self.form_fields[column]["field"].text)) + "/" + str(self.form_fields[column]["length"]) + "):"
+      self.form_fields[column]["header"].content = col + " (" + str(len(self.form_fields[column]["field"].text)) + "/" + str(self.form_fields[column]["length"]) + "):"
   pass
 
   def __init__(self, site_id, table_name, data_list, action, page_info, **properties):
@@ -319,17 +324,20 @@ class RowForm(RowFormTemplate):
       # create column header with column_name and column_description in one flowpanel (col_header)
       # add * to column name if inoout for field is mandatory
       if Global.table_name != "users" and item["IS_NULLABLE"] == "YES":
-        col = ""
+        col = "&nbsp"
       else:
-        col = "* "
-      print(column_name)
-      print(str(type(input)))
+        col = "*"
+      #print(column_name)
+      #print(str(type(input)))
       if str(type(input)) in ["<class 'anvil_extras.Quill.Quill'>", "<class 'anvil.TextBox'>"]:
-        col = col + column_name + " (" + str(cur_len) + "/" + str(max_length) + "): " 
+        #col = col + column_name + " (" + str(cur_len) + "/" + str(max_length) + "): " 
+        col = col + "<b>&nbsp"+column_name+"</b>" + " (" + str(cur_len) + "/" + str(max_length) + "):" 
       else:
-        col = col + column_name + ": "
-        
-      lab = Label(text=col,font_size=14,tag=column_name)
+        #col = col + column_name + ": "
+        col = col + "<b>&nbsp"+column_name+"</b>: "  
+
+      #lab = Label(text=col,font_size=14,tag=column_name)
+      lab = RichText(content=col,font_size=14,tag=column_name,format='restricted_html')
       col_comment = "" if Global.table_name == "users" else item["COLUMN_COMMENT"]
       col_description = Label(text=col_comment,font_size=14)
       col_header = FlowPanel()

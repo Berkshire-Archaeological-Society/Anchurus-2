@@ -247,6 +247,7 @@ class Main(MainTemplate):
       self.execute_sql.visible = Global.work_area[Global.current_work_area_name]["visibility_execute_sql"] 
 
       #
+      #print("In work_area_click")
       table = Global.table_name
       if Global.table_name[0:2] == Global.prefix_special_finds_table:
         table = "fs tables"
@@ -254,9 +255,11 @@ class Main(MainTemplate):
       if Global.system_user_role == "Site User":
         role = Global.site_user_role
       #print(role)
+      #print(table)
       self.edit_row.visible = Global.role_access.get(role, {}).get(table, {}).get("Edit", None)
       self.delete_row.visible = Global.role_access.get(role, {}).get(table, {}).get("Delete", None)
-      #print("set edit_row: " + str(self.edit_row.visible))
+      print("set edit_row: " + str(self.edit_row.visible))
+      #print("set delete_row: " + str(self.delete_row.visible))
   pass # work_area_click
 
   def create_new_work_area(self,action):
@@ -501,6 +504,7 @@ class Main(MainTemplate):
         self.execute_sql.visible = False
 
       #
+      #print("In create_new_work_area")
       table = Global.table_name
       if Global.table_name[0:2] == Global.prefix_special_finds_table:
         table = "fs tables"
@@ -508,10 +512,12 @@ class Main(MainTemplate):
       if Global.system_user_role == "Site User":
         role = Global.site_user_role
       #print(role)
+      #print(table)
       self.edit_row.visible = Global.role_access.get(role, {}).get(table, {}).get("Edit", None)
       self.delete_row.visible = Global.role_access.get(role, {}).get(table, {}).get("Delete", None)
       #print("set edit_row: " + str(self.edit_row.visible))
-      
+      #print("set delete_row: " + str(self.delete_row.visible))
+
       # safe edit_row and delete_row visibilty so that at click woekspace they can be set
       Global.work_area[Global.current_work_area_name]["visibility_view_row"] = self.view_row.visible
       Global.work_area[Global.current_work_area_name]["visibility_edit_row"] = self.edit_row.visible

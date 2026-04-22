@@ -118,7 +118,7 @@ role_access = {
   'query':           {'List': True,  'View': True,  'Edit': False, 'Insert': False, 'Import': False, 'Export': False, 'Delete': False},
   'site':            {'List': False, 'View': False, 'Edit': False, 'Insert': False, 'Import': False, 'Export': False, 'Delete': False},
   'siteuser':        {'List': False, 'View': False, 'Edit': False, 'Insert': False, 'Import': False, 'Export': False, 'Delete': False},
-  'userrole':        {'List': False, 'View': False, 'Edit': False, 'Insert': False, 'Import': False, 'Export': False, 'Delete': False},
+  'sys_userrole':    {'List': False, 'View': False, 'Edit': False, 'Insert': False, 'Import': False, 'Export': False, 'Delete': False},
   'dbdiary':         {'List': False, 'View': False, 'Edit': False, 'Insert': False, 'Import': False, 'Export': False, 'Delete': False},
   'users':           {'List': False, 'View': False, 'Edit': False, 'Insert': False, 'Import': False, 'Export': False, 'Delete': False}
   },
@@ -139,7 +139,7 @@ role_access = {
   'query':           {'List': True,  'View': True,  'Edit': False, 'Insert': False, 'Import': False, 'Export': False, 'Delete': False},
   'site':            {'List': False, 'View': False, 'Edit': False, 'Insert': False, 'Import': False, 'Export': False, 'Delete': False},
   'siteuser':        {'List': False, 'View': False, 'Edit': False, 'Insert': False, 'Import': False, 'Export': False, 'Delete': False},
-  'userrole':        {'List': False, 'View': False, 'Edit': False, 'Insert': False, 'Import': False, 'Export': False, 'Delete': False},
+  'sys_userrole':    {'List': False, 'View': False, 'Edit': False, 'Insert': False, 'Import': False, 'Export': False, 'Delete': False},
   'dbdiary':         {'List': False, 'View': False, 'Edit': False, 'Insert': False, 'Import': False, 'Export': False, 'Delete': False},
   'users':           {'List': False, 'View': False, 'Edit': False, 'Insert': False, 'Import': False, 'Export': False, 'Delete': False}
   } ,
@@ -160,7 +160,7 @@ role_access = {
   'query':           {'List': True, 'View': True, 'Edit': True,  'Insert': True,  'Import': True,  'Export': True,  'Delete': False},
   'site':            {'List': True, 'View': True, 'Edit': True,  'Insert': False, 'Import': False, 'Export': True,  'Delete': False},
   'siteuser':        {'List': True, 'View': True, 'Edit': True,  'Insert': True,  'Import': True,  'Export': True,  'Delete': True},
-  'userrole':        {'List': True, 'View': True, 'Edit': True,  'Insert': True,  'Import': True,  'Export': True,  'Delete': True},
+  'sys_userrole':    {'List': True, 'View': True, 'Edit': True,  'Insert': True,  'Import': True,  'Export': True,  'Delete': True},
   'dbdiary':         {'List': True, 'View': True, 'Edit': False, 'Insert': False, 'Import': False, 'Export': False, 'Delete': False},
   'users':           {'List': True, 'View': True, 'Edit': False, 'Insert': False, 'Import': False, 'Export': False, 'Delete': False}
   },
@@ -181,7 +181,7 @@ role_access = {
   'query':           {'List': True, 'View': True, 'Edit': True,  'Insert': True,  'Import': True,  'Export': True,  'Delete': True},
   'site':            {'List': True, 'View': True, 'Edit': True,  'Insert': True,  'Import': True,  'Export': True,  'Delete': True},
   'siteuser':        {'List': True, 'View': True, 'Edit': True,  'Insert': True,  'Import': True,  'Export': True,  'Delete': True},
-  'userrole':        {'List': True, 'View': True, 'Edit': True,  'Insert': True,  'Import': True,  'Export': True,  'Delete': True},
+  'sys_userrole':    {'List': True, 'View': True, 'Edit': True,  'Insert': True,  'Import': True,  'Export': True,  'Delete': True},
   'dbdiary':         {'List': True, 'View': True, 'Edit': False, 'Insert': False, 'Import': False, 'Export': False, 'Delete': False},
   'users':           {'List': True, 'View': True, 'Edit': True,  'Insert': True,  'Import': True,  'Export': True,  'Delete': True}  
   }
