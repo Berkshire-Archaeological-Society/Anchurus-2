@@ -263,6 +263,7 @@ material_types = ["CBM Tile","CBM Brick","CBM Drain Pipe","CBM Mortar",
                   "Oyster Shells","Wood","Charcoal"]
 login_options = {"Sign in", "Sign out"}
 #
+notification_timeout = 10
 organisation = ""
 query_view = False
 query_id = ""

@@ -258,7 +258,7 @@ class Main(MainTemplate):
       #print(table)
       self.edit_row.visible = Global.role_access.get(role, {}).get(table, {}).get("Edit", None)
       self.delete_row.visible = Global.role_access.get(role, {}).get(table, {}).get("Delete", None)
-      print("set edit_row: " + str(self.edit_row.visible))
+      #print("set edit_row: " + str(self.edit_row.visible))
       #print("set delete_row: " + str(self.delete_row.visible))
   pass # work_area_click
 
@@ -566,7 +566,7 @@ class Main(MainTemplate):
       # reset action dropdown list
       #self.action_list.selected_value = None
     else:
-      n = Notification("This action has not yet been implemented.")
+      n = Notification("This action has not yet been implemented.",timeout=Global.notification_timeout)
       n.show()
     pass # create_new_work_area
   
@@ -786,7 +786,7 @@ class Main(MainTemplate):
         else:
           # unknown role
           msg = "Unkown User Role identified: " + str(Global.site_user_role)
-          n = Notification(msg)
+          n = Notification(msg,timeout=Global.notification_timeout)
           n.show()
           # disable able all action buttons
           self.admin_dropdown.visible = False
@@ -806,7 +806,7 @@ class Main(MainTemplate):
         #Global.site_id = ""
         #Global.selected_site = ""
         #self.select_site_dropdown.selected_value = None
-        n = Notification(msg)
+        n = Notification(msg,timeout=Global.notification_timeout)
         n.show()
       #
       self.menu_middle.visible = True
@@ -1262,14 +1262,15 @@ class Main(MainTemplate):
     # But we just check in case it is not ;)
     if self.username_dropdown.selected_value == "Change password":
       user = anvil.users.get_user()
-      anvil.users.change_password_with_form(require_old_password=True)
-      msg = ("\nDear %s %s,\n\n"
-             "Just to inform you that your password for the Anchurus-II service for %s has been updated.\n\n"
-             "The Anchurus-II service"
-             % (str(user["firstname"]),str(user["lastname"]), Global.organisation, ))
-      n = Notification(msg)
-      n.show()
-      anvil.server.call("send_email","Password reset",msg,user["email"])
+      success = anvil.users.change_password_with_form(require_old_password=True)
+      if success:
+        msg = ("\nDear %s %s,\n\n"
+               "Just to confirm you that your password for the Anchurus-II service for %s has been updated.\n\n"
+               "The Anchurus-II service"
+               % (str(user["firstname"]),str(user["lastname"]), Global.organisation, ))
+        n = Notification(msg,timeout=Global.notification_timeout)
+        n.show()
+        anvil.server.call("send_email","Password reset",msg,user["email"])
 
     elif self.username_dropdown.selected_value == "Save Work Area Environment":
       name = "Saved_areas " + Global.site_id
@@ -1304,13 +1305,13 @@ class Main(MainTemplate):
           work_area_dict[work_area_name]["data_list"] = Global.work_area[work_area_name]["data_list"]
         
       msg = anvil.server.call("save_workareas",name,work_area_dict,Global.site_id)
-      n = Notification(msg)
+      n = Notification(msg,timeout=Global.notification_timeout)
       n.show()
       #alert(msg,title="Saving work area notification")
     elif self.username_dropdown.selected_value == "Clear Work Area Environment":
       name = "Saved_areas " + Global.site_id
       msg = anvil.server.call("clear_saved_workareas",name)
-      n = Notification(msg)
+      n = Notification(msg,timeout=Global.notification_timeout)
       n.show()
       #alert(msg,title="Clearing work area notification")
     elif self.username_dropdown.selected_value == "Logout":

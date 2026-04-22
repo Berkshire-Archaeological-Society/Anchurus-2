@@ -86,7 +86,7 @@ def refresh_click(self):
 #    list_anvil_users_refresh(self)
   else:
     msg = "Refresh not yet implemented."
-    n = Notification(msg)
+    n = Notification(msg,timeout=Global.notification_timeout)
     n.show()
   return
 
