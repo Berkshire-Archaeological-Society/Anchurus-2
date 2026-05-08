@@ -7,7 +7,7 @@ components:
   - event_bindings: {click: login_button_click}
     layout_properties: {grid_position: 'FGKTJN,ZMAKTC'}
     name: login_button
-    properties: {role: outlined-button, text: Login}
+    properties: {role: outlined-button, text: Log In}
     type: Button
   - event_bindings: {click: register_button_click}
     layout_properties: {grid_position: 'FGKTJN,HUZFAM'}

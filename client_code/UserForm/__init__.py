@@ -120,6 +120,7 @@ class UserForm(UserFormTemplate):
       Global.system_user_role = self.user_role_value.selected_value
 
       # check if initials is unique
+      print(Global.action)
       msg = anvil.server.call("check_initials",Global.user_initials)
       #print(msg)
       if msg[:5] == "ERROR":
