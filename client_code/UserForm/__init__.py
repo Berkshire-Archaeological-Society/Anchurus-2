@@ -76,7 +76,10 @@ class UserForm(UserFormTemplate):
       else:
         Global.user_status = False
         self.user_status_value.selected_value = "False"
-      self.initials.enabled = True
+      # in Edit User disable changing Initials
+      self.initials.enabled = False
+      self.initials.foreground = "#ffffff"
+      self.initials.background = "#000000"
       self.initials.text = Global.user_items["initials"]
   
     #validate 
@@ -118,15 +121,13 @@ class UserForm(UserFormTemplate):
       else:
         Global.user_status = False
       Global.system_user_role = self.user_role_value.selected_value
-
-      # check if initials is unique
-      print(Global.action)
-      msg = anvil.server.call("check_initials",Global.user_initials)
-      #print(msg)
+      msg = ""
+      # check if initials is unique if action is not "Edit User"
+      if Global.action not in ["Edit User","Edit user","edit user"]:
+        msg = anvil.server.call("check_initials",Global.user_initials)
       if msg[:5] == "ERROR":
         alert("This initials string is already in use. Please choose another 3 chars string.")
       else:
-        #
         if Global.action in ["Edit User","Edit user","edit user"]: 
           msg = anvil.server.call('system_user_update',Global.username, Global.system_user_role,Global.user_status,Global.user_initials,Global.user_firstname,Global.user_lastname)
         elif Global.action in ["Insert User","Insert user","insert user"]:
