@@ -76,7 +76,7 @@ class UserForm(UserFormTemplate):
       else:
         Global.user_status = False
         self.user_status_value.selected_value = "False"
-      # in Edit User disable changing Initials
+      # in "Edit User" disable changing Initials
       self.initials.enabled = False
       self.initials.foreground = "#ffffff"
       self.initials.background = "#000000"
