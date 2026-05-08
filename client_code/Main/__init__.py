@@ -224,7 +224,8 @@ class Main(MainTemplate):
       if Global.action_form_type in Global.action_forms_with_download:
         # Make download button visible for Global.action_form_type
         #Global.header_download_button.visible = True
-        self.download_csv.visible = True if Global.table_name != "users" else False
+        self.download_csv.visible = True if Global.table_name != "users" and Global.site_user_role != "Viewer" else False
+        #self.download_csv.visible = True if Global.table_name != "users" else False
       else:
         #Global.header_download_button.visible = False
         self.download_csv.visible = False
@@ -544,12 +545,13 @@ class Main(MainTemplate):
         #Global.header_print_button.visible = False   
         self.print.visible = False
 
+      # the following functionnis not yet fully implemented
       Function.set_allowed_actions()
       
       if Global.action_form_type in Global.action_forms_with_download:
         # Make download button visible for Global.action_form_type
         #Global.header_download_button.visible = True
-        self.download_csv.visible = True if Global.table_name != "users" else False
+        self.download_csv.visible = True if Global.table_name != "users" and Global.site_user_role != "Viewer" else False
       else:
         #Global.header_download_button.visible = False
         self.download_csv.visible = False
