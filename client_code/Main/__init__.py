@@ -225,7 +225,6 @@ class Main(MainTemplate):
         # Make download button visible for Global.action_form_type
         #Global.header_download_button.visible = True
         self.download_csv.visible = True if Global.table_name != "users" and Global.site_user_role != "Viewer" else False
-        #self.download_csv.visible = True if Global.table_name != "users" else False
       else:
         #Global.header_download_button.visible = False
         self.download_csv.visible = False
