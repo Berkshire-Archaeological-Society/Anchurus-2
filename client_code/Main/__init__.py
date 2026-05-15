@@ -224,7 +224,7 @@ class Main(MainTemplate):
       if Global.action_form_type in Global.action_forms_with_download:
         # Make download button visible for Global.action_form_type
         #Global.header_download_button.visible = True
-        self.download_csv.visible = True if Global.table_name != "users" and Global.site_user_role != "Viewer" else False
+        self.download_csv.visible = True if Global.table_name != "users" and Global.site_user_role != "Site Viewer" else False
       else:
         #Global.header_download_button.visible = False
         self.download_csv.visible = False
@@ -483,7 +483,7 @@ class Main(MainTemplate):
       self.select_all.checked = False
       
       self.view_row.visible = True
-      self.edit_row.visible = True if Global.site_user_role in ["Editor","Manager", "Site Leader"] or Global.system_user_role == "System Administrator" else False
+      self.edit_row.visible = True if Global.site_user_role in ["Site Editor","Manager", "Site Leader"] or Global.system_user_role == "System Administrator" else False
       self.delete_row.visible = True if Global.site_user_role in ["Manager","Site Leader"] or Global.system_user_role == "System Administrator" else False
       if Global.table_name == "query":
         self.execute_sql.visible = True #if Global.site_user_role in ["Manager", "Site Leader"] or Global.system_user_role == "System Administrator" else False
@@ -550,7 +550,7 @@ class Main(MainTemplate):
       if Global.action_form_type in Global.action_forms_with_download:
         # Make download button visible for Global.action_form_type
         #Global.header_download_button.visible = True
-        self.download_csv.visible = True if Global.table_name != "users" and Global.site_user_role != "Viewer" else False
+        self.download_csv.visible = True if Global.table_name != "users" and Global.site_user_role != "Site Viewer" else False
       else:
         #Global.header_download_button.visible = False
         self.download_csv.visible = False
@@ -766,7 +766,7 @@ class Main(MainTemplate):
           self.delete_row.visible = True
           self.execute_sql.visible = False
           self.import_dropdown.visible = True
-        elif Global.site_user_role in ["Editor"]:
+        elif Global.site_user_role in ["Site Editor"]:
           self.list_dropdown.visible = True
           self.view_row.visible = True        
           self.edit_row.visible = True
@@ -775,7 +775,7 @@ class Main(MainTemplate):
           self.delete_row.visible = False
           self.execute_sql.visible = False
           self.import_dropdown.visible = False
-        elif Global.site_user_role in ["Viewer"]:
+        elif Global.site_user_role in ["Site Viewer"]:
           self.list_dropdown.visible = True
           self.view_row.visible = True
           self.edit_row.visible = False

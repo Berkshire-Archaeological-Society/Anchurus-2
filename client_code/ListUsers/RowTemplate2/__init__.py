@@ -18,7 +18,9 @@ class RowTemplate2(RowTemplate2Template):
     # Any code you write here will run before the form opens.
     self.delete_user_button.visible = False
     self.edit_user_button.visible = False
-    if 
+    if Global.system_user_role == "System Administrator":
+      self.delete_user_button.visible = True
+      self.edit_user_button.visible = True
 
   def edit_user_button_click(self, **event_args):
     """This method is called when the button is clicked"""

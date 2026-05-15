@@ -101,7 +101,7 @@ Quill_toolbarOptions = [
 ]
 #
 role_access = {
-'Viewer': {
+'Site Viewer': {
   "anomaly":         {'List': True,  'View': True,  'Edit': False, 'Insert': False, 'Import': False, 'Export': False, 'Delete': False},
   "context":         {'List': True,  'View': True,  'Edit': False, 'Insert': False,' Import': False, 'Export': False, 'Delete': False},
   "find":            {'List': True,  'View': True,  'Edit': False, 'Insert': False, 'Import': False, 'Export': False, 'Delete': False},
@@ -122,7 +122,7 @@ role_access = {
   'dbdiary':         {'List': False, 'View': False, 'Edit': False, 'Insert': False, 'Import': False, 'Export': False, 'Delete': False},
   'users':           {'List': False, 'View': False, 'Edit': False, 'Insert': False, 'Import': False, 'Export': False, 'Delete': False}
   },
-'Editor': {
+'Site Editor': {
   'anomaly':         {'List': True,  'View': True,  'Edit': True,  'Insert': True,  'Import': True,  'Export': True,  'Delete': False},
   'context':         {'List': True,  'View': True,  'Edit': True,  'Insert': True,  'Import': True,  'Export': True,  'Delete': False},
   'find':            {'List': True,  'View': True,  'Edit': True,  'Insert': True,  'Import': True,  'Export': True,  'Delete': False},
@@ -214,7 +214,7 @@ column_with_dropdown = {
     "error"       : "You must make a selection"
   },
   "Role" : {
-    "options"     : ["Site Leader","Editor","Viewer"], 
+    "options"     : ["Site Leader","Site Editor","Site Viewer"], 
     "placeholder" : "Please select a role", 
     "error"       : "You must make a selection"
   },
@@ -319,7 +319,7 @@ user_initials = ""
 system_user_role = ""
 site_user_role = ""
 user_status = ""
-site_user_role_options = {"Viewer","Editor","Site Leader","Administrator"}
+site_user_role_options = {"Site Viewer","Site Editor","Site Leader","Administrator"}
 system_user_role_options = {"Site User","System Administrator"}
 user_status_options = {"True", "False"}
 user_items = {}
