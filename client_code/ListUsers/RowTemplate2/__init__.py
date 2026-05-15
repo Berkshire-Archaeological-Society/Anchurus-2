@@ -16,6 +16,9 @@ class RowTemplate2(RowTemplate2Template):
     # Set Form properties and Data Bindings.
     self.init_components(**properties)
     # Any code you write here will run before the form opens.
+    self.delete_user_button.visible = False
+    self.edit_user_button.visible = False
+    if 
 
   def edit_user_button_click(self, **event_args):
     """This method is called when the button is clicked"""
