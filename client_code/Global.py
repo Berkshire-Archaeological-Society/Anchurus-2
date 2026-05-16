@@ -38,7 +38,7 @@ help_action_dropdown = ["Anchurus Website"]
 query_action_dropdown = [("List Query","List query"),("Insert Query","Insert query"),("Import Query ","Import query")]
 sys_admin_action_dropdown = [("List System Users","List Users"),("Insert System User","Insert User"),("Import System Users","Import Users"),separator,("List DBDiary","List dbdiary"),separator,("List Sites","List Site"),("Insert Site","Insert Site")]
 site_leader_action_dropdown = [("List System Users","List Users"),separator,("List DBDiary","List dbdiary"),separator,("List Sites","List Site")]
-site_admin_action_dropdown = [(separator,separator),("List Site Users","List sys_userrole"),("Insert Site User","Insert sys_userrole"),("Import Site Users","Import sys_userrole")]
+site_admin_action_dropdown = [(separator,separator),("List Site Uses","List siteuserrole"),("Insert Site User","Insert siteuserrole"),("Import Site Users","Import siteuserrole")]
 #
 import_action_dropdown = ["context","find"]
 #
@@ -118,7 +118,7 @@ role_access = {
   'query':           {'List': True,  'View': True,  'Edit': False, 'Insert': False, 'Import': False, 'Export': False, 'Delete': False},
   'site':            {'List': False, 'View': False, 'Edit': False, 'Insert': False, 'Import': False, 'Export': False, 'Delete': False},
   'siteuser':        {'List': False, 'View': False, 'Edit': False, 'Insert': False, 'Import': False, 'Export': False, 'Delete': False},
-  'sys_userrole':    {'List': False, 'View': False, 'Edit': False, 'Insert': False, 'Import': False, 'Export': False, 'Delete': False},
+  'siteuserrole':    {'List': False, 'View': False, 'Edit': False, 'Insert': False, 'Import': False, 'Export': False, 'Delete': False},
   'dbdiary':         {'List': False, 'View': False, 'Edit': False, 'Insert': False, 'Import': False, 'Export': False, 'Delete': False},
   'users':           {'List': False, 'View': False, 'Edit': False, 'Insert': False, 'Import': False, 'Export': False, 'Delete': False}
   },
@@ -139,7 +139,7 @@ role_access = {
   'query':           {'List': True,  'View': True,  'Edit': False, 'Insert': False, 'Import': False, 'Export': False, 'Delete': False},
   'site':            {'List': False, 'View': False, 'Edit': False, 'Insert': False, 'Import': False, 'Export': False, 'Delete': False},
   'siteuser':        {'List': False, 'View': False, 'Edit': False, 'Insert': False, 'Import': False, 'Export': False, 'Delete': False},
-  'sys_userrole':    {'List': False, 'View': False, 'Edit': False, 'Insert': False, 'Import': False, 'Export': False, 'Delete': False},
+  'siteuserrole':    {'List': False, 'View': False, 'Edit': False, 'Insert': False, 'Import': False, 'Export': False, 'Delete': False},
   'dbdiary':         {'List': False, 'View': False, 'Edit': False, 'Insert': False, 'Import': False, 'Export': False, 'Delete': False},
   'users':           {'List': False, 'View': False, 'Edit': False, 'Insert': False, 'Import': False, 'Export': False, 'Delete': False}
   } ,
@@ -160,7 +160,7 @@ role_access = {
   'query':           {'List': True, 'View': True, 'Edit': True,  'Insert': True,  'Import': True,  'Export': True,  'Delete': False},
   'site':            {'List': True, 'View': True, 'Edit': True,  'Insert': False, 'Import': False, 'Export': True,  'Delete': False},
   'siteuser':        {'List': True, 'View': True, 'Edit': True,  'Insert': True,  'Import': True,  'Export': True,  'Delete': True},
-  'sys_userrole':    {'List': True, 'View': True, 'Edit': True,  'Insert': True,  'Import': True,  'Export': True,  'Delete': True},
+  'siteuserrole':    {'List': True, 'View': True, 'Edit': True,  'Insert': True,  'Import': True,  'Export': True,  'Delete': True},
   'dbdiary':         {'List': True, 'View': True, 'Edit': False, 'Insert': False, 'Import': False, 'Export': False, 'Delete': False},
   'users':           {'List': True, 'View': True, 'Edit': False, 'Insert': False, 'Import': False, 'Export': False, 'Delete': False}
   },
@@ -181,7 +181,7 @@ role_access = {
   'query':           {'List': True, 'View': True, 'Edit': True,  'Insert': True,  'Import': True,  'Export': True,  'Delete': True},
   'site':            {'List': True, 'View': True, 'Edit': True,  'Insert': True,  'Import': True,  'Export': True,  'Delete': True},
   'siteuser':        {'List': True, 'View': True, 'Edit': True,  'Insert': True,  'Import': True,  'Export': True,  'Delete': True},
-  'sys_userrole':    {'List': True, 'View': True, 'Edit': True,  'Insert': True,  'Import': True,  'Export': True,  'Delete': True},
+  'siteuserrole':    {'List': True, 'View': True, 'Edit': True,  'Insert': True,  'Import': True,  'Export': True,  'Delete': True},
   'dbdiary':         {'List': True, 'View': True, 'Edit': False, 'Insert': False, 'Import': False, 'Export': False, 'Delete': False},
   'users':           {'List': True, 'View': True, 'Edit': True,  'Insert': True,  'Import': True,  'Export': True,  'Delete': True}  
   }
@@ -268,7 +268,7 @@ organisation = ""
 query_view = False
 query_id = ""
 query_info = []
-view_queries = ["sys_userrole"]
+view_queries = ["siteuserrole"]
 #
 # The following variable rows_per_page has to be set to 0, to make sure the print function prints the whole table
 # During startup of the client (i.e. browser URL click of website) this value can be overwritten by a value for this

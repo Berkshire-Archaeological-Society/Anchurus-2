@@ -277,7 +277,7 @@ class Main(MainTemplate):
     work_area_name = action
     if action in ["List Users","Insert User","Import Users"]:
       work_area_name = action.split(" ")[0] + " System " + action.split(" ")[1]
-    if action.split(" ")[1].lower() == "sys_userrole":
+    if action.split(" ")[1].lower() == "siteuserrole":
       work_area_name = action.split(" ")[0] + " Site User"
       if action.split(" ")[0] != "Insert":
         work_area_name = work_area_name + "s"   
@@ -345,7 +345,7 @@ class Main(MainTemplate):
               work_area_name = "V-"
             else:
               work_area_name = "E-"
-          if action.split(" ")[1].lower() == "sys_userrole":
+          if action.split(" ")[1].lower() == "siteuserrole":
             work_area_name = work_area_name + action.split(" ")[1][-8:]
           else:
             work_area_name = work_area_name + action.split(" ")[1]
