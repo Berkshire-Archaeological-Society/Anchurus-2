@@ -598,7 +598,7 @@ class Main(MainTemplate):
       #Global.help_page_form.help_page_text.add_component(rt)
       
       self.username_dropdown.placeholder = Global.username
-      self.username_dropdown.items = ["Change password","Clear Work Area Environment","Save Work Area Environment","Logout"]
+      self.username_dropdown.items = ["Change password","Clear saved Work Areas ","Save all Work Areas","Logout"]
 
       # notify server side of login
       Global.ip_address = anvil.server.call("user_authentication")
@@ -1273,7 +1273,7 @@ class Main(MainTemplate):
         n.show()
         anvil.server.call("send_email","Password reset",msg,user["email"])
 
-    elif self.username_dropdown.selected_value == "Save Work Area Environment":
+    elif self.username_dropdown.selected_value == "Save all Work Areas":
       name = "Saved_areas " + Global.site_id
       work_area_dict = {}
       temp_work_area_name_list = list(Global.work_area.keys())
@@ -1309,7 +1309,7 @@ class Main(MainTemplate):
       n = Notification(msg,timeout=Global.notification_timeout)
       n.show()
       #alert(msg,title="Saving work area notification")
-    elif self.username_dropdown.selected_value == "Clear Work Area Environment":
+    elif self.username_dropdown.selected_value == "Clear saved Work Areas":
       name = "Saved_areas " + Global.site_id
       msg = anvil.server.call("clear_saved_workareas",name)
       n = Notification(msg,timeout=Global.notification_timeout)
