@@ -424,7 +424,13 @@ class RowForm(RowFormTemplate):
         if str(type(col[1]["field"])) == "<class 'anvil_extras.Quill.Quill'>":
           # at the moment we only get the text of the Quill data, not the full rich text format - need extra column for that
           # here we have to store both the Rtf and the Txt values in two fields (FieldRtf and FieldTxt)
-          row_list[col[0]] = col[1]["field"].getText()
+          if col[0].endswitch("Rtf"):
+            # here we have Rtf column (col[0]), so there will also be a Txt column; save Rtf and plain Txt
+            col_name_txt = col[0][:-3] + "Txt"
+            row_list[col_name_txt] = col[1]["field"].getText()
+            row_list[col[0]] = col[1]["field"].getContents()
+          else:
+            row_list[col[0]] = col[1]["field"].getText()
           #delta = col[1]["field"].getContents()
           #print("Quill Value is: ",row_list[col[0]])
           #row_list[col[0]] = col[1]["field"].clipboard.convert(text)
