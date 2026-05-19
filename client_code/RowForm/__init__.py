@@ -88,7 +88,7 @@ class RowForm(RowFormTemplate):
       if Global.table_name == "users":
         column_name = item["name"]
         # ignore some columns of system users table and columns with Txt at the end (only use Rtf columns)
-        if column_name in Global.ignore_users_columns or column_name[-3:] == "Txt":
+        if column_name in Global.ignore_users_columns or column_name.endswitch("Txt"):
           continue
         column_type = item["type"]
       else:
@@ -423,6 +423,7 @@ class RowForm(RowFormTemplate):
         #print(str(type(col[1]["field"])))
         if str(type(col[1]["field"])) == "<class 'anvil_extras.Quill.Quill'>":
           # at the moment we only get the text of the Quill data, not the full rich text format - need extra column for that
+          # here we have to store both the Rtf and the Txt values in two fields (FieldRtf and FieldTxt)
           row_list[col[0]] = col[1]["field"].getText()
           #delta = col[1]["field"].getContents()
           #print("Quill Value is: ",row_list[col[0]])
