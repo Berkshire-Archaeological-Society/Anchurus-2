@@ -87,7 +87,8 @@ class RowForm(RowFormTemplate):
       #print(item)
       if Global.table_name == "users":
         column_name = item["name"]
-        if column_name in Global.ignore_users_columns:
+        # ignore some columns of system users table and columns with Txt at the end (only use Rtf columns)
+        if column_name in Global.ignore_users_columns or column_name[-3:] == "Txt":
           continue
         column_type = item["type"]
       else:
