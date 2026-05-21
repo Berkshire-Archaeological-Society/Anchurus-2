@@ -87,13 +87,18 @@ class RowForm(RowFormTemplate):
       #print(item)
       if Global.table_name == "users":
         column_name = item["name"]
-        # ignore some columns of system users table and columns with Txt at the end (only use Rtf columns)
-        if column_name in Global.ignore_users_columns or column_name.endswitch("Txt"):
+        # ignore some columns of system users table
+        if column_name in Global.ignore_users_columns:
           continue
         column_type = item["type"]
       else:
         column_name = item["COLUMN_NAME"]
         column_type = item["COLUMN_TYPE"]
+     
+      # ignore columns with Txt at the end
+      if column_name[-3:] == "Txt":
+        continue
+
       # types can be varchar(length),int(length),text,float,double,date
       # type text can be 65535 char so need to be a TextArea, other can be a TextBox
       # create the label and the input field
@@ -424,11 +429,11 @@ class RowForm(RowFormTemplate):
         if str(type(col[1]["field"])) == "<class 'anvil_extras.Quill.Quill'>":
           # at the moment we only get the text of the Quill data, not the full rich text format - need extra column for that
           # here we have to store both the Rtf and the Txt values in two fields (FieldRtf and FieldTxt)
-          if col[0].endswitch("Rtf"):
-            # here we have Rtf column (col[0]), so there will also be a Txt column; save Rtf and plain Txt
+          if col[0][-3:] == "Rtf":
+            # here we have Rtf column (col[0]), so there will also be a Txt column; save both Rtf and plain Txt
             col_name_txt = col[0][:-3] + "Txt"
             row_list[col_name_txt] = col[1]["field"].getText()
-            row_list[col[0]] = col[1]["field"].getContents()
+            row_list[col[0]] = col[1]["field"].get_html()
           else:
             row_list[col[0]] = col[1]["field"].getText()
           #delta = col[1]["field"].getContents()

@@ -113,9 +113,10 @@ def create_table_columns(column_list,work_area):
     else:
       dt_len = re.findall(r'\d+', data_type)[0]
       col_width = (max(int(dt_len),len(column))) * ratio + padding
-    
-    if (column == "DBAcontrol" and Global.table_name == "dbdiary") or column not in ["select","DBAcontrol"]:
-      # do not create a columns for DBAControl and select
+
+    # do not create a columns for DBAcontrol (but for table dbdiary do create DBAcontrol column), select and for column_name with Rtf in name
+    if (column == "DBAcontrol" and Global.table_name == "dbdiary") or (column not in ["select","DBAcontrol"] and column[-3:] != "Rtf"):
+
       id = id + 1
       columns_titles.append({"id": id, "title": column, "data_key": column, "width": col_width, "expand": True })
   
