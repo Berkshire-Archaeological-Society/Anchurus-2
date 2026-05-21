@@ -118,7 +118,7 @@ class RowForm(RowFormTemplate):
         input.add_event_handler('text_change',self.input_change)
       elif column_type == "date":
         # by default create TextBox fields
-        input = DatePicker(placeholder=column_name,format="%Y-%m-%d")
+        input = DatePicker(placeholder=column_name,format="%d-%m-%Y")
         #input = TextBox(placeholder=column_name)
         # date type is 10 long
         max_length = 10

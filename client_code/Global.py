@@ -38,7 +38,7 @@ help_action_dropdown = ["Anchurus Website"]
 query_action_dropdown = [("List Query","List query"),("Insert Query","Insert query"),("Import Query ","Import query")]
 sys_admin_action_dropdown = [("List System Users","List Users"),("Insert System User","Insert User"),("Import System Users","Import Users"),separator,("List DBDiary","List dbdiary"),separator,("List Sites","List Site"),("Insert Site","Insert Site")]
 site_leader_action_dropdown = [("List System Users","List Users"),separator,("List DBDiary","List dbdiary"),separator,("List Sites","List Site")]
-site_admin_action_dropdown = [(separator,separator),("List Site Uses","List siteuserrole"),("Insert Site User","Insert siteuserrole"),("Import Site Users","Import siteuserrole")]
+site_admin_action_dropdown = [(separator,separator),("List Site Users","List siteuserrole"),("Insert Site User","Insert siteuserrole"),("Import Site Users","Import siteuserrole")]
 #
 import_action_dropdown = ["context","find"]
 #

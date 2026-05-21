@@ -134,7 +134,7 @@ class UserForm(UserFormTemplate):
           msg = anvil.server.call('system_user_insert',Global.username,Global.password,Global.system_user_role,Global.user_status,Global.user_initials,Global.user_firstname,Global.user_lastname)
         else:
           msg = "Unknown action: " + Global.action
-        n = Notification(msg)
+        n = Notification(msg,timeout=Global.notification_timeout)
         n.show()
     else:
      self.validator.show_all_errors()
