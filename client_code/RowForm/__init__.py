@@ -19,6 +19,7 @@ from .. import Global
 class RowForm(RowFormTemplate):
   def input_change(self, **event_args):
     """This method is called when the text in this text box is edited"""
+    print("In input_change function")
     column = event_args["sender"].placeholder
     # add * to column if field is required
     #print(Global.work_area[Global.current_work_area_name]["table_info"])
@@ -28,20 +29,27 @@ class RowForm(RowFormTemplate):
       #col = "* " + column
       col = "*" + "<b>&nbsp"+column+"</b>"
 
-    #print(column)
+    print(column)
+    if column in self.form_fields:
+      print(column+" in form_fields dictionary")
+    else:
+      print(column+" not in form_fields dictionary")
+
     #print(str(type(event_args["sender"])))
-    if str(type(event_args["sender"])) == "<class 'anvil_extras.Quill.Quill'>":
+    if str(type(event_args["sender"])) == "<class 'anvil.TextBox'>":
+      #self.form_fields[column]["header"].text = col + " (" + str(len(self.form_fields[column]["field"].text)) + "/" + str(self.form_fields[column]["length"]) + "):"
+      self.form_fields[column]["header"].content = col + " (" + str(len(self.form_fields[column]["field"].text)) + "/" + str(self.form_fields[column]["length"]) + "):"
+    #elif str(type(event_args["sender"])) == "<class 'anvil_extras.Quill.Quill'>":
       # self.form_fields[column]["header"].text = col + " (" + str(len(self.form_fields[column]["field"].get_html())) + "/" + str(self.form_fields[column]["length"]) + "):"
       #print(self.form_fields[column])
       #print(self.form_fields[column]["header"])
       #print(self.form_fields[column]["field"])
       #print(self.form_fields[column]["length"])
       #self.form_fields[column]["header"].text = col + " (" + str(len(self.form_fields[column]["field"].getText())) + "/" + str(self.form_fields[column]["length"]) + "):"
-      self.form_fields[column]["header"].content = col + " (" + str(len(self.form_fields[column]["field"].getText())) + "/" + str(self.form_fields[column]["length"]) + "):"
-    elif str(type(event_args["sender"])) == "<class 'anvil.TextBox'>":
-      #self.form_fields[column]["header"].text = col + " (" + str(len(self.form_fields[column]["field"].text)) + "/" + str(self.form_fields[column]["length"]) + "):"
-      self.form_fields[column]["header"].content = col + " (" + str(len(self.form_fields[column]["field"].text)) + "/" + str(self.form_fields[column]["length"]) + "):"
-  pass
+      #self.form_fields[column]["header"].content = col + " (" + str(len(self.form_fields[column]["field"].getText())) + "/" + str(self.form_fields[column]["length"]) + "):"
+      #self.form_fields[column]["header"].content = col + " (" + str(self.form_fields[column]["field"].getLength()) + "/" + str(self.form_fields[column]["length"]) + "):"
+    print("Leaving input_change function")
+  pass # end of input_change
 
   def __init__(self, site_id, table_name, data_list, action, page_info, **properties):
     # Set Form properties and Data Bindings.
@@ -171,7 +179,7 @@ class RowForm(RowFormTemplate):
         input.background = "#000000"
       #
 
-      # start validaton for fields 
+      # set validaton for fields 
       if column_name in ["YearEnd","YearStart","Year","ContextYear","SurveyYear"]:
         input_error.text = "Enter a correct year format (-2147483648 to 2147483647)"
         input_error.foreground ="#FF0000"
@@ -271,7 +279,7 @@ class RowForm(RowFormTemplate):
           lambda dd: dd.selected_value is not None,
           input_error
         ) 
-      # end of validation 
+      # end of setting validation for fields
 
       # spedial case when Field is RegistrationDate: Pre-fill is for Insert and also block edit contents
       cur_len = 0
@@ -290,9 +298,11 @@ class RowForm(RowFormTemplate):
           text = Global.work_area[Global.current_work_area_name]["data_list"][0][column_name]
 
           # Manually create the Delta instead of using the clipboard
-          delta = {"ops": [{"insert": text}]}
+          #delta = {"ops": [{"insert": text}]}
           # Apply it
-          input.setContents(delta, 'silent')
+          #input.setContents(delta, 'silent')
+          input.setContents([]);
+          input.clipboard.dangerouslyPasteHTML(text);
 
           cur_len = 0
           if text is not None:
@@ -353,6 +363,7 @@ class RowForm(RowFormTemplate):
       col_header.add_component(col_description)
       # add columns details to nested dictionary
       field_details = {"header": lab, "description": col_description,"field": input, "length": max_length}
+      print(column_name+" added to form_field dictionary")
       self.form_fields[column_name] = field_details
       # add col_header and input field to column_panel
       # do not add an input field for DBAcontrol column if table is not dbdiary
@@ -411,7 +422,7 @@ class RowForm(RowFormTemplate):
       else:
         print("Main form not found!")
 
-    pass
+    pass # end of init
 
   def submit_btn_click(self, **event_args):
     """This method is called when the button is clicked"""
@@ -484,7 +495,7 @@ class RowForm(RowFormTemplate):
       self.validator.show_all_errors()
       alert("There are errors in the form input")
 
-    pass
+    pass # end of submit_btn_click
 
   # a previous version of the submit function; to be check and moved relevant bits to current submit_btn_click function
   def submit_button_click(self, **evemt_args):
@@ -534,4 +545,4 @@ class RowForm(RowFormTemplate):
     else:
       # check which fields are incorrect
       alert("Please correct the field(s) with errors before submitting.")
-    pass
+    pass # end of submit_button_click
