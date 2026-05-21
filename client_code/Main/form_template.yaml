@@ -355,7 +355,7 @@ components:
               margin: ['0', '0', null, '0']
               padding: ['5', '0', '5', '0']
             text: ''
-            tooltip: edit row
+            tooltip: update row
           type: Button
         - event_bindings: {click: delete_row_click}
           layout_properties: {expand: false}

@@ -344,7 +344,7 @@ class Main(MainTemplate):
             if action.split(" ")[0].lower() ==  "view":
               work_area_name = "V-"
             else:
-              work_area_name = "E-"
+              work_area_name = "U-"
           if action.split(" ")[1].lower() == "siteuserrole":
             work_area_name = work_area_name + action.split(" ")[1][-8:]
           else:
