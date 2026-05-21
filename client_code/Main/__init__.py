@@ -598,7 +598,7 @@ class Main(MainTemplate):
       #Global.help_page_form.help_page_text.add_component(rt)
       
       self.username_dropdown.placeholder = Global.username
-      self.username_dropdown.items = ["Change password","Clear saved Work Areas ","Save all Work Areas","Logout"]
+      self.username_dropdown.items = ["Change password","Clear saved Work Areas","Save all Work Areas","Delete all Work Areas","Logout"]
 
       # notify server side of login
       Global.ip_address = anvil.server.call("user_authentication")
@@ -702,7 +702,7 @@ class Main(MainTemplate):
       self.site_summary.visible = True
       self.site_summary.items = db_summary
 
-      #delete all work_areas and all work_area names/buttons
+      #delete all work_areas and all work_area names/buttons and remove seq_no's
       temp_work_area_name_list = list(Global.work_area.keys())
       for work_area_name in temp_work_area_name_list:
         Function.delete_workspace(work_area_name)
@@ -1315,6 +1315,13 @@ class Main(MainTemplate):
       n = Notification(msg,timeout=Global.notification_timeout)
       n.show()
       #alert(msg,title="Clearing work area notification")
+    elif self.username_dropdown.selected_value == "Delete all Work Areas":
+      #delete all work_areas and all work_area names/buttons
+      temp_work_area_name_list = list(Global.work_area.keys())
+      for work_area_name in temp_work_area_name_list:
+        Function.delete_workspace(work_area_name)
+      Global.action_seq_no = {}
+      Global.work_area = {}
     elif self.username_dropdown.selected_value == "Logout":
       self.logout_click()
 

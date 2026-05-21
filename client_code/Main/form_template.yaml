@@ -379,7 +379,7 @@ components:
               margin: ['0', '0', null, null]
               padding: ['0', '0', '0', '0']
             text: ''
-            tooltip: execute SQL
+            tooltip: run SQL
           type: Button
         layout_properties: {width: 162.47982373046875}
         name: fp_select_options
