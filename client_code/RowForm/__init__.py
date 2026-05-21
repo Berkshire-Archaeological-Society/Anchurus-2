@@ -296,20 +296,15 @@ class RowForm(RowFormTemplate):
         #print(Global.work_area[Global.current_work_area_name]["data_list"][0])
         if str(type(input)) == "<class 'anvil_extras.Quill.Quill'>":
           text = Global.work_area[Global.current_work_area_name]["data_list"][0][column_name]
-
-          # Manually create the Delta instead of using the clipboard
-          #delta = {"ops": [{"insert": text}]}
-          # Apply it
-          #input.setContents(delta, 'silent')
-          input.setContents([]);
-          input.clipboard.dangerouslyPasteHTML(text);
-
+          input.set_html(text)
           cur_len = 0
           if text is not None:
             cur_len = len(text)
           if action == "view":
             input.enable(False)
-            input.background = "#052014CC"
+            input.foreground = "#ffffff"
+            input.background = "#000000"
+            #input.background = "#052014CC"
         elif str(type(input)) == "<class 'anvil.DatePicker'>":
           input.date = Global.work_area[Global.current_work_area_name]["data_list"][0][column_name]
         elif str(type(input)) == "<class 'anvil.DropDown'>":
