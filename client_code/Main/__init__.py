@@ -1114,7 +1114,7 @@ class Main(MainTemplate):
     # The alert() function will return the 'value' passed when 'x-close-alert' is raised
     selected_list = alert(
       content=dialog, 
-      title="",
+      title="Filter Columns",
       buttons=[] # Crucial: set buttons=[] to use your custom button for submission
     )
     if selected_list is not None:     # user has made a selection; if not, do nothing
